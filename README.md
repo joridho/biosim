@@ -11,7 +11,7 @@
 
 
 
-#round 2:take 2
+# round 2 igjen
 
 
 # round 2: take 1 
