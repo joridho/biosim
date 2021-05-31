@@ -1,1 +1,0 @@
-# hei hvordan går det?
