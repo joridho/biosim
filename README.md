@@ -11,12 +11,10 @@
 
 
 
-# round 2 igjen
+# round 2 igjen igjen
 
 
 # round 2: take 1 
-
-
 
 
 
