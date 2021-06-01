@@ -4,8 +4,8 @@
 This is a file that creates Herbivores by using the class function
 """
 
-__author__ = 'Christianie Torres'
-__email__ = 'christianie.torres@nmbu.no'
+__author__ = 'Christianie Torres', 'Jorid Holmen'
+__email__ = 'christianie.torres@nmbu.no', 'jorid.holmen@nmbu.no'
 
 import random
 import math
@@ -34,7 +34,6 @@ class herbivore():
             self.a = a_init
             self.a += year
 
-
         def birthweight(self, sigma_birth, w_birth):
             min_w = w_birth - sigma_birth
             max_w = w_birth + sigma_birth
@@ -49,7 +48,7 @@ class herbivore():
         @classmethod
         def weightgain(cls, w, F, beta):
             self.w += beta*F
-            # Mkae this happen each time they eat
+            # Make this happen each time they eat
 
         @classmethod
         def fitness(cls, a, a_half, phi_age, w, w_half, phi_weight):
@@ -60,11 +59,8 @@ class herbivore():
 
             if 0 <= phi <= 1:
                 True
-
             else:
                 return ('Error')
-
-
 
         @classmethod
         def birth_probability(cls, gamma, phi, N, omega, zeta, w_birth, sigma_birth):
@@ -78,8 +74,6 @@ class herbivore():
                 p_birth = 1
 
             # How to make this happen maximum once per year
-
-
 
         @classmethod
         def birth_weightloss(cls, birthweight, zeta, w):
