@@ -34,29 +34,29 @@ class herbivore():
             self.a = a_init
             self.a += year
 
-        @classmethod
-        def birthweight(cls, sigma_birth, w_birth):
-            min_weight = w_birth - sigma_birth
-            max_weight = w_birth + sigma_birth
-            birthweight = random.randint(min_weight, max_weight)
+
+        def birthweight(self, sigma_birth, w_birth):
+            min_w = w_birth - sigma_birth
+            max_w = w_birth + sigma_birth
+            birthweight = random.randint(min_w, max_w)
 
         @classmethod
-        def weightloss(cls, weight, year, eta):
-            # self.weight = weight   # Need to find weight
-            self.weight -= eta*weight
+        def weightloss(cls, w, year, eta):
+            # self.w = w  # Need to find weight
+            self.w -= eta*w
             # Make this happen each year
 
         @classmethod
-        def weightgain(cls, weight, F, beta):
-            self.weight += beta*F
+        def weightgain(cls, w, F, beta):
+            self.w += beta*F
             # Mkae this happen each time they eat
 
         @classmethod
-        def fitness(cls, a, a_half, phi_age, omega, w_half, phi_weight):
-            if omega <= 0:
+        def fitness(cls, a, a_half, phi_age, w, w_half, phi_weight):
+            if w <= 0:
                 phi = 0
             else:
-                phi = 1/(1+math.exp(phi_age(a-a_half)))*1/(1+math.exp(-phi_weight(omega-w_half)))
+                phi = 1/(1+math.exp(phi_age(a-a_half)))*1/(1+math.exp(-phi_weight(w-w_half)))
 
             if 0 <= phi <= 1:
                 True
@@ -67,8 +67,35 @@ class herbivore():
 
 
         @classmethod
-        def birth(cls, gamma, phi, N, omega, zeta, w_birth, sigma_birth):
+        def birth_probability(cls, gamma, phi, N, omega, zeta, w_birth, sigma_birth):
             variabel = gamma * phi * (N-1)
+
+            if variabel < 1:
+                p_birth = variabel
+            elif omega  < zeta * (w_birth + sigma_birth):
+                p_birth = 0
+            else:
+                p_birth = 1
+
+            # How to make this happen maximum once per year
+
+
+
+        @classmethod
+        def birth_weightloss(cls, birthweight, zeta, w):
+            self.w -= zeta*birthweight
+
+        @classmethod
+        def death(cls, w, phi, omega):
+            if w == 0:
+                p_death = 1
+            else:
+                p_death = omega * (1-phi)
+
+
+
+
+
 
 
 
