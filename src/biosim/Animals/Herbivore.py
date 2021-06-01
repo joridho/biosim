@@ -29,6 +29,8 @@ class herbivore():
         self.F = 10.0
         #self.DeltaPhiMax =
 
+
+
         @classmethod
         def age(cls, a_init, year):
             self.a = a_init
@@ -60,7 +62,7 @@ class herbivore():
             if 0 <= phi <= 1:
                 True
             else:
-                return ('Error')
+                return False
 
         @classmethod
         def birth_probability(cls, gamma, phi, N, omega, zeta, w_birth, sigma_birth):
