@@ -8,6 +8,7 @@ __author__ = 'Christianie Torres'
 __email__ = 'christianie.torres@nmbu.no'
 
 import random
+import math
 
 class herbivore():
     def __init__(self):
@@ -49,6 +50,30 @@ class herbivore():
         def weightgain(cls, weight, F, beta):
             self.weight += beta*F
             # Mkae this happen each time they eat
+
+        @classmethod
+        def fitness(cls, a, a_half, phi_age, omega, w_half, phi_weight):
+            if omega <= 0:
+                phi = 0
+            else:
+                phi = 1/(1+math.exp(phi_age(a-a_half)))*1/(1+math.exp(-phi_weight(omega-w_half)))
+
+            if 0 <= phi <= 1:
+                True
+
+            else:
+                return ('Error')
+
+
+
+        @classmethod
+        def birth(cls, gamma, phi, N, omega, zeta, w_birth, sigma_birth):
+            variabel = gamma * phi * (N-1)
+
+
+
+
+
 
 
 
