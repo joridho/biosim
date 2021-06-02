@@ -10,28 +10,11 @@ __email__ = 'christianie.torres@nmbu.no', 'jorid.holmen@nmbu.no'
 import random
 import math
 
-halla
 
-class herbivore:
-    """
-        def __init__(self):
-            self.a_init = 0
-            self.w_birth = 8.0
-            self.sigma_birth = 1.5
-            self.beta = 0.9
-            self.eta = 0.05
-            self.a_half = 40.0
-            self.phi_age = 0.6
-            self.w_half = 10.0
-            self.phi_weight = 0.1
-            self.mu = 0.25
-            self.gamma = 0.2
-            self.zeta = 3.5
-            self.xi = 1.2
-            self.omega = 0.4
-            self.F = 10.0
-            self.DeltaPhiMax = None
-        """
+class Herbivore:
+    '''
+    This is a class for herbivores on the island
+    '''
 
     p = {  # Dictionary of parameters belonging to the Herbivore class
         "w_birth": 8.0,
