@@ -69,26 +69,29 @@ class herbivore():
 
         @classmethod
         def fitness(cls, a, a_half, phi_age, w, w_half, phi_weight):
+            q_plus = 1/(1+math.exp(phi_age(a-a_half)))
+            q_minus = 1/(1+math.exp(-phi_weight(w-w_half)))
+
             if w <= 0:
                 phi = 0
             else:
-                phi = 1/(1+math.exp(phi_age(a-a_half)))*1/(1+math.exp(-phi_weight(w-w_half)))
+                phi = q_plus * q_minus
 
-            if 0 <= phi <= 1:
-                True
-            else:
+            if 0>= phi or phi >= 1:
                 return False
 
         @classmethod
-        def birth_probability(cls, gamma, phi, N, omega, zeta, w_birth, sigma_birth):
+        def birth_probability(cls, gamma, phi, N, omega, zeta, w_birth, sigma_birth, birthweight):
             variabel = gamma * phi * (N-1)
 
             if variabel < 1:
-                p_birth = variabel
+                prob_birth = variabel
             elif omega  < zeta * (w_birth + sigma_birth):
-                p_birth = 0
+                prob_birth = 0
+            elif self.weight <= birthweight:
+                prob_birth = 0
             else:
-                p_birth = 1
+                prob_birth = 1
 
             # How to make this happen maximum once per year
 
@@ -99,9 +102,12 @@ class herbivore():
         @classmethod
         def death(cls, w, phi, omega):
             if w == 0:
-                p_death = 1
+                prob_death = 1
             else:
-                p_death = omega * (1-phi)
+                prob_death = omega * (1-phi)
+
+        # def eat(self):
+            #bruke litt if osv
 
 
 
