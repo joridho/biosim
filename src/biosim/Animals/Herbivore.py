@@ -61,46 +61,57 @@ class herbivore():
             # min_w = w_birth - sigma_birth
             # max_w = w_birth + sigma_birth
             # birthweight = random.randint(min_w, max_w)
-            birthweight = random.gauss(self.p['w_birth'], self.p['sigma_birth'])
+            self.birth_weight = random.gauss(self.p['w_birth'], self.p['sigma_birth'])
 
-        @classmethod
-        def weightloss(cls, w, year, eta):
-            # self.w = w  # Need to find weight
-            w -= eta*w
-            # Make this happen each year
+        def weight_loss(self):
+            '''
+            The animal loses weight each year
+            '''
+            self.weight -= self.p['eta'] * self.weight
 
-        @classmethod
-        def weightgain(cls, w, F, beta):
-            self.w += beta*F
-            # Make this happen each time they eat
+        def weight_gain(self):
+            '''
+            The animal gains weight everytime they eat
+            '''
+            self.weight += self.p['beta'] * self.p['F']
 
-        @classmethod
-        def fitness(cls, a, a_half, phi_age, w, w_half, phi_weight):
-            q_plus = 1/(1+math.exp(phi_age(a-a_half)))
-            q_minus = 1/(1+math.exp(-phi_weight(w-w_half)))
+        def fitness(self):
+            '''
+            The animal has a certain fitness. This function calculates the fitness for one animal,
+            but does not update continously
+            '''
+            q_plus = 1/(1+math.exp(self.p['phi_age'] * (self.a - self.p['a_half'])))
+            q_minus = 1/(1+math.exp(-self.p['phi_weight'] * (self.weight - self.p['w_half'])))
 
-            if w <= 0:
-                phi = 0
+            if self.weight <= 0:
+                self.phi = 0
             else:
-                phi = q_plus * q_minus
+                self.phi = q_plus * q_minus
 
-            if 0>= phi or phi >= 1:
+            if 0>= self.phi or self.phi >= 1:
                 return False
 
-        @classmethod
-        def birth_probability(cls, gamma, phi, N, omega, zeta, w_birth, sigma_birth, birthweight):
-            variabel = gamma * phi * (N-1)
+        def birth_probability(self):
+            '''
+            Animals can mate if there are two or more animals of the same species in the same cell.
+            The animals can give birth with a probability, which depends on fitness and weight.
+            If the newborn weighs more than the mother, the probability of birth is zero.
+            '''
+            variabel = self.p['gamma'] * self.phi * (N - 1)
 
             if variabel < 1:
                 prob_birth = variabel
-            elif omega  < zeta * (w_birth + sigma_birth):
+            elif self.p['omega']  < self.p['zeta'] * (self.p['w_birth'] + self.p['sigma_birth']):
                 prob_birth = 0
-            elif self.weight <= birthweight:
+            elif self.weight <= birth_weight: # birth weight til nytt barn?
+                prob_birth = 0
+            elif N < 2:
                 prob_birth = 0
             else:
                 prob_birth = 1
 
-            # How to make this happen maximum once per year
+            if random.random() < prob_birth:
+                return True
 
         @classmethod
         def birth_weightloss(cls, birthweight, zeta, w):
