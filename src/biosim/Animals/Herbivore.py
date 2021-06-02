@@ -11,7 +11,8 @@ import random
 import math
 
 class herbivore():
-    def __init__(self):
+   '''
+   def __init__(self):
         self.a_init = 0
         self.w_birth = 8.0
         self.sigma_birth = 1.5
@@ -28,6 +29,7 @@ class herbivore():
         self.omega = 0.4
         self.F = 10.0
         self.DeltaPhiMax = None
+'''
 
         p = {  # Dictionary of parameters belonging to the Herbivore class
             "w_birth": 8.0,
