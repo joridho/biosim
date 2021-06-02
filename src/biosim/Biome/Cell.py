@@ -4,6 +4,9 @@ __author__ = 'Jorid Holmen'
 __email__ = 'jorid.holmen@nmbu.no'
 
 class Cell:
+    '''
+    Class for cells
+    '''
 
 
 
