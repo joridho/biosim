@@ -29,44 +29,44 @@ class herbivore():
         self.omega = 0.4
         self.F = 10.0
         self.DeltaPhiMax = None
-'''
+    '''
 
-        p = {  # Dictionary of parameters belonging to the Herbivore class
-            "w_birth": 8.0,
-            "sigma_birth": 1.5,
-            "beta": 0.9,
-            "eta": 0.05,
-            "a_half": 40.0,
-            "phi_age": 0.6,
-            "w_half": 10.0,
-            "phi_weight": 0.1,
-            "mu": 0.25,
-            "gamma": 0.2,
-            "zeta": 3.5,
-            "xi": 1.2,
-            "omega": 0.4,
-            "F": 10.0,
-        } # har ikke inkludert a.init og deltaphimax
+    p = {  # Dictionary of parameters belonging to the Herbivore class
+        "w_birth": 8.0,
+        "sigma_birth": 1.5,
+        "beta": 0.9,
+        "eta": 0.05,
+        "a_half": 40.0,
+        "phi_age": 0.6,
+        "w_half": 10.0,
+        "phi_weight": 0.1,
+        "mu": 0.25,
+        "gamma": 0.2,
+        "zeta": 3.5,
+        "xi": 1.2,
+        "omega": 0.4,
+        "F": 10.0,
+    } # har ikke inkludert a.init og deltaphimax
 
-        def aging(self)
-        ''' 
-         A function for aging the animal 
-        '''
+        def aging(self):
+            '''
+             A function for aging the animal
+            '''
             self.a += 1
 
-        def birthweight(self, sigma_birth, w_birth):
+        def birth_weight(self):
             '''
-
+            Sets value of birth weight from a gaussian distribution
             '''
             # min_w = w_birth - sigma_birth
             # max_w = w_birth + sigma_birth
             # birthweight = random.randint(min_w, max_w)
-            birthweight = random.gauss(w_birth, sigma_birth)
+            birthweight = random.gauss(self.p['w_birth'], self.p['sigma_birth'])
 
         @classmethod
         def weightloss(cls, w, year, eta):
             # self.w = w  # Need to find weight
-            self.w -= eta*w
+            w -= eta*w
             # Make this happen each year
 
         @classmethod
@@ -117,7 +117,7 @@ class herbivore():
             #super().__init__(weight, age)
 
         # def eat(self):
-            #bruke litt if osv
+            # bruke litt if osv
 
 
 
