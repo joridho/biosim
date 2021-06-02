@@ -11,8 +11,8 @@ import random
 import math
 
 class herbivore():
-       '''
-       def __init__(self):
+        '''
+        def __init__(self):
             self.a_init = 0
             self.w_birth = 8.0
             self.sigma_birth = 1.5
@@ -134,11 +134,39 @@ class herbivore():
             if random.random() < prob_death:
                return True
 
-        # def __init__(self, weight=None, age=0):
-            #super().__init__(weight, age)
+        # def migration(self):
 
-        # def eat(self):
-            #bruke litt if osv
+        def __init__(self, weight=None, age=0):
+            '''
+
+            '''
+            super().__init__(weight, age)
+
+        def eat_fodder(self):
+            '''
+            Herbivores tries to eat a certain amount in a year. However, how much the animal
+            actually consumes depends on how much fodder is available in the cell.
+
+            After it
+
+            F_cell: how much food in the cell
+            F: how much the herbivore wants to eat in a year (appetite)
+            F_consumption: how much the herbivore actually eats
+
+            after the consumption the herbivore gains weight
+            '''
+
+            if F_cell >= self.p['F']: # Hvordan skal vi kalle på F_cell
+                F_cell -= self.p['F']
+                herbivore.weight_gain()
+            else:
+                F_consumption = F_cell
+                F_cell = 0
+                self.weight += self.p['beta'] * F_consumption  # kunne kanskje brukt funskjonen til dette
+
+
+
+
 
 
 
