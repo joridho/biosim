@@ -10,8 +10,6 @@ __email__ = 'christianie.torres@nmbu.no', 'jorid.holmen@nmbu.no'
 import random
 import math
 
-halla
-
 class herbivore:
     """
         def __init__(self):
