@@ -48,15 +48,20 @@ class herbivore():
             "F": 10.0,
         } # har ikke inkludert a.init og deltaphimax
 
-        @classmethod
-        def age(cls, a_init, year):
-            self.a = a_init
-            self.a += year
+        def aging(self)
+        ''' 
+         A function for aging the animal 
+        '''
+            self.a += 1
 
         def birthweight(self, sigma_birth, w_birth):
-            min_w = w_birth - sigma_birth
-            max_w = w_birth + sigma_birth
-            birthweight = random.randint(min_w, max_w)
+            '''
+
+            '''
+            # min_w = w_birth - sigma_birth
+            # max_w = w_birth + sigma_birth
+            # birthweight = random.randint(min_w, max_w)
+            birthweight = random.gauss(w_birth, sigma_birth)
 
         @classmethod
         def weightloss(cls, w, year, eta):
@@ -108,10 +113,11 @@ class herbivore():
             else:
                 prob_death = omega * (1-phi)
 
+        # def __init__(self, weight=None, age=0):
+            #super().__init__(weight, age)
+
         # def eat(self):
             #bruke litt if osv
-
-
 
 
 
