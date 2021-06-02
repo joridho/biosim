@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-__author__ = 'Jorid Holmen'
-__email__ = 'jorid.holmen@nmbu.no'
+__author__ = 'Jorid Holmen', 'Christianie Torres'
+__email__ = 'jorid.holmen@nmbu.no', 'christianie.torres@nmbu.no'
 
 class Cell:
     '''
@@ -24,6 +24,10 @@ class Lowland(Cell):
     '''
     subclass for lowlandcells
     '''
+
+
+
+
 
 
 
