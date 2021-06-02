@@ -120,6 +120,8 @@ class herbivore:
 
     # def migration(self):
 
+    # special case for herbivores:
+
     def __init__(self, weight=None, age=0):
         """
 
