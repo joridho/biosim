@@ -11,42 +11,44 @@ import random
 import math
 
 class herbivore():
-   '''
-   def __init__(self):
-        self.a_init = 0
-        self.w_birth = 8.0
-        self.sigma_birth = 1.5
-        self.beta = 0.9
-        self.eta = 0.05
-        self.a_half = 40.0
-        self.phi_age = 0.6
-        self.w_half = 10.0
-        self.phi_weight = 0.1
-        self.mu = 0.25
-        self.gamma = 0.2
-        self.zeta = 3.5
-        self.xi = 1.2
-        self.omega = 0.4
-        self.F = 10.0
-        self.DeltaPhiMax = None
-    '''
+       '''
+       def __init__(self):
+            self.a_init = 0
+            self.w_birth = 8.0
+            self.sigma_birth = 1.5
+            self.beta = 0.9
+            self.eta = 0.05
+            self.a_half = 40.0
+            self.phi_age = 0.6
+            self.w_half = 10.0
+            self.phi_weight = 0.1
+            self.mu = 0.25
+            self.gamma = 0.2
+            self.zeta = 3.5
+            self.xi = 1.2
+            self.omega = 0.4
+            self.F = 10.0
+            self.DeltaPhiMax = None
+        '''
 
-    p = {  # Dictionary of parameters belonging to the Herbivore class
-        "w_birth": 8.0,
-        "sigma_birth": 1.5,
-        "beta": 0.9,
-        "eta": 0.05,
-        "a_half": 40.0,
-        "phi_age": 0.6,
-        "w_half": 10.0,
-        "phi_weight": 0.1,
-        "mu": 0.25,
-        "gamma": 0.2,
-        "zeta": 3.5,
-        "xi": 1.2,
-        "omega": 0.4,
-        "F": 10.0,
-    } # har ikke inkludert a.init og deltaphimax
+        p = {  # Dictionary of parameters belonging to the Herbivore class
+            "w_birth": 8.0,
+            "sigma_birth": 1.5,
+            "beta": 0.9,
+            "eta": 0.05,
+            "a_half": 40.0,
+            "phi_age": 0.6,
+            "w_half": 10.0,
+            "phi_weight": 0.1,
+            "mu": 0.25,
+            "gamma": 0.2,
+            "zeta": 3.5,
+            "xi": 1.2,
+            "omega": 0.4,
+            "F": 10.0,
+        } # har ikke inkludert a.init og deltaphimax
+
+        random.seed(1)
 
         def aging(self):
             '''
@@ -97,7 +99,8 @@ class herbivore():
             The animals can give birth with a probability, which depends on fitness and weight.
             If the newborn weighs more than the mother, the probability of birth is zero.
             '''
-            variabel = self.p['gamma'] * self.phi * (N - 1)
+            variabel = self.p['gamma'] * self.phi * (N - 1) # hvordan få tak i N
+            birth_weight = self.birth_weight # this is the weight of the possible newborn
 
             if variabel < 1:
                 prob_birth = variabel
@@ -113,22 +116,29 @@ class herbivore():
             if random.random() < prob_birth:
                 return True
 
-        @classmethod
-        def birth_weightloss(cls, birthweight, zeta, w):
-            self.w -= zeta*birthweight
+        def birth_weightloss(self, birth_weight):
+            '''
+            If the mother gives birth, she looses weight
+            '''
+            self.weight -= self.p['zeta'] * birth_weight
 
-        @classmethod
-        def death(cls, w, phi, omega):
-            if w == 0:
+        def death_probality(self):
+            '''
+            The animal dies if it weighs nothing, but also with a probability of prob_death
+            '''
+            if self.weight == 0:
                 prob_death = 1
             else:
-                prob_death = omega * (1-phi)
+                prob_death = self.p['omega'] * (1 - self.phi)
+
+            if random.random() < prob_death:
+               return True
 
         # def __init__(self, weight=None, age=0):
             #super().__init__(weight, age)
 
         # def eat(self):
-            # bruke litt if osv
+            #bruke litt if osv
 
 
 
