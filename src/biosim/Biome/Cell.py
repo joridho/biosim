@@ -8,6 +8,24 @@ class Cell:
     Class for cells
     '''
 
+    p = {'f_max' = 800.0}
+
+    def
+
+
+
+
+
+
+
+
+
+class Lowland(Cell):
+    '''
+    subclass for lowlandcells
+    '''
+
+
 
 
 
