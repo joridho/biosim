@@ -5,7 +5,7 @@ __author__ = 'Jorid Holmen', 'Christianie Torres'
 __email__ = 'jorid.holmen@nmbu.no', 'christianie.torres@nmbu.no'
 
 import random
-
+from biosim.Animals import herbivores
 
 class Cell:
     """
