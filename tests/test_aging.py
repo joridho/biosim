@@ -50,7 +50,7 @@ def test_herbivore_birth_weight():
 def test_herbivore_weight_loss():
     h = herbivore(weight=10, a =2)
     eta = h.p['eta']
-    h.weight = h.weight_loss()
+    h.weight_loss()
     assert h.weight == 10 - 10*eta
 
 
