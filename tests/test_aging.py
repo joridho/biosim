@@ -30,11 +30,22 @@ def test_herbivore_aging():
         h.aging()
         assert h.a == n + 1
 
-def test_herbivore_death(mocker):
-    mocker.patch('random.random', return_values=1)
+def test_herbivore_birth_weight():
     h = herbivore()
-    for _ in range(100):
-        assert h.death_probability() == True
+    w_birth = h.p['w_birth']
+    sigma_birth = h.p['sigma_birth']
+    min_weight = w_birth - sigma_birth * 3
+    max_weight = w_birth + sigma_birth * 3
+    w = gauss(w_birth, sigma_birth)
+    h.birth_weight()
+    assert h.birth_weight in w
+
+
+#def test_herbivore_death(mocker):
+    #mocker.patch('random.random', return_values=1)
+    #h = herbivore()
+    #for _ in range(100):
+        #assert h.death_probability() == True
 
 
 
