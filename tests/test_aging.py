@@ -6,6 +6,10 @@
 __author__ = 'Christianie Torres'
 __email__ = 'christianie.torres@nmbu.no'
 
-import pip
+from biosim.animals import herbivore
 
-pip install tox
+def test_aging():
+    h = herbivore()
+    assert h.age == 0
+
+def test_
