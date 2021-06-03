@@ -13,13 +13,20 @@ import random
 import pytest
 import scipy.stats as stats
 
-def test_herbivore_created():
+def test_herbivore_age():
     """
-    A test that checks that a herbivore has been created
+    A test that checks that a herbivore has been created with age 0
     """
-
     h = herbivore()
     assert h.a == 0
+
+def test_herbivore_weight():
+    '''
+        test to check if the herbivore has been given a weight
+        '''
+    h = herbivore()
+    b = h.birth_weight
+    assert h.weight == b
 
 def test_herbivore_aging():
     """
@@ -37,11 +44,11 @@ def test_herbivore_birth_weight():
 
 def test_herbivore_weight_loss():
     # tror koden er feil,
-    #h = herbivore(weight=10, a =2)
+    h = herbivore(weight=10, a =2)
     #eta = h.p['eta']
     #h.weight_loss()
     # assert h.weight == 10 - 10*eta
-    assert 1 == 1
+    assert h.weight == 10
 
 def test_herbivore_weight_gain():
     '''
