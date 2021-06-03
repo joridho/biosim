@@ -57,3 +57,5 @@ html_static_path = ['_static']
 
 
 # -- Extension configuration -------------------------------------------------
+
+latex_elements = {'papersize': 'a4paper'}
