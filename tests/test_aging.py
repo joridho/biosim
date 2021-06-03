@@ -38,11 +38,23 @@ def test_herbivore_birth_weight():
 
 
 
+    """
+    
+    """
 #def test_herbivore_death(mocker):
     #mocker.patch('random.random', return_values=1)
     #h = herbivore()
     #for _ in range(100):
         #assert h.death_probability() == True
+
+def test_herbivore_weight_loss():
+    h = herbivore(weight=10, a =2)
+    eta = h.p['eta']
+    h.weight = h.weight_loss()
+    assert h.weight == 10 - 10*eta
+
+
+
 
 
 
