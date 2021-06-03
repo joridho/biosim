@@ -47,6 +47,7 @@ class animal:
 
         #self.birth_weight = self.birth_weight()
 
+
     @property
     def weight(self):
         """Getter method for Animal._weight
@@ -79,7 +80,7 @@ class animal:
         """
             The animal loses weight each year
             """
-        weight_minus = float(self.p['eta']) * self.weight # self.weight er method. det går ikke
+        weight_minus = self.p['eta'] * self.weight # self.weight er method. det går ikke
         self.weight -= weight_minus
 
     def weight_gain(self):
