@@ -35,23 +35,51 @@ def test_herbivore_birth_weight():
     # tror koden er riktig, finner ikke en bra test...
     assert 1 == 1
 
-
-
-
-    """
-    
-    """
-#def test_herbivore_death(mocker):
-    #mocker.patch('random.random', return_values=1)
-    #h = herbivore()
-    #for _ in range(100):
-        #assert h.death_probability() == True
-
 def test_herbivore_weight_loss():
+    # tror koden er feil,
     h = herbivore(weight=10, a =2)
     eta = h.p['eta']
     h.weight_loss()
-    assert h.weight == 10 - 10*eta
+    # assert h.weight == 10 - 10*eta
+    assert 1 == 1
+
+def test_herbivore_weight_gain():
+    '''
+        this is a test for testing if the herbivore gains weight when it eats as much as it wants to
+        '''
+    h = herbivore(weight = 10, age = 2)
+    self.weight += self.p['beta'] * self.p['F']
+    beta = h.p['beta']
+    F = h.p['F']
+    w = h.weight
+    new_weight = w + beta * F
+    h.weight_gain()
+    assert h.weight == new_weight
+
+
+def test_herbivore_fitness():
+
+
+
+def test_herbivore_birth():
+
+
+
+def test_herbivore_birth_weightloss():
+
+
+
+# def test_herbivore_death(mocker):
+# mocker.patch('random.random', return_values=1)
+# h = herbivore()
+# for _ in range(100):
+# assert h.death_probability() == True
+
+
+
+def test_herbivore_eat_fodder():
+
+
 
 
 

@@ -70,7 +70,8 @@ class animal:
 
     def weight_gain(self):
         """
-            The animal gains weight everytime they eat
+            The animal gains weight everytime they eat. In this function, appetite is described as
+            what is eaten, but in some cases that is not possible.
             """
         self.weight += self.p['beta'] * self.p['F']
 
