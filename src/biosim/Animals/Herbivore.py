@@ -13,8 +13,10 @@ import math
 
 class animal:
     """
-    This i a class for herbivores on the island
+    This i a class for animals on the island
     """
+
+    random.seed(1)
 
     p = {  # Dictionary of parameters belonging to the Herbivore class
         "w_birth": 8.0,
@@ -33,8 +35,6 @@ class animal:
         "F": 10.0,
     }
 
-    random.seed(1)
-
     def __init__(self, weight, a):
         self.a = a
 
@@ -49,8 +49,8 @@ class animal:
 
     def aging(self):
         """
-        A function for aging the animal
-        """
+            A function for aging the animal
+            """
         self.a += 1
 
     def birth_weight(self):
@@ -135,6 +135,9 @@ class animal:
 
 
 class herbivore(animal):
+    """
+    this is a class for herbivpres on the island
+    """
 
     def __init__(self, weight=None, a=0):
         """
