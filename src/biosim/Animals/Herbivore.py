@@ -10,10 +10,11 @@ __email__ = 'christianie.torres@nmbu.no', 'jorid.holmen@nmbu.no'
 import random
 import math
 
+
 class herbivore:
-    '''
+    """
     This i a class for herbivores on the island
-    '''
+    """
 
     p = {  # Dictionary of parameters belonging to the Herbivore class
         "w_birth": 8.0,
@@ -33,6 +34,18 @@ class herbivore:
     }
 
     random.seed(1)
+
+    def __init__(self, weight, a):
+        self.a = a
+
+        if weight is None:
+            self.weight = self.birth_weight
+        else:
+            self._weight = float(weight)
+
+        self.phi = self.fitness()
+
+        self.birth_weight = self.birth_weight()
 
     def aging(self):
         """
@@ -122,11 +135,11 @@ class herbivore:
 
     # special case for herbivores:
 
-    def __init__(self, weight=None, age=0):
+    def __init__(self, weight=None, a=0):
         """
 
             """
-        super().__init__(weight, age)
+        super().__init__(weight, a)
 
     def eat_fodder(self):
         """
@@ -144,7 +157,7 @@ class herbivore:
 
         if F_cell >= self.p['F']:  # Hvordan skal vi kalle på F_cell
             F_cell -= self.p['F']
-            herbivore.weight_gain()
+            self.weight_gain()
         else:
             F_consumption = F_cell
             F_cell = 0
