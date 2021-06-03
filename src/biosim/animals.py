@@ -43,9 +43,9 @@ class animal:
         else:
             self._weight = float(weight)
 
-        self.phi = self.fitness()
+        #self.phi = self.fitness()
 
-        self.birth_weight = self.birth_weight()
+        #self.birth_weight = self.birth_weight()
 
     def aging(self):
         """
