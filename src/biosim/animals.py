@@ -119,7 +119,7 @@ class animal:
             """
         self.weight -= self.p['zeta'] * birth_weight
 
-    def death_probality(self):
+    def death_probability(self):
         """
             The animal dies if it weighs nothing, but also with a probability of prob_death
             """

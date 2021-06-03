@@ -30,5 +30,15 @@ def test_herbivore_aging():
         h.aging()
         assert h.a == n + 1
 
+def test_herbivore_death(mocker):
+    mocker.patch('random.random', return_values=1)
+    h = herbivore()
+    for _ in range(100):
+        assert h.death_probability() == True
+
+
+
+
+
 
 
