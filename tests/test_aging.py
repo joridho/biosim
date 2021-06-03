@@ -44,21 +44,21 @@ def test_herbivore_birth_weight():
 
 def test_herbivore_weight_loss():
     # tror koden er feil,
-    h = herbivore(weight=10, a =2)
-    #eta = h.p['eta']
-    #h.weight_loss()
-    # assert h.weight == 10 - 10*eta
-    assert h.weight == 10
+    h = herbivore()
+    current_weight = h.weight
+    eta = h.p['eta']
+    h.weight_loss()
+    assert h.weight == current_weight - current_weight * eta
 
 def test_herbivore_weight_gain():
     '''
         this is a test for testing if the herbivore gains weight when it eats as much as it wants to
         '''
-    h = herbivore(weight = 10, a = 2)
+    h = herbivore()
+    current_weight = h.weight
     beta = h.p['beta']
     F = h.p['F']
-    w = h.weight
-    new_weight = w + beta * F
+    new_weight = current_weight + beta * F
     h.weight_gain()
     assert h.weight == new_weight
 

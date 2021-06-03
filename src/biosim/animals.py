@@ -47,6 +47,19 @@ class animal:
 
         #self.birth_weight = self.birth_weight()
 
+    @property
+    def weight(self):
+        """Getter method for Animal._weight
+        :return: Weight of animal
+        :r_type: float
+        """
+        return self._weight
+
+    @weight.setter
+    def weight(self, weight):
+        """Setter method for Animal._weight"""
+        self._weight = weight
+
     def aging(self):
         """
             A function for aging the animal
@@ -66,14 +79,16 @@ class animal:
         """
             The animal loses weight each year
             """
-        self.weight -= self.p['eta'] * self.weight
+        weight_minus = float(self.p['eta']) * self.weight # self.weight er method. det går ikke
+        self.weight -= weight_minus
 
     def weight_gain(self):
         """
             The animal gains weight everytime they eat. In this function, appetite is described as
             what is eaten, but in some cases that is not possible.
             """
-        self.weight += self.p['beta'] * self.p['F']
+        weight_plus = self.p['beta'] * self.p['F']
+        self.weight += weight_plus
 
     def fitness(self):
         """
