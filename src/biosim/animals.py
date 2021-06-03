@@ -41,9 +41,10 @@ class animal:
         if weight is None:
             self.weight = self.birth_weight
         else:
-            self._weight = float(weight)
+            self._weight = float(weight) # litt usikker på om vi skal ha denne
 
         # self.phi = self.fitness()
+        # self.phi = None
 
         # self.birth_weight = self.birth_weight()
 
@@ -93,6 +94,8 @@ class animal:
 
         if 0 >= self.phi or self.phi >= 1:
             return False
+        else:
+            return self.phi
 
     def birth_probability(self):
         """

@@ -53,7 +53,7 @@ def test_herbivore_weight_gain():
         this is a test for testing if the herbivore gains weight when it eats as much as it wants to
         '''
     h = herbivore()
-    current_weight = h.weight()
+    current_weight = h.weight
     beta = h.p['beta']
     F = h.p['F']
     new_weight = current_weight + beta * F
@@ -73,11 +73,11 @@ def test_herbivore_weight_gain():
 
 
 
-# def test_herbivore_death(mocker):
-# mocker.patch('random.random', return_values=1)
-# h = herbivore()
-# for _ in range(100):
-# assert h.death_probability() == True
+def test_herbivore_death(mocker):
+    mocker.patch('random.random', return_values=1)
+    h = herbivore()
+    for _ in range(100):
+        assert h.death_probability() == True
 
 
 
