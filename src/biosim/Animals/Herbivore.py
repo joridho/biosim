@@ -11,7 +11,7 @@ import random
 import math
 
 
-class herbivore:
+class animal:
     """
     This i a class for herbivores on the island
     """
@@ -133,11 +133,12 @@ class herbivore:
 
     # def migration(self):
 
-    # special case for herbivores:
+
+class herbivore(animal):
 
     def __init__(self, weight=None, a=0):
         """
-
+        initialisation of weight and age for a new herbivore
             """
         super().__init__(weight, a)
 
