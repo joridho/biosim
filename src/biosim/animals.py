@@ -66,8 +66,7 @@ class animal:
         """
             The animal loses weight each year
             """
-        current_weight = self.weight
-        self.weight -= self.p['eta'] * current_weight
+        self.weight -= self.p['eta'] * self.weight
 
     def weight_gain(self):
         """
