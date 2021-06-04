@@ -120,18 +120,18 @@ class cell:
         for k in range(len(self.herbivores_pop)):
             self.herbivores_pop[k].weight_loss()
 
-    def remove_animals(self):
-        """
-            When an animal dies, either natural causes or eaten, it needs to be taken of the
-            list of animals.
-            Animal also needs to be taken of the list when migrating
-            """
-
     def dead_animals_natural_cause(self):
         """
             Each year some animals will die of natural causes. We check if the animal dies or not
             by using the function death_probability. After we need to remove them from the from the
             list of animals
+            """
+
+    def remove_animals(self):
+        """
+            When an animal dies, either natural causes or eaten, it needs to be taken of the
+            list of animals.
+            Animal also needs to be taken of the list when migrating
             """
 
 
