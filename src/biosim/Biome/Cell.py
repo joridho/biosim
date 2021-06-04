@@ -19,6 +19,7 @@ class Cell:
 
     def __init__(self):
         self._F = self.p['f_max']
+        self._accessible = True
         self.herbivores_pop = []
 
     def adding_animals(self):
@@ -32,6 +33,7 @@ class Cell:
             Herbivores are sorted weakest to fittest, since the weakest are eaten first
             Carnivores are sorted fittest to weakest, since the fittest eats first
             """
+        # do we need property here?
 
     def available_fodder(self):
         """
@@ -42,6 +44,7 @@ class Cell:
         """
             The animals eats available fodder until their appetite is filled.
             The eat_fodder-function from the Herbivore class does this.
+            Herbivores eat in a random order, and therefore need to be randomised
             """
 
     def newborn_animals(self):
@@ -55,8 +58,10 @@ class Cell:
     def counting_animals(self):
         """
             A function for counting how many animals there are in the cell.
-            We need to differentiate between the different animals.
+            We also need to differentiate between the different animals and provide to
+            variables for this
             """
+        # do we need to use property here?
 
     # yearly activities:
 
@@ -75,10 +80,11 @@ class Cell:
             Each year the animal loses weight based on their own weight and eta
             """
 
-    def remove_dead_animals(self):
+    def remove_animals(self):
         """
             When an animal dies, either natural causes or eaten, it needs to be taken of the
             list of animals.
+            Animal also needs to be taken of the list when migrating
             """
 
     def dead_animals_natural_cause(self):
