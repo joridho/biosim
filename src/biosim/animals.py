@@ -39,9 +39,10 @@ class animal:
         self.a = a
 
         if weight is None:
+            self.birth_weight_function()
             self.weight = self.birth_weight
         else:
-            self._weight = float(weight)  # unsure about float
+            self.weight = float(weight)  # unsure about float
 
         # self.phi = self.fitness()
         self.phi = None
@@ -54,7 +55,7 @@ class animal:
             """
         self.a += 1
 
-    def birth_weight(self):
+    def birth_weight_function(self):
         """
             Sets value of birth weight from a gaussian distribution
             """
