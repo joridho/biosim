@@ -120,4 +120,4 @@ def test_yearly_weight_loss():
         liste.append(c.herbivores_pop[ani].weight)
     c.make_animals_lose_weight()
     for k in range(len(c.herbivores_pop)):
-        assert c.herbivores_pop[k].weight == liste[k] - h.p['eta'] * c.herbivores_pop[k].weight
+        assert c.herbivores_pop[k].weight == liste[k] - h.p['eta'] * liste[k]
