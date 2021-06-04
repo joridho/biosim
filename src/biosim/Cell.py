@@ -56,7 +56,7 @@ class cell:
             self.herb = random.choice(self.herbivores_pop)
             self.herb.eat_fodder(F_cell=self.available_fodder)
             self.available_fodder = self.herb.F_cell
-            # self.herbivores_pop.remove(self.herb)
+            self.herbivores_pop.remove(self.herb)
 
     def newborn_animals(self):
         """
@@ -96,6 +96,7 @@ class cell:
             """
         for k in range(len(self.herbivores_pop)):
             herbivore.p['F'] = 10.0
+            self.herbivores_pop[k].p['F'] = 10.0
 
     def reset_given_birth(self):
         """
@@ -109,7 +110,8 @@ class cell:
             Each year the animals ages. Here we use the aging function from the herbivore class
             """
         for k in range(len(self.herbivores_pop)):
-            herbivore.p['F'] = 10.0
+            self.herbivores_pop[k].aging()
+
 
     def make_animals_lose_weight(self):
         """
