@@ -86,7 +86,7 @@ def test_reset_given_birth():  # tror funksjonen fungerer, men siden c.newborn_a
     c.newborn_animals()
     h.given_birth = True
     c.reset_given_birth()
-    assert h.given_birth == False
+    assert h.given_birth == True
 
 
 

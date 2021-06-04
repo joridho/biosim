@@ -101,13 +101,15 @@ class cell:
         """
             An animal can only give birth once per year
             """
-        for ani in self.herbivores_pop:
-            ani.given_birth = False
+        for k in range(len(self.herbivores_pop)):
+            self.herbivores_pop[k].given_birth = False
 
     def make_animals_age(self):
         """
             Each year the animals ages. Here we use the aging function from the herbivore class
             """
+        for k in range(len(self.herbivores_pop)):
+            herbivore.p['F'] = 10.0
 
     def make_animals_lose_weight(self):
         """
