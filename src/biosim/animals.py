@@ -46,6 +46,7 @@ class animal:
 
         # self.phi = self.fitness()
         self.fitness()
+        self.given_birth = False
 
         # self.birth_weight = self.birth_weight()
 

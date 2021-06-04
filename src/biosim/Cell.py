@@ -54,9 +54,9 @@ class cell:
         self.available_fodder_function()
         while self.available_fodder >= 0:
             self.herb = random.choice(self.herbivores_pop)
-            self.herb.eat_fodder(F_cell=25)
+            self.herb.eat_fodder(F_cell=self.available_fodder)
             self.available_fodder = self.herb.F_cell
-            self.herbivores_pop.remove(self.herb)
+            # self.herbivores_pop.remove(self.herb)
 
     def newborn_animals(self):
         """
@@ -65,12 +65,13 @@ class cell:
             weight for the mother.
             The newborn must be added to the list of either herbivores or carnivores
             """
-        for animal in self.herbivores_pop:
-            if animal.given_birth == False:
+        for ani in self.herbivores_pop:
+            if ani.given_birth == False:
                 if herbivore.birth_probability == True:
-                    # add newborn to list
-                    animal.birth_weight_loss(N=self.N)
-                    animal.given_birth == True
+                    newborn = herbivore(weight=ani.newborn_birth_weight, a=0)
+                    self.herbivores_pop.append(newborn)
+                    ani.birth_weight_loss(N=self.N)
+                    ani.given_birth == True
 
     def counting_animals(self):
         """
@@ -93,18 +94,22 @@ class cell:
         """
             The appetite is filled every year
             """
+        for k in range(len(self.herbivores_pop)):
+            herbivore.p['F'] = 10.0
 
     def reset_given_birth(self):
         """
             An animal can only give birth once per year
             """
-        for animal in self.herbivores_pop:
-            animal.given_birth = False
+        for k in range(len(self.herbivores_pop)):
+            self.herbivores_pop[k].given_birth = False
 
     def make_animals_age(self):
         """
             Each year the animals ages. Here we use the aging function from the herbivore class
             """
+        for k in range(len(self.herbivores_pop)):
+            herbivore.p['F'] = 10.0
 
     def make_animals_lose_weight(self):
         """
