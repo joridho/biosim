@@ -52,10 +52,11 @@ class cell:
             Herbivores eat in a random order, and therefore need to be randomised
             """
         self.available_fodder_function()
+        h = herbivore()
         while self.available_fodder > 0:
             herb = random.choice(self.herbivores_pop)
             herb.eat_fodder(F_cell=self.available_fodder)
-            self.available_fodder = herb.F_cell
+            self.available_fodder = h.F_cell
 
 
     def newborn_animals(self):

@@ -115,6 +115,16 @@ def test_weight_gain_after_eating():
     h.eat_fodder(F_cell=8)
     assert h.weight == new_weight
 
+def test_update_appetite():
+    h = herbivore()
+    h.eat_fodder(F_cell=4)
+    assert h.p['F'] == 6
+
+def test_update_F_cell():
+    h = herbivore()
+    h.eat_fodder(F_cell=800)
+    assert h.F_cell == 800-10
+
 
 
 
