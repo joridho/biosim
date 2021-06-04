@@ -28,16 +28,12 @@ class cell:
             Use of the animal class to add animals to the cell.
             """
 
-    def sorting_animals(self): # do we need property here?
+    def sorting_animals(self):  # do we need property here?
         """
             A function for sorting the animals.
             Herbivores are sorted weakest to fittest, since the weakest are eaten first
             Carnivores are sorted fittest to weakest, since the fittest eats first
             """
-        #for k in self.herbivore_pop:
-            #if k.fitness_must_be_updated is true:
-                #herb.find_fitness()
-        #self.sorted_herbivores_pop = sorted(self.herbivores_pop, key=lambda x: x.fitness, reverse=True)
         self.sorted_herbivores_pop = sorted(self.herbivores_pop, key=operator.attrgetter('phi'))
 
     def available_fodder_function(self):
@@ -56,12 +52,10 @@ class cell:
 
             """
         self.available_fodder_function()
-        h = herbivore()
         while self.available_fodder > 0:
             herb = random.choice(self.herbivores_pop)
             herb.eat_fodder(F_cell=25)
             self.available_fodder = herb.F_cell
-
 
     def newborn_animals(self):
         """
@@ -74,7 +68,7 @@ class cell:
             if animal.given_birth == False:
                 if herbivore.birth_probability == True:
                     # add newborn to list
-                    animal.birth_weight_loss(self.N)
+                    animal.birth_weight_loss(N=self.N)
                     animal.given_birth == True
 
     def counting_animals(self):
@@ -84,6 +78,7 @@ class cell:
             variables for this
             """
         # do we need to use property here?
+        self.N = len(self.herbivores_pop)
 
     # yearly activities:
 
@@ -102,7 +97,7 @@ class cell:
         """
             An animal can only give birth once per year
             """
-        for animal in self.herbiovers_pop:
+        for animal in self.herbivores_pop:
             animal.given_birth = False
 
     def make_animals_age(self):
