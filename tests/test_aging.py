@@ -85,26 +85,32 @@ def test_no_newborn_when_to_few_animals():
     assert h.prob_birth == 0
 
 def test_no_newborn_if_newborn_too_fat():
-    h = herbivore(weight=4, a=3)
+    h = herbivore(weight=20, a=3)
     h.birth_probability(N=3)
     h.newborn_birth_weight = 5
     assert h.prob_birth == 0
 
+
+
+
+
+
 def test_birth():
-    #mocker.patch('random.random', return_values=1)
-    h = herbivore(weight=20, a=3)
+    h = herbivore(weight=35, a=3)
     for _ in range(100):
-        assert h.birth_probability(N=20) == True
+        assert h.birth_probability(N=4) == True
+
+
+
 
 def test_herbivore_birth_weight_loss():
     h = herbivore()
     w = h.weight
-    h.birth_weight_loss(N=3)
+    h.birth_weight_loss(N=40)
     assert h.weight == w - h.p['zeta'] * h.newborn_birth_weight
 
 def test_death():
-    #mocker.patch('random.random', return_values=1)
-    h = herbivore(weight=0)
+    h = herbivore(weight=10)
     for _ in range(100):
         assert h.death_probability() == True
 

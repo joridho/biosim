@@ -59,9 +59,6 @@ class animal:
         """
             Sets value of birth weight from a gaussian distribution
             """
-        # min_w = w_birth - sigma_birth
-        # max_w = w_birth + sigma_birth
-        # birth_weight = random.randint(min_w, max_w)
         self.birth_weight = random.gauss(self.p['w_birth'], self.p['sigma_birth'])
         return self.birth_weight
 
@@ -106,20 +103,20 @@ class animal:
             """
         variable = self.p['gamma'] * self.phi * (N - 1)
         self.newborn_birth_weight = self.birth_weight_function()
-                                                        # this is the weight of the possible newborn
+                                                          # this is the weight of the possible newborn
 
         if self.weight < self.p['zeta'] * (self.p['w_birth'] + self.p['sigma_birth']):
-            self.prob_birth = 0
+            prob_birth = 0
         elif self.weight <= self.newborn_birth_weight:  # birth weight to newborn
-            self.prob_birth = 0
+            prob_birth = 0
         elif N < 2:
-            self.prob_birth = 0
-        elif variable < 1:
-            self.prob_birth = variable
+            prob_birth = 0
+        elif self.variable < 1:
+            prob_birth = variable
         else:
-            self.prob_birth = 1
+            prob_birth = 1
 
-        if 0 < self.prob_birth:
+        if random.random() < prob_birth:
             return True
         else:
             return False
@@ -140,8 +137,10 @@ class animal:
         else:
             self.prob_death = self.p['omega'] * (1 - self.phi)
 
-        if 0 < self.prob_death:
+        if random.random() < self.prob_death:
             return True
+        else:
+            return self.prob_death
 
     # def migration(self):
 
