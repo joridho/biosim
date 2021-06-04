@@ -7,7 +7,7 @@ __email__ = 'jorid.holmen@nmbu.no', 'christianie.torres@nmbu.no'
 import random
 
 
-from biosim.animals import herbivores
+from biosim.animals import herbivore
 
 
 class cell:
@@ -37,7 +37,7 @@ class cell:
         #for k in self.herbivore_pop:
             #if k.fitness_must_be_updated is true:
                 #herb.find_fitness()
-        #self.sorted_herbivore_pop = sorted(self.herbivores_pop, key=lambda x: x.fitness, reverse=True)
+        self.sorted_herbivores_pop = sorted(self.herbivores_pop, key=lambda x: x.fitness, reverse=True)
 
     def available_fodder_function(self):
         """
@@ -51,6 +51,7 @@ class cell:
             The eat_fodder-function from the Herbivore class does this.
             Herbivores eat in a random order, and therefore need to be randomised
             """
+        self.available_fodder_function()
         while self.available_fodder > 0:
             herb = random.choice(self.herbivores_pop)
             herb.eat_fodder(F_cell=self.available_fodder)

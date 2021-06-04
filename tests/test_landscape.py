@@ -14,16 +14,18 @@ from biosim.Cell import cell
 
 def test_simple_sorting():
     c = cell()
-    c.herbivore_pop = [herbivore(weight=35,a=3), herbivore(weight=41,a=8),herbivore(weight=20,a=6)]
-    liste1 = c.herbivore_pop
+    c.herbivores_pop = [herbivore(weight=35,a=3), herbivore(weight=41,a=8),herbivore(weight=20,a=6)]
+    liste1 = c.herbivores_pop
     liste2 = [liste1[0].phi, liste1[1].phi, liste1[2].phi]
     liste2.sort()
     c.sorting_animals()
-    assert liste2 == c.sorted_herbivore_pop
+    assert liste2 == c.sorted_herbivores_pop
 
 def test_fodder_eaten():
     c = cell()
-    c.make_herviores_eat()
+    c.herbivores_pop = [herbivore(weight=35, a=3), herbivore(weight=41, a=8),
+                       herbivore(weight=20, a=6)]
+    c.make_herbivores_eat()
     assert c.available_fodder == 0
 
 
