@@ -109,13 +109,13 @@ def test_no_newborn_if_newborn_too_fat():
     h.newborn_birth_weight = 5
     assert h.prob_birth == 0
 
-"""
+
 
 def test_birth():
     h = herbivore(weight=35, a=3)
     for _ in range(100):
         assert h.birth_probability(N=4) == True
-"""
+
 
 def test_herbivore_birth_weight_loss():
     h = herbivore()
@@ -123,19 +123,19 @@ def test_herbivore_birth_weight_loss():
     h.birth_weight_loss(N=40)
     assert h.weight == w - h.p['zeta'] * h.newborn_birth_weight
 
-"""
+
 def test_death():
     h = herbivore(weight=10)
     for _ in range(100):
         assert h.death_probability() == True
-"""
+
 
 def test_herbivore_eat_fodder():
     h = herbivore()
     h.eat_fodder(F_cell = h.p['F'])
     assert h.F_cell == 0
 
-"""
+
 def test_weight_gain_after_eating():
     h = herbivore()
     current_weight = float(h.weight)
@@ -154,7 +154,7 @@ def test_update_F_cell():
     h = herbivore()
     h.eat_fodder(F_cell=800)
     assert h.F_cell == 800-10
-"""
+
 
 
 
