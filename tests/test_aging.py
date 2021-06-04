@@ -53,7 +53,6 @@ def test_herbivore_weight_gain():
         this is a test for testing if the herbivore gains weight when it eats as much as it wants to
         '''
     h = herbivore()
-    print(type(h.weight))
     current_weight = float(h.weight)
     beta = h.p['beta']
     F = h.p['F']

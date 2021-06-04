@@ -76,9 +76,8 @@ class animal:
             The animal gains weight everytime they eat. In this function, appetite is described as
             what is eaten, but in some cases that is not possible.
             """
-        current_weight = float(self.weight)
         weight_plus = self.p['beta'] * self.p['F']
-        self.weight += current_weight + weight_plus
+        self.weight += weight_plus
 
     def fitness(self):
         """
