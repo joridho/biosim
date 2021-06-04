@@ -109,18 +109,20 @@ class animal:
                                                         # this is the weight of the possible newborn
 
         if self.weight < self.p['zeta'] * (self.p['w_birth'] + self.p['sigma_birth']):
-            self.prob_birth = 0.0
-        elif self.weight <= newborn_birth_weight:  # birth weight to newborn
-            self.prob_birth = 0.0
+            self.prob_birth = 0
+        elif self.weight <= self.newborn_birth_weight:  # birth weight to newborn
+            self.prob_birth = 0
         elif N < 2:
-            self.prob_birth = 0.0
+            self.prob_birth = 0
         elif variable < 1:
             self.prob_birth = variable
         else:
-            self.prob_birth = 1.0
+            self.prob_birth = 1
 
-        if random.random() < self.prob_birth:
+        if 0 < self.prob_birth:
             return True
+        else:
+            return False
 
     def birth_weight_loss(self,N):
         """
@@ -138,7 +140,7 @@ class animal:
         else:
             self.prob_death = self.p['omega'] * (1 - self.phi)
 
-        if random.random() < self.prob_death:
+        if 0 < self.prob_death:
             return True
 
     # def migration(self):
