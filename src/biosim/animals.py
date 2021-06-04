@@ -140,10 +140,12 @@ class animal:
         else:
             self.prob_death = self.p['omega'] * (1 - self.phi)
 
-        if random.random() < self.prob_death:
+        self.d = random.random()
+
+        if self.d < self.prob_death:
             return True
         else:
-            return self.prob_death
+            return False #self.prob_death
 
     # def migration(self):
 

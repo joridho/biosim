@@ -120,7 +120,6 @@ def test_birth():
         else:
             assert h.r >= h.prob_birth
 
-
 def test_herbivore_birth_weight_loss():
     ' This is a test that checks if the Mother looses the right amount of weight after giving birth'
     h = herbivore()
@@ -128,11 +127,16 @@ def test_herbivore_birth_weight_loss():
     h.birth_weight_loss(N=40)
     assert h.weight == current_weight - h.p['zeta'] * h.newborn_birth_weight
 
-'''
+
 def test_death():
     h = herbivore(weight=10)
     for _ in range(100):
-        assert h.death_probability() == True
+        h.death_probability()
+        if h.death_probability() == True:
+            assert h.d < h.prob_death
+        else:
+            assert h.d >= h.prob_death
+            '''
 
 def test_herbivore_eat_fodder():
     h = herbivore()
