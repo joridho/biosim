@@ -105,7 +105,7 @@ class animal:
             If the newborn weighs more than the mother, the probability of birth is zero.
             """
         variable = self.p['gamma'] * self.phi * (N - 1)
-        newborn_birth_weight = self.birth_weight_function()
+        self.newborn_birth_weight = self.birth_weight_function()
                                                         # this is the weight of the possible newborn
 
         if self.weight < self.p['zeta'] * (self.p['w_birth'] + self.p['sigma_birth']):
@@ -122,22 +122,23 @@ class animal:
         if random.random() < self.prob_birth:
             return True
 
-    def birth_weight_loss(self, birth_weight):
+    def birth_weight_loss(self,N):
         """
             If the mother gives birth, she looses weight
             """
-        self.weight -= self.p['zeta'] * birth_weight
+        self.birth_probability(N)
+        self.weight -= self.p['zeta'] * self.newborn_birth_weight
 
     def death_probability(self):
         """
             The animal dies if it weighs nothing, but also with a probability of prob_death
             """
         if self.weight == 0:
-            prob_death = 1
+            self.prob_death = 1
         else:
-            prob_death = self.p['omega'] * (1 - self.phi)
+            self.prob_death = self.p['omega'] * (1 - self.phi)
 
-        if random.random() < prob_death:
+        if random.random() < self.prob_death:
             return True
 
     # def migration(self):
