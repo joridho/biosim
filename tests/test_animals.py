@@ -111,6 +111,7 @@ def test_no_newborn_if_newborn_too_fat():
 
 
 def test_birth():
+    'This is a test that checks if the Herbivore gives birth when its meant to'
     h = herbivore(weight=35, a=3)
     for _ in range(100):
         h.birth_probability(N=4)
@@ -121,10 +122,11 @@ def test_birth():
 
 
 def test_herbivore_birth_weight_loss():
+    ' This is a test that checks if the Mother looses the right amount of weight after giving birth'
     h = herbivore()
-    w = h.weight
+    current_weight = h.weight
     h.birth_weight_loss(N=40)
-    assert h.weight == w - h.p['zeta'] * h.newborn_birth_weight
+    assert h.weight == current_weight - h.p['zeta'] * h.newborn_birth_weight
 
 '''
 def test_death():
