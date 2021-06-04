@@ -33,11 +33,17 @@ def test_herbivore_aging():
         assert h.a == n + 1
 
 def test_herbivore_birth_weight():
+    """
+    A test that checks that the herbivore have been given a birth_weight
+    """
     h = herbivore()
     birth_w = h.birth_weight
     assert h.birth_weight == birth_w
 
 def test_herbivore_weight_loss():
+    '''
+        this is a test for testing if the herbivore looses weight each year
+    '''
     h = herbivore()
     current_weight = h.weight
     eta = h.p['eta']
@@ -58,18 +64,27 @@ def test_herbivore_weight_gain():
 
 
 def test_herbivore_fitness():
+    """
+    A test that checks that the herbivore have been given a fitness
+    """
     h = herbivore()
     fitness = h.phi
     h.fitness()
     assert fitness == h.phi
 
 def test_valid_fitness():
+"""
+This is a test for checking that the fitness-function returns a phi-value between 0 and 1
+"""
     for _ in range(100):
         h = herbivore()
         h.fitness()
         assert 0 <= h.phi <= 1
 
 def test_no_newborn_when_mother_weighs_too_little():
+"""
+This is a test that checks if the birth probability equals zero when the mother weighs to little.
+"""
     h = herbivore(weight=3.5, a=3)
     h.birth_probability(N=3)
     assert h.prob_birth == 0
