@@ -5,26 +5,99 @@ __author__ = 'Jorid Holmen', 'Christianie Torres'
 __email__ = 'jorid.holmen@nmbu.no', 'christianie.torres@nmbu.no'
 
 import random
-from biosim.Animals import herbivores
+
+
+# from biosim.Animals import herbivores
+
 
 class Cell:
     """
-    Class for cells
-    """
+        Class for cells
+        """
 
     p = {'f_max': 800.0}
 
     def __init__(self):
         self._F = self.p['f_max']
-        self.herbivores = []
+        self.herbivores_pop = []
 
     def adding_animals(self):
         """
-        Use of the animal class to add animals to the cell
+            Use of the animal class to add animals to the cell.
+            """
+
+    def sorting_animals(self):
         """
+            A function for sorting the animals.
+            Herbivores are sorted weakest to fittest, since the weakest are eaten first
+            Carnivores are sorted fittest to weakest, since the fittest eats first
+            """
+
+    def available_fodder(self):
+        """
+            This function calculates how much fodder there are in the cell and adds it to F
+            """
+
+    def make_herbivores_eat(self):
+        """
+            The animals eats available fodder until their appetite is filled.
+            The eat_fodder-function from the Herbivore class does this.
+            """
+
+    def newborn_animals(self):
+        """
+            An animal gives birth maximum one time per year.The function birth_probability
+            calculates if the animal will give birth or not and birth_weightloss calculates the new
+            weight for the mother.
+            The newborn must be added to the list of either herbivores or carnivores
+            """
+
+    def counting_animals(self):
+        """
+            A function for counting how many animals there are in the cell.
+            We need to differentiate between the different animals.
+            """
+
+    # yearly activities:
+
+    def reset_fodder(self):
+        """
+            At the beginning of the year the amount of fodder resets to the default value
+            """
+
+    def make_animals_age(self):
+        """
+            Each year the animals ages. Here we use the aging function from the herbivore class
+            """
+
+    def make_animals_lose_weight(self):
+        """
+            Each year the animal loses weight based on their own weight and eta
+            """
+
+    def remove_dead_animals(self):
+        """
+            When an animal dies, either natural causes or eaten, it needs to be taken of the
+            list of animals.
+            """
+
+    def dead_animals_natural_cause(self):
+        """
+            Each year some animals will die of natural causes. We check if the animal dies or not
+            by using the function death_probability. After we need to remove them from the from the
+            list of animals
+            """
 
 
 class Lowland(Cell):
     """
-    subclass for lowlandcells
+    subclass for lowland cells
     """
+
+    # should have amount of fodder down here, not up in the cell class
+
+    def __init__(self):
+        """
+            Initialises lowland class
+            """
+        super().__init__()
