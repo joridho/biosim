@@ -110,12 +110,15 @@ def test_no_newborn_if_newborn_too_fat():
     assert h.prob_birth == 0
 
 
-'''
 def test_birth():
     h = herbivore(weight=35, a=3)
     for _ in range(100):
-        assert h.birth_probability(N=4) == True
-'''
+        h.birth_probability(N=4)
+        if h.birth_probability(N=4) == True:
+            assert h.r < h.prob_birth
+        else:
+            assert h.r >= h.prob_birth
+
 
 def test_herbivore_birth_weight_loss():
     h = herbivore()
@@ -155,7 +158,6 @@ def test_update_F_cell():
     h = herbivore()
     h.eat_fodder(F_cell=800)
     assert h.F_cell == 800-10
-
 
 
 

@@ -117,7 +117,9 @@ class animal:
         else:
             self.prob_birth = 1
 
-        if random.random() < self.prob_birth:
+        self.r = random.random()
+
+        if self.r < self.prob_birth:
             return True
         else:
             return False
