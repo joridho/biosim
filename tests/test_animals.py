@@ -180,13 +180,14 @@ def test_weight_gain_after_eating():
     h = herbivore()
     current_weight = h.weight
     beta = h.p['beta']
-    F = 8 # Den går ikke opp i vekt med cellen
+    P = 8 # Den går ikke opp i vekt med cellen
 
-    new_weight = current_weight + beta * F
-    h.eat_fodder(F_cell= F)
-    #assert h.weight == new_weight
-    assert h.F_cell ==0
-    #print(H.)
+    new_weight = current_weight + beta * P
+    h.eat_fodder(F_cell= P)
+    assert h.weight == new_weight
+    #assert h.F_cell ==0
+    #assert h.F_consumption == 8
+
 
 '''
 def test_update_appetite():
