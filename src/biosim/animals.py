@@ -169,12 +169,12 @@ class herbivore(animal):
 
             after the consumption the herbivore gains weight
             """
-
-        if F_cell >= self.p['F']:
-            F_cell -= self.p['F']
+        self.F_cell = F_cell
+        if self.F_cell >= self.p['F']:
+            self.F_cell -= self.p['F']
             self.weight_gain()
         else:
-            F_consumption = F_cell
-            F_cell = 0
-            self.weight += self.p['beta'] * F_consumption
+            self.F_consumption = self.F_cell
+            self.F_cell = 0
+            self.weight += self.p['beta'] * self.F_consumption
                                             # could use weight_gain function for this

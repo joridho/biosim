@@ -107,9 +107,18 @@ def test_death():
         assert h.death_probability() == True
 
 def test_herbivore_eat_fodder():
+    h = herbivore()
+    h.eat_fodder(F_cell = h.p['F'])
+    assert h.F_cell == 0
 
-
-
+def test_weight_gain_after_eating():
+    h = herbivore()
+    current_weight = float(h.weight)
+    beta = h.p['beta']
+    F = 8
+    new_weight = current_weight + beta * F
+    h.eat_fodder(F_cell=8)
+    assert h.weight == new_weight
 
 
 
