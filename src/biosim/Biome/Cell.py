@@ -27,6 +27,7 @@ class Cell:
             Use of the animal class to add animals to the cell.
             """
 
+
     def sorting_animals(self):
         """
             A function for sorting the animals.
