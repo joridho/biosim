@@ -68,7 +68,6 @@ class cell:
         for ani in self.herbivores_pop:
             if ani.given_birth == False:
                 if herbivore.birth_probability == True:
-
                     newborn = herbivore(weight=ani.newborn_birth_weight, a=0)
                     self.herbivores_pop.append(newborn)
                     ani.birth_weight_loss(N=self.N)

@@ -40,7 +40,13 @@ def test_newborn_added_to_list():
     c.newborn_animals()
     assert len(c.herbivores_pop) == 7
 
-#def test_mother_lost_weight():
+def test_mother_lost_weight():
+    h = herbivore()
+    h.birth_probability(N=6)
+    c = cell()
+    c.herbivores_pop = [herbivore(weight=35, a=3)]
+    c.newborn_animals()
+    assert h.weight == 35 - h.newborn_birth_weight
 
 def test_count_animals():
     c = cell()
@@ -50,6 +56,8 @@ def test_count_animals():
                         herbivore(weight=20, a=6)]
     c.counting_animals()
     assert c.N == 6
+
+
 
 
 
