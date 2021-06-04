@@ -41,10 +41,10 @@ class animal:
         if weight is None:
             self.weight = self.birth_weight
         else:
-            self._weight = float(weight) # litt usikker på om vi skal ha denne
+            self._weight = float(weight)  # unsure about float
 
         # self.phi = self.fitness()
-        # self.phi = None
+        self.phi = None
 
         # self.birth_weight = self.birth_weight()
 
@@ -60,14 +60,14 @@ class animal:
             """
         # min_w = w_birth - sigma_birth
         # max_w = w_birth + sigma_birth
-        # birthweight = random.randint(min_w, max_w)
+        # birth_weight = random.randint(min_w, max_w)
         self.birth_weight = random.gauss(self.p['w_birth'], self.p['sigma_birth'])
 
     def weight_loss(self):
         """
             The animal loses weight each year
             """
-        weight_minus = self.p['eta'] * self.weight  # self.weight er method. det går ikke
+        weight_minus = self.p['eta'] * self.weight  # self.weight is method. Does not work in test
         self.weight -= weight_minus
 
     def weight_gain(self):
@@ -82,7 +82,7 @@ class animal:
     def fitness(self):
         """
             The animal has a certain fitness. This function calculates the fitness for one animal,
-            but does not update continously
+            but does not update continuously
             """
         q_plus = 1 / (1 + math.exp(self.p['phi_age'] * (self.a - self.p['a_half'])))
         q_minus = 1 / (1 + math.exp(-self.p['phi_weight'] * (self.weight - self.p['w_half'])))
@@ -103,14 +103,14 @@ class animal:
             The animals can give birth with a probability, which depends on fitness and weight.
             If the newborn weighs more than the mother, the probability of birth is zero.
             """
-        variabel = self.p['gamma'] * self.phi * (N - 1)  # hvordan få tak i N
+        variable = self.p['gamma'] * self.phi * (N - 1)  # how to call N
         birth_weight = self.birth_weight  # this is the weight of the possible newborn
 
-        if variabel < 1:
-            prob_birth = variabel
+        if variable < 1:
+            prob_birth = variable
         elif self.p['omega'] < self.p['zeta'] * (self.p['w_birth'] + self.p['sigma_birth']):
             prob_birth = 0
-        elif self.weight <= birth_weight:  # birth weight til nytt barn?
+        elif self.weight <= birth_weight:  # birth weight to newborn
             prob_birth = 0
         elif N < 2:
             prob_birth = 0
@@ -120,7 +120,7 @@ class animal:
         if random.random() < prob_birth:
             return True
 
-    def birth_weightloss(self, birth_weight):
+    def birth_weight_loss(self, birth_weight):
         """
             If the mother gives birth, she looses weight
             """
@@ -143,7 +143,7 @@ class animal:
 
 class herbivore(animal):
     """
-    this is a class for herbivpres on the island
+    this is a class for herbivores on the island
     """
 
     def __init__(self, weight=None, a=0):
@@ -166,11 +166,11 @@ class herbivore(animal):
             after the consumption the herbivore gains weight
             """
 
-        if F_cell >= self.p['F']:  # Hvordan skal vi kalle på F_cell
+        if F_cell >= self.p['F']:  # How to call F_cell
             F_cell -= self.p['F']
             self.weight_gain()
         else:
             F_consumption = F_cell
             F_cell = 0
-            self.weight += self.p[
-                               'beta'] * F_consumption  # kunne kanskje brukt funskjonen til dette
+            self.weight += self.p['beta'] * F_consumption
+                                            # could use weight_gain function for this
