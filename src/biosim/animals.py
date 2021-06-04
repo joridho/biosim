@@ -101,22 +101,22 @@ class animal:
             The animals can give birth with a probability, which depends on fitness and weight.
             If the newborn weighs more than the mother, the probability of birth is zero.
             """
-        variable = self.p['gamma'] * self.phi * (N - 1)
+        self.variable = self.p['gamma'] * self.phi * (N - 1)
         self.newborn_birth_weight = self.birth_weight_function()
                                                           # this is the weight of the possible newborn
 
         if self.weight < self.p['zeta'] * (self.p['w_birth'] + self.p['sigma_birth']):
-            prob_birth = 0
+            self.prob_birth = 0
         elif self.weight <= self.newborn_birth_weight:  # birth weight to newborn
-            prob_birth = 0
+            self.prob_birth = 0
         elif N < 2:
-            prob_birth = 0
-        elif variable < 1:
-            prob_birth = variable
+            self.prob_birth = 0
+        elif self.variable < 1:
+            self.prob_birth = self.variable
         else:
-            prob_birth = 1
+            self.prob_birth = 1
 
-        if random.random() < prob_birth:
+        if random.random() < self.prob_birth:
             return True
         else:
             return False

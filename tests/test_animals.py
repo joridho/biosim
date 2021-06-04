@@ -80,7 +80,7 @@ def test_no_newborn_when_to_few_animals():
     assert h.prob_birth == 0
 
 def test_no_newborn_if_newborn_too_fat():
-    h = herbivore(weight=20, a=3)
+    h = herbivore(weight=3, a=3)
     h.birth_probability(N=3)
     h.newborn_birth_weight = 5
     assert h.prob_birth == 0
