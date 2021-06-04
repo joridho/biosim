@@ -74,7 +74,17 @@ def test_valid_fitness():
         h.fitness()
         assert 0 <= h.phi <= 1
 
-def test_herbivore_birth():
+def test_no_newborn_when_mother_weighs_too_little():
+    h = herbivore(weight=3.5, a=2)
+    h.birth_probability(N=3)
+    assert h.prob_birth == 0
+
+def test_no_newborn_when_to_few_animals():
+    h = herbivore(weight=4, a=2)
+    h.birth_probability(N=1)
+    assert h.prob_birth == 0
+
+def test_no_
 
 
 
