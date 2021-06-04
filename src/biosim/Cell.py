@@ -50,6 +50,9 @@ class cell:
             The animals eats available fodder until their appetite is filled.
             The eat_fodder-function from the Herbivore class does this.
             Herbivores eat in a random order, and therefore need to be randomised
+
+            This function can only be used once per year because of the available_fodder_function
+
             """
         self.available_fodder_function()
         h = herbivore()
@@ -66,6 +69,11 @@ class cell:
             weight for the mother.
             The newborn must be added to the list of either herbivores or carnivores
             """
+        if self.given_birth == False
+            if herbivore.birth_probability == True:
+                # add newborn to list
+                # make mother gain weight
+                self.given_birth == True
 
     def counting_animals(self):
         """
@@ -81,11 +89,18 @@ class cell:
         """
             At the beginning of the year the amount of fodder resets to the default value
             """
+        self.available_fodder_function()
 
     def reset_appetite(self):
         """
             The appetite is filled every year
             """
+
+    def reset_given_birth(self):
+        """
+            An animal can only give birth once per year
+            """
+        self.given_birth = False
 
     def make_animals_age(self):
         """
