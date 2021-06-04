@@ -9,10 +9,7 @@ class MyTestCase(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()
 
-
-from biosim.Biome import Cell
-from Cell import cell
-from biosim.Animals import Herbivore
+from biosim.Cell import cell
 from Herbivore import herbivore
 
 def test_simple_sorting():
