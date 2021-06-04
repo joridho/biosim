@@ -178,7 +178,8 @@ class herbivore(animal):
         if self.F_cell >= self.p['F']:
             self.F_cell -= self.p['F']
             self.weight_gain()
-            self.p['F'] = 0
+            self.f = self.p['F']
+            self.p['F'] = 0  #Den resetter!!!!!!!!! Hva vil at cellen skal returne
         else:
             self.F_consumption = self.F_cell
             self.F_cell = 0
