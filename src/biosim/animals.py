@@ -111,7 +111,7 @@ class animal:
             prob_birth = 0
         elif N < 2:
             prob_birth = 0
-        elif self.variable < 1:
+        elif variable < 1:
             prob_birth = variable
         else:
             prob_birth = 1
