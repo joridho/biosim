@@ -69,7 +69,7 @@ class cell:
             weight for the mother.
             The newborn must be added to the list of either herbivores or carnivores
             """
-        for herb in self.herbiovers_pop:
+        for herb in self.herbivores_pop:
             if herb.given_birth == False:
                 if herbivore.birth_probability == True:
                     # add newborn to list
