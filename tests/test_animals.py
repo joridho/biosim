@@ -140,12 +140,15 @@ def test_death():
         else:
             assert h.d >= h.prob_death
 
+'''
 def test_herbivore_eat_fodder():
     h = herbivore()
     current_weight = h.weight
-    h.eat_fodder(F_cell = h.p['F'])
+    h.eat_fodder(F_cell = h.p['F']) 
     #assert h.weight == current_weight + h.p['beta'] * h.f
-    assert h.F_cell == 0
+    assert h.F_cell == 0   #apetiten F skal være tom 0. 
+    # og F_celle skal være lik celle i start minus apetit (men blir 0 her pga de er like store duhhh)
+'''
 
 def test_herbivore_gains_weight_after_eat_fodder():
     #Kan hende det er samme som weight_gain funksjonen
@@ -175,12 +178,12 @@ def test_weight_gain_after_eating():
     when it eats in a cell that does not have enough fodder that satisfies the Herbivore apetite
     '''
     h = herbivore()
-    current_weight = float(h.weight)
+    current_weight = h.weight
     beta = h.p['beta']
     F = 8 # Den går ikke opp i vekt med cellen
 
     new_weight = current_weight + beta * F
-    h.eat_fodder(F_cell=8)
+    h.eat_fodder(F_cell= F)
     assert h.weight == new_weight
 
 '''
