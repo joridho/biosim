@@ -65,12 +65,14 @@ class cell:
             weight for the mother.
             The newborn must be added to the list of either herbivores or carnivores
             """
-        for animal in self.herbivores_pop:
-            if animal.given_birth == False:
+        for ani in self.herbivores_pop:
+            if ani.given_birth == False:
                 if herbivore.birth_probability == True:
-                    # add newborn to list
-                    animal.birth_weight_loss(N=self.N)
-                    animal.given_birth == True
+
+                    newborn = herbivore(weight=ani.newborn_birth_weight, a=0)
+                    self.herbivores_pop.append(newborn)
+                    ani.birth_weight_loss(N=self.N)
+                    ani.given_birth == True
 
     def counting_animals(self):
         """
@@ -98,8 +100,8 @@ class cell:
         """
             An animal can only give birth once per year
             """
-        for animal in self.herbivores_pop:
-            animal.given_birth = False
+        for ani in self.herbivores_pop:
+            ani.given_birth = False
 
     def make_animals_age(self):
         """

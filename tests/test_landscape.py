@@ -31,6 +31,28 @@ def test_fodder_eaten():
     c.make_herbivores_eat()
     assert c.available_fodder == c.herbivores_pop
 
+def test_newborn_added_to_list():
+    c = cell()
+    c.herbivores_pop = [herbivore(weight=35, a=3), herbivore(weight=41, a=8),
+                        herbivore(weight=20, a=6), herbivore(weight=35, a=3),
+                        herbivore(weight=41, a=8),
+                        herbivore(weight=20, a=6)]
+    c.newborn_animals()
+    assert len(c.herbivores_pop) == 7
+
+#def test_mother_lost_weight():
+
+def test_count_animals():
+    c = cell()
+    c.herbivores_pop = [herbivore(weight=35, a=3), herbivore(weight=41, a=8),
+                        herbivore(weight=20, a=6), herbivore(weight=35, a=3),
+                        herbivore(weight=41, a=8),
+                        herbivore(weight=20, a=6)]
+    c.counting_animals()
+    assert c.N == 6
+
+
+
 
 
 
