@@ -26,10 +26,10 @@ def test_simple_sorting():
 def test_fodder_eaten():
     c = cell()
     c.herbivores_pop = [herbivore(weight=35, a=3), herbivore(weight=41, a=8),
-                       herbivore(weight=20, a=6),herbivore(weight=35, a=3), herbivore(weight=41, a=8),
-                       herbivore(weight=20, a=6)]
+                        herbivore(weight=20, a=6),herbivore(weight=35, a=3),
+                        herbivore(weight=41, a=8),herbivore(weight=20, a=6)]
     c.make_herbivores_eat()
-    assert c.available_fodder == 0
+    assert c.available_fodder == 800 - 6*10
 
 def test_newborn_added_to_list():
     c = cell()

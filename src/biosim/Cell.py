@@ -52,11 +52,11 @@ class cell:
 
             """
         self.available_fodder_function()
-        while self.available_fodder >= 25:
+        while self.available_fodder >= 0:
             self.herb = random.choice(self.herbivores_pop)
-            self.herb.eat_fodder(F_cell=25)
+            self.herb.eat_fodder(F_cell=self.available_fodder)
             self.available_fodder = self.herb.F_cell
-            self.herbivores_pop.remove(self.herb)
+            # self.herbivores_pop.remove(self.herb)
 
     def newborn_animals(self):
         """
