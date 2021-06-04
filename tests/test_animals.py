@@ -8,11 +8,6 @@ __email__ = 'christianie.torres@nmbu.no'
 
 from biosim.animals import herbivore
 
-import math
-import random
-import pytest
-import scipy.stats as stats
-
 def test_herbivore_age():
     """
     A test that checks that a herbivore has been created with age 0
