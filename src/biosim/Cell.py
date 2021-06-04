@@ -52,7 +52,7 @@ class cell:
 
             """
         self.available_fodder_function()
-        while self.available_fodder >= 0:
+        while self.available_fodder >= 25:
             self.herb = random.choice(self.herbivores_pop)
             self.herb.eat_fodder(F_cell=25)
             self.available_fodder = self.herb.F_cell
@@ -94,6 +94,8 @@ class cell:
         """
             The appetite is filled every year
             """
+        for k in range(len(self.herbivores_pop)):
+            herbivore.p['F'] = 10.0
 
     def reset_given_birth(self):
         """

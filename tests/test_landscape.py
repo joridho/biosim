@@ -29,7 +29,7 @@ def test_fodder_eaten():
                        herbivore(weight=20, a=6),herbivore(weight=35, a=3), herbivore(weight=41, a=8),
                        herbivore(weight=20, a=6)]
     c.make_herbivores_eat()
-    assert c.available_fodder == c.herbivores_pop
+    assert c.available_fodder == 0
 
 def test_newborn_added_to_list():
     c = cell()
@@ -56,6 +56,29 @@ def test_count_animals():
                         herbivore(weight=20, a=6)]
     c.counting_animals()
     assert c.N == 6
+
+def test_reset_available_fodder():
+    c = cell()
+    c.herbivores_pop = [herbivore(weight=35, a=3), herbivore(weight=41, a=8),
+                        herbivore(weight=20, a=6), herbivore(weight=35, a=3),
+                        herbivore(weight=41, a=8),
+                        herbivore(weight=20, a=6)]
+    c.make_herbivores_eat()
+    c.reset_fodder()
+    assert c.available_fodder == c.p['f_max']
+
+def test_reset_appetite():
+    c = cell()
+    c.herbivores_pop = [herbivore(weight=35, a=3), herbivore(weight=41, a=8),
+                        herbivore(weight=20, a=6), herbivore(weight=35, a=3),
+                        herbivore(weight=41, a=8),
+                        herbivore(weight=20, a=6)]
+    c.make_herbivores_eat()
+    c.reset_appetite()
+    for k in range(len(c.herbivores_pop)):
+        assert c.herbivores_pop[k].p['F'] == 10
+
+
 
 
 
