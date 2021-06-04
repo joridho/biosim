@@ -7,10 +7,10 @@ __email__ = 'jorid.holmen@nmbu.no', 'christianie.torres@nmbu.no'
 import random
 
 
-# from biosim.Animals import herbivores
+from biosim.animals import herbivores
 
 
-class Cell:
+class cell:
     """
         Class for cells
         """
@@ -28,8 +28,6 @@ class Cell:
             Use of the animal class to add animals to the cell.
             """
 
-
-
     def sorting_animals(self): # do we need property here?
         """
             A function for sorting the animals.
@@ -39,13 +37,13 @@ class Cell:
         #for k in self.herbivore_pop:
             #if k.fitness_must_be_updated is true:
                 #herb.find_fitness()
-        self.herbivore_pop = sorted(self.pop_herb, key=lambda x: x.fitness, reverse=True)
+        #self.sorted_herbivore_pop = sorted(self.herbivores_pop, key=lambda x: x.fitness, reverse=True)
 
-
-    def available_fodder(self):
+    def available_fodder_function(self):
         """
-            This function calculates how much fodder there are in the cell and adds it to F
+            At the beginning of the year the available fodder is f_max
             """
+        self.available_fodder = self.p['f_max']
 
     def make_herbivores_eat(self):
         """
@@ -53,6 +51,11 @@ class Cell:
             The eat_fodder-function from the Herbivore class does this.
             Herbivores eat in a random order, and therefore need to be randomised
             """
+        while self.available_fodder > 0:
+            herb = random.choice(self.herbivores_pop)
+            herb.eat_fodder(F_cell=self.available_fodder)
+            self.available_fodder = herb.F_cell
+
 
     def newborn_animals(self):
         """
@@ -75,6 +78,11 @@ class Cell:
     def reset_fodder(self):
         """
             At the beginning of the year the amount of fodder resets to the default value
+            """
+
+    def reset_appetite(self):
+        """
+            The appetite is filled every year
             """
 
     def make_animals_age(self):
@@ -102,7 +110,7 @@ class Cell:
             """
 
 
-class Lowland(Cell):
+class lowland(cell):
     """
     subclass for lowland cells
     """
