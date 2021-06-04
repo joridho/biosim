@@ -78,6 +78,17 @@ def test_reset_appetite():
     for k in range(len(c.herbivores_pop)):
         assert c.herbivores_pop[k].p['F'] == 10
 
+def test_reset_given_birth():  # tror funksjonen fungerer, men siden c.newborn_animal ikke fungerer,
+                                    # fungerer ikke testen
+    h = herbivore()
+    c = cell()
+    c.herbivores_pop = [herbivore(weight=35, a=3)]
+    c.newborn_animals()
+    h.given_birth = True
+    c.reset_given_birth()
+    assert h.given_birth == False
+
+
 
 
 
