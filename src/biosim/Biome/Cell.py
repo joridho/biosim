@@ -21,6 +21,7 @@ class Cell:
         self._F = self.p['f_max']
         self._accessible = True
         self.herbivores_pop = []
+        self.carnivores_pop = []
 
     def adding_animals(self):
         """
@@ -28,13 +29,18 @@ class Cell:
             """
 
 
-    def sorting_animals(self):
+
+    def sorting_animals(self): # do we need property here?
         """
             A function for sorting the animals.
             Herbivores are sorted weakest to fittest, since the weakest are eaten first
             Carnivores are sorted fittest to weakest, since the fittest eats first
             """
-        # do we need property here?
+        #for k in self.herbivore_pop:
+            #if k.fitness_must_be_updated is true:
+                #herb.find_fitness()
+        self.herbivore_pop = sorted(self.pop_herb, key=lambda x: x.fitness, reverse=True)
+
 
     def available_fodder(self):
         """

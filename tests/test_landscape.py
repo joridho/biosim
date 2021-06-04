@@ -10,3 +10,14 @@ if __name__ == '__main__':
     unittest.main()
 
 
+from biosim.Biome import Cell
+from Cell import cell
+from biosim.Animals import Herbivore
+from Herbivore import herbivore
+
+def test_simple_sorting():
+    c = cell()
+    c.herbivore_pop = [herbivore(weight=35,a=3), herbivore(weight=41,a=8),herbivore(weight=20,a=6)]
+
+
+
