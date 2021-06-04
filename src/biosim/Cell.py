@@ -117,6 +117,8 @@ class cell:
         """
             Each year the animal loses weight based on their own weight and eta
             """
+        for k in range(len(self.herbivores_pop)):
+            self.herbivores_pop[k].weight_loss()
 
     def remove_animals(self):
         """

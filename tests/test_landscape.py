@@ -108,3 +108,16 @@ def test_aging():
     c.make_animals_age()
     for k in range(len(c.herbivores_pop)):
         assert c.herbivores_pop[k].a == liste[k] + 1
+
+def test_yearly_weight_loss():
+    c = cell()
+    h = herbivore()
+    c.herbivores_pop = [herbivore(weight=35, a=3), herbivore(weight=41, a=8),
+                        herbivore(weight=20, a=6), herbivore(weight=35, a=3),
+                        herbivore(weight=41, a=8), herbivore(weight=20, a=6)]
+    liste = []
+    for ani in range(len(c.herbivores_pop)):
+        liste.append(c.herbivores_pop[ani].weight)
+    c.make_animals_lose_weight()
+    for k in range(len(c.herbivores_pop)):
+        assert c.herbivores_pop[k].weight == liste[k] - h.p['eta'] * c.herbivores_pop[k].weight
