@@ -73,7 +73,7 @@ def test_valid_fitness():
     h.fitness()
     assert 0 <= h.phi <= 1 or h.phi == None
 
-def test_herbivore_birth():
+# def test_herbivore_birth():
 
 
 
