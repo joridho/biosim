@@ -45,7 +45,7 @@ class animal:
             self.weight = float(weight)  # unsure about float
 
         # self.phi = self.fitness()
-        self.phi = None
+        self.fitness()
 
         # self.birth_weight = self.birth_weight()
 

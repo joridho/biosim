@@ -37,16 +37,17 @@ def test_herbivore_aging():
         h.aging()
         assert h.a == n + 1
 
-#def test_herbivore_birth_weight():
-    #assert 1 == 1
+def test_herbivore_birth_weight():
+    h = herbivore()
+    birth_w = h.birth_weight
+    assert h.birth_weight == birth_w
 
-#def test_herbivore_weight_loss():
-    # tror koden er feil,
-    #h = herbivore()
+def test_herbivore_weight_loss():
+    h = herbivore()
     current_weight = h.weight
-    #eta = h.p['eta']
-    #h.weight_loss()
-    #assert h.weight == current_weight - current_weight * eta
+    eta = h.p['eta']
+    h.weight_loss()
+    assert h.weight == current_weight - current_weight * eta
 
 def test_herbivore_weight_gain():
     '''
@@ -61,11 +62,14 @@ def test_herbivore_weight_gain():
     assert h.weight == new_weight
 
 
-#def test_herbivore_fitness():
+def test_herbivore_fitness():
+    h = herbivore()
+    fitness = h.phi
+    h.fitness()
+    assert fitness == h.phi
 
+def test_herbivore_birth():
 
-
-#def test_herbivore_birth():
 
 
 
