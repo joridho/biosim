@@ -19,11 +19,14 @@ def test_simple_sorting():
     liste2 = [liste1[0].phi, liste1[1].phi, liste1[2].phi]
     liste2.sort()
     c.sorting_animals()
-    assert liste2 == c.sorted_herbivores_pop
+    liste3 = [c.sorted_herbivores_pop[0].phi,c.sorted_herbivores_pop[1].phi,
+              c.sorted_herbivores_pop[2].phi]
+    assert liste2 == liste3
 
 def test_fodder_eaten():
     c = cell()
     c.herbivores_pop = [herbivore(weight=35, a=3), herbivore(weight=41, a=8),
+                       herbivore(weight=20, a=6),herbivore(weight=35, a=3), herbivore(weight=41, a=8),
                        herbivore(weight=20, a=6)]
     c.make_herbivores_eat()
     assert c.available_fodder == 0

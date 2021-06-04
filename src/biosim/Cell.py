@@ -5,7 +5,7 @@ __author__ = 'Jorid Holmen', 'Christianie Torres'
 __email__ = 'jorid.holmen@nmbu.no', 'christianie.torres@nmbu.no'
 
 import random
-
+import operator
 
 from biosim.animals import herbivore
 
@@ -37,7 +37,8 @@ class cell:
         #for k in self.herbivore_pop:
             #if k.fitness_must_be_updated is true:
                 #herb.find_fitness()
-        self.sorted_herbivores_pop = sorted(self.herbivores_pop, key=lambda x: x.fitness, reverse=True)
+        #self.sorted_herbivores_pop = sorted(self.herbivores_pop, key=lambda x: x.fitness, reverse=True)
+        self.sorted_herbivores_pop = sorted(self.herbivores_pop, key=operator.attrgetter('phi'))
 
     def available_fodder_function(self):
         """
@@ -58,8 +59,8 @@ class cell:
         h = herbivore()
         while self.available_fodder > 0:
             herb = random.choice(self.herbivores_pop)
-            herb.eat_fodder(F_cell=self.available_fodder)
-            self.available_fodder = h.F_cell
+            herb.eat_fodder(F_cell=25)
+            self.available_fodder = herb.F_cell
 
 
     def newborn_animals(self):
@@ -69,12 +70,12 @@ class cell:
             weight for the mother.
             The newborn must be added to the list of either herbivores or carnivores
             """
-        for herb in self.herbivores_pop:
-            if herb.given_birth == False:
+        for animal in self.herbivores_pop:
+            if animal.given_birth == False:
                 if herbivore.birth_probability == True:
                     # add newborn to list
-                    herb.birth_weight_loss(self.N)
-                    herb.given_birth == True
+                    animal.birth_weight_loss(self.N)
+                    animal.given_birth == True
 
     def counting_animals(self):
         """
@@ -101,9 +102,8 @@ class cell:
         """
             An animal can only give birth once per year
             """
-        # en måte å iterere gjennom dyrene
-        for herb in self.herbiovers_pop:
-            herb.given_birth = False
+        for animal in self.herbiovers_pop:
+            animal.given_birth = False
 
     def make_animals_age(self):
         """
