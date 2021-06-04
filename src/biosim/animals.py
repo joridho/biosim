@@ -63,6 +63,7 @@ class animal:
         # max_w = w_birth + sigma_birth
         # birth_weight = random.randint(min_w, max_w)
         self.birth_weight = random.gauss(self.p['w_birth'], self.p['sigma_birth'])
+        return self.birth_weight
 
     def weight_loss(self):
         """
@@ -97,20 +98,21 @@ class animal:
         else:
             return self.phi
 
-    def birth_probability(self):
+    def birth_probability(self,N):
         """
             Animals can mate if there are two or more animals of the same species in the same cell.
             The animals can give birth with a probability, which depends on fitness and weight.
             If the newborn weighs more than the mother, the probability of birth is zero.
             """
-        variable = self.p['gamma'] * self.phi * (N - 1)  # how to call N
-        birth_weight = self.birth_weight  # this is the weight of the possible newborn
+        variable = self.p['gamma'] * self.phi * (N - 1)
+        newborn_birth_weight = self.birth_weight_function()
+                                                        # this is the weight of the possible newborn
 
         if variable < 1:
             prob_birth = variable
         elif self.p['omega'] < self.p['zeta'] * (self.p['w_birth'] + self.p['sigma_birth']):
             prob_birth = 0
-        elif self.weight <= birth_weight:  # birth weight to newborn
+        elif self.weight <= newborn_birth_weight:  # birth weight to newborn
             prob_birth = 0
         elif N < 2:
             prob_birth = 0
@@ -152,7 +154,7 @@ class herbivore(animal):
             """
         super().__init__(weight, a)
 
-    def eat_fodder(self):
+    def eat_fodder(self, F_cell):
         """
             Herbivores tries to eat a certain amount in a year. However, how much the animal
             actually consumes depends on how much fodder is available in the cell.
@@ -166,7 +168,7 @@ class herbivore(animal):
             after the consumption the herbivore gains weight
             """
 
-        if F_cell >= self.p['F']:  # How to call F_cell
+        if F_cell >= self.p['F']:
             F_cell -= self.p['F']
             self.weight_gain()
         else:

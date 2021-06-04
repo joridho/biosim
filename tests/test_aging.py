@@ -69,11 +69,13 @@ def test_herbivore_fitness():
     assert fitness == h.phi
 
 def test_valid_fitness():
-    h = herbivore()
-    h.fitness()
-    assert 0 <= h.phi <= 1 or h.phi == None
+    for _ in range(100):
+        h = herbivore()
+        h.fitness()
+        assert 0 <= h.phi <= 1
 
-# def test_herbivore_birth():
+def test_herbivore_birth():
+
 
 
 
