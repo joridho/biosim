@@ -59,19 +59,19 @@ def test_newborn_added_to_list():
     c = cell()
     c.herbivores_pop = [herbivore(weight=35, a=3), herbivore(weight=41, a=8),
                         herbivore(weight=20, a=6), herbivore(weight=35, a=3),
-                        herbivore(weight=41, a=8),
-                        herbivore(weight=20, a=6)]
+                        herbivore(weight=41, a=8), herbivore(weight=20, a=6)]
+    length = len(c.herbivores_pop)
     for k in range(len(c.herbivores_pop)):
         c.herbivores_pop[k].given_birth = False
     c.newborn_animals()
-    assert len(c.herbivores_pop) == 12
+    assert len(c.herbivores_pop) == length + c.new
 
 
 def test_mother_lost_weight():
     c = cell()
     c.herbivores_pop = [herbivore(weight=35, a=3)]
-    c.newborn_animals()
     list = c.herbivores_pop
+    c.newborn_animals()
     assert list[0].weight == 35 - list[0].p['zeta'] * list[0].newborn_birth_weight
 
 
@@ -90,7 +90,7 @@ def test_reset_available_fodder():  # testen fungerer ikke siden make_herbivores
                         herbivore(weight=20, a=6)]
     c.make_herbivores_eat()
     c.reset_fodder()
-    assert c.available_fodder == c.p['f_max']
+    assert c.af == c.p['f_max']
 
 
 def test_reset_appetite():  # testen fungerer ikke siden make_herbivores_eat ikke fungerer

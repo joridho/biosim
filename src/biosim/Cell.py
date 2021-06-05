@@ -83,6 +83,7 @@ class cell:
         self.counting_animals()
         self.reset_given_birth() # must be removed later
         length = len(list_h)
+        self.new = 0
         for k in range(length):
             list_h[k].birth_probability(n=self.N)
             #list_h[k].birth = True
@@ -91,6 +92,7 @@ class cell:
                 list_h[k].birth_weight_loss(n=self.N)
                 list_h[k].given_birth is True # burde være riktig
                 list_h.append(newborn)  # skal være riktig
+                self.new += 1
         self.herbivores_pop = list_h
 
     def counting_animals(self):
