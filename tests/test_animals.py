@@ -86,7 +86,7 @@ def test_no_newborn_when_mother_weighs_too_little():
     This is a test that checks if the birth probability equals zero when the mother weighs to little.
     """
     h = herbivore(weight=3.5, a=3)
-    h.birth_probability(N=3)
+    h.birth_probability(n=3)
     assert h.prob_birth == 0
 
 def test_no_newborn_when_to_few_animals(): #too
@@ -96,7 +96,7 @@ def test_no_newborn_when_to_few_animals(): #too
     """
 
     h = herbivore(weight=32, a=3)
-    h.birth_probability(N=1)
+    h.birth_probability(n=1)
     assert h.prob_birth == 0
 
 def test_no_newborn_if_newborn_too_fat():
@@ -105,7 +105,7 @@ def test_no_newborn_if_newborn_too_fat():
     than the mother
     """
     h = herbivore(weight=3, a=3)
-    h.birth_probability(N=3)
+    h.birth_probability(n=3)
     h.newborn_birth_weight = 5
     assert h.prob_birth == 0
 
@@ -114,8 +114,8 @@ def test_birth():
     'This is a test that checks if the Herbivore gives birth when it is supposed to'
     h = herbivore(weight=35, a=3)
     for _ in range(100):
-        h.birth_probability(N=4)
-        if h.birth_probability(N=4) == True:
+        h.birth_probability(n=4)
+        if h.birth_probability(n=4) == True:
             assert h.r < h.prob_birth
         else:
             assert h.r >= h.prob_birth
@@ -124,7 +124,7 @@ def test_herbivore_birth_weight_loss():
     ' This is a test that checks if the Mother looses the right amount of weight after giving birth'
     h = herbivore()
     current_weight = h.weight
-    h.birth_weight_loss(N=40)
+    h.birth_weight_loss(n=40)
     assert h.weight == current_weight - h.p['zeta'] * h.newborn_birth_weight
 
 
@@ -140,7 +140,6 @@ def test_death():
         else:
             assert h.d >= h.prob_death
 
-'''
 def test_herbivore_eat_fodder():
     h = herbivore()
     current_weight = h.weight
@@ -148,7 +147,6 @@ def test_herbivore_eat_fodder():
     #assert h.weight == current_weight + h.p['beta'] * h.f
     assert h.F_cell == 0   #apetiten F skal være tom 0. 
     # og F_celle skal være lik celle i start minus apetit (men blir 0 her pga de er like store duhhh)
-'''
 
 def test_herbivore_gains_weight_after_eat_fodder():
     #Kan hende det er samme som weight_gain funksjonen
@@ -171,7 +169,6 @@ def test_cell_empty_after_herbivore_eat_fodder():
     assert h.F_cell == 0
 
 
-'''
 def test_weight_gain_after_eating():
     
     # This is a test that checks if the Herbivore gains the right amount of weight
@@ -188,9 +185,6 @@ def test_weight_gain_after_eating():
     #assert h.F_cell ==0
     #assert h.F_consumption == 8
 
-'''
-
-'''
 def test_update_appetite():
     h = herbivore()
     h.eat_fodder(F_cell=4)
@@ -201,7 +195,7 @@ def test_update_F_cell():
     h = herbivore()
     h.eat_fodder(F_cell=800)
     assert h.F_cell == 800-10
-'''
+
 
 
 

@@ -63,7 +63,6 @@ class cell:
                 self.herbivores_pop.remove(self.herb)
 
 
-'''
     def newborn_animals(self):
         """
             An animal gives birth maximum one time per year.The function birth_probability
@@ -157,4 +156,4 @@ class lowland(cell):
             Initialises lowland class
             """
         super().__init__()
-'''
+

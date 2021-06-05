@@ -54,7 +54,7 @@ def test_fodder_eaten():
     liste5 = c.herbivores_pop
     assert  liste5 = []
 
-'''
+
 def test_newborn_added_to_list():
     c = cell()
     c.herbivores_pop = [herbivore(weight=35, a=3), herbivore(weight=41, a=8),
@@ -142,4 +142,4 @@ def test_yearly_weight_loss():
     c.make_animals_lose_weight()
     for k in range(len(c.herbivores_pop)):
         assert c.herbivores_pop[k].weight == liste[k] - h.p['eta'] * liste[k]
-'''
+
