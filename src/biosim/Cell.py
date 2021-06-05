@@ -42,7 +42,7 @@ class cell:
         """
             At the beginning of the year the available fodder is f_max
             """
-        self.af = self._F
+        self.af = self.p['f_max']
 
     def make_herbivores_eat(self):
 
