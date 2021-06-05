@@ -30,7 +30,7 @@ class biosim:
             Herbivores eats yearly
             """
 
-    def breeding(self):
+    def procreation(self):
         """
             Animals mate maximum once per year
             """

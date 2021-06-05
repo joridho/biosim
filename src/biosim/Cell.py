@@ -88,10 +88,9 @@ class cell:
         for k in range(length):
             list_h[k].birth_probability(n=self.N)
             #list_h[k].birth = True
-            list_h[k].birth_weight_loss(n=self.N)
             if list_h[k].given_birth is False and list_h[k].birth is True:
                 newborn = herbivore(weight=list_h[k].newborn_birth_weight, a=0)
-                #list_h[k].birth_weight_loss(n=self.N)
+                list_h[k].birth_weight_loss(n=self.N)
                 list_h[k].given_birth is True # burde være riktig
                 list_new.append(newborn)  # skal være riktig
                 self.new += 1
