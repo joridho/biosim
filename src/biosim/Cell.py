@@ -137,6 +137,15 @@ class cell:
             by using the function death_probability. After we need to remove them from the from the
             list of animals
             """
+        list_a = self.herbivores_pop
+        length = len(list_a)
+        for k in range(length):
+            list_a[k].death_probability()
+            if list_a[k].prob_death is True:
+                # self.remove is True
+                # self.remove_animals()
+                list_a.remove(list_a[k])
+        self.herbivores_pop = list_a
 
     def remove_animals(self):
         """
@@ -144,6 +153,8 @@ class cell:
             list of animals.
             Animal also needs to be taken of the list when migrating
             """
+
+
 
 
 class lowland(cell):

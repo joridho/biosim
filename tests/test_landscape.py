@@ -13,13 +13,10 @@ if __name__ == '__main__':
 from biosim.animals import herbivore
 from biosim.Cell import cell
 
-'''
 def test_adding_animals():
     c = cell()
     c.adding_animals()
     assert len(c.herbivores_pop) == 50
-    
-'''
 
 def test_simple_sorting():
     '''
@@ -59,7 +56,7 @@ def test_fodder_eaten():
     #liste5 = c.herbivores_pop
     #assert liste5 == []
 
-'''
+
 def test_newborn_added_to_list():
     c = cell()
     c.herbivores_pop = [herbivore(weight=35, a=3), herbivore(weight=41, a=8),
@@ -140,4 +137,10 @@ def test_yearly_weight_loss():
     c.make_animals_lose_weight()
     for k in range(len(c.herbivores_pop)):
         assert c.herbivores_pop[k].weight == liste[k] - h.p['eta'] * liste[k]
-'''
+
+def test_animal_removed_after_death():
+    c = cell()
+    c.adding_animals()
+    c.dead_animals_natural_cause()
+    assert len(c.herbivores_pop) == 0
+
