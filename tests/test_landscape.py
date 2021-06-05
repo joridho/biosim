@@ -138,3 +138,9 @@ def test_yearly_weight_loss():
     for k in range(len(c.herbivores_pop)):
         assert c.herbivores_pop[k].weight == liste[k] - h.p['eta'] * liste[k]
 
+def test_animal_removed_after_death():
+    c = cell()
+    c.adding_animals()
+    c.dead_animals_natural_cause()
+    assert len(c.herbivores_pop) == 0
+

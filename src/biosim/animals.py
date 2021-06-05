@@ -119,7 +119,7 @@ class animal:
 
         self.r = random.random()
 
-        if self.r < 1: #self.prob_birth:
+        if self.r < self.prob_birth:
             return True
         else:
             return False
@@ -142,7 +142,7 @@ class animal:
 
         self.d = random.random()
 
-        if self.d < self.prob_death:
+        if self.d < 1:#self.prob_death:
             return True
         else:
             return False #self.prob_death
