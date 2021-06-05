@@ -28,6 +28,8 @@ class cell:
         """
             Use of the animal class to add animals to the cell.
             """
+        for k in range(49):
+            self.herbivores_pop.append(herbivore(weight=None, age=0))
 
     def sorting_animals(self):  # do we need property here?
         """
@@ -55,12 +57,14 @@ class cell:
 
    
          """
-        for herb in self.herbivores_pop:
-            self.herb = random.choice(self.herbivores_pop)
-            if self.available_fodder >= 0:
-                self.herb.eat_fodder(F_cell=self.available_fodder)
-                self.available_fodder = self.herb.F_cell
-                self.herbivores_pop.remove(self.herb)
+        self.available_fodder_function()
+        length = len(self.herbivores_pop)
+        for _ in range(length):
+            herb = random.choice(self.herbivores_pop)
+            if self.af >= 0:
+                herb.eat_fodder(F_cell=self.af)
+                self.af -= herb.F_consumption
+                self.herbivores_pop.remove(herb)
 
 
     def newborn_animals(self):

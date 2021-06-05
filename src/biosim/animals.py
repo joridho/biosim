@@ -179,10 +179,11 @@ class herbivore(animal):
             self.F_cell -= self.p['F']
             self.weight_gain()
             self.f = self.p['F']
-            self.p['F'] = 0  #Den resetter!!!!!!!!! Hva vil at cellen skal returne
+            self.F_consumption = self.p['F']
+            self.p['F'] = 0
         else:
             self.F_consumption = self.F_cell
-            self.F_cell = 0 #########
+            self.F_cell = 0
             self.weight += self.p['beta'] * self.F_consumption
                                             # could use weight_gain function for this
             self.p['F'] -= self.F_consumption
