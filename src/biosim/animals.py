@@ -34,6 +34,7 @@ class animal:
     }
 
     def __init__(self, weight, a):
+
         self.a = a
 
         if weight is None:
