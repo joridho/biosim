@@ -119,7 +119,7 @@ class animal:
 
         self.r = random.random()
 
-        if self.r < 1: #self.prob_birth:
+        if self.r < self.prob_birth:
             self.birth = True
         else:
             self.birth = False
@@ -142,10 +142,10 @@ class animal:
 
         self.d = random.random()
 
-        if self.d < 1:#self.prob_death:
-            return True
+        if self.d < self.prob_death:
+            self.death = True
         else:
-            return False #self.prob_death
+            self.death = False #self.prob_death
 
     # def migration(self):
 

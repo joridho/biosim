@@ -141,6 +141,8 @@ def test_yearly_weight_loss():
 def test_animal_removed_after_death():
     c = cell()
     c.adding_animals()
+    list = c.herbivores_pop
     c.dead_animals_natural_cause()
-    assert len(c.herbivores_pop) == 0
+
+    assert len(c.herbivores_pop) == len(list) - c.dead
 

@@ -147,13 +147,14 @@ class cell:
             """
         list_a = self.herbivores_pop
         length = len(list_a)
+        list_dead = []
+        self.dead = 0
         for k in range(length):
             list_a[k].death_probability()
-            if list_a[k].prob_death is True:
-                # self.remove is True
-                # self.remove_animals()
-                list_a.remove(list_a[k])
-        self.herbivores_pop = list_a
+            if list_a[k].death is True:
+                list_dead.append(list_a[k])
+                self.dead += 1 # for testing
+        self.herbivores_pop = set(list_a) - set(list_dead)
 
     def remove_animals(self):
         """
