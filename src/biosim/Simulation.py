@@ -40,6 +40,14 @@ class biosim:
     def year_cycle(self):
         """
             simulates one year
+
+        Runs through each of the 6 yearly seasons for all cells.
+        - Step 1: Animals feed
+        - Step 2: Animals procreate
+        - Step 3: Animals migrate
+        - Step 4: Animals age
+        - Step 5: Animals lose weight
+        - Step 6: Animals die
             """
 
     def year(self):
