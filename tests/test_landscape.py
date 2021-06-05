@@ -1,6 +1,6 @@
 import unittest
 
-
+''''
 class MyTestCase(unittest.TestCase):
     def test_something(self):
         self.assertEqual(True, False)
@@ -8,12 +8,17 @@ class MyTestCase(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+'''
 
 from biosim.animals import herbivore
 from biosim.Cell import cell
 
 
 def test_simple_sorting():
+    '''
+    This is a test that checks if the herbivores get sorted in a list based on ascending
+    phi-value.
+    '''
     c = cell()
     c.herbivores_pop = [herbivore(weight=35, a=3), herbivore(weight=41, a=8),
                         herbivore(weight=20, a=6)]
@@ -25,6 +30,19 @@ def test_simple_sorting():
               c.sorted_herbivores_pop[2].phi]
     assert liste2 == liste3
 
+'''
+def test_available_fodder_function():
+    
+    #This is a test that checks if the cell gets it maximum amount of fodder back
+    #with the help of the available fodder function
+    
+    c = cell()
+    available_fodder = 800
+    c.available_fodder_function()
+    assert c.af == available_fodder
+
+
+'''
 
 def test_fodder_eaten():
     c = cell()
@@ -34,7 +52,7 @@ def test_fodder_eaten():
     c.make_herbivores_eat()
     assert c.available_fodder == 800 - 6 * 10
 
-
+'''
 def test_newborn_added_to_list():
     c = cell()
     c.herbivores_pop = [herbivore(weight=35, a=3), herbivore(weight=41, a=8),
@@ -121,3 +139,4 @@ def test_yearly_weight_loss():
     c.make_animals_lose_weight()
     for k in range(len(c.herbivores_pop)):
         assert c.herbivores_pop[k].weight == liste[k] - h.p['eta'] * liste[k]
+'''

@@ -18,7 +18,8 @@ class cell:
     p = {'f_max': 800.0}
 
     def __init__(self):
-        self._F = self.p['f_max']
+        #self._F = self.p['f_max']
+        self.available_fodder = self.p['f_max']
         self._accessible = True
         self.herbivores_pop = []
         self.carnivores_pop = []
@@ -36,13 +37,15 @@ class cell:
             """
         self.sorted_herbivores_pop = sorted(self.herbivores_pop, key=operator.attrgetter('phi'))
 
+
     def available_fodder_function(self):
         """
             At the beginning of the year the available fodder is f_max
             """
-        self.available_fodder = self.p['f_max']
+        self.af = self._F
 
     def make_herbivores_eat(self):
+
         """
             The animals eats available fodder until their appetite is filled.
             The eat_fodder-function from the Herbivore class does this.
@@ -50,14 +53,17 @@ class cell:
 
             This function can only be used once per year because of the available_fodder_function
 
-            """
-        self.available_fodder_function()
-        while self.available_fodder >= 0:
+   
+         """
+        for herb in self.herbivores_pop:
             self.herb = random.choice(self.herbivores_pop)
-            self.herb.eat_fodder(F_cell=self.available_fodder)
-            self.available_fodder = self.herb.F_cell
-            self.herbivores_pop.remove(self.herb)
+            if self.available_fodder >= 0:
+                self.herb.eat_fodder(F_cell=self.available_fodder)
+                self.available_fodder = self.herb.F_cell
+                self.herbivores_pop.remove(self.herb)
 
+
+'''
     def newborn_animals(self):
         """
             An animal gives birth maximum one time per year.The function birth_probability
@@ -147,3 +153,4 @@ class lowland(cell):
             Initialises lowland class
             """
         super().__init__()
+'''
