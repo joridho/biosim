@@ -16,8 +16,6 @@ class animal:
     This i a class for animals on the island
     """
 
-    random.seed(1)
-
     p = {  # Dictionary of parameters belonging to the Herbivore class
         "w_birth": 8.0,
         "sigma_birth": 1.5,
