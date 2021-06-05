@@ -53,7 +53,8 @@ def test_fodder_eaten():
                         herbivore(weight=41, a=8), herbivore(weight=20, a=6)]
     c.make_herbivores_eat()
     #assert c.af == 800 - 6 * 10
-    assert len(c.herbivores_pop) == 6
+    #assert herbivore.p['F']  == 10
+    #assert len(c.herbivores_pop) == 6
     #liste5 = c.herbivores_pop
     #assert liste5 == []
 
