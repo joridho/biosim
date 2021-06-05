@@ -67,7 +67,7 @@ class cell:
                 self.af -= herb.F_consumption
                 still_alive.append(herb)
                 self.herbivores_pop.remove(herb)
-        self.herbivores_pop.append(still_alive)
+        self.herbivores_pop.extend(still_alive)
 
 
 
