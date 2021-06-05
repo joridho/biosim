@@ -74,15 +74,16 @@ class cell:
             """
         list_h = self.herbivores_pop
         self.counting_animals()
-        self.reset_given_birth()
+        self.reset_given_birth() # must be removed later
         length = len(list_h)
         for k in range(length):
             list_h[k].birth_probability(n=self.N)
-            if list_h[k].given_birth is False and list_h[k].birth_probability is True:
+            list_h[k].prob_birth = True
+            if list_h[k].given_birth is False and list_h[k].prob_birth is True:
                 newborn = herbivore(weight=list_h[k].newborn_birth_weight, a=0)
-                list_h.append(newborn)
                 list_h[k].birth_weight_loss(n=self.N)
-                list_h[k].given_birth is True
+                list_h[k].given_birth is True # burde være riktig
+                list_h.append(newborn)  # skal være riktig
         self.herbivores_pop = list_h
 
     def counting_animals(self):

@@ -119,7 +119,7 @@ class animal:
 
         self.r = random.random()
 
-        if self.r < self.prob_birth:
+        if self.r < 1: #self.prob_birth:
             return True
         else:
             return False
@@ -178,7 +178,7 @@ class herbivore(animal):
         if self.F_cell >= self.p['F']:
             self.F_cell -= self.p['F']
             self.weight_gain()
-            self.f = self.p['F']
+            #self.f = self.p['F']
             self.F_consumption = self.p['F']
             self.p['F'] = 0
         else:
