@@ -58,12 +58,18 @@ class cell:
          """
         self.available_fodder_function()
         length = len(self.herbivores_pop)
+        still_alive = []
         for _ in range(length):
             herb = random.choice(self.herbivores_pop)
             if self.af >= 0:
+                herb.p['F'] = 10
                 herb.eat_fodder(F_cell=self.af)
                 self.af -= herb.F_consumption
+                still_alive.append(herb)
                 self.herbivores_pop.remove(herb)
+        self.herbivores_pop.append(still_alive)
+
+
 
     def newborn_animals(self):
         """
