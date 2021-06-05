@@ -120,9 +120,9 @@ class animal:
         self.r = random.random()
 
         if self.r < 1: #self.prob_birth:
-            return True
+            self.birth = True
         else:
-            return False
+            self.birth = False
 
     def birth_weight_loss(self,n):
         """
