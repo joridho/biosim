@@ -135,7 +135,7 @@ def test_death():
     h = herbivore(weight=10)
     for _ in range(100):
         h.death_probability()
-        if h.death_probability() == True:
+        if h.death == True:
             assert h.d < h.prob_death
         else:
             assert h.d >= h.prob_death

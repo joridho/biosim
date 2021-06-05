@@ -69,10 +69,15 @@ def test_newborn_added_to_list():
 
 def test_mother_lost_weight():
     c = cell()
-    c.herbivores_pop = [herbivore(weight=35, a=3)]
+    c.herbivores_pop = [herbivore(weight=36, a=3), herbivore(weight=40, a=3)]
     list = c.herbivores_pop
+    weight = []
+    for k in range(len(list)):
+        weight.append(list[k].weight)
     c.newborn_animals()
-    assert list[0].weight == 35 - list[0].p['zeta'] * list[0].newborn_birth_weight
+    list2 = c.herbivores_pop
+    for k in range(len(weight)):
+        assert list2[k].weight == weight[k] - list[k].p['zeta'] * list[k].newborn_birth_weight
 
 
 def test_count_animals():
