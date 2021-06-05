@@ -66,12 +66,11 @@ def test_newborn_added_to_list():
 
 
 def test_mother_lost_weight():
-    h = herbivore()
-    h.birth_probability(N=6)
     c = cell()
     c.herbivores_pop = [herbivore(weight=35, a=3)]
     c.newborn_animals()
-    assert h.weight == 35 - h.newborn_birth_weight
+    list = c.herbivores_pop
+    assert list[0].weight == 35 - list[0].p['zeta'] * list[0].newborn_birth_weight
 
 
 def test_count_animals():
@@ -84,7 +83,7 @@ def test_count_animals():
     assert c.N == 6
 
 
-def test_reset_available_fodder():
+def test_reset_available_fodder():  # testen fungerer ikke siden make_herbivores_eat ikke fungerer
     c = cell()
     c.herbivores_pop = [herbivore(weight=35, a=3), herbivore(weight=41, a=8),
                         herbivore(weight=20, a=6), herbivore(weight=35, a=3),
@@ -95,7 +94,7 @@ def test_reset_available_fodder():
     assert c.available_fodder == c.p['f_max']
 
 
-def test_reset_appetite():
+def test_reset_appetite():  # testen fungerer ikke siden make_herbivores_eat ikke fungerer
     c = cell()
     c.herbivores_pop = [herbivore(weight=35, a=3), herbivore(weight=41, a=8),
                         herbivore(weight=20, a=6), herbivore(weight=35, a=3),
@@ -108,13 +107,15 @@ def test_reset_appetite():
 
 def test_reset_given_birth():  # tror funksjonen fungerer, men siden c.newborn_animal ikke fungerer,
     # fungerer ikke testen
-    h = herbivore()
     c = cell()
-    c.herbivores_pop = [herbivore(weight=35, a=3)]
-    c.newborn_animals()
-    h.given_birth = True
+    c.herbivores_pop = [herbivore(weight=35, a=3), herbivore(weight=41, a=8),
+                        herbivore(weight=20, a=6), herbivore(weight=35, a=3),
+                        herbivore(weight=41, a=8), herbivore(weight=20, a=6)]
+    for k in range(len(c.herbivores_pop)):
+        c.herbivores_pop[k].given_birth = True
     c.reset_given_birth()
-    assert h.given_birth == True
+    for k in range(len(c.herbivores_pop)):
+        assert c.herbivores_pop[k].given_birth == False
 
 
 def test_aging():

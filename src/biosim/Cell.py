@@ -71,13 +71,17 @@ class cell:
             weight for the mother.
             The newborn must be added to the list of either herbivores or carnivores
             """
-        for ani in self.herbivores_pop:
-            if ani.given_birth == False:
-                if herbivore.birth_probability == True:
-                    newborn = herbivore(weight=ani.newborn_birth_weight, a=0)
-                    self.herbivores_pop.append(newborn)
-                    ani.birth_weight_loss(N=self.N)
-                    ani.given_birth == True
+        list = self.herbivores_pop
+        self.counting_animals()
+        for k in range(len(list)):
+            list[k].birth_probability(n=self.N)
+            if list[k].given_birth == False:
+                if list[k].birth_probability == True:
+                    newborn = herbivore(weight=list[k].newborn_birth_weight, a=0)
+                    list.append(newborn)
+                    list[k].birth_weight_loss(n=self.N)
+                    list[k].given_birth == True
+        self.herbivores_pop = list
 
     def counting_animals(self):
         """
