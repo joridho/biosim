@@ -46,6 +46,7 @@ class animal:
 
         # self.phi = self.fitness()
         self.fitness()
+        self.given_birth = False
 
         # self.birth_weight = self.birth_weight()
 
@@ -95,13 +96,13 @@ class animal:
         else:
             return self.phi
 
-    def birth_probability(self,N):
+    def birth_probability(self,n):
         """
             Animals can mate if there are two or more animals of the same species in the same cell.
             The animals can give birth with a probability, which depends on fitness and weight.
             If the newborn weighs more than the mother, the probability of birth is zero.
             """
-        self.variable = self.p['gamma'] * self.phi * (N - 1)
+        self.variable = self.p['gamma'] * self.phi * (n - 1)
         self.newborn_birth_weight = self.birth_weight_function()
                                                           # this is the weight of the possible newborn
 
@@ -109,23 +110,25 @@ class animal:
             self.prob_birth = 0
         elif self.weight <= self.newborn_birth_weight:  # birth weight to newborn
             self.prob_birth = 0
-        elif N < 2:
+        elif n < 2:
             self.prob_birth = 0
         elif self.variable < 1:
             self.prob_birth = self.variable
         else:
             self.prob_birth = 1
 
-        if random.random() < self.prob_birth:
-            return True
-        else:
-            return False
+        self.r = random.random()
 
-    def birth_weight_loss(self,N):
+        if self.r < self.prob_birth:
+            self.birth = True
+        else:
+            self.birth = False
+
+    def birth_weight_loss(self,n):
         """
             If the mother gives birth, she looses weight
             """
-        self.birth_probability(N)
+        self.birth_probability(n)
         self.weight -= self.p['zeta'] * self.newborn_birth_weight
 
     def death_probability(self):
@@ -137,10 +140,12 @@ class animal:
         else:
             self.prob_death = self.p['omega'] * (1 - self.phi)
 
-        if random.random() < self.prob_death:
-            return True
+        self.d = random.random()
+
+        if self.d < self.prob_death:
+            self.death = True
         else:
-            return self.prob_death
+            self.death = False #self.prob_death
 
     # def migration(self):
 
@@ -173,6 +178,8 @@ class herbivore(animal):
         if self.F_cell >= self.p['F']:
             self.F_cell -= self.p['F']
             self.weight_gain()
+            self.f = self.p['F'] # for testing
+            self.F_consumption = self.p['F']
             self.p['F'] = 0
         else:
             self.F_consumption = self.F_cell

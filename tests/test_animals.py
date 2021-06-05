@@ -33,11 +33,17 @@ def test_herbivore_aging():
         assert h.a == n + 1
 
 def test_herbivore_birth_weight():
+    """
+    A test that checks that the herbivore have been given a birth_weight
+    """
     h = herbivore()
     birth_w = h.birth_weight
     assert h.birth_weight == birth_w
 
 def test_herbivore_weight_loss():
+    '''
+        this is a test for testing if the herbivore looses weight each year
+    '''
     h = herbivore()
     current_weight = h.weight
     eta = h.p['eta']
@@ -58,62 +64,137 @@ def test_herbivore_weight_gain():
 
 
 def test_herbivore_fitness():
+    """
+    A test that checks that the herbivore have been given a fitness
+    """
     h = herbivore()
     fitness = h.phi
     h.fitness()
     assert fitness == h.phi
 
 def test_valid_fitness():
+    """
+    This is a test for checking that the fitness-function returns a phi-value between 0 and 1
+    """
     for _ in range(100):
         h = herbivore()
         h.fitness()
         assert 0 <= h.phi <= 1
 
 def test_no_newborn_when_mother_weighs_too_little():
+    """
+    This is a test that checks if the birth probability equals zero when the mother weighs to little.
+    """
     h = herbivore(weight=3.5, a=3)
-    h.birth_probability(N=3)
+    h.birth_probability(n=3)
     assert h.prob_birth == 0
 
-def test_no_newborn_when_to_few_animals():
-    h = herbivore(weight=4, a=3)
-    h.birth_probability(N=1)
+def test_no_newborn_when_to_few_animals(): #too
+    """
+    This is a test that checks if the birth probability equals zero when there are too few animals
+    a cell.
+    """
+
+    h = herbivore(weight=32, a=3)
+    h.birth_probability(n=1)
     assert h.prob_birth == 0
 
 def test_no_newborn_if_newborn_too_fat():
+    """
+    This is a test that checks if the birth probability equals zero when the newborn weighs more
+    than the mother
+    """
     h = herbivore(weight=3, a=3)
-    h.birth_probability(N=3)
+    h.birth_probability(n=3)
     h.newborn_birth_weight = 5
     assert h.prob_birth == 0
 
+
 def test_birth():
+    'This is a test that checks if the Herbivore gives birth when it is supposed to'
     h = herbivore(weight=35, a=3)
     for _ in range(100):
-        assert h.birth_probability(N=4) == True
+        h.birth_probability(n=4)
+        if h.birth_probability(n=4) == True:
+            assert h.r < h.prob_birth
+        else:
+            assert h.r >= h.prob_birth
 
 def test_herbivore_birth_weight_loss():
+    ' This is a test that checks if the Mother looses the right amount of weight after giving birth'
     h = herbivore()
-    w = h.weight
-    h.birth_weight_loss(N=40)
-    assert h.weight == w - h.p['zeta'] * h.newborn_birth_weight
+    current_weight = h.weight
+    h.birth_weight_loss(n=40)
+    assert h.weight == current_weight - h.p['zeta'] * h.newborn_birth_weight
+
 
 def test_death():
+    '''
+    This is a test that checks if the Herbivore dies when it is supposed to'
+    '''
     h = herbivore(weight=10)
     for _ in range(100):
-        assert h.death_probability() == True
+        h.death_probability()
+        if h.death == True:
+            assert h.d < h.prob_death
+        else:
+            assert h.d >= h.prob_death
 
 def test_herbivore_eat_fodder():
     h = herbivore()
+    current_weight = h.weight
+    h.eat_fodder(F_cell = h.p['F']) 
+    #assert h.weight == current_weight + h.p['beta'] * h.f
+    assert h.F_cell == 0   #apetiten F skal være tom 0. 
+    # og F_celle skal være lik celle i start minus apetit (men blir 0 her pga de er like store duhhh)
+
+def test_herbivore_gains_weight_after_eat_fodder():
+    #Kan hende det er samme som weight_gain funksjonen
+    '''
+    This is a test that checks if the Herbivore gains the right amount of weight
+    when it eats in a cell that has enough fodder that satisfies the Herbivore apetite
+    '''
+    h = herbivore()
+    current_weight = h.weight
     h.eat_fodder(F_cell = h.p['F'])
+    assert h.weight == current_weight + h.p['beta'] * h.f
+
+def test_cell_empty_after_herbivore_eat_fodder():
+    '''
+    This is a test that checks if the cell is empty after the Herbivore has eaten in a cell that
+     has enough fodder that satisfies the herbivores apetite'
+    '''
+    h = herbivore()
+    h.eat_fodder(F_cell=h.p['F'])
     assert h.F_cell == 0
 
+
 def test_weight_gain_after_eating():
+    
+    # This is a test that checks if the Herbivore gains the right amount of weight
+    #when it eats in a cell that does not have enough fodder that satisfies the Herbivore apetite
+    
     h = herbivore()
-    current_weight = float(h.weight)
+    current_weight = h.weight
     beta = h.p['beta']
     F = 8
+
     new_weight = current_weight + beta * F
-    h.eat_fodder(F_cell=8)
+    h.eat_fodder(F_cell= F)
     assert h.weight == new_weight
+    #assert h.F_cell ==0
+    #assert h.F_consumption == 8
+
+def test_update_appetite():
+    h = herbivore()
+    h.eat_fodder(F_cell=4)
+    assert h.p['F'] == 6
+
+
+def test_update_F_cell():
+    h = herbivore()
+    h.eat_fodder(F_cell=800)
+    assert h.F_cell == 800-10
 
 
 
