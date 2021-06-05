@@ -18,8 +18,8 @@ class cell:
     p = {'f_max': 800.0}
 
     def __init__(self):
-        #self._F = self.p['f_max']
-        self.available_fodder = self.p['f_max']
+        # self._F = self.p['f_max']
+        self.af = self.p['f_max']
         self._accessible = True
         self.herbivores_pop = []
         self.carnivores_pop = []
@@ -28,8 +28,8 @@ class cell:
         """
             Use of the animal class to add animals to the cell.
             """
-        for k in range(49):
-            self.herbivores_pop.append(herbivore(weight=None, age=0))
+        for k in range(50):
+            self.herbivores_pop.append(herbivore())
 
     def sorting_animals(self):  # do we need property here?
         """
@@ -38,7 +38,6 @@ class cell:
             Carnivores are sorted fittest to weakest, since the fittest eats first
             """
         self.sorted_herbivores_pop = sorted(self.herbivores_pop, key=operator.attrgetter('phi'))
-
 
     def available_fodder_function(self):
         """
@@ -66,7 +65,6 @@ class cell:
                 self.af -= herb.F_consumption
                 self.herbivores_pop.remove(herb)
 
-
     def newborn_animals(self):
         """
             An animal gives birth maximum one time per year.The function birth_probability
@@ -74,17 +72,18 @@ class cell:
             weight for the mother.
             The newborn must be added to the list of either herbivores or carnivores
             """
-        list = self.herbivores_pop
+        list_h = self.herbivores_pop
         self.counting_animals()
-        for k in range(len(list)):
-            list[k].birth_probability(n=self.N)
-            if list[k].given_birth == False:
-                if list[k].birth_probability == True:
-                    newborn = herbivore(weight=list[k].newborn_birth_weight, a=0)
-                    list.append(newborn)
-                    list[k].birth_weight_loss(n=self.N)
-                    list[k].given_birth == True
-        self.herbivores_pop = list
+        self.reset_given_birth()
+        length = len(list_h)
+        for k in range(length):
+            list_h[k].birth_probability(n=self.N)
+            if list_h[k].given_birth is False and list_h[k].birth_probability is True:
+                newborn = herbivore(weight=list_h[k].newborn_birth_weight, a=0)
+                list_h.append(newborn)
+                list_h[k].birth_weight_loss(n=self.N)
+                list_h[k].given_birth is True
+        self.herbivores_pop = list_h
 
     def counting_animals(self):
         """
@@ -125,7 +124,6 @@ class cell:
         for k in range(len(self.herbivores_pop)):
             self.herbivores_pop[k].aging()
 
-
     def make_animals_lose_weight(self):
         """
             Each year the animal loses weight based on their own weight and eta
@@ -160,4 +158,3 @@ class lowland(cell):
             Initialises lowland class
             """
         super().__init__()
-
