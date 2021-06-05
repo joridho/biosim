@@ -77,12 +77,9 @@ def test_mother_lost_weight():
 
 def test_count_animals():
     c = cell()
-    c.herbivores_pop = [herbivore(weight=35, a=3), herbivore(weight=41, a=8),
-                        herbivore(weight=20, a=6), herbivore(weight=35, a=3),
-                        herbivore(weight=41, a=8),
-                        herbivore(weight=20, a=6)]
+    c.adding_animals()
     c.counting_animals()
-    assert c.N == 6
+    assert c.N == 50
 
 
 def test_reset_available_fodder():  # testen fungerer ikke siden make_herbivores_eat ikke fungerer
@@ -122,9 +119,7 @@ def test_reset_given_birth():  # tror funksjonen fungerer, men siden c.newborn_a
 
 def test_aging():
     c = cell()
-    c.herbivores_pop = [herbivore(weight=35, a=3), herbivore(weight=41, a=8),
-                        herbivore(weight=20, a=6), herbivore(weight=35, a=3),
-                        herbivore(weight=41, a=8), herbivore(weight=20, a=6)]
+    c.adding_animals()
     liste = []
     for ani in range(len(c.herbivores_pop)):
         liste.append(c.herbivores_pop[ani].a)
@@ -135,9 +130,7 @@ def test_aging():
 def test_yearly_weight_loss():
     c = cell()
     h = herbivore()
-    c.herbivores_pop = [herbivore(weight=35, a=3), herbivore(weight=41, a=8),
-                        herbivore(weight=20, a=6), herbivore(weight=35, a=3),
-                        herbivore(weight=41, a=8), herbivore(weight=20, a=6)]
+    c.adding_animals()
     liste = []
     for ani in range(len(c.herbivores_pop)):
         liste.append(c.herbivores_pop[ani].weight)
