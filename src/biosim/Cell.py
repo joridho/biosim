@@ -125,6 +125,8 @@ class cell:
             herbivore.p['F'] = 10.0
             self.herbivores_pop[k].p['F'] = 10.0
 
+        return self.herbivores_pop
+
     def reset_given_birth(self):
         """
         An animal can only give birth once per year

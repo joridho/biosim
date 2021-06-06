@@ -55,7 +55,7 @@ def test_fodder_eaten():
     assert c.af == 800 - 6 * 10
 
 def test_fodder_eaten():
-    'Check if there all the animals are still in herbivores_pop'
+    'Check if there all the animals are still in herbivores_pop after add_pop'
     l = lowland()
     l.herbivores_pop = [herbivore(weight=35, a=3), herbivore(weight=41, a=8),
                         herbivore(weight=20, a=6), herbivore(weight=35, a=3),
