@@ -186,3 +186,52 @@ class herbivore(animal):
             self.weight += self.p['beta'] * self.F_consumption
                                             # could use weight_gain function for this
             self.p['F'] -= self.F_consumption
+
+class carnivore(animal):
+    """
+    this is a class for carnivores  on the island
+    """
+
+    def __init__(self, weight=None, a=0):
+        """
+        initialisation of weight and age for a new herbivore
+            """
+        super().__init__(weight, a)
+
+    def eat_herbivores(self):
+        """
+            Carnivores eats herbivores
+            """
+
+    def probability_kill_herbivore(self, herb):
+        """
+            The carnivore kills a herbivore with probability prob_kill
+            """
+        if self.phi <= herb.phi:
+            self.prob_kill = 0
+        elif 0 < self.phi - herb.phi < self.p['DeltaPhiMax']:
+            self.prob_kill = (self.phi - herb.phi)/self.p['DeltaPhiMax']
+        else:
+            self.prob_kill = 1
+
+        self.r = random.random()
+
+        if self.r < self.prob_kill:
+            self.kill = True
+        else:
+            self.kill = False
+
+    def weight_gain_after_eating_herb(self, herb):
+        """
+            After eating the carnivore gains weight relative to the eaten herbivore
+            """
+
+
+
+
+
+
+
+
+
+
