@@ -15,7 +15,11 @@ def test_init_pop():
     b.add_pop()
     assert len(b.init_pop) == 50
 
-def
+def test_year_cycle:
+
+
+def test_year:
+
 
 
 
