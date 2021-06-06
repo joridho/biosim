@@ -61,8 +61,8 @@ def test_newborn_added_to_list():
                         herbivore(weight=20, a=6), herbivore(weight=35, a=3),
                         herbivore(weight=41, a=8), herbivore(weight=20, a=6)]
     length = len(c.herbivores_pop)
-    for k in range(len(c.herbivores_pop)):
-        c.herbivores_pop[k].given_birth = False
+    #for k in range(len(c.herbivores_pop)):
+        #c.herbivores_pop[k].given_birth = False
     c.newborn_animals()
     assert len(c.herbivores_pop) == length + c.new
 
