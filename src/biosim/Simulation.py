@@ -63,14 +63,14 @@ class biosim:
             """
         l = lowland()
 
-        if self.y == 0:
-            l.adding_animals()
-        l.make_herbivores_eat() # Animals feed
+        if year == 0:
+            l.adding_animals()  # tror ikke den trenger å være i year_cycle, men heller i simulation
+        l.make_herbivores_eat()  # Animals feed
         l.reset_appetite()      # Animals feed
-        l.newborn_animals() #Animals procreate
-        l.aging()           #Animals age
-        l.make_animals_lose_weight() #Animals lose weight
-        l.dead_animals_natural_cause() # Animals die
+        l.newborn_animals()  # Animals procreate
+        l.aging()           # Animals age
+        l.make_animals_lose_weight()  # Animals lose weight
+        l.dead_animals_natural_cause()  # Animals die
         #self.init_pop = l.counting_animals()
 #=======
         l.make_herbivores_eat()  # Animals feed
