@@ -51,7 +51,7 @@ class biosim:
             """
         l = lowland()
         l.make_herbivores_eat() # Animals feed
-        l.reset_appetite()
+        l.reset_appetite()      # Animals feed
         l.newborn_animals() #Animals procreate
         l.aging()           #Animals age
         l.make_animals_lose_weight() #Animals lose weight
