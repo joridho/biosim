@@ -12,11 +12,13 @@ if __name__ == '__main__':
     unittest.main()
 
 def test_init_pop():
+    'Check if add_pop works'
     b = biosim(init_pop=None)
     b.add_pop()
     assert len(b.init_pop) == 50
 
 def test_year_cycle():
+    'Check if add_pop works in test_year_cycle'
     b = biosim(init_pop=None)
     assert len(b.year_cycle()) == 50
     #assert len(l.nyliste) == 50
@@ -24,11 +26,12 @@ def test_year_cycle():
 
 
 def test_fodder_eaten():
+    'Check if make_herbivores eat works in year_cycle'
+    l = lowland()
     b = biosim(init_pop=None)
     b.year_cycle()
-    l = lowland()
     l.herbivores_pop = b.dyn
-    l.make_herbivores_eat()
+    #l.make_herbivores_eat()
     assert l.af == 800 - 50 * 10
 
 #def test_year:
