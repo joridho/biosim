@@ -13,24 +13,26 @@ import ran
 
 class biosim:
 
-    def __init__(self, init_pop, seed):  # mangler img og ymax
+    def __init__(self, init_pop, seed, ):  # mangler img og ymax
 
         self.seed = random.seed(10)
 
         self.init_pop = 2
 
+        self.init_pop = init_pop
+
     def add_pop(self):
         """
-            Adds animal to the cell/island
+            Adds animal to the cell/island. These animals become the initial population
             """
         self.init_pop = lowland.adding_animals()
 
-    def feeding(self):
+    #def feeding(self):
         """
             Herbivores eats yearly
             """
 
-    def procreation(self):
+    #def procreation(self):
         """
             Animals mate maximum once per year
             """
@@ -50,6 +52,8 @@ class biosim:
         - Step 6: Animals die
             """
         l = lowland()
+        if year == 0:
+            l.adding_animals()
         l.make_herbivores_eat() # Animals feed
         l.reset_appetite()      # Animals feed
         l.newborn_animals() #Animals procreate
