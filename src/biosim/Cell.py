@@ -81,7 +81,7 @@ class cell:
             """
         list_h = self.herbivores_pop
         self.counting_animals()
-        self.reset_given_birth() # must be removed later
+        self.reset_given_birth() # must be removed later. Må egt ikke bli fjernet
         length = len(list_h)
         self.new = 0
         list_new = []
