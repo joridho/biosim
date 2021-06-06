@@ -72,7 +72,9 @@ class biosim:
         b.add_pop()
         #l.adding_animals
         #l.make_herbivores_eat()# Animals feed
-        h = len(b.add_pop()) #l.herbivores blir ikke oppdatert fra l.adding_animals
+        l.herbivores_pop = len(b.add_pop())
+
+        #l.herbivores blir ikke oppdatert fra l.adding_animals
         # (og sikkert ikke fra de andre også)!!!!
         # Dette funker hvis man plotter (l.adding_animals som argument i len)
         #l.reset_appetite()      # Animals feed
@@ -85,7 +87,7 @@ class biosim:
 
 
         #self.y = n_year + 1  # counts how many years have passed for the simulation #tror denne er feil da, ville bare ha den med
-        return h
+        return l.herbivores_pop
     def year(self):
         """
             Counts how many years to use in simulation
