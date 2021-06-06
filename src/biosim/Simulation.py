@@ -13,18 +13,17 @@ import ran
 
 class biosim:
 
-    def __init__(self, init_pop, seed, ):  # mangler img og ymax
+    def __init__(self, seed = 10, init_pop = 2):  # mangler img og ymax
 
-        self.seed = random.seed(10)
-
-        self.init_pop = 2
-
+        #self.seed = random.seed(10)
+        #self.init_pop = 2
+        self.seed = random.seed(seed)
         self.init_pop = init_pop
 
     def add_pop(self):
         """
-            Adds animal to the cell/island. These animals become the initial population
-            """
+        Adds animal to the cell/island. These animals become the initial population
+        """
         self.init_pop = lowland.adding_animals()
 
     #def feeding(self):
@@ -60,7 +59,7 @@ class biosim:
         l.aging()           #Animals age
         l.make_animals_lose_weight() #Animals lose weight
         l.dead_animals_natural_cause() # Animals die
-        l.counting_animals()
+        #self.init_pop = l.counting_animals()
 
     def year(self):
         """
