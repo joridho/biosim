@@ -37,7 +37,7 @@ class biosim:
         l = lowland()
         self.init_pop = l.adding_animals()
         #self.idk = len(self.init_pop)
-        return self
+        return self.init_pop
 
     #def feeding(self):
         """
@@ -68,10 +68,11 @@ class biosim:
         #if year == 0:
             #l.adding_animals() # tror ikke den trenger å være i year_cycle, men heller i simulation
         #b = biosim(self, init_pop=None)
-
-        l.adding_animals
+        b = biosim(init_pop=None)
+        b.add_pop()
+        #l.adding_animals
         #l.make_herbivores_eat()# Animals feed
-        h = len(l.herbivores_pop) #l.herbivores blir ikke oppdatert fra l.adding_animals
+        h = len(b.add_pop()) #l.herbivores blir ikke oppdatert fra l.adding_animals
         # (og sikkert ikke fra de andre også)!!!!
         # Dette funker hvis man plotter (l.adding_animals som argument i len)
         #l.reset_appetite()      # Animals feed
