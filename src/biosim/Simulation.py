@@ -63,7 +63,7 @@ class biosim:
             """
         l = lowland()
 
-        if year == 0:
+        if self.y == 0:
             l.adding_animals()
         l.make_herbivores_eat() # Animals feed
         l.reset_appetite()      # Animals feed
