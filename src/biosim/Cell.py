@@ -116,7 +116,7 @@ class cell:
 
     def reset_appetite(self):
         """
-            The appetite is filled every year
+            The appetite is filles every year
             """
         for k in range(len(self.herbivores_pop)):
             herbivore.p['F'] = 10.0
@@ -124,8 +124,8 @@ class cell:
 
     def reset_given_birth(self):
         """
-            An animal can only give birth once per year
-            """
+        An animal can only give birth once per year
+        """
         for k in range(len(self.herbivores_pop)):
             self.herbivores_pop[k].given_birth = False
 
@@ -145,10 +145,10 @@ class cell:
 
     def dead_animals_natural_cause(self):
         """
-            Each year some animals will die of natural causes. We check if the animal dies or not
-            by using the function death_probability. After we need to remove them from the from the
-            list of animals
-            """
+        Each year some animals will die of natural causes. We check if the animal dies or not
+        by using the function death_probability. After we need to remove them from the from the
+        list of animals
+        """
         list_a = self.herbivores_pop
         length = len(list_a)
         list_dead = []
