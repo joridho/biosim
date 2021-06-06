@@ -4,12 +4,12 @@ __author__ = 'Jorid Holmen'
 __email__ = 'jorid.holmen@nmbu.no'
 
 from biosim.animals import herbivore
-from biosim.Cell import lowland
+from biosim.Cell import lowland, cell
 
 import pandas
 import matplotlib.pyplot as plt
 import subprocess
-import random
+import ran
 
 class biosim:
 
@@ -49,6 +49,14 @@ class biosim:
         - Step 5: Animals lose weight
         - Step 6: Animals die
             """
+        l = lowland()
+        l.make_herbivores_eat() # Animals feed
+        l.reset_appetite()
+        l.newborn_animals() #Animals procreate
+        l.aging()           #Animals age
+        l.make_animals_lose_weight() #Animals lose weight
+        l.dead_animals_natural_cause() # Animals die
+        l.counting_animals()
 
     def year(self):
         """
