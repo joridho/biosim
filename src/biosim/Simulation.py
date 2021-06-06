@@ -10,28 +10,38 @@ import pandas
 import matplotlib.pyplot as plt
 import subprocess
 import random
+<<<<<<< HEAD
+=======
 
+>>>>>>> origin/Simulation
 
 class biosim:
 
-    def __init__(self, init_pop, seed):  # mangler img og ymax
+    def __init__(self, init_pop, seed = 10):  # mangler img og ymax
 
-        self.seed = random.seed(10)
+        #self.seed = random.seed(10)
+        #self.init_pop = 2
+        self.seed = random.seed(seed)
+        if init_pop is None:
+            self.init_pop = self.add_pop()
 
-        self.init_pop = 2
+
+
+        self.init_pop = init_pop
 
     def add_pop(self):
         """
-            Adds animal to the cell/island
-            """
-        self.init_pop = lowland.adding_animals()
+        Adds animal to the cell/island. These animals become the initial population
+        """
+        l = lowland()
+        self.init_pop = l.adding_animals()
 
-    def feeding(self):
+    #def feeding(self):
         """
             Herbivores eat yearly
             """
 
-    def procreation(self):
+    #def procreation(self):
         """
             Animals mate maximum once per year
             """
@@ -51,6 +61,17 @@ class biosim:
         - Step 6: Animals die
             """
         l = lowland()
+<<<<<<< HEAD
+        if year == 0:
+            l.adding_animals()
+        l.make_herbivores_eat() # Animals feed
+        l.reset_appetite()      # Animals feed
+        l.newborn_animals() #Animals procreate
+        l.aging()           #Animals age
+        l.make_animals_lose_weight() #Animals lose weight
+        l.dead_animals_natural_cause() # Animals die
+        #self.init_pop = l.counting_animals()
+=======
         l.make_herbivores_eat()  # Animals feed
         l.reset_appetite()
         l.newborn_animals()  # Animals procreate
@@ -58,6 +79,7 @@ class biosim:
         l.make_animals_lose_weight()  # Animals lose weight
         l.dead_animals_natural_cause()  # Animals die
         l.counting_animals()
+>>>>>>> origin/Simulation
 
         self.y = n_year + 1  # counts how many years have passed for the simulation #tror denne er feil da, ville bare ha den med
 
