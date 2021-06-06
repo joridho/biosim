@@ -70,13 +70,13 @@ class biosim:
         #b = biosim(self, init_pop=None)
         b = biosim(init_pop=None)
         b.add_pop()
-        #l.adding_animals
-        #l.make_herbivores_eat()# Animals feed
-        l.herbivores_pop = len(b.add_pop())
-
+        l.herbivores_pop = b.add_pop()
+        l.herbivores_pop = l.make_herbivores_eat()# Animals feed
         #l.herbivores blir ikke oppdatert fra l.adding_animals
         # (og sikkert ikke fra de andre også)!!!!
         # Dette funker hvis man plotter (l.adding_animals som argument i len)
+
+
         #l.reset_appetite()      # Animals feed
         #l.newborn_animals()  # Animals procreate
         #l.make_animals_age()           # Animals age

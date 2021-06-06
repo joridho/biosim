@@ -18,7 +18,7 @@ def test_init_pop():
 def test_year_cycle():
     b = biosim(init_pop=None)
     b.add_pop
-    assert b.year_cycle() == 50
+    assert len(b.year_cycle()) == 50
     #assert len(l.nyliste) == 50
    #assert len(b.eat) == 50
 

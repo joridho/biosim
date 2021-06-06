@@ -71,7 +71,7 @@ class cell:
                 self.herbivores_pop.remove(herb)
         self.herbivores_pop.extend(still_alive)
 
-        #return self.herbivores_pop
+        return self.herbivores_pop
 
 
 
