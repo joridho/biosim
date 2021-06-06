@@ -4,12 +4,13 @@ __author__ = 'Jorid Holmen'
 __email__ = 'jorid.holmen@nmbu.no'
 
 from biosim.animals import herbivore
-from biosim.Cell import lowland, cell
+from biosim.Cell import lowland
 
 import pandas
 import matplotlib.pyplot as plt
 import subprocess
-import ran
+import random
+
 
 class biosim:
 
@@ -27,7 +28,7 @@ class biosim:
 
     def feeding(self):
         """
-            Herbivores eats yearly
+            Herbivores eat yearly
             """
 
     def procreation(self):
@@ -50,42 +51,29 @@ class biosim:
         - Step 6: Animals die
             """
         l = lowland()
-        l.make_herbivores_eat() # Animals feed
+        l.make_herbivores_eat()  # Animals feed
         l.reset_appetite()
-        l.newborn_animals() #Animals procreate
-        l.aging()           #Animals age
-        l.make_animals_lose_weight() #Animals lose weight
-        l.dead_animals_natural_cause() # Animals die
+        l.newborn_animals()  # Animals procreate
+        l.make_animals_age()  # Animals age
+        l.make_animals_lose_weight()  # Animals lose weight
+        l.dead_animals_natural_cause()  # Animals die
         l.counting_animals()
+
+        self.y = n_year + 1  # counts how many years have passed for the simulation #tror denne er feil da, ville bare ha den med
 
     def year(self):
         """
             Counts how many years to use in simulation
             """
+        # n_year =
 
     def num_animals(self):
         """
-            Teller hvor mange dyr det er i cella/øya
+            Counts how many animals there are in the cell/island, for use in simulation
             """
+        self.N_animals = lowland.counting_animals()
 
     def simulate(self):
         """
             function for simulating
             """
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
