@@ -31,7 +31,6 @@ def test_fodder_eaten():
     b = biosim(init_pop=None)
     b.year_cycle()
     l.herbivores_pop = b.dyn
-    #l.make_herbivores_eat()
     assert l.af == 800 - 50 * 10
 
 #def test_year:
