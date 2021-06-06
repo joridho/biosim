@@ -56,12 +56,12 @@ def test_fodder_eaten():
 
 def test_fodder_eaten():
     'Check if there all the animals are still in herbivores_pop'
-    c = lowland()
-    c.herbivores_pop = [herbivore(weight=35, a=3), herbivore(weight=41, a=8),
+    l = lowland()
+    l.herbivores_pop = [herbivore(weight=35, a=3), herbivore(weight=41, a=8),
                         herbivore(weight=20, a=6), herbivore(weight=35, a=3),
                         herbivore(weight=41, a=8), herbivore(weight=20, a=6)]
-    c.make_herbivores_eat()
-    assert len(c.herbivores_pop) == 6
+    l.make_herbivores_eat()
+    assert len(l.herbivores_pop) == 6
 
 
 def test_newborn_added_to_list():

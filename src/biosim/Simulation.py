@@ -36,6 +36,8 @@ class biosim:
         """
         l = lowland()
         self.init_pop = l.adding_animals()
+        #self.idk = len(self.init_pop)
+        return self
 
     #def feeding(self):
         """
@@ -66,9 +68,9 @@ class biosim:
         #if year == 0:
             #l.adding_animals() # tror ikke den trenger å være i year_cycle, men heller i simulation
         #b = biosim(self, init_pop=None)
-        #b.add_pop()
 
-        l.make_herbivores_eat() # Animals feed
+        l.adding_animals #
+        l.make_herbivores_eat()# Animals feed
         h = len(l.herbivores_pop)
         #l.reset_appetite()      # Animals feed
         #l.newborn_animals()  # Animals procreate
