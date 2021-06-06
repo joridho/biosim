@@ -74,6 +74,7 @@ class biosim:
         # lage self for hver nye l.herbivore(s) for å sjekke om den har adde
         l.herbivores_pop = l.make_herbivores_eat()# Animals feed
         # lage self for å sjekke
+        self.dyn = l.herbivores_pop
         #l.herbivores blir ikke oppdatert fra l.adding_animals
         # (og sikkert ikke fra de andre også)!!!!
         # Dette funker hvis man plotter (l.adding_animals som argument i len)
