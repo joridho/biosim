@@ -4,27 +4,33 @@ __author__ = 'Jorid Holmen'
 __email__ = 'jorid.holmen@nmbu.no'
 
 from biosim.animals import herbivore
-from biosim.Cell import lowland, cell
+from biosim.Cell import lowland
 
 import pandas
 import matplotlib.pyplot as plt
 import subprocess
-import ran
+import random
 
 class biosim:
 
-    def __init__(self, seed = 10, init_pop = 2):  # mangler img og ymax
+    def __init__(self, init_pop, seed = 10):  # mangler img og ymax
 
         #self.seed = random.seed(10)
         #self.init_pop = 2
         self.seed = random.seed(seed)
+        if init_pop is None:
+            self.init_pop = self.add_pop()
+
+
+
         self.init_pop = init_pop
 
     def add_pop(self):
         """
         Adds animal to the cell/island. These animals become the initial population
         """
-        self.init_pop = lowland.adding_animals()
+        l = lowland()
+        self.init_pop = l.adding_animals()
 
     #def feeding(self):
         """

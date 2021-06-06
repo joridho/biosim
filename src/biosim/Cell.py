@@ -30,6 +30,7 @@ class cell:
             """
         for k in range(50):
             self.herbivores_pop.append(herbivore())
+        return self.herbivores_pop
 
     def sorting_animals(self):  # do we need property here?
         """
