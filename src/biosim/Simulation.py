@@ -67,7 +67,7 @@ class biosim:
             #l.adding_animals() # tror ikke den trenger å være i year_cycle, men heller i simulation
         b = biosim()
         b.add_pop()
-        l.make_herbivores_eat()  # Animals feed
+        l.make_herbivores_eat() # Animals feed
         l.reset_appetite()      # Animals feed
         l.newborn_animals()  # Animals procreate
         l.aging()           # Animals age

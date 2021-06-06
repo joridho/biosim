@@ -16,6 +16,11 @@ def test_init_pop():
     assert len(b.init_pop) == 50
 
 def test_year_cycle:
+    b = biosim(init_pop=None)
+    b.year_cycle()
+    for k in l.herbivore_pop
+        l.herbivore_pop[k] =
+    assert
 
 
 def test_year:
