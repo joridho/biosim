@@ -69,18 +69,18 @@ class biosim:
         #b.add_pop()
 
         l.make_herbivores_eat() # Animals feed
-        h = l.herbivores_pop
-        l.reset_appetite()      # Animals feed
-        l.newborn_animals()  # Animals procreate
-        l.make_animals_age()           # Animals age
-        l.make_animals_lose_weight()  # Animals lose weight
-        l.dead_animals_natural_cause()  # Animals die
-        self.init_pop = l.counting_animals()
-        l.counting_animals()
+        h = len(l.herbivores_pop)
+        #l.reset_appetite()      # Animals feed
+        #l.newborn_animals()  # Animals procreate
+        #l.make_animals_age()           # Animals age
+        #l.make_animals_lose_weight()  # Animals lose weight
+        #l.dead_animals_natural_cause()  # Animals die
+        #self.init_pop = l.counting_animals()
+        #l.counting_animals()
+
 
         #self.y = n_year + 1  # counts how many years have passed for the simulation #tror denne er feil da, ville bare ha den med
         return h
-
     def year(self):
         """
             Counts how many years to use in simulation
