@@ -32,6 +32,7 @@ class Map_Island:
 
 
 
+#INSP fra ida. MÅ fortsatt redigeres
         def check_boundaries_are_ocean(self):
             """
             Checks that all boundary cells for the map are Ocean.
