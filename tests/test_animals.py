@@ -56,11 +56,11 @@ def test_herbivore_weight_gain():
         this is a test for testing if the herbivore gains weight when it eats as much as it wants to
         '''
     h = herbivore()
-    current_weight = float(h.weight)
+    current_weight = h.weight
     beta = h.p['beta']
     F = h.p['F']
     new_weight = current_weight + beta * F
-    h.weight_gain()
+    h.weight_gain(consumption=F)
     assert h.weight == new_weight
 
 
@@ -157,8 +157,8 @@ def test_herbivore_gains_weight_after_eat_fodder():
     '''
     h = herbivore()
     current_weight = h.weight
-    h.eat_fodder(F_cell = h.p['F'])
-    assert h.weight == current_weight + h.p['beta'] * h.f
+    h.eat_fodder(F_cell = 6)
+    assert h.weight == current_weight + h.p['beta'] * h.F_consumption
 
 def test_cell_empty_after_herbivore_eat_fodder():
     '''
@@ -175,25 +175,21 @@ def test_weight_gain_after_eating():
     # This is a test that checks if the Herbivore gains the right amount of weight
     #when it eats in a cell that does not have enough fodder that satisfies the Herbivore apetite
     
-    h = herbivore()
-    current_weight = h.weight
-    beta = h.p['beta']
-    F = 8
-
-    new_weight = current_weight + beta * F
-    h.eat_fodder(F_cell = F)
-    assert h.weight == new_weight
-    #assert h.F_cell ==0
-    #assert h.F_consumption == 8
+    h = herbivore(weight=37)
+    h.p['F']= 10
+    h.eat_fodder(F_cell = 800)
+    assert h.weight == 37 + 0.9 * 10
 
 def test_update_appetite():
     h = herbivore()
+    h.p['F'] = 10
     h.eat_fodder(F_cell=4)
     assert h.p['F'] == 6
 
 
 def test_update_F_cell():
     h = herbivore()
+    h.p['F'] = 10
     h.eat_fodder(F_cell=800)
     assert h.F_cell == 800-10
 

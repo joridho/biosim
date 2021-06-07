@@ -41,11 +41,13 @@ class animal:
             self.birth_weight_function()
             self.weight = self.birth_weight
         else:
-            self.weight = float(weight)  # unsure about float
+            self.weight = weight  # unsure about float
 
         # self.phi = self.fitness()
         self.fitness()
         self.given_birth = False
+        #self.F_consumption = None
+        #self.F_cell = None
 
         # self.birth_weight = self.birth_weight()
 
@@ -66,16 +68,14 @@ class animal:
         """
             The animal loses weight each year
             """
-        weight_minus = self.p['eta'] * self.weight  # self.weight is method. Does not work in test
-        self.weight -= weight_minus
+        self.weight -= self.p['eta'] * self.weight
 
-    def weight_gain(self):
+    def weight_gain(self, consumption):
         """
             The animal gains weight everytime they eat. In this function, appetite is described as
             what is eaten, but in some cases that is not possible.
             """
-        weight_plus = self.p['beta'] * self.p['F']
-        self.weight += weight_plus
+        self.weight += self.p['beta'] * consumption
 
     def fitness(self):
         """
@@ -95,7 +95,7 @@ class animal:
         else:
             return self.phi
 
-    def birth_probability(self,n):
+    def birth_probability(self, n):
         """
             Animals can mate if there are two or more animals of the same species in the same cell.
             The animals can give birth with a probability, which depends on fitness and weight.
@@ -103,7 +103,7 @@ class animal:
             """
         self.variable = self.p['gamma'] * self.phi * (n - 1)
         self.newborn_birth_weight = self.birth_weight_function()
-                                                          # this is the weight of the possible newborn
+        # this is the weight of the possible newborn
 
         if self.weight < self.p['zeta'] * (self.p['w_birth'] + self.p['sigma_birth']):
             self.prob_birth = 0
@@ -123,7 +123,7 @@ class animal:
         else:
             self.birth = False
 
-    def birth_weight_loss(self,n):
+    def birth_weight_loss(self, n):
         """
             If the mother gives birth, she looses weight
             """
@@ -144,7 +144,7 @@ class animal:
         if self.d < self.prob_death:
             self.death = True
         else:
-            self.death = False #self.prob_death
+            self.death = False  # self.prob_death
 
     # def migration(self):
 
@@ -173,19 +173,21 @@ class herbivore(animal):
 
             after the consumption the herbivore gains weight
             """
-        self.F_cell = F_cell
-        if self.F_cell >= self.p['F']:
-            self.F_cell -= self.p['F']
-            self.weight_gain()
-            self.f = self.p['F'] # for testing
+        #self.F_cell = F_cell
+        if F_cell >= self.p['F']:
+            #f = self.p['F']
+            #self.F_cell -= self.p['F']
+            #self.weight_gain(consumption=f)
             self.F_consumption = self.p['F']
-            #self.p['F'] = 0
+            #self.p['F'] -= self.F_consumption
         else:
-            self.F_consumption = self.F_cell
-            self.F_cell = 0
-            self.weight += self.p['beta'] * self.F_consumption
-                                            # could use weight_gain function for this
-            self.p['F'] -= self.F_consumption
+            self.F_consumption = F_cell
+            #self.F_cell -= self.F_consumption
+            #self.weight_gain(consumption=self.F_consumption)
+            #self.p['F'] -= self.F_consumption
+
+        return self.F_consumption
+
 
 class carnivore(animal):
     """
@@ -210,7 +212,7 @@ class carnivore(animal):
         if self.phi <= herb.phi:
             self.prob_kill = 0
         elif 0 < self.phi - herb.phi < self.p['DeltaPhiMax']:
-            self.prob_kill = (self.phi - herb.phi)/self.p['DeltaPhiMax']
+            self.prob_kill = (self.phi - herb.phi) / self.p['DeltaPhiMax']
         else:
             self.prob_kill = 1
 
@@ -225,9 +227,4 @@ class carnivore(animal):
         """
             After eating the carnivore gains weight relative to the eaten herbivore
             """
-        self.p['F'] = herb.weight
-        self.weight_gain()
-
-
-
-
+        self.weight_gain(consumption=herb.weight)
