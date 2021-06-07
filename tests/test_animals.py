@@ -181,7 +181,7 @@ def test_weight_gain_after_eating():
     F = 8
 
     new_weight = current_weight + beta * F
-    h.eat_fodder(F_cell= F)
+    h.eat_fodder(F_cell = F)
     assert h.weight == new_weight
     #assert h.F_cell ==0
     #assert h.F_consumption == 8
