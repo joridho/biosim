@@ -44,6 +44,7 @@ def test_weight_gain_after_fodder_eaten():
     newlist = []
     for k in range(len(b.pop)):
         newlist[k] = b.pop[k].weight
+        newlist[k] = init_w[k]
 
     assert b.w_bio ==
     g = [n for k in ]
