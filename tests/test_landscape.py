@@ -56,15 +56,23 @@ def test_fodder_eaten():
 
 def test_gain_weight_after_eating():
     c = lowland()
-    c.adding_animals()
-    list = c.herbivores_pop
+    c.herbivores_pop = [herbivore(weight=35, a=3), herbivore(weight=41, a=8),
+                        herbivore(weight=20, a=6), herbivore(weight=35, a=3),
+                        herbivore(weight=41, a=8), herbivore(weight=20, a=6)]
+    list = [herbivore(weight=35, a=3), herbivore(weight=41, a=8), herbivore(weight=20, a=6),
+            herbivore(weight=35, a=3), herbivore(weight=41, a=8), herbivore(weight=20, a=6)]
     weight = []
     for k in range(len(list)):
         weight.append(list[k].weight)
+
     c.make_herbivores_eat()
-    list_after = c.herbivores_pop
-    for k in range(len(list)):
-        assert list_after[k].weight == weight[k] + list[k].p['beta'] * 10#list[k].F_consumption
+    weight2 = []
+    for k in c.herbivores_pop:
+        weight2.append(k.weight)
+    assert weight == weight2
+    #list_after = c.herbivores_pop
+    #for k in range(len(weight)):
+        #assert weight[k] == weight[k] + list[k].p['beta'] * 10 #list[k].F_consumption
 
 
 def test_fodder_eaten():
@@ -74,7 +82,7 @@ def test_fodder_eaten():
                         herbivore(weight=20, a=6), herbivore(weight=35, a=3),
                         herbivore(weight=41, a=8), herbivore(weight=20, a=6)]
     l.make_herbivores_eat()
-    assert len(l.herbivores_pop) == 6
+    assert len(l.make_herbivores_eat()) == 6
 
 
 def test_newborn_added_to_list():

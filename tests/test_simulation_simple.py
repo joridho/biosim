@@ -28,12 +28,12 @@ def test_init_pop():
 def test_fodder_in_cell_after_fodder_eaten():
     '''Check if make_herbivores eat works in year_cycle
     by checking if fodder in cell has the right amount'''
-    #l = lowland()
     b = biosim(init_pop=None)
+    b.add_pop()
     b.year_cycle()
-    #l.herbivores_pop = b.dyn
-    # celle har available fodder, så må sjekke cell.af
-    assert b.af_bio == 800 - 50 * 10
+
+    af2 = b.af_bio
+    assert af2 == 800 - 50 * 10
 
 def test_weight_gain_after_fodder_eaten():
     b = biosim(init_pop=None)

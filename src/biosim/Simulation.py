@@ -28,6 +28,7 @@ class biosim:
 
         self.init_pop = init_pop
         self.year = 0
+        self.af_bio = 800
 
     def add_pop(self):
         """
@@ -70,10 +71,13 @@ class biosim:
         l.make_animals_lose_weight()
         l.dead_animals_natural_cause()
 
+        # for testing:
+        self.af_bio = l.af
+
         # reset
-        l.reset_fodder()
-        l.reset_appetite()
-        l.reset_given_birth()
+        #l.reset_fodder()
+        #l.reset_appetite()
+        #l.reset_given_birth()
 
         self.year += 1
 

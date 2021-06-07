@@ -59,19 +59,21 @@ class cell:
          """
         self.available_fodder_function()
         length = len(self.herbivores_pop)
+        list = self.herbivores_pop
         still_alive = []
         #apetite = self.herbivores_pop[0].p['F']
         for _ in range(length):
-            herb = random.choice(self.herbivores_pop)
+            herb = random.choice(list)
             if self.af >= 0:
                 #herb.p['F'] = apetite
                 herb.eat_fodder(F_cell=self.af)
                 herb.weight_gain()
                 self.af -= herb.F_consumption
                 still_alive.append(herb)
-                self.herbivores_pop.remove(herb)
-        self.herbivores_pop.extend(still_alive)
-
+                list.remove(herb)
+        for k in still_alive:
+            list.append(k)
+        self.herbivores_pop = list
         return self.herbivores_pop
 
 
