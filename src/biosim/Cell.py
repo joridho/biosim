@@ -66,7 +66,7 @@ class cell:
             self.list[k].eat_fodder(F_cell=800)
             #self.list[k].F_consumption = 10 # skal ikke være her
             consumption = self.list[k].F_consumption
-            self.spist.append(consumption)
+            self.spist.append(consumption)  # for testing
 
             # make the herbivore gain weight:
             self.list[k].weight_gain(consumption)
