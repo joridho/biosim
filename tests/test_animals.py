@@ -7,7 +7,7 @@
 __author__ = 'Christianie Torres'
 __email__ = 'christianie.torres@nmbu.no'
 
-from biosim.animals import herbivore
+from biosim.animals import herbivore, carnivore
 
 def test_herbivore_age():
     """
@@ -197,6 +197,22 @@ def test_update_F_cell():
     h.eat_fodder(F_cell=800)
     assert h.F_cell == 800-10
 
+def test_if_carnivore_gains_correct_weight():
+    carn = carnivore()
+    w = carn.weight
+    herb = herbivore(weight=35)
+    carn.weight_gain_after_eating_herb(herb)
+    assert carn.weight == w + herb.weight * herb.p['beta']
+
+def test_prob_kill():
+    herb = herbivore(weight=35, a=3)
+    carn = carnivore()
+    for _ in range(100):
+        carn.probability_kill_herbivore(herb)
+        if carn.kill == True:
+            assert carn.r < carn.prob_kill
+        else:
+            assert carn.r >= carn.prob_kill
 
 
 

@@ -225,12 +225,8 @@ class carnivore(animal):
         """
             After eating the carnivore gains weight relative to the eaten herbivore
             """
-
-
-
-
-
-
+        self.p['F'] = herb.weight
+        self.weight_gain()
 
 
 
