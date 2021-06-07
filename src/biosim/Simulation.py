@@ -65,10 +65,11 @@ class biosim:
             """
 
         l = lowland()
-        l.herbivores_pop = self.init_pop  # må fjernes
+        # l.herbivores_pop = self.init_pop  # må fjernes
 
         l.make_herbivores_eat()
-        self.weight_year_cycle = [k.weight for k in l.herbivores_pop] # for testing
+        self.population_herb = l.herbivores_pop
+        self.weight_year_cycle = [k.weight for k in l.herbivores_pop]  # for testing
         self.available_fodder = l.af  # for testing
 
         l.newborn_animals()
@@ -78,7 +79,7 @@ class biosim:
 
         # reset
         l.reset_fodder()
-        l.reset_appetite()
+        #l.reset_appetite()
         l.reset_given_birth()
 
         self.year += 1
@@ -90,7 +91,7 @@ class biosim:
         """
             Counts how many animals there are in the cell/island, for use in simulation
             """
-        self.N_animals = lowland.counting_animals()
+        self.N_animals = lowland().counting_animals()
 
 '''
     def simulate(self):
