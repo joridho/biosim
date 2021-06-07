@@ -37,7 +37,7 @@ class biosim:
         l = lowland()
         self.init_pop = l.adding_animals()
         #self.idk = len(self.init_pop)
-        return self.init_pop
+        #return self.init_pop
 
     #def feeding(self):
         """
@@ -65,24 +65,16 @@ class biosim:
             """
 
         l = lowland()
-
-        self.add_pop() # må huske å fjerne
-
+        l.herbivores_pop = self.init_pop  # må fjernes
 
         l.make_herbivores_eat()
+        self.weight_year_cycle = [k.weight for k in l.herbivores_pop] # for testing
+        self.available_fodder = l.af  # for testing
+
         l.newborn_animals()
         l.make_animals_age()
         l.make_animals_lose_weight()
         l.dead_animals_natural_cause()
-
-        # for testing:
-        self.af = l.af
-
-        #w_b = []
-        w_b = [k.weight for k in l.make_herbivores_eat()]
-        #for k in range(len(l.make_herbivores_eat())):
-            #w_b.append(l.herbivores_pop[k].weight)
-        self.weight_year_cycle = w_b
 
         # reset
         l.reset_fodder()
