@@ -5,6 +5,7 @@ __email__ = 'jorid.holmen@nmbu.no'
 
 import biosim.animals
 from biosim.Cell import lowland
+from biosim.Map_Island import Map_Island
 
 import pandas
 import matplotlib.pyplot as plt
@@ -29,6 +30,13 @@ class biosim:
         self.seed = random.seed(seed)
         if init_pop is None:
             self.init_pop = self.add_pop()
+
+        if island_geo == None:
+            island_geo = '-----' # vet ikke helt hva det skal bli enda
+            self._island_map_graph = Map_Island(island_geo)
+        else: #Går også an å inkl en elif som skal sjekke om island_geo er string
+            self._island_map_graph = Map_Island(island_geo)
+        #ELSE RAISE VALUE ERROR
 
         self.init_pop = init_pop
         self.year = 0

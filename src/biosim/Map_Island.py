@@ -23,9 +23,14 @@ class Map_Island:
         #self.geography = {}
         #self.population = {}
         self.map = {}
-        self.geo = island_geo
+        #self.geo = island_geo
         self.geog = textwrap.dedent(island_geo)
         #self.ini_pop = init_pop
+
+
+
+
+
 
         def check_boundaries_are_ocean(self):
             """
