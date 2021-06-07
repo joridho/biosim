@@ -26,9 +26,8 @@ class biosim:
         if init_pop is None:
             self.init_pop = self.add_pop()
 
-
-
         self.init_pop = init_pop
+        self.year = 0
 
     def add_pop(self):
         """
