@@ -73,6 +73,7 @@ class biosim:
         l.herbivores_pop = b.add_pop()
         # lage self l.herbivore for å sjekke om den har addet.
         l.herbivores_pop = l.make_herbivores_eat()# Animals feed
+        self.af_bio = l.af
         self.dyn = l.herbivores_pop # lagde self for å sjekke om den har spist
 
 
@@ -116,4 +117,13 @@ class biosim:
             4. map of island
             5. later heat map for one cell with distribution of carnivores
             """
+
+
+
+
+
+
+
+
+
 

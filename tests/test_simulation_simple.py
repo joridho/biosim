@@ -27,11 +27,12 @@ def test_year_cycle():
 
 def test_fodder_eaten():
     'Check if make_herbivores eat works in year_cycle'
-    l = lowland()
+    #l = lowland()
     b = biosim(init_pop=None)
     b.year_cycle()
-    l.herbivores_pop = b.dyn
-    assert l.af == 800 - 50 * 10
+    #l.herbivores_pop = b.dyn
+    # celle har available fodder, så må sjekke cell.af
+    assert b.af_bio == 800 - 50 * 10
 
 #def test_year:
 
