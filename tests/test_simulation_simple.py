@@ -17,10 +17,10 @@ def test_init_pop():
     b.add_pop()
     assert len(b.init_pop) == 50
 
-def test_year_cycle():
-    'Check if add_pop works in test_year_cycle'
-    b = biosim(init_pop=None)
-    assert len(b.year_cycle()) == 50
+#def test_year_cycle():
+ #   'Check if add_pop works in test_year_cycle'
+  #  b = biosim(init_pop=None)
+   # assert len(b.year_cycle()) == 50
     #assert len(l.nyliste) == 50
    #assert len(b.eat) == 50
 

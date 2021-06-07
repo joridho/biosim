@@ -68,9 +68,10 @@ class biosim:
         #if year == 0:
             #l.adding_animals() # tror ikke den trenger å være i year_cycle, men heller i simulation
         #b = biosim(self, init_pop=None)
-        b = biosim(init_pop=None)
-        b.add_pop()
-        l.herbivores_pop = b.add_pop()
+        #b = biosim(init_pop=None)
+        #b.add_pop()
+        l.herbivores_pop = l.adding_animals()
+        #l.herbivores_pop = b.add_pop()
         # lage self l.herbivore for å sjekke om den har addet.
         l.herbivores_pop = l.make_herbivores_eat()# Animals feed
         self.af_bio = l.af
