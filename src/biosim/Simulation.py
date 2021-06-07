@@ -102,4 +102,18 @@ class biosim:
     def simulate(self):
         """
             function for simulating
+
+            1. start time
+            2. add arrays for plotting
+            3. add initial population
+            4. initiate year_cycle
+            5. plot
+
+            plots:
+            1. line graph for number of animals
+            2. heat map for one cell with distribution of herbivores
+            3. write down number of years
+            4. map of island
+            5. later heat map for one cell with distribution of carnivores
             """
+
