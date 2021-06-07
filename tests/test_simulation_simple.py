@@ -43,22 +43,13 @@ def test_weight_gain_after_fodder_eaten():
         init_w.append(b.init_pop[k].weight)
 
     b.year_cycle()
-    newlist = []
-    for k in b.w_bio:
-        newlist.append(k)
+    newlist = [k for k in b.weight_year_cycle]
 
-    assert b.year_cycle() == init_w
+    assert newlist == init_w
 
-    #for k in range(len(newlist)):
+    #for k in range(len(b.weight_year_cycle)):
         #assert newlist[k] == init_w[k] + b.init_pop[k].p['beta']*init_w[k]
 
-    #assert b.w_bio ==
-    #g = [n for k in ]
-
-
-
-
-#def test_year:
 
 
 

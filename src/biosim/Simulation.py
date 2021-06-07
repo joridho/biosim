@@ -66,7 +66,6 @@ class biosim:
 
         l = lowland()
 
-
         self.add_pop() # må huske å fjerne
 
 
@@ -78,27 +77,22 @@ class biosim:
 
         # for testing:
         self.af = l.af
-        w_b = []
-        for k in range(len(l.make_herbivores_eat())):
-            w_b.append(l.herbivores_pop[k].weight)
 
-        self.w_bio = w_b
+        #w_b = []
+        w_b = [k.weight for k in l.make_herbivores_eat()]
+        #for k in range(len(l.make_herbivores_eat())):
+            #w_b.append(l.herbivores_pop[k].weight)
+        self.weight_year_cycle = w_b
 
         # reset
-        #l.reset_fodder()
-        #l.reset_appetite()
-        #l.reset_given_birth()
+        l.reset_fodder()
+        l.reset_appetite()
+        l.reset_given_birth()
 
         self.year += 1
 
         return l.herbivores_pop
 
-
-    def year(self):
-        """
-            Counts how many years to use in simulation
-            """
-        # n_year =
 
     def num_animals(self):
         """
@@ -123,6 +117,49 @@ class biosim:
             4. map of island
             5. later heat map for one cell with distribution of carnivores
             """
+
+        phi_array_herb = []
+        age_array_herb = []
+        weight_array_herb = []
+        N_herb = []
+        year = []
+
+        # values needed after stopping:
+        number_of_simulated_years = 0
+        total_number_of_animals = 0
+        total_number_of_herbivores = 0
+        total_number_of_carnivores = 0
+
+        fig = plt.figure()
+        ax1 = fig.add_subplot(3, 3, 1)  # map
+        ax2 = fig.add_subplot(3, 3, 3)  # animal count
+        ax3 = fig.add_subplot(3, 3, 4)  # herbivore distribution
+        ax4 = fig.add_subplot(3, 3, 5)  # carnivore distribution
+        ax5 = fig.add_subplot(3, 3, 6)  # fitness
+        ax6 = fig.add_subplot(3, 3, 7)  # age
+        ax7 = fig.add_subplot(3, 3, 8)  # weight
+
+        axt = fig.add_axes([0.4, 0.8, 0.2, 0.2])  # llx, lly, w, h
+        axt.axis('off')
+
+        template = 'Count: {:5d}'
+        txt = axt.text(0.5, 0.5, template.format(0),
+                       horizontalalignment='center',
+                       verticalalignment='center',
+                       transform=axt.transAxes)  # relative coordinates
+
+        plt.pause(0.01)  # pause required to make figure visible
+
+        input('Press ENTER to begin counting')
+
+        for k in range(30):
+            txt.set_text(template.format(k))
+            plt.pause(0.1)  # pause required to make update visible
+
+        plt.show()
+
+
+
 
 
 
