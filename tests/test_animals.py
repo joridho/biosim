@@ -116,7 +116,7 @@ def test_birth():
     h = herbivore(weight=35, a=3)
     for _ in range(100):
         h.birth_probability(n=4)
-        if h.birth_probability(n=4) == True:
+        if h.birth == True:
             assert h.r < h.prob_birth
         else:
             assert h.r >= h.prob_birth
