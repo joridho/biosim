@@ -37,13 +37,15 @@ def test_fodder_in_cell_after_fodder_eaten():
 
 def test_weight_gain_after_fodder_eaten():
     b = biosim(init_pop=None)
+    b.add_pop()
     init_w = []
-    for k in range(len(b.pop)):
-        init_w[k] = b.pop[k].weight
+    # b pop for ikke oppdatert seg
+    for k in range(len(b.init_pop)):
+        init_w[k] = b.init_pop[k].weight
     b.year_cycle()
     newlist = []
-    for k in range(len(b.pop)):
-        newlist[k] = b.pop[k].weight
+    for k in range(len(b.papi)):
+        newlist[k] = b.papi[k].weight
 
     for k in range(len(newlist)):
         assert newlist[k] == init_w[k] + init_w.p['beta']*init_w[k].weight
