@@ -56,14 +56,16 @@ def test_fodder_eaten():
 
 def test_gain_weight_after_eating():
     c = lowland()
-    c.herbivores_pop = [herbivore(weight=35, a=3), herbivore(weight=41, a=8),
+    c.herbivores_pop = [herbivore(weight=36, a=3), herbivore(weight=41, a=8),
                         herbivore(weight=20, a=6), herbivore(weight=35, a=3),
                         herbivore(weight=41, a=8), herbivore(weight=20, a=6)]
-    list = [herbivore(weight=35, a=3), herbivore(weight=41, a=8), herbivore(weight=20, a=6),
+    list = [herbivore(weight=36, a=3), herbivore(weight=41, a=8), herbivore(weight=20, a=6),
             herbivore(weight=35, a=3), herbivore(weight=41, a=8), herbivore(weight=20, a=6)]
     weight = []
     for k in range(len(list)):
         weight.append(list[k].weight)
+
+    # legger på vekta to ganger
 
     c.make_herbivores_eat()
     weight2 = []

@@ -31,7 +31,6 @@ def test_fodder_in_cell_after_fodder_eaten():
     b = biosim(init_pop=None)
     b.add_pop()
     b.year_cycle()
-
     af2 = b.af_bio
     assert af2 == 800 - 50 * 10
 
@@ -42,13 +41,16 @@ def test_weight_gain_after_fodder_eaten():
     # b pop for ikke oppdatert seg
     for k in range(len(b.init_pop)):
         init_w.append(b.init_pop[k].weight)
+
     b.year_cycle()
     newlist = []
-    for k in range(len(b.papi)):
-        newlist.append(b.papi[k].weight)
+    for k in b.w_bio:
+        newlist.append(k)
 
-    for k in range(len(newlist)):
-        assert newlist[k] == init_w[k] + b.init_pop[k].p['beta']*init_w[k]
+    assert b.year_cycle() == init_w
+
+    #for k in range(len(newlist)):
+        #assert newlist[k] == init_w[k] + b.init_pop[k].p['beta']*init_w[k]
 
     #assert b.w_bio ==
     #g = [n for k in ]
