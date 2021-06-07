@@ -54,6 +54,19 @@ def test_fodder_eaten():
     c.make_herbivores_eat()
     assert c.af == 800 - 6 * 10
 
+def test_gain_weight_after_eating():
+    c = lowland()
+    c.adding_animals()
+    list = c.herbivores_pop
+    weight = []
+    for k in range(len(list)):
+        weight.append(list[k].weight)
+    c.make_herbivores_eat()
+    list_after = c.herbivores_pop
+    for k in range(len(list)):
+        assert list_after[k].weight == weight[k] + list[k].p['beta'] * 10#list[k].F_consumption
+
+
 def test_fodder_eaten():
     'Check if there all the animals are still in herbivores_pop after make herbivores eat'
     l = lowland()

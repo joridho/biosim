@@ -66,6 +66,7 @@ class cell:
             if self.af >= 0:
                 #herb.p['F'] = apetite
                 herb.eat_fodder(F_cell=self.af)
+                herb.weight_gain()
                 self.af -= herb.F_consumption
                 still_alive.append(herb)
                 self.herbivores_pop.remove(herb)
