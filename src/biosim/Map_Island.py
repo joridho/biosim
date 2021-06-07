@@ -23,7 +23,7 @@ class Map_Island:
         #self.geography = {}
         #self.population = {}
         self.map = {}
-        #self.geo = island_geo
+        self.geo = island_geo
         self.geog = textwrap.dedent(island_geo)
         #self.ini_pop = init_pop
 
@@ -67,7 +67,7 @@ class Map_Island:
             :raise ValueError: if lines in map str are more than one length
             """
             line_lengths = []
-            for line in self.geogr.splitlines():
+            for line in self.geo.splitlines():
                 line_lengths.append(len(line))
 
             if len(set(line_lengths)) != 1:

@@ -36,6 +36,7 @@ class biosim:
             self._island_map_graph = Map_Island(island_geo)
         else: #Går også an å inkl en elif som skal sjekke om island_geo er string
             self._island_map_graph = Map_Island(island_geo)
+
         #ELSE RAISE VALUE ERROR
 
         self.init_pop = init_pop
