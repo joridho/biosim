@@ -64,34 +64,22 @@ class biosim:
             """
         l = lowland()
 
-        #if year == 0:
-            #l.adding_animals() # tror ikke den trenger å være i year_cycle, men heller i simulation
-        #b = biosim(self, init_pop=None)
-        #b = biosim(init_pop=None)
-        #b.add_pop()
-        #l.herbivores_pop = l.adding_animals()
-        #self.pop = l.herbivores_pop
-        #l.herbivores_pop = b.add_pop()
-        # lage self l.herbivore for å sjekke om den har addet.
-        #l.herbivores_pop = l.make_herbivores_eat()# Animals feed
+        l.make_herbivores_eat()
+        l.newborn_animals()
+        l.make_animals_age()
+        l.make_animals_lose_weight()
+        l.dead_animals_natural_cause()
 
-        self.papi = l.make_herbivores_eat()
-        self.af_bio = l.af
-        #self.w_bio = l.herbivores_pop.weight[0]
-        self.dyn = l.herbivores_pop # lagde self for å sjekke om den har spist
+        # reset
+        l.reset_fodder()
+        l.reset_appetite()
+        l.reset_given_birth()
 
+        self.year += 1
 
-        l.herbivores_pop = l.reset_appetite()      # Animals feed
-        #l.newborn_animals()  # Animals procreate
-        #l.make_animals_age()           # Animals age
-        #l.make_animals_lose_weight()  # Animals lose weight
-        #l.dead_animals_natural_cause()  # Animals die
-        #self.init_pop = l.counting_animals()
-        #l.counting_animals()
-
-
-        #self.y = n_year + 1  # counts how many years have passed for the simulation #tror denne er feil da, ville bare ha den med
         return l.herbivores_pop
+
+
     def year(self):
         """
             Counts how many years to use in simulation
