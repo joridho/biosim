@@ -22,7 +22,7 @@ import textwrap
 '''
 class biosim:
 
-    def __init__(self, island_geo, init_pop, seed = 10, ymaxanimals=None, cmaxanimals=None, img_base=None):  # mangler img og ymax
+    def __init__(self, island_geo, init_pop, seed = 10, ymaxanimals=None, cmaxanimals=None):  # mangler img og ymax
 
         #self.seed = random.seed(10)
         #self.init_pop = 2
@@ -33,6 +33,8 @@ class biosim:
         self.init_pop = init_pop
         self.year = 0
         self.af_bio = 800
+
+
 
     def add_pop(self):
         """
