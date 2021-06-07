@@ -180,7 +180,7 @@ class biosim:
 
 
 def setup_graphics(self):
-
+    self.create_map()
 
 def create_map(self):
     # geography
