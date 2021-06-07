@@ -3,13 +3,17 @@
 __author__ = 'Jorid Holmen'
 __email__ = 'jorid.holmen@nmbu.no'
 
-from biosim.animals import herbivore
+import biosim.animals
 from biosim.Cell import lowland
 
 import pandas
 import matplotlib.pyplot as plt
-import subprocess
+# import subprocess
 import random
+import time
+# import os
+import textwrap
+
 '''
 <<<<<<< HEAD
 =======
@@ -18,7 +22,7 @@ import random
 '''
 class biosim:
 
-    def __init__(self, init_pop, seed = 10):  # mangler img og ymax
+    def __init__(self, island_geo, init_pop, seed = 10, ymaxanimals=None, cmaxanimals=None, img_base=None):  # mangler img og ymax
 
         #self.seed = random.seed(10)
         #self.init_pop = 2
