@@ -100,8 +100,11 @@ class cell:
                 list_h[k].given_birth is True # burde være riktig
                 list_new.append(newborn)  # skal være riktig
                 self.new += 1
-        list_h.extend(list_new)
+        #list_h.extend(list_new)
+        for k in list_new:
+            list_h.append(k)
         self.herbivores_pop = list_h
+        return self.herbivores_pop
 
     def counting_animals(self):
         """
