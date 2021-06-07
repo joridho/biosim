@@ -35,7 +35,10 @@ def test_fodder_in_cell_after_fodder_eaten():
     # celle har available fodder, så må sjekke cell.af
     assert b.af_bio == 800 - 50 * 10
 
-def test_fodder_
+def test_weight_gain_after_fodder_eaten():
+    b = biosim(init_pop=None)
+    b.year_cycle()
+
 
 
 #def test_year:
