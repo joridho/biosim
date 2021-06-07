@@ -25,14 +25,18 @@ def test_init_pop():
    #assert len(b.eat) == 50
 
 
-def test_fodder_eaten():
-    'Check if make_herbivores eat works in year_cycle'
+def test_fodder_in_cell_after_fodder_eaten():
+    '''Check if make_herbivores eat works in year_cycle
+    by checking if fodder in cell has the right amount'''
     #l = lowland()
     b = biosim(init_pop=None)
     b.year_cycle()
     #l.herbivores_pop = b.dyn
     # celle har available fodder, så må sjekke cell.af
     assert b.af_bio == 800 - 50 * 10
+
+def test_fodder_
+
 
 #def test_year:
 
