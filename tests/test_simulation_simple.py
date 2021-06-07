@@ -1,6 +1,7 @@
 import unittest
 from  biosim.Simulation import biosim
 from biosim.Cell import lowland
+from biosim.animals import herbivore, carnivore
 
 '''
 class MyTestCase(unittest.TestCase):
@@ -42,13 +43,71 @@ def test_weight_gain_after_fodder_eaten():
 
     b.year_cycle()
     new_weight_by_function = b.weight_year_cycle
+    #new_weight_by_function2 = [k.weight for k in b.population_herb]  # hvorfor fungerer ikke den?
     calculated_new_weight.sort()
     new_weight_by_function.sort()
+    #assert new_weight_by_function == new_weight_by_function2
 
     assert new_weight_by_function == calculated_new_weight
 
-    #for k in range(len(b.weight_year_cycle)):
-        #assert newlist[k] == init_w[k] + b.init_pop[k].p['beta']*init_w[k]
+def test_change_of_appetite():
+    l = lowland()
+    l.herbivores_pop = [herbivore(weight=35, a=3), herbivore(weight=41, a=8),
+                        herbivore(weight=20, a=6), herbivore(weight=35, a=3),
+                        herbivore(weight=41, a=8), herbivore(weight=20, a=6)]
+    b = biosim(init_pop=l.herbivores_pop)
+    # b.add_pop()
+
+    one_herb = b.init_pop[0]
+    init_ap = one_herb.p['F']
+    b.year_cycle()
+    # same_but_updated_herb = b.init_pop[0]
+    new_ap = b.population_herb[0].p['F']  # vet ikke hvorfor b.population_herb ikke funker
+    b.num_animals()
+    assert new_ap == init_ap - b.population_herb[0].F_consumed
+
+def test_newborn_animals():
+    """
+        will the newborns be added to the list
+        """
+    assert 1 == 1
+
+def test_mother_weight_gain():
+    """
+        Will the mother gain weight in the year cycle
+        """
+    assert 1 == 1
+
+def test_age():
+    """
+        Will the animals age in accordance with the year?
+        """
+    assert 1 == 1
+
+def test_weight_loss():
+    """
+        Will the animal lose weight each year?
+        """
+    assert 1 == 1
+
+def test_remove_dead_animals():
+    """
+        Will the dead animals be removed from the list
+        """
+    assert 1 == 1
+
+def test_reset():
+    """
+        Will the necessary variables reset
+        """
+
+def test_count_years():
+    """
+        Is one year added each year?
+        """
+
+
+
 
 
 
