@@ -100,11 +100,9 @@ def test_mother_lost_weight(): #fungerer om jeg får mocker til å fungere
     weight = [k.weight for k in c.herbivores_pop]
     c.newborn_animals()
     after = [k.weight for k in c.herbivores_pop]
-    #weight_after = [after[k] for k in range(len(after)/2)]
     weight_after = [after[0], after[1]]
     weight.sort()
     weight_after.sort()
-    #assert weight == weight_after
     for k in range(len(weight)):
         assert weight_after[k] == weight[k] - list[k].p['zeta'] * list[k].newborn_birth_weight
 
