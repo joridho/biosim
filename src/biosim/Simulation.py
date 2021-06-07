@@ -105,7 +105,7 @@ class biosim:
 
             1. start time
             2. add arrays for plotting
-            3. add initial population
+            3. add initial population (i eksempelet fra Plesser er dette i island class)
             4. initiate year_cycle
             5. plot
 
