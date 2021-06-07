@@ -29,7 +29,7 @@ def test_simple_sorting():
     liste1 = c.herbivores_pop
     liste2 = [liste1[0].phi, liste1[1].phi, liste1[2].phi]
     liste2.sort()
-    c.sorting_animals()
+    c.sorting_animals(pop=c.herbivores_pop, sort_by='phi')
     liste3 = [c.sorted_herbivores_pop[0].phi, c.sorted_herbivores_pop[1].phi,
               c.sorted_herbivores_pop[2].phi]
     assert liste2 == liste3
@@ -54,27 +54,21 @@ def test_fodder_eaten():
     c.make_herbivores_eat()
     assert c.af == 800 - 6 * 10
 
-def test_gain_weight_after_eating():
+def test_gain_weight_after_eating(): # får den kun til å fungere på ett dyr
     c = lowland()
     c.herbivores_pop = [herbivore(weight=36, a=3), herbivore(weight=41, a=8),
                         herbivore(weight=20, a=6), herbivore(weight=35, a=3),
                         herbivore(weight=41, a=8), herbivore(weight=20, a=6)]
-    list = [herbivore(weight=36, a=3), herbivore(weight=41, a=8), herbivore(weight=20, a=6),
-            herbivore(weight=35, a=3), herbivore(weight=41, a=8), herbivore(weight=20, a=6)]
-    weight = []
-    for k in range(len(list)):
-        weight.append(list[k].weight)
 
-    # legger på vekta to ganger
+    weight = [k.weight for k in c.herbivores_pop]
 
+    c.af = 800
     c.make_herbivores_eat()
-    weight2 = []
-    for k in c.herbivores_pop:
-        weight2.append(k.weight)
-    assert weight == weight2
-    #list_after = c.herbivores_pop
-    #for k in range(len(weight)):
-        #assert weight[k] == weight[k] + list[k].p['beta'] * 10 #list[k].F_consumption
+    weight2 = [k.weight for k in c.herbivores_pop]
+    weight.sort()
+    weight2.sort()
+    #assert len(c.list) == c.spist
+    assert [k + 9 for k in weight] == weight2
 
 
 def test_fodder_eaten():
@@ -84,7 +78,7 @@ def test_fodder_eaten():
                         herbivore(weight=20, a=6), herbivore(weight=35, a=3),
                         herbivore(weight=41, a=8), herbivore(weight=20, a=6)]
     l.make_herbivores_eat()
-    assert len(l.make_herbivores_eat()) == 6
+    assert len(l.herbivores_pop) == 6
 
 
 def test_newborn_added_to_list():
@@ -99,17 +93,20 @@ def test_newborn_added_to_list():
     assert len(c.herbivores_pop) == length + c.new
 
 
-def test_mother_lost_weight():
+def test_mother_lost_weight(): #fungerer om jeg får mocker til å fungere
     c = lowland()
     c.herbivores_pop = [herbivore(weight=36, a=3), herbivore(weight=40, a=3)]
     list = c.herbivores_pop
-    weight = []
-    for k in range(len(list)):
-        weight.append(list[k].weight)
-
-    list2 = c.newborn_animals()
+    weight = [k.weight for k in c.herbivores_pop]
+    c.newborn_animals()
+    after = [k.weight for k in c.herbivores_pop]
+    #weight_after = [after[k] for k in range(len(after)/2)]
+    weight_after = [after[0], after[1]]
+    weight.sort()
+    weight_after.sort()
+    #assert weight == weight_after
     for k in range(len(weight)):
-        assert list2[k].weight == weight[k] - list[k].p['zeta'] * list[k].newborn_birth_weight
+        assert weight_after[k] == weight[k] - list[k].p['zeta'] * list[k].newborn_birth_weight
 
 
 def test_count_animals():

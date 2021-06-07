@@ -100,6 +100,7 @@ class biosim:
             """
         self.N_animals = lowland.counting_animals()
 
+'''
     def simulate(self):
         """
             function for simulating
@@ -122,6 +123,7 @@ class biosim:
         age_array_herb = []
         weight_array_herb = []
         N_herb = []
+        N_carn = []
         year = []
 
         # values needed after stopping:
@@ -139,6 +141,7 @@ class biosim:
         ax6 = fig.add_subplot(3, 3, 7)  # age
         ax7 = fig.add_subplot(3, 3, 8)  # weight
 
+        # time counter
         axt = fig.add_axes([0.4, 0.8, 0.2, 0.2])  # llx, lly, w, h
         axt.axis('off')
 
@@ -156,9 +159,16 @@ class biosim:
             txt.set_text(template.format(k))
             plt.pause(0.1)  # pause required to make update visible
 
-        plt.show()
+        ax2.plt.plot(N_herb, self.year, 'b')
+        ax2.plt.plot(N_carn, self.year, 'r')
+        ax2.legend('Animals')
 
-
+        ax3.set_xticks(1)
+        ax3.set_xticks(1)
+        ax3.set_title("Herbivore distribution")
+        fig.tight_layout()
+        ax3.plt.imshow(N_herb,)
+'''
 
 
 

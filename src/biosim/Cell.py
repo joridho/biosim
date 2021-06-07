@@ -32,13 +32,13 @@ class cell:
             self.herbivores_pop.append(herbivore())
         return self.herbivores_pop
 
-    def sorting_animals(self):  # do we need property here?
+    def sorting_animals(self, pop, sort_by):  # do we need property here?
         """
             A function for sorting the animals.
             Herbivores are sorted weakest to fittest, since the weakest are eaten first
             Carnivores are sorted fittest to weakest, since the fittest eats first
             """
-        self.sorted_herbivores_pop = sorted(self.herbivores_pop, key=operator.attrgetter('phi'))
+        self.sorted_herbivores_pop = sorted(pop, key=operator.attrgetter(sort_by))
 
     def available_fodder_function(self):
         """
@@ -54,27 +54,31 @@ class cell:
             Herbivores eat in a random order, and therefore need to be randomised
 
             This function can only be used once per year because of the available_fodder_function
-
-   
          """
-        self.available_fodder_function()
-        length = len(self.herbivores_pop)
-        list = self.herbivores_pop
-        still_alive = []
-        #apetite = self.herbivores_pop[0].p['F']
-        for _ in range(length):
-            herb = random.choice(list)
-            if self.af >= 0:
-                #herb.p['F'] = apetite
-                herb.eat_fodder(F_cell=self.af)
-                herb.weight_gain()
-                self.af -= herb.F_consumption
-                still_alive.append(herb)
-                list.remove(herb)
-        for k in still_alive:
-            list.append(k)
-        self.herbivores_pop = list
-        return self.herbivores_pop
+        self.af = 800
+
+        self.list = self.herbivores_pop
+        random.shuffle(self.list)
+        self.spist = []
+
+        for k in range(len(self.list)):
+            # make the herbivore eat:
+            self.list[k].eat_fodder(F_cell=800)
+            #self.list[k].F_consumption = 10 # skal ikke være her
+            consumption = self.list[k].F_consumption
+            self.spist.append(consumption)
+
+            # make the herbivore gain weight:
+            self.list[k].weight_gain(consumption)
+
+            # change the animals appetite:
+            self.list[k].p['F'] -= consumption
+
+            # change the amount of fodder in the cell
+            self.af -= consumption
+
+
+        self.herbivores_pop = self.list
 
 
 
