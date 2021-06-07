@@ -64,7 +64,7 @@ class cell:
         for k in range(len(self.list)):
             # make the herbivore eat:
             self.list[k].eat_fodder(F_cell=800)
-            #self.list[k].F_consumption = 10 # skal ikke være her
+            self.list[k].F_consumption = 10 # skal ikke være her
             consumption = self.list[k].F_consumption
             self.spist.append(consumption)  # for testing
 
