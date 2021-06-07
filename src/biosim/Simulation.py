@@ -71,10 +71,13 @@ class biosim:
         #b = biosim(init_pop=None)
         #b.add_pop()
         l.herbivores_pop = l.adding_animals()
+        self.pop = l.herbivores_pop
         #l.herbivores_pop = b.add_pop()
         # lage self l.herbivore for å sjekke om den har addet.
         l.herbivores_pop = l.make_herbivores_eat()# Animals feed
+        self.pop = l.herbivores_pop
         self.af_bio = l.af
+        self.w_bio = l.herbivores_pop.weight[0]
         self.dyn = l.herbivores_pop # lagde self for å sjekke om den har spist
 
 

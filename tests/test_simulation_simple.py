@@ -37,7 +37,16 @@ def test_fodder_in_cell_after_fodder_eaten():
 
 def test_weight_gain_after_fodder_eaten():
     b = biosim(init_pop=None)
+    init_w = []
+    for k in range(len(b.pop)):
+        init_w[k] = b.pop[k].weight
     b.year_cycle()
+    newlist = []
+    for k in range(len(b.pop)):
+        newlist[k] = b.pop[k].weight
+
+    assert b.w_bio ==
+    g = [n for k in ]
 
 
 
