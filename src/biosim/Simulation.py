@@ -35,7 +35,7 @@ class biosim:
             island_geo = '-----' # vet ikke helt hva det skal bli enda
             self._island_map_graph = Map_Island(island_geo)
         else: #Går også an å inkl en elif som skal sjekke om island_geo er string
-            self._island_map_graph = Map_Island(island_geo)
+            self._island_map_graph = Map_Island(island_geo, init_pop)
 
         #ELSE RAISE VALUE ERROR
 
@@ -179,6 +179,57 @@ class biosim:
 '''
 
 
+def setup_graphics(self):
+
+
+def create_map(self):
+    # geography
+    #island_map = """WWWWW
+    #WWLHW
+    #WDDLW
+    #WWWWW
+    #"""
+    # hver bokstav for fargeverdi
+    #                R    G    B
+    rgb_value = {'W': (0.0, 0.0, 1.0),  # blue
+                 'L': (0.0, 0.6, 0.0),  # dark green
+                 'H': (0.5, 1.0, 0.5),  # light green
+                 'D': (1.0, 1.0, 0.5)}  # light yellow
+
+    # hver bokstav I geography får rgb_value
+    map_rgb = [[rgb_value[column] for column in row]
+               for row in self.island_map_graph.splitlines()] # vet ikke hv Map_Island returnere enda
+
+    # lager tom figur
+    fig = plt.figure()
+
+    # adder akser til tom figur (skal bli øy)
+    ax_im = fig.add_axes([0.1, 0.1, 0.7, 0.8])  # llx, lly, w, h
+
+    # viser øya m/vann
+    ax_im.imshow(map_rgb)
+
+    # hva gjør denne??????????????????
+    ax_im.set_xticks(range(len(map_rgb[0])))
+    ax_im.set_xticklabels(range(1, 1 + len(map_rgb[0])))
+    ax_im.set_yticks(range(len(map_rgb)))
+    ax_im.set_yticklabels(range(1, 1 + len(map_rgb)))
+
+    # lager nytt koordinatsystem i figuren (x akse starter ved 80 % bredde (v->h) av figuren, y akse starter i 10 prosent høyde av figuren, har bredde som er på 10% av figuren, har høyde som er på 80% av figuren)
+    ax_lg = fig.add_axes([0.85, 0.1, 0.1, 0.8])  # llx, lly, w, h
+    ax_lg.axis('off')  # fjerner selve koordinatsystemet
+    for ix, name in enumerate(('Water', 'Lowland',
+                               'Highland',
+                               'Desert')):  # enumarte gir tall/indeks til elementene i en liste ['katt', 'skole'] blir til ['0', 'katt', '1', 'skole']
+        ax_lg.add_patch(plt.Rectangle((0., ix * 0.2), 0.3, 0.1,
+                                      # tilsetter rektangler med x akse.. yakse ... bredde... og høyde..(samme som over)
+                                      edgecolor='none',  # ingen ytterkant
+                                      facecolor=rgb_value[
+                                          name[0]]))  # første element i navn feks 'W'
+        ax_lg.text(0.35, ix * 0.2, name,
+                   transform=ax_lg.transAxes)  # legger til navn ved x akse... og yakse ...
+
+    plt.show()  # viser plott
 
 
 
