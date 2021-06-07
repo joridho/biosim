@@ -28,7 +28,6 @@ class biosim:
 
         self.init_pop = init_pop
         self.year = 0
-        self.pop = lowland.herbivores_pop
 
     def add_pop(self):
         """
@@ -70,11 +69,12 @@ class biosim:
         #b = biosim(self, init_pop=None)
         #b = biosim(init_pop=None)
         #b.add_pop()
-        l.herbivores_pop = l.adding_animals()
-        self.pop = l.herbivores_pop
+        #l.herbivores_pop = l.adding_animals()
+        #self.pop = l.herbivores_pop
         #l.herbivores_pop = b.add_pop()
         # lage self l.herbivore for å sjekke om den har addet.
         #l.herbivores_pop = l.make_herbivores_eat()# Animals feed
+
         self.papi = l.make_herbivores_eat()
         self.af_bio = l.af
         #self.w_bio = l.herbivores_pop.weight[0]
