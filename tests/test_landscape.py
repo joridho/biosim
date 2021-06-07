@@ -104,8 +104,8 @@ def test_mother_lost_weight():
     weight = []
     for k in range(len(list)):
         weight.append(list[k].weight)
-    c.newborn_animals()
-    list2 = c.herbivores_pop
+
+    list2 = c.newborn_animals()
     for k in range(len(weight)):
         assert list2[k].weight == weight[k] - list[k].p['zeta'] * list[k].newborn_birth_weight
 
