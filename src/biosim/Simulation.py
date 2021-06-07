@@ -63,7 +63,12 @@ class biosim:
         - Step 5: Animals lose weight
         - Step 6: Animals die
             """
+
         l = lowland()
+
+
+        self.add_pop() # må huske å fjerne
+
 
         l.make_herbivores_eat()
         l.newborn_animals()
@@ -72,7 +77,12 @@ class biosim:
         l.dead_animals_natural_cause()
 
         # for testing:
-        self.af_bio = l.af
+        self.af = l.af
+        w_b = []
+        for k in range(len(l.make_herbivores_eat())):
+            w_b.append(l.herbivores_pop[k].weight)
+
+        self.w_bio = w_b
 
         # reset
         #l.reset_fodder()
