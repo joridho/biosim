@@ -21,7 +21,7 @@ class Map_Island:
         :type initial_population: list of dicts
         """
         self.geography = {}
-        #self.population = {}
+        self.population = {}
         self.map = {}
         self.geo = island_geo
         self.init_pop = init_pop
@@ -30,7 +30,7 @@ class Map_Island:
         #self.geo = textwrap.dedent(island_geo) #føler ikke denne burde funke
         #self.ini_pop = init_pop
 
-    '''
+
     #MÅ fortsatt redigeres
     def check_island_boundaries(self):
         """
@@ -67,15 +67,10 @@ class Map_Island:
         for l in self.geo.splitlines():
             lengths_of_lines.append(len(l))
         if len(set(lengths_of_lines)) != 1:
-            raise ValueError(f"Inconsistent line length.")
+            raise ValueError('Map lines are not equal')
 
-        length = len(line_lengths[0])
-        for l in line_lengths(): # hvordan splitte string til lnjer
-            if length != len(line_lengths[l]):
-                raise ValueError('Map lines are not equal')
-    
 
-    
+    # Gir koordinatene i et kart ulike cell_typer (avh av self.geo = island_geo)
     def create_geography_dict(self):
         """
         Converts geography string to a dictionary with coordinates as keys and
@@ -85,15 +80,85 @@ class Map_Island:
         self.check_island_boundaries()
         self.check_for_equal_map_lines()
 
-        x_coord = 1
+        y_coord = 1 #orginalt er det motsatt: der y koordinatet står
         for line in self.geo.splitlines():
-            y_coord = 1
-            for landscape_type in line:
-                self.geography[(x_coord, y_coord)] = landscape_type
-                y_coord += 1
-            x_coord += 1
-    '''
+            x_coord = 1
+            for cell_type in line:
+                self.geography[(x_coord, y_coord)] = cell_type
+                x_coord += 1
+            y_coord += 1
 
+
+    def create_population_dict(self): #### Når skal dette bli brukt???
+        """
+        Converts list of populations to a population dictionary that has coordinates as keys
+        and lists of the properties of the animals at this location as values.
+        """
+
+        #self.population skal til slutt være en dictionary med
+        #                  posisjoner som nøkler
+        #                  lister med "properties" of the animal som verdier
+        for pop_info in self.init_pop: # iterer gjennom elementene (dictionaries) i lista. init_pop er en liste med dictionaries
+            if pop_info["loc"] in self.population.keys(): #vi sjekker om verdien som tilhører cell_info['loc'] er en nøkkel i dictionary. Vi sjekker altså om posisjonen allerede er en nøkkel i dictionary
+                self.population[pop_info["loc"]].extend(pop_info["pop"]) # I en allerede eksisterende nøkkel i population, legger vi til den tilhørende lista med properties of animal
+            else:
+                self.population[pop_info["loc"]] = pop_info["pop"] # vi legger til posisjonen som ny nøkkel i population dictionary
+# vi legger til den tilhørende lista av properties of animal som verdi til nøkkelen
+
+    def add_population(self, population): # population her?!!!!!!!!!!!!!!!!!!!!!!!
+        """
+        Adds a new population to the already existing population of the island,
+        in a manner similar to create_population_dict.
+        :param population: Specifies the new population of one or more cells
+        :type population: list of dicts
+        """
+        # population består av en liste av dictionaries
+        new_population = {} # ny dictionary
+        for pop_info in population: # iterer gjennom hvert element (dictionary) i lista
+            if pop_info['loc'] in new_population.keys():
+                new_population[pop_info['loc']].extend(pop_info['pop'])
+            else:
+                new_population[pop_info["loc"]] = pop_info["pop"] # vi legger posisjonen til pop_info som ny nøkkel i newpopulasjon. Her vil vi legge til den tilhørende lista av properties som verdi
+
+        for location, population in new_population.items():
+            for animal_info in population: # iterer gjennom elementene (listene med animal info) i lista population
+                if animal_info["species"] == "Herbivore": # Hvis dyret er herbivore, blir den ....
+                    self.map[location].pop_carn.append(Herbivore(animal_info)) # lagt i maper den skrevet riktig
+                else:
+                    self.map[location].pop_herb.append(Carnivore(animal_info))
+
+    def create_map_dict(self):
+        """
+        Iterates through geography dictionary and creates a new dictionary of
+        the entire map. This dict has coordinates as keys and
+        instances of landscape classes as values. Each landscape instance has
+        the population list of it's coordinate as input.
+        :raise ValueError: if invalid landscape type is given in geography
+            string
+        """
+        self.create_geography_dict()
+        self.create_population_dict()
+
+        for location, cell_type in self.geography.items():
+            if cell_type is "L":
+                if location in self.population.keys():
+                    self.map[location] = Lowland(self.population[location])
+                else:
+                    self.map[location] = Lowland([])
+            elif cell_type is "H":
+                if location in self.population.keys():
+                    self.map[location] = Highland(self.population[location])
+                else:
+                    self.map[location] = Highland([])
+            elif cell_type is "D":
+                if location in self.population.keys():
+                    self.map[location] = Desert(self.population[location])
+                else:
+                    self.map[location] = Desert([])
+            elif cell_type is "W":
+                self.map[location] = Water([])
+            else:
+                raise ValueError(f"Invalid landscape type {cell_type}")
 
     def year_cycle(self):
         """
