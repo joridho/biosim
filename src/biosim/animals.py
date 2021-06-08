@@ -15,7 +15,7 @@ class animal:
     """
     This i a class for animals on the island
     """
-
+    '''
     p = {  # Dictionary of parameters belonging to the Herbivore class
         "w_birth": 8.0,
         "sigma_birth": 1.5,
@@ -31,6 +31,23 @@ class animal:
         "xi": 1.2,
         "omega": 0.4,
         "F": 10.0,
+    }
+    '''
+    p = {  # Dictionary of parameters belonging to the Herbivore class
+        "w_birth": None,
+        "sigma_birth": None,
+        "beta": None,
+        "eta": None,
+        "a_half": None,
+        "phi_age": None,
+        "w_half": None,
+        "phi_weight": None,
+        "mu": None,
+        "gamma": None,
+        "zeta": None,
+        "xi": None,
+        "omega": None,
+        "F": None,
     }
 
     def __init__(self, weight, a):
