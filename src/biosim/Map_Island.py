@@ -75,7 +75,7 @@ class map_island:
                 raise ValueError('Map lines are not equal')
 
 
-        #
+        #Annen løsning som vi ikke skjønner
         if len(set(line_lengths)) != 1:
             raise ValueError(f"Inconsistent line length.")
 
