@@ -18,8 +18,7 @@ class Cell:
     p = {'f_max': 800.0}
 
     def __init__(self):
-        # self._F = self.p['f_max']
-        self.af = self.p['f_max']
+
         self._accessible = True
         self.herbivores_pop = []
         self.carnivores_pop = []

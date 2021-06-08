@@ -3,7 +3,6 @@
 __author__ = 'Jorid Holmen'
 __email__ = 'jorid.holmen@nmbu.no'
 
-import biosim.animals
 from biosim.animals import Herbivore, Carnivore
 from biosim.Cell import Lowland
 from biosim.MapIsland import Map_Island
@@ -22,65 +21,67 @@ import textwrap
 
 >>>>>>> origin/Simulation
 '''
+
+
 class BioSim:
 
     def __init__(self, island_geo, init_pop, seed=10, img_dir=None, img_base=None, img_years=None):
+        # self.seed = random.seed(10)
+        # self.init_pop = 2
+        # self.seed = random.seed(seed)
+        random.seed(seed)  # ??
 
-        #self.seed = random.seed(10)
-        #self.init_pop = 2
-        #self.seed = random.seed(seed)
         if init_pop is None:
-            self.init_pop = self.add_population()
+            self.init_pop = self.add_population()  # usikker på
 
-        if island_geo == None:  # trenger vi denne? er jo input senere
-            island_geo = '-----' # vet ikke helt hva det skal bli enda, noe med random?
-            self._island_map_graph = Map_Island(island_geo)
-        else: #Går også an å inkl en elif som skal sjekke om island_geo er string
-            self._island_map_graph = Map_Island(island_geo, init_pop)
+        # if island_geo == None:  # trenger vi denne? er jo input senere
+        # island_geo = '-----' # vet ikke helt hva det skal bli enda, noe med random?
+        # self._island_map_graph = Map_Island(island_geo)
+        # else: #Går også an å inkl en elif som skal sjekke om island_geo er string
 
-        #ELSE RAISE VALUE ERROR
+        self._island_map_graph = Map_Island(island_geo, init_pop)
+
+        # ELSE RAISE VALUE ERROR
 
         self.init_pop = init_pop
         self.num_years_simulated = 0
 
-
-
-    def set_animal_parameters(self, species, params):
+    '''
+    def set_animal_parameters(self, species, p):
         """
         Set parameters for animal species.
 
         :param species: String, name of animal species
-        :param params: Dict with valid parameter specification for species
+        :param p: Dict with valid parameter specification for species
         """
         
         class_names = {'Herbivores': Herbivore,
                        'Carnivore': Carnivore}
-        for param_name in params.keys():
-            if param_name in class_names[species].params:
-                if params[param_name] >= 0 and param_name is not "DeltaPhiMax" \
+        for param_name in p.keys():
+            if param_name in class_names[species].p:
+                if p[param_name] >= 0 and param_name is not "DeltaPhiMax" \
                         and param_name is not "eta" and param_name is not "F":
-                    class_names[species].params[param_name] = params[
+                    class_names[species].p[param_name] = p[
                         param_name]
                 # checks special criteria for eta
-                elif param_name is "eta" and 0 <= params[param_name] <= 1:
-                    class_names[species].params[param_name] = params[
+                elif param_name is "eta" and 0 <= p[param_name] <= 1:
+                    class_names[species].p[param_name] = p[
                         param_name]
                 # checks special criteria for F
-                elif param_name is "F" and 0 < params[param_name]:
-                    class_names[species].params[param_name] = params[
+                elif param_name is "F" and 0 < p[param_name]:
+                    class_names[species].p[param_name] = p[
                         param_name]
                 # checks special criteria for DeltaPhiMax
-                elif param_name is "DeltaPhiMax" and params[param_name] > 0:
-                    class_names[species].params[param_name] = params[
+                elif param_name is "DeltaPhiMax" and p[param_name] > 0:
+                    class_names[species].p[param_name] = p[
                         param_name]
                 else:
-                    raise ValueError(f'{params[param_name]} is an invalid '
+                    raise ValueError(f'{p[param_name]} is an invalid '
                                      f'parameter value for parameter '
                                      f'{param_name}!')
             else:
                 raise ValueError(f'{param_name} is an invalid parameter name!')
 
-    '''
     def set_landscape_parameters(self, landscape, params):
         """
         Set parameters for landscape type.
@@ -108,18 +109,17 @@ class BioSim:
             5. later heat map for one cell with distribution of carnivores
             """
 
-        phi_array_herb = []
-        age_array_herb = []
-        weight_array_herb = []
-        N_herb = []
-        N_carn = []
-        year = []
+        # phi_array_herb = []
+        # age_array_herb = []
+        # weight_array_herb = []
+        # N_herb = []
+        # N_carn = []
+        # V year = []
 
-        self.num_animals()
-        print(num_animals)
+        # self.num_animals()
+        print(len(Lowland.herbivores_pop))
 
         self.num_years_simulated += 1
-
 
         '''
         # values needed after stopping:
@@ -165,7 +165,6 @@ class BioSim:
         fig.tight_layout()
         ax3.plt.imshow(N_herb,)
         '''
-
 
     '''
     def setup_graphics(self): ikke fra plesser 
@@ -221,16 +220,16 @@ class BioSim:
         plt.show()  # viser plott
     '''
 
-    def add_population(self, population):
+    def add_population(self):
         """
             Adds animal to the cell/island. These animals become the initial population
             """
-        l = Lowland()
+        for k in range():
+            Lowland.herbivores_pop.append(Herbivore())
 
         # self.init_pop = l.adding_animals()
-        #self.idk = len(self.init_pop)
-        #return self.init_pop
-
+        # self.idk = len(self.init_pop)
+        # return self.init_pop
 
     @property
     def year(self):
@@ -240,11 +239,10 @@ class BioSim:
     @property
     def num_animals(self):
         """Total number of animals on island."""
-        num_herbivores = len(Lowland.herbivore_pop)
-        num_carnivores = 0  # len(lowland.carnivore_pop)
+        num_herbivores = len(Lowland.herbivores_pop)
+        num_carnivores = 0  # len(lowland.carnivores_pop)
         num_animals = num_carnivores + num_herbivores
         return num_animals
-
 
     @property
     def num_animals_per_species(self):
@@ -264,13 +262,3 @@ class BioSim:
     def make_movie(self): denne er fra Plesser 
         """Create MPEG4 movie from visualization images saved."""
     '''
-
-
-
-
-
-
-
-
-
-
