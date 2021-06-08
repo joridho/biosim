@@ -125,7 +125,7 @@ class Map_Island:
                 if animal_info["species"] == "Herbivore": # Hvis dyret er herbivore, blir den ....
                     self.map[location].pop_carn.append(Herbivore(animal_info)) # lagt i maper den skrevet riktig
                 else:
-                    self.map[location].pop_herb.append(Carnivore(animal_info))
+                    self.map[location].pop_herb.append(Carnivore(animal_info)) # skjønne de her
 
     def create_map_dict(self):
         """
@@ -136,8 +136,8 @@ class Map_Island:
         :raise ValueError: if invalid landscape type is given in geography
             string
         """
-        self.create_geography_dict()
-        self.create_population_dict()
+        self.create_geography_dict() # hvert koordinat har sin celletype
+        self.create_population_dict() # Hvert koordinat har sine lister med dyr (med ulik info)
 
         for location, cell_type in self.geography.items():
             if cell_type is "L":
