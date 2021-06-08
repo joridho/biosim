@@ -29,9 +29,11 @@ class Cell:
             Herbivores are sorted weakest to fittest, since the weakest are eaten first
             Carnivores are sorted fittest to weakest, since the fittest eats first
             """
-        self.sorted_herbivores_pop = sorted(pop, key=operator.attrgetter(sort_by))
-        self.sorted_carnivores_pop = sorted(pop, key=operator.attrgetter(sort_by))
-        self.sorted_carnivores_pop.reverse()
+        sorted_herbivores_pop = sorted(pop, key=operator.attrgetter(sort_by))
+        sorted_carnivores_pop = sorted(pop, key=operator.attrgetter(sort_by))
+        sorted_carnivores_pop.reverse()
+        self.herbivores_pop = sorted_herbivores_pop
+        self.carnivores_pop = sorted_carnivores_pop
         # my get an error later, just read the error and we will be good
 
     def make_herbivores_eat(self):
@@ -63,6 +65,7 @@ class Cell:
         '''
 
 
+
     def newborn_animals(self):  # make it work for bort species
         """
             An animal gives birth maximum one time per year.The function birth_probability
@@ -70,25 +73,39 @@ class Cell:
             weight for the mother.
             The newborn must be added to the list of either herbivores or carnivores
             """
-        list_h = self.herbivores_pop
         self.counting_animals()
 
-        self.new = 0  # for testing
+        # for herbivores
+        list_h = self.herbivores_pop
+        self.new_h = 0  # for testing
         list_new = []
-
-        for k in range(self.N):
-            list_h[k].birth_probability(n=self.N)
-
+        for k in range(self.N_herb):
+            list_h[k].birth_probability(n=self.N_herb)
+            # list_h[k].birth = True # har den der for testing siden jeg ikke får til mocker
             if list_h[k].birth is True:
                 newborn = Herbivore(weight=list_h[k].newborn_birth_weight, age=0)
-                list_h[k].birth_weight_loss(n=self.N)
+                list_h[k].birth_weight_loss(n=self.N_herb)
                 list_new.append(newborn)
-                self.new += 1  # for testing
-
+                self.new_h += 1  # for testing
         for k in list_new:
             list_h.append(k)
-
         self.herbivores_pop = list_h
+
+        # for carnivores
+        list_c = self.carnivores_pop
+        self.new_c = 0  # for testing
+        list_new = []
+        for k in range(self.N_carn):
+            list_c[k].birth_probability(n=self.N_carn)
+            #  list_c[k].birth = True  # har den der for testing siden jeg ikke får til mocker
+            if list_c[k].birth is True:
+                newborn = Carnivore(weight=list_c[k].newborn_birth_weight, age=0)
+                list_c[k].birth_weight_loss(n=self.N_carn)
+                list_new.append(newborn)
+                self.new_c += 1  # for testing
+        for k in list_new:
+            list_c.append(k)
+        self.carnivores_pop = list_c
 
     def counting_animals(self):
         """

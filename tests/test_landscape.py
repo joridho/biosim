@@ -25,8 +25,8 @@ def test_simple_sorting():
     liste2 = [liste1[0].phi, liste1[1].phi, liste1[2].phi]
     liste2.sort()
     c.sorting_animals(pop=c.herbivores_pop, sort_by='phi')
-    liste3 = [c.sorted_herbivores_pop[0].phi, c.sorted_herbivores_pop[1].phi,
-              c.sorted_herbivores_pop[2].phi]
+    liste3 = [c.herbivores_pop[0].phi, c.herbivores_pop[1].phi,
+              c.herbivores_pop[2].phi]
     assert liste2 == liste3
 
 def test_sorting_carnivores():
@@ -38,7 +38,7 @@ def test_sorting_carnivores():
     pop1 = [k.phi for k in liste1]
     pop1.reverse()
     l.sorting_animals(pop=l.carnivores_pop, sort_by='phi')
-    liste2 = l.sorted_carnivores_pop
+    liste2 = l.carnivores_pop
     pop2 = [k.phi for k in liste2]
     assert pop2 == pop1
 
@@ -74,25 +74,46 @@ def test_gain_weight_after_eating(): # får den kun til å fungere på ett dyr
 
     assert [k + 9 for k in weight] == weight2
 
-def test_newborn_added_to_list():
-    c = Lowland()
-    c.herbivores_pop = [Herbivore(weight=35, age=3), Herbivore(weight=41, age=8),
+def test_newborn_added_to_list_herb():
+    l = Lowland()
+    l.herbivores_pop = [Herbivore(weight=35, age=3), Herbivore(weight=41, age=8),
                         Herbivore(weight=20, age=6), Herbivore(weight=35, age=3),
                         Herbivore(weight=41, age=8), Herbivore(weight=20, age=6)]
-    length = len(c.herbivores_pop)
-    #for k in range(len(c.herbivores_pop)):
-        #c.herbivores_pop[k].given_birth = False
-    c.newborn_animals()
-    assert len(c.herbivores_pop) == length + c.new
+    length = len(l.herbivores_pop)
+    l.newborn_animals()
+    assert len(l.herbivores_pop) == length + l.new_h
+
+def test_newborn_added_to_list_carn():
+    l = Lowland()
+    l.carnivores_pop = [Carnivore(weight=35, age=3), Carnivore(weight=41, age=8),
+                        Carnivore(weight=20, age=6), Carnivore(weight=35, age=3),
+                        Carnivore(weight=41, age=8), Carnivore(weight=20, age=6)]
+    length = len(l.carnivores_pop)
+    l.newborn_animals()
+    assert len(l.carnivores_pop) == length + l.new_c
 
 
-def test_mother_lost_weight():  # fungerer hver gang om mocker fungerer
+def test_mother_lost_weight_herb():  # fungerer hver gang om mocker fungerer
     c = Lowland()
     c.herbivores_pop = [Herbivore(weight=50, age=3), Herbivore(weight=40, age=3)]
     weight = [k.weight for k in c.herbivores_pop]
 
     c.newborn_animals()
     after = [c.herbivores_pop[0], c.herbivores_pop[1]]
+
+    newborn_weight = [k.newborn_birth_weight for k in after]
+    after_weight = [k.weight for k in after]
+
+    for k in range(len(weight)):
+        assert after_weight[k] == weight[k] - Herbivore.p['zeta'] * newborn_weight[k]
+
+def test_mother_lost_weight_carn():  # fungerer hver gang om mocker fungerer
+    c = Lowland()
+    c.carnivores_pop = [Carnivore(weight=50, age=3), Carnivore(weight=40, age=3)]
+    weight = [k.weight for k in c.carnivores_pop]
+
+    c.newborn_animals()
+    after = [c.carnivores_pop[0], c.carnivores_pop[1]]
 
     newborn_weight = [k.newborn_birth_weight for k in after]
     after_weight = [k.weight for k in after]
@@ -107,7 +128,7 @@ def test_count_animals():
                         Herbivore(weight=20, age=6), Herbivore(weight=35, age=3),
                         Herbivore(weight=41, age=8), Herbivore(weight=20, age=6)]
     c.counting_animals()
-    assert c.N == len(c.herbivores_pop)
+    assert c.N_herb == len(c.herbivores_pop)
 
 def test_aging():
     c = Lowland()
