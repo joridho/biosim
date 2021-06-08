@@ -46,7 +46,6 @@ class BioSim:
 
         self.init_pop = init_pop
         self.num_years_simulated = 0
-        self.num_animals =
     '''
     def set_animal_parameters(self, species, p):
         """
@@ -241,7 +240,7 @@ class BioSim:
         """Total number of animals on island."""
         # num_herbivores = len(Lowland.herbivores_pop)
         num_carnivores = 0  # len(lowland.carnivores_pop)
-        num_herbivores = len(self.island_map_graph.map.values().herbivores_population)
+        num_herbivores = len(self.island_map_graph.map.values().herbivores_pop)
         num_animals = num_carnivores + num_herbivores
         return num_animals
 
