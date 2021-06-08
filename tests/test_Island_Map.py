@@ -1,7 +1,7 @@
 import unittest
-from biosim.animals import herbivore, carnivore
-from biosim.Cell import lowland
-from biosim.Map_Island import map_island
+from biosim.animals import Herbivore, Carnivore
+from biosim.Cell import Lowland
+from biosim.MapIsland import Map_Island
 
 class MyTestCase(unittest.TestCase):
     def test_something(self):
@@ -14,14 +14,14 @@ if __name__ == '__main__':
 def test_fodder_in_cell_after_fodder_eaten():
     '''Check if make_herbivores eat works in year_cycle
     by checking if fodder in cell has the right amount'''
-    m = map_island(island_geo='0', init_pop=None)
+    m = Map_Island(island_geo='0', init_pop=None)
     m.add_population()
     m.year_cycle()
     af2 = m.available_fodder
     assert af2 == 800 - 50 * 10
 
 def test_weight_gain_after_fodder_eaten():
-    m = map_island(island_geo='0', init_pop=None)
+    m = Map_Island(island_geo='0', init_pop=None)
     m.add_population()
     init_w = [k.weight for k in m.init_pop]
     calculated_new_weight = [k + 9 for k in init_w]
@@ -37,10 +37,10 @@ def test_weight_gain_after_fodder_eaten():
     assert calculated_new_weight == new_weight_by_function
 
 def test_change_of_appetite():
-    l = lowland()
-    l.herbivores_pop = [herbivore(weight=35, a=3), herbivore(weight=41, a=8),
-                        herbivore(weight=20, a=6), herbivore(weight=35, a=3),
-                        herbivore(weight=41, a=8), herbivore(weight=20, a=6)]
+    l = Lowland()
+    l.herbivores_pop = [Herbivore(weight=35, a=3), Herbivore(weight=41, a=8),
+                        Herbivore(weight=20, a=6), Herbivore(weight=35, a=3),
+                        Herbivore(weight=41, a=8), Herbivore(weight=20, a=6)]
     b = biosim(init_pop=l.herbivores_pop)
     # b.add_pop()
 

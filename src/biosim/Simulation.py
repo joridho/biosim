@@ -4,9 +4,9 @@ __author__ = 'Jorid Holmen'
 __email__ = 'jorid.holmen@nmbu.no'
 
 import biosim.animals
-from biosim.animals import herbivore, carnivore
-from biosim.Cell import lowland
-from biosim.Map_Island import map_island
+from biosim.animals import Herbivore, Carnivore
+from biosim.Cell import Lowland
+from biosim.MapIsland import Map_Island
 
 import pandas
 import matplotlib.pyplot as plt
@@ -34,9 +34,9 @@ class BioSim:
 
         if island_geo == None:
             island_geo = '-----' # vet ikke helt hva det skal bli enda
-            self._island_map_graph = map_island(island_geo)
+            self._island_map_graph = Map_Island(island_geo)
         else: #Går også an å inkl en elif som skal sjekke om island_geo er string
-            self._island_map_graph = map_island(island_geo, init_pop)
+            self._island_map_graph = Map_Island(island_geo, init_pop)
 
         #ELSE RAISE VALUE ERROR
 
@@ -53,8 +53,8 @@ class BioSim:
         :param params: Dict with valid parameter specification for species
         """
         
-        class_names = {'Herbivores': herbivore,
-                       'Carnivore': carnivore}
+        class_names = {'Herbivores': Herbivore,
+                       'Carnivore': Carnivore}
 
     '''
     def set_landscape_parameters(self, landscape, params):
@@ -69,7 +69,7 @@ class BioSim:
         """
         Adds animal to the cell/island. These animals become the initial population
         """
-        l = lowland()
+        l = Lowland()
         self.init_pop = l.adding_animals()
         #self.idk = len(self.init_pop)
         #return self.init_pop
@@ -215,7 +215,7 @@ def create_map(self):
     @property
     def num_animals(self):
         """Total number of animals on island."""
-        num_herbivores = len(lowland.pop_herb)
+        num_herbivores = len(Lowland.pop_herb)
         num_carnivores = 0  # len(lowland.pop_carn)
         num_animals = num_carnivores + num_herbivores
         return num_animals
@@ -232,7 +232,7 @@ def create_map(self):
         return num_animals_per_species()
         '''
         num_animals_per_species = {"Herbivore": 0, "Carnivore": 0}
-        num_animals_per_species["Herbivore"] = len(lowland.herbivore_pop)
+        num_animals_per_species["Herbivore"] = len(Lowland.herbivore_pop)
         num_animals_per_species["Carnivore"] = 0  # len(lowland.carnivore_pop)
 
         '''

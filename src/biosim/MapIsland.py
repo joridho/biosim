@@ -6,11 +6,11 @@
 __author__ = 'Christianie Torres'
 __email__ = 'christianie.torres@nmbu.no'
 
-from biosim.Cell import lowland #highland, water, desert
-from biosim.animals import herbivore #Carnivore
+from biosim.Cell import Lowland #highland, water, desert
+from biosim.animals import Herbivore #Carnivore
 import textwrap
 
-class map_island:
+class Map_Island:
     def __init__(self, island_geo, init_pop): # Usikker på om init_pop skal være argument her
         """
         Initialize map class with given island geography and initial population
@@ -87,7 +87,7 @@ class map_island:
         - Step 6: Animals die
             """
 
-        l = lowland()
+        l = Lowland()
         l.herbivores_pop = self.init_pop  # må fjernes
 
         l.make_herbivores_eat()
@@ -110,6 +110,6 @@ class map_island:
         return l.herbivores_pop
 
     def add_population(self):
-        l = lowland()
+        l = Lowland()
         self.init_pop = l.adding_animals()
 

@@ -1,7 +1,7 @@
 import unittest
 from  biosim.Simulation import biosim
-from biosim.Cell import lowland
-from biosim.animals import herbivore, carnivore
+from biosim.Cell import Lowland
+from biosim.animals import Herbivore, Carnivore
 
 '''
 class MyTestCase(unittest.TestCase):
@@ -51,10 +51,10 @@ def test_weight_gain_after_fodder_eaten():
     assert new_weight_by_function == calculated_new_weight
 
 def test_change_of_appetite():
-    l = lowland()
-    l.herbivores_pop = [herbivore(weight=35, a=3), herbivore(weight=41, a=8),
-                        herbivore(weight=20, a=6), herbivore(weight=35, a=3),
-                        herbivore(weight=41, a=8), herbivore(weight=20, a=6)]
+    l = Lowland()
+    l.herbivores_pop = [Herbivore(weight=35, a=3), Herbivore(weight=41, a=8),
+                        Herbivore(weight=20, a=6), Herbivore(weight=35, a=3),
+                        Herbivore(weight=41, a=8), Herbivore(weight=20, a=6)]
     b = biosim(init_pop=l.herbivores_pop)
     # b.add_pop()
 
