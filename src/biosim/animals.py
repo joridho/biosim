@@ -154,11 +154,27 @@ class herbivore(animal):
     this is a class for herbivores on the island
     """
 
+
     def __init__(self, weight=None, a=0):
         """
         initialisation of weight and age for a new herbivore
             """
         super().__init__(weight, a)
+
+        self.p["w_birth"] = 8.0
+        self.p["sigma_birth"] = 1.5
+        self.p["beta"] = 0.9
+        self.p["eta"] = 0.05
+        self.p["a_half"] = 40.0
+        self.p["phi_age"] = 0.6
+        self.p["w_half"] = 10.0
+        self.p["phi_weight"] = 0.1
+        self.p["mu"] = 0.25
+        self.p["gamma"] = 0.2
+        self.p["zeta"] = 3.5
+        self.p["xi"] = 1.2
+        self.p["omega"] = 0.4
+        self.p["F"] = 10.0
 
     def eat_fodder(self, F_cell):
         """
@@ -199,6 +215,21 @@ class carnivore(animal):
         initialisation of weight and age for a new herbivore
             """
         super().__init__(weight, a)
+
+        self.p["w_birth"] = 8.0
+        self.p["sigma_birth"] = 1.5
+        self.p["beta"] = 0.9
+        self.p["eta"] = 0.05
+        self.p["a_half"] = 40.0
+        self.p["phi_age"] = 0.6
+        self.p["w_half"] = 10.0
+        self.p["phi_weight"] = 0.1
+        self.p["mu"] = 0.25
+        self.p["gamma"] = 0.2
+        self.p["zeta"] = 3.5
+        self.p["xi"] = 1.2
+        self.p["omega"] = 0.4
+        self.p["F"] = 10.0
 
     def eat_herbivores(self):
         """
