@@ -43,8 +43,23 @@ class biosim:
         self.year = 0
         self.af_bio = 800
 
+'''
+    def set_animal_parameters(self, species, params):
+        """
+        Set parameters for animal species.
 
+        :param species: String, name of animal species
+        :param params: Dict with valid parameter specification for species
+        """
 
+    def set_landscape_parameters(self, landscape, params):
+        """
+        Set parameters for landscape type.
+
+        :param landscape: String, code letter for landscape
+        :param params: Dict with valid parameter specification for landscape
+        """
+'''
     def add_pop(self):
         """
         Adds animal to the cell/island. These animals become the initial population
@@ -53,53 +68,6 @@ class biosim:
         self.init_pop = l.adding_animals()
         #self.idk = len(self.init_pop)
         #return self.init_pop
-
-    #def feeding(self):
-        """
-            Herbivores eat yearly
-            """
-
-    #def procreation(self):
-        """
-            Animals mate maximum once per year
-            """
-
-    # def migration(self):
-
-    def year_cycle(self):
-        """
-            simulates one year
-
-        Runs through each of the 6 yearly seasons for all cells.
-        - Step 1: Animals feed
-        - Step 2: Animals procreate
-        - Step 3: Animals migrate
-        - Step 4: Animals age
-        - Step 5: Animals lose weight
-        - Step 6: Animals die
-            """
-
-        l = lowland()
-        # l.herbivores_pop = self.init_pop  # må fjernes
-
-        l.make_herbivores_eat()
-        self.population_herb = l.herbivores_pop
-        self.weight_year_cycle = [k.weight for k in l.herbivores_pop]  # for testing
-        self.available_fodder = l.af  # for testing
-
-        l.newborn_animals()
-        l.make_animals_age()
-        l.make_animals_lose_weight()
-        l.dead_animals_natural_cause()
-
-        # reset
-        l.reset_fodder()
-        #l.reset_appetite()
-        l.reset_given_birth()
-
-        self.year += 1
-
-        return l.herbivores_pop
 
 
     def num_animals(self):
@@ -231,6 +199,22 @@ def create_map(self):
 
     plt.show()  # viser plott
 
+'''
+    @property
+    def year(self):
+        """Last year simulated."""
+
+    @property
+    def num_animals(self):
+        """Total number of animals on island."""
+
+    @property
+    def num_animals_per_species(self):
+        """Number of animals per species in island, as dictionary."""
+
+    def make_movie(self):
+        """Create MPEG4 movie from visualization images saved."""
+'''
 
 
 

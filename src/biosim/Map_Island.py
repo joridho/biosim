@@ -74,7 +74,40 @@ class Map_Island:
             if len(set(line_lengths)) != 1:
                 raise ValueError(f"Inconsistent line length.")
 
-        def year cycle
+        def year_cycle(self):
+            """
+                simulates one year
+
+            Runs through each of the 6 yearly seasons for all cells.
+            - Step 1: Animals feed
+            - Step 2: Animals procreate
+            - Step 3: Animals migrate
+            - Step 4: Animals age
+            - Step 5: Animals lose weight
+            - Step 6: Animals die
+                """
+
+            l = lowland()
+            # l.herbivores_pop = self.init_pop  # må fjernes
+
+            l.make_herbivores_eat()
+            self.population_herb = l.herbivores_pop
+            self.weight_year_cycle = [k.weight for k in l.herbivores_pop]  # for testing
+            self.available_fodder = l.af  # for testing
+
+            l.newborn_animals()
+            l.make_animals_age()
+            l.make_animals_lose_weight()
+            l.dead_animals_natural_cause()
+
+            # reset
+            l.reset_fodder()
+            # l.reset_appetite()
+            l.reset_given_birth()
+
+            self.year += 1
+
+            return l.herbivores_pop
 
         #def add_population
 
