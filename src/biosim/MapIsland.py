@@ -86,9 +86,9 @@ class Map_Island:
         self.check_island_boundaries()
         self.check_for_equal_map_lines()
 
-        x_coord = 0
+        x_coord = 1
         for line in self.geo.splitlines():
-            y_coord = 0
+            y_coord = 1
             for landscape_type in line:
                 self.geography[(x_coord, y_coord)] = landscape_type
                 y_coord += 1
