@@ -33,7 +33,7 @@ class map_island:
 
 
 #INSP fra ida. MÅ fortsatt redigeres
-    def check_boundaries_are_ocean(self):
+    def check_island_boundaries(self):
         """
         This is a function that raises an error if the boundary cells are not water.
         """
