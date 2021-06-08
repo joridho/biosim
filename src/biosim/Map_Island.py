@@ -10,7 +10,7 @@ from biosim.Cell import lowland #highland, water, desert
 from biosim.animals import herbivore #Carnivore
 import textwrap
 
-class Map_Island:
+class map_island:
     def __init__(self, island_geo, init_pop): # Usikker på om init_pop skal være argument her
         """
         Initialize map class with given island geography and initial population
