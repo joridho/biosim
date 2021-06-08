@@ -155,64 +155,25 @@ def  test_consumption_not_enough_fodder():
     h.eat_fodder(F_cell=7)
     assert h.F_consumption == h.F_cell
 
-'''
 def test_herbivore_eat_fodder():
-    h = herbivore()
+    h = Herbivore()
     current_weight = h.weight
     h.eat_fodder(F_cell = h.p['F']) 
-    #assert h.weight == current_weight + h.p['beta'] * h.f
-    # assert h.F_cell == 0   #apetiten F skal være tom 0. 
-    # og F_celle skal være lik celle i start minus apetit (men blir 0 her pga de er like store duhhh)
-
+    assert h.weight == current_weight + h.p['beta'] * h.F_consumption
 
 def test_herbivore_gains_weight_after_eat_fodder():
-    #Kan hende det er samme som weight_gain funksjonen
-    
-    This is a test that checks if the Herbivore gains the right amount of weight
-    when it eats in a cell that has enough fodder that satisfies the Herbivore apetite
-    
-    h = herbivore()
+    h = Herbivore()
     current_weight = h.weight
     h.eat_fodder(F_cell = 6)
     assert h.weight == current_weight + h.p['beta'] * h.F_consumption
-'''
-
-'''
-def test_cell_empty_after_herbivore_eat_fodder():
-    
-    This is a test that checks if the cell is empty after the Herbivore has eaten in a cell that
-     has enough fodder that satisfies the herbivores apetite'
-    
-    h = herbivore()
-    h.eat_fodder(F_cell=h.p['F'])
-    assert h.F_cell == 0
-
 
 def test_weight_gain_after_eating():
-    
-    # This is a test that checks if the Herbivore gains the right amount of weight
-    #when it eats in a cell that does not have enough fodder that satisfies the Herbivore apetite
-    
-    h = herbivore(weight=37)
+    h = Herbivore(weight=37)
     h.p['F']= 10
     h.eat_fodder(F_cell = 800)
     assert h.weight == 37 + 0.9 * 10
 
-
-def test_update_appetite():
-    h = herbivore()
-    h.p['F'] = 10
-    h.eat_fodder(F_cell=4)
-    assert h.p['F'] == 6
-
-
-def test_update_F_cell():
-    h = herbivore()
-    h.p['F'] = 10
-    h.eat_fodder(F_cell=800)
-    assert h.F_cell == 800-10
 '''
-
 def test_if_carnivore_gains_correct_weight():
     carn = Carnivore()
     w = carn.weight
@@ -229,12 +190,4 @@ def test_prob_kill():
             assert carn.r < carn.prob_kill
         else:
             assert carn.r >= carn.prob_kill
-
-
-
-
-
-
-
-
-
+'''

@@ -15,40 +15,6 @@ class Animal:
     """
     This i a class for animals on the island
     """
-    p = {  # Dictionary of parameters belonging to the Herbivore class
-        "w_birth": 8.0,
-        "sigma_birth": 1.5,
-        "beta": 0.9,
-        "eta": 0.05,
-        "a_half": 40.0,
-        "phi_age": 0.6,
-        "w_half": 10.0,
-        "phi_weight": 0.1,
-        "mu": 0.25,
-        "gamma": 0.2,
-        "zeta": 3.5,
-        "xi": 1.2,
-        "omega": 0.4,
-        "F": 10.0,
-    }
-    '''
-    p = {  # Dictionary of parameters belonging to the Herbivore class
-        "w_birth": None,
-        "sigma_birth": None,
-        "beta": None,
-        "eta": None,
-        "a_half": None,
-        "phi_age": None,
-        "w_half": None,
-        "phi_weight": None,
-        "mu": None,
-        "gamma": None,
-        "zeta": None,
-        "xi": None,
-        "omega": None,
-        "F": None,
-    }
-    '''
 
     def __init__(self, weight, a):
 
@@ -60,13 +26,16 @@ class Animal:
         else:
             self.weight = weight  # unsure about float
 
-        # self.phi = self.fitness()
         self.fitness()
-        self.given_birth = False
-        #self.F_consumption = None
-        #self.F_cell = None
 
-        # self.birth_weight = self.birth_weight()
+    @classmethod
+    def set_given_parameters(cls, params):
+        """
+        Saves the parameters for the different animals for use in Animals class
+        """
+        for parameter in params:
+            if parameter in cls.p:
+                cls.p[parameter] = params[parameter]
 
     def aging(self):
         """
@@ -170,30 +139,28 @@ class Herbivore(Animal):
     """
     this is a class for herbivores on the island
     """
-
+    p = {  # Dictionary of parameters belonging to the Herbivore class
+        "w_birth": 8.0,
+        "sigma_birth": 1.5,
+        "beta": 0.9,
+        "eta": 0.05,
+        "a_half": 40.0,
+        "phi_age": 0.6,
+        "w_half": 10.0,
+        "phi_weight": 0.1,
+        "mu": 0.25,
+        "gamma": 0.2,
+        "zeta": 3.5,
+        "xi": 1.2,
+        "omega": 0.4,
+        "F": 10.0,
+    }
 
     def __init__(self, weight=None, a=0):
         """
         initialisation of weight and age for a new herbivore
             """
         super().__init__(weight, a)
-
-        '''
-        self.p["w_birth"] = 8.0
-        self.p["sigma_birth"] = 1.5
-        self.p["beta"] = 0.9
-        self.p["eta"] = 0.05
-        self.p["a_half"] = 40.0
-        self.p["phi_age"] = 0.6
-        self.p["w_half"] = 10.0
-        self.p["phi_weight"] = 0.1
-        self.p["mu"] = 0.25
-        self.p["gamma"] = 0.2
-        self.p["zeta"] = 3.5
-        self.p["xi"] = 1.2
-        self.p["omega"] = 0.4
-        self.p["F"] = 10.0
-        '''
 
     def eat_fodder(self, F_cell):
         """
@@ -211,14 +178,33 @@ class Herbivore(Animal):
         self.F_cell = F_cell
         if self.F_cell >= self.p['F']:
             self.F_consumption = self.p['F']
+            self.weight_gain(consumption=self.F_consumption)
         else:
             self.F_consumption = self.F_cell
+            self.weight_gain(consumption=self.F_consumption)
 
 
 class Carnivore(Animal):
     """
     this is a class for carnivores  on the island
     """
+
+    p = {  # Dictionary of parameters belonging to the Herbivore class
+        "w_birth": 8.0,
+        "sigma_birth": 1.5,
+        "beta": 0.9,
+        "eta": 0.05,
+        "a_half": 40.0,
+        "phi_age": 0.6,
+        "w_half": 10.0,
+        "phi_weight": 0.1,
+        "mu": 0.25,
+        "gamma": 0.2,
+        "zeta": 3.5,
+        "xi": 1.2,
+        "omega": 0.4,
+        "F": 10.0,
+    }
 
     def __init__(self, weight=None, a=0):
         """
