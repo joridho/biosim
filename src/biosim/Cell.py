@@ -64,7 +64,7 @@ class Cell:
         for k in range(len(self.list)):
             # make the herbivore eat:
             self.list[k].eat_fodder(F_cell=800)
-            self.list[k].F_consumption = 10 # skal ikke være her
+            self.list[k].F_consumption = 10  # skal ikke være her
             consumption = self.list[k].F_consumption
             self.spist.append(consumption)  # for testing
 
@@ -77,10 +77,7 @@ class Cell:
             # change the amount of fodder in the cell
             self.af -= consumption
 
-
         self.herbivores_pop = self.list
-
-
 
     def newborn_animals(self):
         """
@@ -89,25 +86,26 @@ class Cell:
             weight for the mother.
             The newborn must be added to the list of either herbivores or carnivores
             """
-        list_h = self.herbivores_pop
+        self.list_h = self.herbivores_pop
         self.counting_animals()
-        self.reset_given_birth() # must be removed later. Må egt ikke bli fjernet
-        length = len(list_h)
+        self.reset_given_birth()  # must be removed later. Må egt ikke bli fjernet
+        #length = len(self.list_h)
         self.new = 0
-        list_new = []
-        for k in range(length):
-            list_h[k].birth_probability(n=self.N)
-            #list_h[k].birth = True
-            if list_h[k].given_birth is False and list_h[k].birth is True:
-                newborn = Herbivore(weight=list_h[k].newborn_birth_weight, a=0)
-                list_h[k].birth_weight_loss(n=self.N)
-                list_h[k].given_birth is True # burde være riktig
-                list_new.append(newborn)  # skal være riktig
+        self.list_new = []
+        for k in range(self.N):
+            self.list_h[k].birth_probability(n=self.N)
+            # list_h[k].birth = True
+            if self.list_h[k].given_birth is False and self.list_h[k].birth is True:
+                newborn = Herbivore(weight=self.list_h[k].newborn_birth_weight, a=0)
+                self.list_h[k].birth_weight_loss(n=self.N)
+                self.list_h[k].given_birth is True  # burde være riktig
+                self.list_new.append(newborn)  # skal være riktig
                 self.new += 1
-        #list_h.extend(list_new)
-        for k in list_new:
-            list_h.append(k)
-        self.herbivores_pop = list_h
+        # list_h.extend(list_new)
+
+        for k in self.list_new:
+            self.list_h.append(k)
+        self.herbivores_pop = self.list_h
         return self.herbivores_pop
 
     def counting_animals(self):
@@ -172,7 +170,7 @@ class Cell:
             list_a[k].death_probability()
             if list_a[k].death is True:
                 list_dead.append(list_a[k])
-                self.dead += 1 # for testing
+                self.dead += 1  # for testing
         self.herbivores_pop = list(set(list_a) - set(list_dead))
 
     def remove_animals(self):
@@ -181,8 +179,6 @@ class Cell:
             list of animals.
             Animal also needs to be taken of the list when migrating
             """
-
-
 
 
 class Lowland(Cell):
