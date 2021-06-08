@@ -42,6 +42,15 @@ def test_sorting_carnivores():
     pop2 = [k.phi for k in liste2]
     assert pop2 == pop1
 
+def test_available_herbivores():
+    l = Lowland()
+    l.herbivores_pop = [Herbivore(weight=35, age=3), Herbivore(weight=41, age=8),
+                        Herbivore(weight=20, age=6)]
+    weight = 0
+    for k in l.herbivores_pop:
+        weight += k.weight
+    l.available_herbivores_for_carnivores()
+    assert l.herbivores_weight_sum == weight
 
 def test_fodder_eaten():
     c = Lowland()

@@ -50,7 +50,20 @@ class Cell:
             k.eat_fodder(F_cell=self.af)  # make the herbivore eat
             self.af -= k.F_consumption  # change the amount of fodder in the cell
 
-    def newborn_animals(self):
+    def available_herbivores_for_carnivores(self):
+        self.herbivores_weight_sum = 0
+        for k in self.herbivores_pop:
+            self.herbivores_weight_sum += k.weight
+
+    def feed_carnivores(self):
+        '''
+            1. sort herbivores and carnivores by fitness
+            2. make the carnivores eat
+            3. remove all eaten herbivores
+        '''
+
+
+    def newborn_animals(self):  # make it work for bort species
         """
             An animal gives birth maximum one time per year.The function birth_probability
             calculates if the animal will give birth or not and birth_weightloss calculates the new
@@ -83,10 +96,13 @@ class Cell:
             We also need to differentiate between the different animals and provide to
             variables for this
             """
-        self.N = len(self.herbivores_pop)
+        self.N_herb = len(self.herbivores_pop)
+        self.N_carn = len(self.carnivores_pop)
 
 
     # yearly activities:
+
+    # make the yealy activities work for both species
 
     def make_animals_age(self):
         """
@@ -118,13 +134,6 @@ class Cell:
                 list_dead.append(list_a[k])
                 self.dead += 1  # for testing
         self.herbivores_pop = list(set(list_a) - set(list_dead))
-
-    def remove_animals(self):
-        """
-            When an animal dies, either natural causes or eaten, it needs to be taken of the
-            list of animals.
-            Animal also needs to be taken of the list when migrating
-            """
 
 
 class Lowland(Cell):
