@@ -18,7 +18,7 @@ def test_herbivore_age():
     A test that checks that a herbivore has been created with age 0
     """
     h = Herbivore()
-    assert h.a == 0
+    assert h.age == 0
 
 def test_herbivore_weight():
     '''
@@ -35,7 +35,7 @@ def test_herbivore_aging():
     h = Herbivore()
     for n in range(10):
         h.aging()
-        assert h.a == n + 1
+        assert h.age == n + 1
 
 def test_herbivore_birth_weight():
     """
@@ -90,7 +90,7 @@ def test_no_newborn_when_mother_weighs_too_little():
     """
     This is a test that checks if the birth probability equals zero when the mother weighs to little.
     """
-    h = Herbivore(weight=3.5, a=3)
+    h = Herbivore(weight=3.5, age=3)
     h.birth_probability(n=3)
     assert h.prob_birth == 0
 
@@ -100,7 +100,7 @@ def test_no_newborn_when_to_few_animals(): #too
     a cell.
     """
 
-    h = Herbivore(weight=32, a=3)
+    h = Herbivore(weight=32, age=3)
     h.birth_probability(n=1)
     assert h.prob_birth == 0
 
@@ -109,7 +109,7 @@ def test_no_newborn_if_newborn_too_fat():
     This is a test that checks if the birth probability equals zero when the newborn weighs more
     than the mother
     """
-    h = Herbivore(weight=3, a=3)
+    h = Herbivore(weight=3, age=3)
     h.birth_probability(n=3)
     h.newborn_birth_weight = 5
     assert h.prob_birth == 0
@@ -117,7 +117,7 @@ def test_no_newborn_if_newborn_too_fat():
 
 def test_birth():
     'This is a test that checks if the Herbivore gives birth when it is supposed to'
-    h = Herbivore(weight=35, a=3)
+    h = Herbivore(weight=35, age=3)
     for _ in range(100):
         h.birth_probability(n=4)
         if h.birth == True:
@@ -155,73 +155,43 @@ def  test_consumption_not_enough_fodder():
     h.eat_fodder(F_cell=7)
     assert h.F_consumption == h.F_cell
 
-'''
 def test_herbivore_eat_fodder():
-    h = herbivore()
+    h = Herbivore()
     current_weight = h.weight
     h.eat_fodder(F_cell = h.p['F']) 
-    #assert h.weight == current_weight + h.p['beta'] * h.f
-    # assert h.F_cell == 0   #apetiten F skal være tom 0. 
-    # og F_celle skal være lik celle i start minus apetit (men blir 0 her pga de er like store duhhh)
-
+    assert h.weight == current_weight + h.p['beta'] * h.F_consumption
 
 def test_herbivore_gains_weight_after_eat_fodder():
-    #Kan hende det er samme som weight_gain funksjonen
-    
-    This is a test that checks if the Herbivore gains the right amount of weight
-    when it eats in a cell that has enough fodder that satisfies the Herbivore apetite
-    
-    h = herbivore()
+    h = Herbivore()
     current_weight = h.weight
     h.eat_fodder(F_cell = 6)
     assert h.weight == current_weight + h.p['beta'] * h.F_consumption
-'''
-
-'''
-def test_cell_empty_after_herbivore_eat_fodder():
-    
-    This is a test that checks if the cell is empty after the Herbivore has eaten in a cell that
-     has enough fodder that satisfies the herbivores apetite'
-    
-    h = herbivore()
-    h.eat_fodder(F_cell=h.p['F'])
-    assert h.F_cell == 0
-
 
 def test_weight_gain_after_eating():
-    
-    # This is a test that checks if the Herbivore gains the right amount of weight
-    #when it eats in a cell that does not have enough fodder that satisfies the Herbivore apetite
-    
-    h = herbivore(weight=37)
+    h = Herbivore(weight=37)
     h.p['F']= 10
     h.eat_fodder(F_cell = 800)
     assert h.weight == 37 + 0.9 * 10
 
-
-def test_update_appetite():
-    h = herbivore()
-    h.p['F'] = 10
-    h.eat_fodder(F_cell=4)
-    assert h.p['F'] == 6
-
-
-def test_update_F_cell():
-    h = herbivore()
-    h.p['F'] = 10
-    h.eat_fodder(F_cell=800)
-    assert h.F_cell == 800-10
-'''
 
 def test_if_carnivore_gains_correct_weight():
     carn = Carnivore()
     w = carn.weight
     herb = Herbivore(weight=35)
     carn.weight_gain_after_eating_herb(herb)
-    assert carn.weight == w + herb.weight * herb.p['beta']
+    assert carn.weight == w + herb.weight * carn.p['beta']
+
+def test_carnivore_updated_fitness():
+    carn = Carnivore(weight=70, age=5)
+    f1 = carn.phi
+    herb = Herbivore(weight=35, age=2)
+    carn.weight_gain_after_eating_herb(herb)
+    weight_carn = carn.weight
+    carn2 = Carnivore(weight=weight_carn, age=5)
+    assert carn.phi == carn2.phi
 
 def test_prob_kill():
-    herb = Herbivore(weight=35, a=3)
+    herb = Herbivore(weight=35, age=3)
     carn = Carnivore()
     for _ in range(100):
         carn.probability_kill_herbivore(herb)
@@ -230,11 +200,17 @@ def test_prob_kill():
         else:
             assert carn.r >= carn.prob_kill
 
+def test_prob_kill_not_work1():
+    herb = Herbivore(weight=35, age=3)
+    carn = Carnivore(weight=8, age=1)
+    carn.probability_kill_herbivore(herb)
+    assert carn.prob_kill == 0
 
-
-
-
-
+def test_prob_kill_not_work2():
+    herb = Herbivore(weight=35, age=3)
+    carn = Carnivore(weight=60, age=4)
+    carn.probability_kill_herbivore(herb)
+    assert carn.prob_kill == (carn.phi - herb.phi) / carn.p['DeltaPhiMax']
 
 
 
