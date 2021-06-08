@@ -32,13 +32,14 @@ class BioSim:
         random.seed(seed)  # ??
 
         if init_pop is None:
-            self.init_pop = self.add_population()  # usikker på
+            self.init_pop = self.add_population()  # Trengs ikke
 
         # init_pop = Herbivore(weight=init_pop['weight'], a=init_pop['age'])
 
         self.island_map_graph = Map_Island(island_geo, init_pop)
+        self.island_map_graph.create_map_dict() # koordinatene i kart får tilhørende lister med dyr
 
-        self.init_pop = init_pop
+        self.init_pop = init_pop #Trengs ikke
         self.num_years_simulated = 0
 
         # if island_geo == None:  # trenger vi denne? er jo input senere
@@ -225,7 +226,8 @@ class BioSim:
         """
             Adds animal to the cell/island. These animals become the initial population
             """
-        self.herbivores_pop = self.island_map_graph.add_population()
+        #self.herbivores_pop = self.island_map_graph.add_population() # feil
+        return self.island_map_graph.add_population(population)
 
         #for k in range(50):
             #Lowland.herbivores_pop.append(Herbivore())
