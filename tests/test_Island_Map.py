@@ -30,7 +30,8 @@ def test_weight_gain_after_fodder_eaten():
     #new_weight_by_function = m.weight_year_cycle
     pop = m.population_herb
     #new_weight_by_function = [k.weight for k in pop]
-    new_weight_by_function = [k.weight for k in m.population_herb]  # hvorfor fungerer ikke den?
+    #new_weight_by_function = [k.weight for k in m.population_herb]  # hvorfor fungerer ikke den?
+    new_weight_by_function = m.weight_year_cycle
     calculated_new_weight.sort()
     new_weight_by_function.sort()
     assert calculated_new_weight == new_weight_by_function

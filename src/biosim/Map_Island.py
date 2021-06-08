@@ -92,7 +92,7 @@ class map_island:
 
         l.make_herbivores_eat()
         self.population_herb = l.herbivores_pop
-        # self.weight_year_cycle = [k.weight for k in l.herbivores_pop]  # for testing
+        self.weight_year_cycle = [k.weight for k in l.herbivores_pop]  # for testing
         self.available_fodder = l.af  # for testing
 
         l.newborn_animals()
