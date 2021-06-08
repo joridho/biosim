@@ -20,11 +20,11 @@ class Map_Island:
         :param initial_population: Specifies initial population of each cell
         :type initial_population: list of dicts
         """
-        #self.geography = {}
+        self.geography = {}
         #self.population = {}
         self.map = {}
         self.geo = island_geo
-        self.geog = textwrap.dedent(island_geo)
+        #self.geo = textwrap.dedent(island_geo) #føler ikke denne burde funke
         #self.ini_pop = init_pop
 
         self.year = 0
@@ -77,7 +77,22 @@ class Map_Island:
                 raise ValueError('Map lines are not equal')
 
         '''
+    def create_geography_dict(self):
+        """
+        Converts geography string to a dictionary with coordinates as keys and
+        the landscape types as values. Coordinates are a tuple of x and y
+        coordinates.
+        """
+        self.check_island_boundaries()
+        self.check_for_equal_map_lines()
 
+        x_coord = 0
+        for line in self.geo.splitlines():
+            y_coord = 0
+            for landscape_type in line:
+                self.geography[(x_coord, y_coord)] = landscape_type
+                y_coord += 1
+            x_coord += 1
 
 
 
