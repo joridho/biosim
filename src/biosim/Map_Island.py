@@ -73,3 +73,8 @@ class Map_Island:
 
             if len(set(line_lengths)) != 1:
                 raise ValueError(f"Inconsistent line length.")
+
+        def year cycle
+
+        #def add_population
+
