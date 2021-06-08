@@ -27,7 +27,7 @@ class map_island:
         self.geog = textwrap.dedent(island_geo)
         #self.ini_pop = init_pop
 
-
+        self.year = 0
 
 
 
@@ -88,11 +88,11 @@ class map_island:
             """
 
         l = lowland()
-        # l.herbivores_pop = self.init_pop  # må fjernes
+        l.herbivores_pop = self.init_pop  # må fjernes
 
         l.make_herbivores_eat()
         self.population_herb = l.herbivores_pop
-        self.weight_year_cycle = [k.weight for k in l.herbivores_pop]  # for testing
+        # self.weight_year_cycle = [k.weight for k in l.herbivores_pop]  # for testing
         self.available_fodder = l.af  # for testing
 
         l.newborn_animals()
@@ -101,7 +101,7 @@ class map_island:
         l.dead_animals_natural_cause()
 
         # reset
-        l.reset_fodder()
+        # l.reset_fodder()
         # l.reset_appetite()
         l.reset_given_birth()
 
@@ -109,5 +109,7 @@ class map_island:
 
         return l.herbivores_pop
 
-    #def add_population
+    def add_population(self):
+        l = lowland()
+        self.init_pop = l.adding_animals()
 
