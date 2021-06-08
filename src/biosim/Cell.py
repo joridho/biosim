@@ -23,16 +23,6 @@ class Cell:
         self.herbivores_pop = []
         self.carnivores_pop = []
 
-    ''' skal ikke være her, brukes senere 
-    def adding_animals(self):
-        """
-            Use of the animal class to add animals to the cell.
-            """
-        for k in range(50):
-            self.herbivores_pop.append(Herbivore())
-        return self.herbivores_pop
-    '''
-
     def sorting_animals(self, pop, sort_by):  # do we need property here?
         """
             A function for sorting the animals.
@@ -40,19 +30,9 @@ class Cell:
             Carnivores are sorted fittest to weakest, since the fittest eats first
             """
         self.sorted_herbivores_pop = sorted(pop, key=operator.attrgetter(sort_by))
+        self.sorted_carnivores_pop = sorted(pop, key=operator.attrgetter(sort_by))
+        self.sorted_carnivores_pop.reverse()
         # my get an error later, just read the error and we will be good
-
-
-
-    ''' usikker på behovet for denne 
-    def available_fodder_function(self):
-        """
-            At the beginning of the year the available fodder is f_max
-            """
-        self.af = self.p['f_max']
-    '''
-
-
 
     def make_herbivores_eat(self):
 
@@ -64,23 +44,11 @@ class Cell:
             This function can only be used once per year because of the available_fodder_function
          """
         self.af = self.p['f_max']
-        list = self.herbivores_pop
-        random.shuffle(list)
+        random.shuffle(self.herbivores_pop)
 
-        for k in list:
-            # make the herbivore eat:
-            k.eat_fodder(F_cell=self.af)
-
-            consumption = k.F_consumption
-            # self.spist.append(consumption)  # for testing
-
-            # make the herbivore gain weight:
-            k.weight_gain(consumption)
-
-            # change the amount of fodder in the cell:
-            self.af -= consumption
-
-        self.herbivores_pop = list
+        for k in self.herbivores_pop:
+            k.eat_fodder(F_cell=self.af)  # make the herbivore eat
+            self.af -= k.F_consumption  # change the amount of fodder in the cell
 
     def newborn_animals(self):
         """
@@ -97,8 +65,9 @@ class Cell:
 
         for k in range(self.N):
             list_h[k].birth_probability(n=self.N)
+
             if list_h[k].birth is True:
-                newborn = Herbivore(weight=list_h[k].newborn_birth_weight, a=0)
+                newborn = Herbivore(weight=list_h[k].newborn_birth_weight, age=0)
                 list_h[k].birth_weight_loss(n=self.N)
                 list_new.append(newborn)
                 self.new += 1  # for testing
