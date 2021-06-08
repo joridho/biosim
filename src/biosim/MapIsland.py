@@ -24,12 +24,11 @@ class Map_Island:
         #self.population = {}
         self.map = {}
         self.geo = island_geo
+        self.init_pop = init_pop
+        # l = Lowland()
+        # self.herbivores_pop = l.herbivores_pop
         #self.geo = textwrap.dedent(island_geo) #føler ikke denne burde funke
         #self.ini_pop = init_pop
-
-        self.year = 0
-
-
 
     '''
     #MÅ fortsatt redigeres
@@ -121,5 +120,10 @@ class Map_Island:
 
     def add_population(self):
         for k in range(50):
-            Lowland.herbivores_pop.append(Herbivore())
+            self.herbivores_pop.append(Herbivore())
+
+
+
+
+
 
