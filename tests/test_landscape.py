@@ -13,7 +13,7 @@ if __name__ == '__main__':
 from biosim.animals import Herbivore, Carnivore
 from biosim.Cell import Lowland
 
-def test_simple_sorting():
+def test_simple_sorting_herb():
     '''
     This is a test that checks if the herbivores get sorted in a list based on ascending
     phi-value.
@@ -24,7 +24,7 @@ def test_simple_sorting():
     liste1 = c.herbivores_pop
     liste2 = [liste1[0].phi, liste1[1].phi, liste1[2].phi]
     liste2.sort()
-    c.sorting_animals(pop=c.herbivores_pop, sort_by='phi')
+    c.sorting_animals()
     liste3 = [c.herbivores_pop[0].phi, c.herbivores_pop[1].phi,
               c.herbivores_pop[2].phi]
     assert liste2 == liste3
@@ -37,7 +37,7 @@ def test_sorting_carnivores():
     liste1 = l.carnivores_pop
     pop1 = [k.phi for k in liste1]
     pop1.reverse()
-    l.sorting_animals(pop=l.carnivores_pop, sort_by='phi')
+    l.sorting_animals()
     liste2 = l.carnivores_pop
     pop2 = [k.phi for k in liste2]
     assert pop2 == pop1
@@ -122,7 +122,7 @@ def test_mother_lost_weight_carn():  # fungerer hver gang om mocker fungerer
         assert after_weight[k] == weight[k] - Herbivore.p['zeta'] * newborn_weight[k]
 
 
-def test_count_animals():
+def test_count_animals_herb():
     c = Lowland()
     c.herbivores_pop = [Herbivore(weight=35, age=3), Herbivore(weight=41, age=8),
                         Herbivore(weight=20, age=6), Herbivore(weight=35, age=3),
@@ -130,7 +130,7 @@ def test_count_animals():
     c.counting_animals()
     assert c.N_herb == len(c.herbivores_pop)
 
-def test_aging():
+def test_aging_herb():
     c = Lowland()
     c.herbivores_pop = [Herbivore(weight=35, age=3), Herbivore(weight=41, age=8),
                         Herbivore(weight=20, age=6), Herbivore(weight=35, age=3),
@@ -142,7 +142,7 @@ def test_aging():
     for k in range(len(c.herbivores_pop)):
         assert c.herbivores_pop[k].age == liste[k] + 1
 
-def test_yearly_weight_loss():
+def test_yearly_weight_loss_herb():
     c = Lowland()
     h = Herbivore()
 
@@ -153,7 +153,7 @@ def test_yearly_weight_loss():
     for k in range(len(c.herbivores_pop)):
         assert c.herbivores_pop[k].weight == liste[k] - h.p['eta'] * liste[k]
 
-def test_animal_removed_after_death():
+def test_animal_removed_after_death_herb():
     c = Lowland()
     c.herbivores_pop = [Herbivore(weight=35, age=3), Herbivore(weight=41, age=8),
                         Herbivore(weight=20, age=6), Herbivore(weight=35, age=3),

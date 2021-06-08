@@ -23,14 +23,14 @@ class Cell:
         self.herbivores_pop = []
         self.carnivores_pop = []
 
-    def sorting_animals(self, pop, sort_by):  # do we need property here?
+    def sorting_animals(self):  # pop, sort_by):  # do we need property here?
         """
             A function for sorting the animals.
             Herbivores are sorted weakest to fittest, since the weakest are eaten first
             Carnivores are sorted fittest to weakest, since the fittest eats first
             """
-        sorted_herbivores_pop = sorted(pop, key=operator.attrgetter(sort_by))
-        sorted_carnivores_pop = sorted(pop, key=operator.attrgetter(sort_by))
+        sorted_herbivores_pop = sorted(self.herbivores_pop, key=operator.attrgetter('phi'))
+        sorted_carnivores_pop = sorted(self.carnivores_pop, key=operator.attrgetter('phi'))
         sorted_carnivores_pop.reverse()
         self.herbivores_pop = sorted_herbivores_pop
         self.carnivores_pop = sorted_carnivores_pop
@@ -57,16 +57,28 @@ class Cell:
         for k in self.herbivores_pop:
             self.herbivores_weight_sum += k.weight
 
-    def feed_carnivores(self):
+    def feed_carnivores(self):  # må testes!!
         '''
             1. sort herbivores and carnivores by fitness
             2. make the carnivores eat
             3. remove all eaten herbivores
         '''
+        self.sorting_animals()
+        list_carn = self.carnivores_pop
+        list_herb = self.herbivores_pop
+        killed = []
 
+        for carn in list_carn:
+            for herb in list_herb:
+                carn.probability_kill_herbivore()
+                if carn.kill == True:
+                    carn.weight_weight_gain_after_eating_herb()
+                    killed.append(herb)
 
+        self.herbivores_pop = list(set(list_herb) - set(killed))
+        self.carnivores_pop = list_carn
 
-    def newborn_animals(self):  # make it work for bort species
+    def newborn_animals(self):  # make it work for both species
         """
             An animal gives birth maximum one time per year.The function birth_probability
             calculates if the animal will give birth or not and birth_weightloss calculates the new
@@ -121,19 +133,21 @@ class Cell:
 
     # make the yealy activities work for both species
 
-    def make_animals_age(self):
+    def make_animals_age(self):  # blir alderen bare oppdatert på herbivore_pop nå? testes!
         """
             Each year the animals ages. Here we use the aging function from the herbivore class
             """
-        for k in range(len(self.herbivores_pop)):
-            self.herbivores_pop[k].aging()
+        animals = self.herbivores_pop + self.carnivores_pop
+        for animal in animals:
+            animal.aging()
 
-    def make_animals_lose_weight(self):
+    def make_animals_lose_weight(self):  # testes!!
         """
             Each year the animal loses weight based on their own weight and eta
             """
-        for k in range(len(self.herbivores_pop)):
-            self.herbivores_pop[k].weight_loss()
+        animals = self.herbivores_pop + self.carnivores_pop
+        for animal in animals:
+            animal.weight_loss()
 
     def dead_animals_natural_cause(self):
         """
@@ -141,16 +155,27 @@ class Cell:
         by using the function death_probability. After we need to remove them from the from the
         list of animals
         """
-        list_a = self.herbivores_pop
-        length = len(list_a)
+
+        '''
+        list_animals = self.herbivores_pop + self.carnivores_pop
+        length = len(list_animals)
         list_dead = []
-        self.dead = 0
+        self.dead = 0  # for testing?
+
         for k in range(length):
-            list_a[k].death_probability()
-            if list_a[k].death is True:
-                list_dead.append(list_a[k])
+            list_animals[k].death_probability()
+            if list_animals[k].death is True:
+                list_dead.append(list_animals[k])
                 self.dead += 1  # for testing
+
         self.herbivores_pop = list(set(list_a) - set(list_dead))
+        '''
+        # bruke death_probability
+
+        # self.herbivores_pop = [herb for herb in self.herbivores_pop
+                                # if herb.death is True]
+        # self.carnivores_pop = [carn for carn in self.carnivores_pop
+                                # if carn.death is True]
 
 
 class Lowland(Cell):
