@@ -45,7 +45,7 @@ class BioSim:
 
         self.init_pop = init_pop
         self.num_years_simulated = 0
-
+        self.num_animals =
     '''
     def set_animal_parameters(self, species, p):
         """
