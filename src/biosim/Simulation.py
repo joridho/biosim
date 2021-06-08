@@ -58,7 +58,7 @@ class BioSim:
         for param_name in params.keys():
             if param_name in class_names[species].params:
                 if params[param_name] >= 0 and param_name is not "DeltaPhiMax" \
-                        and param_name is not "eta" and param_name is not "F":
+                        and param_name is not "eta" and param_name is not "F": # Hvorfor akk
                     class_names[species].params[param_name] = params[
                         param_name]
                 # checks special criteria for eta
