@@ -81,6 +81,52 @@ def test_fodder_eaten():
     assert len(l.herbivores_pop) == 6
 
 
+def test_newborn1():
+    l=Lowland()
+    l.herbivores_pop = [Herbivore(weight=35, a=3), Herbivore(weight=41, a=8),
+                        Herbivore(weight=20, a=6), Herbivore(weight=35, a=3),
+                        Herbivore(weight=41, a=8), Herbivore(weight=20, a=6)]
+    l.newborn_animals()
+    assert l.list_h == l.herbivores_pop
+
+def test_newborn2():
+    l = Lowland()
+    l.herbivores_pop = [Herbivore(weight=35, a=3), Herbivore(weight=41, a=8),
+                        Herbivore(weight=20, a=6), Herbivore(weight=35, a=3),
+                        Herbivore(weight=41, a=8), Herbivore(weight=20, a=6)]
+    l.newborn_animals()
+    assert l.N == 6
+
+def test_newborn2():
+    l = Lowland()
+    l.herbivores_pop = [Herbivore(weight=35, a=3), Herbivore(weight=41, a=8),
+                        Herbivore(weight=20, a=6), Herbivore(weight=35, a=3),
+                        Herbivore(weight=41, a=8), Herbivore(weight=20, a=6)]
+    l.newborn_animals()
+    new = 0
+    for k in range(l.N):
+        if l.list_h[k].birth is True:
+            new += 1
+    assert new == l.new
+
+def test_newborn3():
+    l = Lowland()
+    l.herbivores_pop = [Herbivore(weight=35, a=3), Herbivore(weight=41, a=8),
+                        Herbivore(weight=20, a=6), Herbivore(weight=35, a=3),
+                        Herbivore(weight=41, a=8), Herbivore(weight=20, a=6)]
+    l.newborn_animals()
+    assert len(l.list_new) == l.new
+
+def test_newborn4():
+    l = Lowland()
+    l.herbivores_pop = [Herbivore(weight=35, a=3), Herbivore(weight=41, a=8),
+                        Herbivore(weight=20, a=6), Herbivore(weight=35, a=3),
+                        Herbivore(weight=41, a=8), Herbivore(weight=20, a=6)]
+    l.newborn_animals()
+    assert 1 == 2
+
+
+
 def test_newborn_added_to_list():
     c = Lowland()
     c.herbivores_pop = [Herbivore(weight=35, a=3), Herbivore(weight=41, a=8),
