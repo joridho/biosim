@@ -28,12 +28,12 @@ class BioSim:
 
         #self.seed = random.seed(10)
         #self.init_pop = 2
-        self.seed = random.seed(seed)
+        #self.seed = random.seed(seed)
         if init_pop is None:
-            self.init_pop = self.add_pop()
+            self.init_pop = self.add_population()
 
-        if island_geo == None:
-            island_geo = '-----' # vet ikke helt hva det skal bli enda
+        if island_geo == None:  # trenger vi denne? er jo input senere
+            island_geo = '-----' # vet ikke helt hva det skal bli enda, noe med random?
             self._island_map_graph = Map_Island(island_geo)
         else: #Går også an å inkl en elif som skal sjekke om island_geo er string
             self._island_map_graph = Map_Island(island_geo, init_pop)
@@ -90,14 +90,6 @@ class BioSim:
         """
     '''
 
-    '''
-    def num_animals(self):
-        """
-            Counts how many animals there are in the cell/island, for use in simulation
-            """
-        self.N_animals = lowland().counting_animals()
-
-    '''
     def simulate(self, years):
         """
             function for simulating
@@ -123,7 +115,8 @@ class BioSim:
         N_carn = []
         year = []
 
-        print(len(N_herb))
+        self.num_animals()
+        print(num_animals)
 
         self.num_years_simulated += 1
 
@@ -247,8 +240,8 @@ class BioSim:
     @property
     def num_animals(self):
         """Total number of animals on island."""
-        num_herbivores = len(Lowland.pop_herb)
-        num_carnivores = 0  # len(lowland.pop_carn)
+        num_herbivores = len(Lowland.herbivore_pop)
+        num_carnivores = 0  # len(lowland.carnivore_pop)
         num_animals = num_carnivores + num_herbivores
         return num_animals
 
