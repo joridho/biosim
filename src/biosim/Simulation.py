@@ -39,6 +39,7 @@ class BioSim:
         # self._island_map_graph = Map_Island(island_geo)
         # else: #Går også an å inkl en elif som skal sjekke om island_geo er string
 
+
         self._island_map_graph = Map_Island(island_geo, init_pop)
 
         # ELSE RAISE VALUE ERROR
@@ -116,8 +117,7 @@ class BioSim:
         # N_carn = []
         # V year = []
 
-        # self.num_animals()
-        print(len(Lowland.herbivores_pop))
+        print(self.num_animals())
 
         self.num_years_simulated += 1
 
@@ -234,13 +234,14 @@ class BioSim:
     @property
     def year(self):
         """Last year simulated."""
-        self.year = self.num_years_simulated
+        return self.num_years_simulated
 
     @property
     def num_animals(self):
         """Total number of animals on island."""
-        num_herbivores = len(Lowland.herbivores_pop)
+        # num_herbivores = len(Lowland.herbivores_pop)
         num_carnivores = 0  # len(lowland.carnivores_pop)
+        num_herbivores = len(self.island_map_graph.map.values().herbivores_population)
         num_animals = num_carnivores + num_herbivores
         return num_animals
 
