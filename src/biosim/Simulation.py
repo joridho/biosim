@@ -42,8 +42,8 @@ class biosim:
         #ELSE RAISE VALUE ERROR
 
         self.init_pop = init_pop
-        self.year = 0
-        self.af_bio = 800
+        self.num_years_simulated = 0
+
 
 '''
     def set_animal_parameters(self, species, params):
@@ -146,6 +146,8 @@ class biosim:
         ax3.set_title("Herbivore distribution")
         fig.tight_layout()
         ax3.plt.imshow(N_herb,)
+        
+        self.num_years_simulated += 1
 '''
 
 
@@ -201,19 +203,35 @@ def create_map(self):
 
     plt.show()  # viser plott
 
-'''
+
     @property
     def year(self):
         """Last year simulated."""
+        self.year = self.num_years_simulated
 
     @property
     def num_animals(self):
         """Total number of animals on island."""
+        num_herbivores = len(lowland.pop_herb)
+        num_carnivores = 0  # len(lowland.pop_carn)
+        num_animals = num_carnivores + num_herbivores
+        return num_animals
 
-    @property
+@property
     def num_animals_per_species(self):
         """Number of animals per species in island, as dictionary."""
+        '''
+        num_animals_per_species = {"Herbivore": 0, "Carnivore": 0}
+        for k in self.island_map.map.values():
+            num_animals_per_species["Herbivore"] += len(lowland.pop_herb)
+            num_animals_per_species["Carnivore"] += 0  # len(lowland.pop_carn)
+        return num_animals_per_species()
+        '''
+        num_animals_per_species = {"Herbivore": 0, "Carnivore": 0}
+        num_animals_per_species["Herbivore"] = len(lowland.herbivore_pop)
+        num_animals_per_species["Carnivore"] = 0  # len(lowland.carnivore_pop)
 
+'''
     def make_movie(self):
         """Create MPEG4 movie from visualization images saved."""
 '''
