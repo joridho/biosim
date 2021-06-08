@@ -37,25 +37,25 @@ class map_island:
         """
         This is a function that raises an error if the boundary cells are not water.
         """
-        map_lines = []
+        lines_map = []
         for line in self.geo.splitlines():
-            map_lines.append(line)
+            lines_map.append(line)
 
-        for line_nr in range(len(map_lines)):
+        for line_nr in range(len(lines_map)):
             # checks all cells in first line of geography str
             if line_nr == 0: # sjekker linje nr 0 i string
-                for cell_type in map_lines[line_nr]: # iterer gjennom hver bokstav i linjenr 0 og sjekker om det er W
+                for cell_type in lines_map[line_nr]: # iterer gjennom hver bokstav i linjenr 0 og sjekker om det er W
                     if cell_type is not "W":
                         raise ValueError("Map boundary has to be only 'W'")
             # checks left- and rightmost cell in middle lines of geography str
-            elif 0 < line_nr < (len(map_lines) - 1): # sjekker fra linje nr 1 til nest siste linje nr
-                if map_lines[line_nr][0] is not "W": # sjekker om de første bokstavene i linjenr er lik W
+            elif 0 < line_nr < (len(lines_map) - 1): # sjekker fra linje nr 1 til nest siste linje nr
+                if lines_map[line_nr][0] is not "W": # sjekker om de første bokstavene i linjenr er lik W
                     raise ValueError("Map boundary has to be only 'W'")
-                elif map_lines[line_nr][-1] is not "W": # SJEKKER OM DE SISTE BOKSTAVENE I LINJENR ER LIK W
+                elif lines_map[line_nr][-1] is not "W": # SJEKKER OM DE SISTE BOKSTAVENE I LINJENR ER LIK W
                     raise ValueError("Map boundary has to be only 'W'")
             # checks all cells in last line of geography str
             else:
-                for cell_type in map_lines[line_nr]: # sjekker siste linje i string
+                for cell_type in lines_map[line_nr]: # sjekker siste linje i string
                     if cell_type is not "W": # iterer gjennom hver bokstav i linjenr 0 og sjekker om det er W
                         raise ValueError("Map boundary has to be only 'W'")
 
