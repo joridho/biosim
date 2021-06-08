@@ -61,23 +61,23 @@ class map_island:
 
     def check_for_equal_map_lines(self):
         """
-        Checks that all lines in the map's geography string are of equal
+        This is a function that checks that all the lines in the map's geography string have equal
         length.
-        :raise ValueError: if lines in map str are more than one length
         """
-        line_lengths = []
-        for line in self.geo.splitlines():
-            line_lengths.append(len(line))
+        lengths_of_lines = []
+        for l in self.geo.splitlines():
+            lengths_of_lines.append(len(l))
+        if len(set(lengths_of_lines)) != 1:
+            raise ValueError(f"Inconsistent line length.")
 
+        '''
         length = len(line_lengths[0])
-        for line in line_lengths(): # hvordan splitte string til lnjer
-            if length != len(line_lengths[line]):
+        for l in line_lengths(): # hvordan splitte string til lnjer
+            if length != len(line_lengths[l]):
                 raise ValueError('Map lines are not equal')
 
+        '''
 
-        #Annen løsning som vi ikke skjønner
-        if len(set(line_lengths)) != 1:
-            raise ValueError(f"Inconsistent line length.")
 
 
 
