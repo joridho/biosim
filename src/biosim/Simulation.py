@@ -255,7 +255,7 @@ class BioSim:
         return num_animals_per_species()
         '''
         num_animals_per_species = {"Herbivore": 0, "Carnivore": 0}
-        num_animals_per_species["Herbivore"] = len(Lowland.herbivore_pop)
+        num_animals_per_species["Herbivore"] = len(Lowland.herbivores_pop)
         num_animals_per_species["Carnivore"] = 0  # len(lowland.carnivore_pop)
 
         '''
