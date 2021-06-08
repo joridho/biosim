@@ -11,7 +11,7 @@ from biosim.animals import Herbivore, Carnivore
 import textwrap
 
 class Map_Island:
-    def __init__(self, island_geo, init_pop): # Usikker på om init_pop skal være argument her
+    def __init__(self, island_geo, init_pop): # Tror init_pop skal være argument her
         """
         Initialize map class with given island geography and initial population
         of the various cells.
@@ -25,10 +25,7 @@ class Map_Island:
         self.map = {}
         self.geo = island_geo
         self.init_pop = init_pop
-        # l = Lowland()
-        # self.herbivores_pop = l.herbivores_pop
         #self.geo = textwrap.dedent(island_geo) #føler ikke denne burde funke
-        #self.ini_pop = init_pop
 
 
     #MÅ fortsatt redigeres
@@ -149,7 +146,7 @@ class Map_Island:
                 if location in self.population.keys():
                     self.map[location] = Highland(self.population[location])
                 else:
-                    self.map[location] = Highland([])
+                    self.map[location] = Highland([]) #Har ikke highland enda
             elif cell_type is "D":
                 if location in self.population.keys():
                     self.map[location] = Desert(self.population[location])
