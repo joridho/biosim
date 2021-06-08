@@ -117,10 +117,7 @@ class Map_Island:
         l.make_animals_lose_weight()
         l.dead_animals_natural_cause()
 
-        l.reset_fodder()
-
-
-    # def add_population(self):
-        # l = Lowland()
-        # self.init_pop = l.adding_animals()
+    def add_population(self):
+        for k in range(50):
+            Lowland.herbivores_pop.append(Herbivore())
 
