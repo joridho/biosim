@@ -122,7 +122,7 @@ class Map_Island:
 
     def add_population(self):
         for k in range(50):
-            self.herbivores_pop.append(Herbivore())
+            Lowland.herbivores_pop.append(Herbivore())
 
 
 

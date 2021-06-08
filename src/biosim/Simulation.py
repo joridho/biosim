@@ -34,6 +34,8 @@ class BioSim:
         if init_pop is None:
             self.init_pop = self.add_population()  # usikker på
 
+        # init_pop = Herbivore(weight=init_pop['weight'], a=init_pop['age'])
+
         self.island_map_graph = Map_Island(island_geo, init_pop)
 
         self.init_pop = init_pop
