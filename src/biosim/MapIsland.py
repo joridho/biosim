@@ -123,9 +123,9 @@ class Map_Island:
         for location, population in new_population.items():
             for animal_info in population: # iterer gjennom elementene (listene med animal info) i lista population
                 if animal_info["species"] == "Herbivore": # Hvis dyret er herbivore, blir den ....
-                    self.map[location].pop_carn.append(Herbivore(animal_info)) # lagt i maper den skrevet riktig
+                    self.map[location].pop_herb.append(Herbivore(animal_info)) . #Legger populasjon (flere lister med ulike herbivore info) inn i allerede eksisterende kartkoordinat.Hvor kommer pop_herb inn i bildet?
                 else:
-                    self.map[location].pop_herb.append(Carnivore(animal_info)) # skjønne de her
+                    self.map[location].pop_carn.append(Carnivore(animal_info)) # samme prinsipp som over
 
     def create_map_dict(self):
         """
@@ -142,7 +142,7 @@ class Map_Island:
         for location, cell_type in self.geography.items(): #
             if cell_type is "L": #celletype blir bestemt
                 if location in self.population.keys(): #sjekker om koordinatet i self.geography er et koordinat i self.population
-                    self.map[location] = Lowland(self.population[location]) # Vi gir koordinatet i et kart en celletype som tar inn en populasjon (som fins i det samme koordinatet) som argument. populasjon aka en flere lister med ulike dyr med ulik info
+                    self.map[location] = Lowland(self.population[location]) # Vi gir koordinatet i et kart en celletype og denne celletypen tar inn en populasjon (som fins i det samme koordinatet) som argument. populasjon aka en flere lister med ulike dyr med ulik info
                 else:
                     self.map[location] = Lowland([]) # Hvis ikke koordinatet i self.geography fins i self.population betyr det at det ikke fins noen dyr i den cella/koordinatet. Argumentet blir en tom liste. Kan den ta inn en tom liste????
             elif cell_type is "H":
