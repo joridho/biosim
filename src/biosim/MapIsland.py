@@ -140,9 +140,9 @@ class Map_Island:
         self.create_population_dict() # Hvert koordinat har sine lister med dyr (med ulik info)
 
         for location, cell_type in self.geography.items(): #
-            if cell_type is "L":
+            if cell_type is "L": #celletype blir bestemt
                 if location in self.population.keys(): #sjekker om koordinatet i self.geography er et koordinat i self.population
-                    self.map[location] = Lowland(self.population[location]) # Vi gir koordinatet i et kart en celletype
+                    self.map[location] = Lowland(self.population[location]) # Vi gir koordinatet i et kart en celletype som tar inn en populasjon (som fins i det samme koordinatet) som argument
                 else:
                     self.map[location] = Lowland([])
             elif cell_type is "H":
