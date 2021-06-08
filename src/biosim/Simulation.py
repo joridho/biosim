@@ -71,14 +71,14 @@ class biosim:
         #self.idk = len(self.init_pop)
         #return self.init_pop
 
-
+'''
     def num_animals(self):
         """
             Counts how many animals there are in the cell/island, for use in simulation
             """
         self.N_animals = lowland().counting_animals()
 
-'''
+
     def simulate(self):
         """
             function for simulating
