@@ -29,7 +29,7 @@ def test_simple_sorting():
               c.sorted_herbivores_pop[2].phi]
     assert liste2 == liste3
 
-
+'''
 def test_available_fodder_function():
     
     #This is a test that checks if the cell gets it maximum amount of fodder back
@@ -39,7 +39,7 @@ def test_available_fodder_function():
     available_fodder = 800
     c.available_fodder_function()
     assert c.af == available_fodder
-
+'''
 
 def test_fodder_eaten():
     c = Lowland()

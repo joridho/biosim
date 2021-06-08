@@ -43,11 +43,17 @@ class Cell:
         self.sorted_herbivores_pop = sorted(pop, key=operator.attrgetter(sort_by))
         # my get an error later, just read the error and we will be good
 
+
+
+    ''' usikker på behovet for denne 
     def available_fodder_function(self):
         """
             At the beginning of the year the available fodder is f_max
             """
         self.af = self.p['f_max']
+    '''
+
+
 
     def make_herbivores_eat(self):
 
@@ -58,7 +64,7 @@ class Cell:
 
             This function can only be used once per year because of the available_fodder_function
          """
-        self.available_fodder_function()
+        self.af = self.p['f_max']
         list = self.herbivores_pop
         random.shuffle(list)
 
