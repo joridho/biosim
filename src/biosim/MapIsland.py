@@ -142,7 +142,7 @@ class Map_Island:
         for location, cell_type in self.geography.items(): #
             if cell_type is "L": #celletype blir bestemt
                 if location in self.population.keys(): #sjekker om koordinatet i self.geography er et koordinat i self.population
-                    self.map[location] = Lowland(self.population[location]) # Vi gir koordinatet i et kart en celletype som tar inn en populasjon (som fins i det samme koordinatet) som argument
+                    self.map[location] = Lowland(self.population[location]) # Vi gir koordinatet i et kart en celletype som tar inn en populasjon (som fins i det samme koordinatet) som argument. populasjon aka en flere lister med ulike dyr med ulik info
                 else:
                     self.map[location] = Lowland([])
             elif cell_type is "H":
