@@ -24,9 +24,7 @@ import textwrap
 '''
 class BioSim:
 
-    def __init__(self, island_geo, init_pop, seed = 10, vis_years=1, ymax_animals=None, cmax_animals=None, hist_specs=None,
-                 img_dir=None, img_base=None, img_fmt='png', img_years=None,
-                 log_file=None):
+    def __init__(self, island_geo, init_pop, seed=10, img_dir=None, img_base=None, img_years=None):
 
         #self.seed = random.seed(10)
         #self.init_pop = 2
@@ -46,7 +44,7 @@ class BioSim:
         self.num_years_simulated = 0
 
 
-    '''
+
     def set_animal_parameters(self, species, params):
         """
         Set parameters for animal species.
@@ -54,7 +52,11 @@ class BioSim:
         :param species: String, name of animal species
         :param params: Dict with valid parameter specification for species
         """
+        
+        class_names = {'Herbivores': herbivore,
+                       'Carnivore': carnivore}
 
+    '''
     def set_landscape_parameters(self, landscape, params):
         """
         Set parameters for landscape type.
@@ -72,14 +74,14 @@ class BioSim:
         #self.idk = len(self.init_pop)
         #return self.init_pop
 
-'''
+    '''
     def num_animals(self):
         """
             Counts how many animals there are in the cell/island, for use in simulation
             """
         self.N_animals = lowland().counting_animals()
 
-
+    '''
     def simulate(self):
         """
             function for simulating
@@ -149,8 +151,6 @@ class BioSim:
         ax3.plt.imshow(N_herb,)
         
         self.num_years_simulated += 1
-'''
-
 
 def setup_graphics(self):
     self.create_map()
@@ -218,6 +218,7 @@ def create_map(self):
         num_animals = num_carnivores + num_herbivores
         return num_animals
 
+
     @property
     def num_animals_per_species(self):
         """Number of animals per species in island, as dictionary."""
@@ -232,7 +233,7 @@ def create_map(self):
         num_animals_per_species["Herbivore"] = len(lowland.herbivore_pop)
         num_animals_per_species["Carnivore"] = 0  # len(lowland.carnivore_pop)
 
-'''
+        '''
     def make_movie(self):
         """Create MPEG4 movie from visualization images saved."""
 '''
