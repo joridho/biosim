@@ -40,7 +40,7 @@ class BioSim:
         # else: #Går også an å inkl en elif som skal sjekke om island_geo er string
 
 
-        self._island_map_graph = Map_Island(island_geo, init_pop)
+        self.island_map_graph = Map_Island(island_geo, init_pop)
 
         # ELSE RAISE VALUE ERROR
 
@@ -115,6 +115,8 @@ class BioSim:
         # N_herb = []
         # N_carn = []
         # V year = []
+
+        self.island_map_graph.year_cycle()
 
         print(self.num_animals())
 
@@ -219,7 +221,7 @@ class BioSim:
         plt.show()  # viser plott
     '''
 
-    def add_population(self):
+    def add_population(self, population):
         """
             Adds animal to the cell/island. These animals become the initial population
             """
