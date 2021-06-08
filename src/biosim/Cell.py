@@ -55,7 +55,7 @@ class Cell:
 
             This function can only be used once per year because of the available_fodder_function
          """
-        self.af = 800
+        # self.af = 800
 
         self.list = self.herbivores_pop
         random.shuffle(self.list)
