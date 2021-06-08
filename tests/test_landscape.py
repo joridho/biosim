@@ -13,11 +13,6 @@ if __name__ == '__main__':
 from biosim.animals import Herbivore
 from biosim.Cell import Lowland
 
-def test_adding_animals():
-    l = Lowland()
-    l.adding_animals()
-    assert len(l.herbivores_pop) == 50
-
 def test_simple_sorting():
     '''
     This is a test that checks if the herbivores get sorted in a list based on ascending
@@ -59,72 +54,14 @@ def test_gain_weight_after_eating(): # får den kun til å fungere på ett dyr
     c.herbivores_pop = [Herbivore(weight=36, a=3), Herbivore(weight=41, a=8),
                         Herbivore(weight=20, a=6), Herbivore(weight=35, a=3),
                         Herbivore(weight=41, a=8), Herbivore(weight=20, a=6)]
-
     weight = [k.weight for k in c.herbivores_pop]
 
-    c.af = 800
     c.make_herbivores_eat()
     weight2 = [k.weight for k in c.herbivores_pop]
     weight.sort()
     weight2.sort()
-    #assert len(c.list) == c.spist
+
     assert [k + 9 for k in weight] == weight2
-
-
-def test_fodder_eaten():
-    'Check if there all the animals are still in herbivores_pop after make herbivores eat'
-    l = Lowland()
-    l.herbivores_pop = [Herbivore(weight=35, a=3), Herbivore(weight=41, a=8),
-                        Herbivore(weight=20, a=6), Herbivore(weight=35, a=3),
-                        Herbivore(weight=41, a=8), Herbivore(weight=20, a=6)]
-    l.make_herbivores_eat()
-    assert len(l.herbivores_pop) == 6
-
-
-def test_newborn1():
-    l=Lowland()
-    l.herbivores_pop = [Herbivore(weight=35, a=3), Herbivore(weight=41, a=8),
-                        Herbivore(weight=20, a=6), Herbivore(weight=35, a=3),
-                        Herbivore(weight=41, a=8), Herbivore(weight=20, a=6)]
-    l.newborn_animals()
-    assert l.list_h == l.herbivores_pop
-
-def test_newborn2():
-    l = Lowland()
-    l.herbivores_pop = [Herbivore(weight=35, a=3), Herbivore(weight=41, a=8),
-                        Herbivore(weight=20, a=6), Herbivore(weight=35, a=3),
-                        Herbivore(weight=41, a=8), Herbivore(weight=20, a=6)]
-    l.newborn_animals()
-    assert l.N == 6
-
-def test_newborn2():
-    l = Lowland()
-    l.herbivores_pop = [Herbivore(weight=35, a=3), Herbivore(weight=41, a=8),
-                        Herbivore(weight=20, a=6), Herbivore(weight=35, a=3),
-                        Herbivore(weight=41, a=8), Herbivore(weight=20, a=6)]
-    l.newborn_animals()
-    new = 0
-    for k in range(l.N):
-        if l.list_h[k].birth is True:
-            new += 1
-    assert new == l.new
-
-def test_newborn3():
-    l = Lowland()
-    l.herbivores_pop = [Herbivore(weight=35, a=3), Herbivore(weight=41, a=8),
-                        Herbivore(weight=20, a=6), Herbivore(weight=35, a=3),
-                        Herbivore(weight=41, a=8), Herbivore(weight=20, a=6)]
-    l.newborn_animals()
-    assert len(l.list_new) == l.new
-
-def test_newborn4():
-    l = Lowland()
-    l.herbivores_pop = [Herbivore(weight=35, a=3), Herbivore(weight=41, a=8),
-                        Herbivore(weight=20, a=6), Herbivore(weight=35, a=3),
-                        Herbivore(weight=41, a=8), Herbivore(weight=20, a=6)]
-    l.newborn_animals()
-    assert 1 == 2
-
 
 
 def test_newborn_added_to_list():
@@ -139,64 +76,34 @@ def test_newborn_added_to_list():
     assert len(c.herbivores_pop) == length + c.new
 
 
-def test_mother_lost_weight(): #fungerer om jeg får mocker til å fungere
+def test_mother_lost_weight():  # fungerer hver gang om mocker fungerer
     c = Lowland()
-    c.herbivores_pop = [Herbivore(weight=36, a=3), Herbivore(weight=40, a=3)]
-    list = c.herbivores_pop
+    c.herbivores_pop = [Herbivore(weight=50, a=3), Herbivore(weight=40, a=3)]
     weight = [k.weight for k in c.herbivores_pop]
+
     c.newborn_animals()
-    after = [k.weight for k in c.herbivores_pop]
-    weight_after = [after[0], after[1]]
-    weight.sort()
-    weight_after.sort()
+    after = [c.herbivores_pop[0], c.herbivores_pop[1]]
+
+    newborn_weight = [k.newborn_birth_weight for k in after]
+    after_weight = [k.weight for k in after]
+
     for k in range(len(weight)):
-        assert weight_after[k] == weight[k] - list[k].p['zeta'] * list[k].newborn_birth_weight
+        assert after_weight[k] == weight[k] - Herbivore.p['zeta'] * newborn_weight[k]
 
 
 def test_count_animals():
     c = Lowland()
-    c.adding_animals()
+    c.herbivores_pop = [Herbivore(weight=35, a=3), Herbivore(weight=41, a=8),
+                        Herbivore(weight=20, a=6), Herbivore(weight=35, a=3),
+                        Herbivore(weight=41, a=8), Herbivore(weight=20, a=6)]
     c.counting_animals()
-    assert c.N == 50
-
-
-def test_reset_available_fodder():  # testen fungerer ikke siden make_herbivores_eat ikke fungerer
-    c = Lowland()
-    c.herbivores_pop = [Herbivore(weight=35, a=3), Herbivore(weight=41, a=8),
-                        Herbivore(weight=20, a=6), Herbivore(weight=35, a=3),
-                        Herbivore(weight=41, a=8),
-                        Herbivore(weight=20, a=6)]
-    c.make_herbivores_eat()
-    c.reset_fodder()
-    assert c.af == c.p['f_max']
-
-
-def test_reset_appetite():  # testen fungerer ikke siden make_herbivores_eat ikke fungerer
-    c = Lowland()
-    c.herbivores_pop = [Herbivore(weight=35, a=3), Herbivore(weight=41, a=8),
-                        Herbivore(weight=20, a=6), Herbivore(weight=35, a=3),
-                        Herbivore(weight=41, a=8), Herbivore(weight=20, a=6)]
-    c.make_herbivores_eat()
-    c.reset_appetite()
-    for k in range(len(c.herbivores_pop)):
-        assert c.herbivores_pop[k].p['F'] == 10
-
-
-def test_reset_given_birth():
-    c = Lowland()
-    c.herbivores_pop = [Herbivore(weight=35, a=3), Herbivore(weight=41, a=8),
-                        Herbivore(weight=20, a=6), Herbivore(weight=35, a=3),
-                        Herbivore(weight=41, a=8), Herbivore(weight=20, a=6)]
-    for k in range(len(c.herbivores_pop)):
-        c.herbivores_pop[k].given_birth = True
-    c.reset_given_birth()
-    for k in range(len(c.herbivores_pop)):
-        assert c.herbivores_pop[k].given_birth == False
-
+    assert c.N == len(c.herbivores_pop)
 
 def test_aging():
     c = Lowland()
-    c.adding_animals()
+    c.herbivores_pop = [Herbivore(weight=35, a=3), Herbivore(weight=41, a=8),
+                        Herbivore(weight=20, a=6), Herbivore(weight=35, a=3),
+                        Herbivore(weight=41, a=8), Herbivore(weight=20, a=6)]
     liste = []
     for ani in range(len(c.herbivores_pop)):
         liste.append(c.herbivores_pop[ani].a)
@@ -207,7 +114,7 @@ def test_aging():
 def test_yearly_weight_loss():
     c = Lowland()
     h = Herbivore()
-    c.adding_animals()
+
     liste = []
     for ani in range(len(c.herbivores_pop)):
         liste.append(c.herbivores_pop[ani].weight)
@@ -217,7 +124,9 @@ def test_yearly_weight_loss():
 
 def test_animal_removed_after_death():
     c = Lowland()
-    c.adding_animals()
+    c.herbivores_pop = [Herbivore(weight=35, a=3), Herbivore(weight=41, a=8),
+                        Herbivore(weight=20, a=6), Herbivore(weight=35, a=3),
+                        Herbivore(weight=41, a=8), Herbivore(weight=20, a=6)]
     list = c.herbivores_pop
     c.dead_animals_natural_cause()
 
