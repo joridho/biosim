@@ -33,81 +33,81 @@ class Map_Island:
 
 
 #INSP fra ida. MÅ fortsatt redigeres
-        def check_boundaries_are_ocean(self):
-            """
-            Checks that all boundary cells for the map are Ocean.
-            :raise ValueError: if a boundary cell is other landscape type than
-                Ocean
-            """
-            map_lines = []
-            for line in self.geo.splitlines():
-                map_lines.append(line)
+    def check_boundaries_are_ocean(self):
+        """
+        Checks that all boundary cells for the map are Ocean.
+        :raise ValueError: if a boundary cell is other landscape type than
+            Ocean
+        """
+        map_lines = []
+        for line in self.geo.splitlines():
+            map_lines.append(line)
 
-            for line_num in range(len(map_lines)):
-                # checks all cells in first line of geography str
-                if line_num == 0:
-                    for landscape_type in map_lines[line_num]:
-                        if landscape_type is not "O":
-                            raise ValueError("Map boundary has to be only 'O'")
-                # checks left- and rightmost cell in middle lines of geography str
-                elif 0 < line_num < (len(map_lines) - 1):
-                    if map_lines[line_num][0] is not "O":
+        for line_num in range(len(map_lines)):
+            # checks all cells in first line of geography str
+            if line_num == 0:
+                for landscape_type in map_lines[line_num]:
+                    if landscape_type is not "O":
                         raise ValueError("Map boundary has to be only 'O'")
-                    elif map_lines[line_num][-1] is not "O":
+            # checks left- and rightmost cell in middle lines of geography str
+            elif 0 < line_num < (len(map_lines) - 1):
+                if map_lines[line_num][0] is not "O":
+                    raise ValueError("Map boundary has to be only 'O'")
+                elif map_lines[line_num][-1] is not "O":
+                    raise ValueError("Map boundary has to be only 'O'")
+            # checks all cells in last line of geography str
+            else:
+                for landscape_type in map_lines[line_num]:
+                    if landscape_type is not "O":
                         raise ValueError("Map boundary has to be only 'O'")
-                # checks all cells in last line of geography str
-                else:
-                    for landscape_type in map_lines[line_num]:
-                        if landscape_type is not "O":
-                            raise ValueError("Map boundary has to be only 'O'")
 
-        def check_map_lines_have_equal_length(self):
+    def check_map_lines_have_equal_length(self):
+        """
+        Checks that all lines in the map's geography string are of equal
+        length.
+        :raise ValueError: if lines in map str are more than one length
+        """
+        line_lengths = []
+        for line in self.geo.splitlines():
+            line_lengths.append(len(line))
+
+        if len(set(line_lengths)) != 1:
+            raise ValueError(f"Inconsistent line length.")
+
+    def year_cycle(self):
+        """
+            simulates one year
+
+        Runs through each of the 6 yearly seasons for all cells.
+        - Step 1: Animals feed
+        - Step 2: Animals procreate
+        - Step 3: Animals migrate
+        - Step 4: Animals age
+        - Step 5: Animals lose weight
+        - Step 6: Animals die
             """
-            Checks that all lines in the map's geography string are of equal
-            length.
-            :raise ValueError: if lines in map str are more than one length
-            """
-            line_lengths = []
-            for line in self.geo.splitlines():
-                line_lengths.append(len(line))
 
-            if len(set(line_lengths)) != 1:
-                raise ValueError(f"Inconsistent line length.")
+        l = lowland()
+        # l.herbivores_pop = self.init_pop  # må fjernes
 
-        def year_cycle(self):
-            """
-                simulates one year
+        l.make_herbivores_eat()
+        self.population_herb = l.herbivores_pop
+        self.weight_year_cycle = [k.weight for k in l.herbivores_pop]  # for testing
+        self.available_fodder = l.af  # for testing
 
-            Runs through each of the 6 yearly seasons for all cells.
-            - Step 1: Animals feed
-            - Step 2: Animals procreate
-            - Step 3: Animals migrate
-            - Step 4: Animals age
-            - Step 5: Animals lose weight
-            - Step 6: Animals die
-                """
+        l.newborn_animals()
+        l.make_animals_age()
+        l.make_animals_lose_weight()
+        l.dead_animals_natural_cause()
 
-            l = lowland()
-            # l.herbivores_pop = self.init_pop  # må fjernes
+        # reset
+        l.reset_fodder()
+        # l.reset_appetite()
+        l.reset_given_birth()
 
-            l.make_herbivores_eat()
-            self.population_herb = l.herbivores_pop
-            self.weight_year_cycle = [k.weight for k in l.herbivores_pop]  # for testing
-            self.available_fodder = l.af  # for testing
+        self.year += 1
 
-            l.newborn_animals()
-            l.make_animals_age()
-            l.make_animals_lose_weight()
-            l.dead_animals_natural_cause()
+        return l.herbivores_pop
 
-            # reset
-            l.reset_fodder()
-            # l.reset_appetite()
-            l.reset_given_birth()
-
-            self.year += 1
-
-            return l.herbivores_pop
-
-        #def add_population
+    #def add_population
 
