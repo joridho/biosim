@@ -109,5 +109,5 @@ class map_island:
 
         return l.herbivores_pop
 
-    #def add_population
+    def add_population
 
