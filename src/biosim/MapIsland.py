@@ -123,9 +123,9 @@ class Map_Island:
         for location, population in new_population.items():
             for animal_info in population: # iterer gjennom elementene (listene med animal info) i lista population
                 if animal_info["species"] == "Herbivore": # Hvis dyret er herbivore, blir den ....
-                    self.map[location].pop_herb.append(Herbivore(animal_info)) . #Legger populasjon (flere lister med ulike herbivore info) inn i allerede eksisterende kartkoordinat.Hvor kommer pop_herb inn i bildet?
+                    self.map[location].herbivores_pop.append(Herbivore(animal_info)) #Legger populasjon (flere lister med ulike herbivore info) inn i allerede eksisterende kartkoordinat
                 else:
-                    self.map[location].pop_carn.append(Carnivore(animal_info)) # samme prinsipp som over
+                    self.map[location].carnivores_pop.append(Carnivore(animal_info)) # samme prinsipp som over
 
     def create_map_dict(self):
         """
