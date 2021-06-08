@@ -23,7 +23,9 @@ import textwrap
 '''
 class biosim:
 
-    def __init__(self, island_geo, init_pop, seed = 10, ymaxanimals=None, cmaxanimals=None):  # mangler img og ymax
+    def __init__(self, island_geo, init_pop, seed = 10, vis_years=1, ymax_animals=None, cmax_animals=None, hist_specs=None,
+                 img_dir=None, img_base=None, img_fmt='png', img_years=None,
+                 log_file=None):  # mangler img og ymax
 
         #self.seed = random.seed(10)
         #self.init_pop = 2
