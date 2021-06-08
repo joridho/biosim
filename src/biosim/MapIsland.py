@@ -88,7 +88,7 @@ class Map_Island:
                 x_coord += 1
             y_coord += 1
 
-
+    # Gir koordinatene flere lister med dyreinfo. et koordinat kan få flere lister med dyr (med ulik info)
     def create_population_dict(self): #### Når skal dette bli brukt???
         """
         Converts list of populations to a population dictionary that has coordinates as keys
