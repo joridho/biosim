@@ -1,5 +1,5 @@
 import unittest
-from  biosim.Simulation import biosim
+from biosim.Simulation import BioSim
 from biosim.Cell import Lowland
 from biosim.animals import Herbivore, Carnivore
 
