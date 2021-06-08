@@ -117,9 +117,15 @@ class BioSim:
         # N_carn = []
         # V year = []
 
+        self.adding_population(self.init_pop)
+
         self.island_map_graph.year_cycle()
 
-        print(self.num_animals())
+        print(len(self.herbivores_pop))
+
+
+
+        #print(self.num_animals())
 
         self.num_years_simulated += 1
 
@@ -222,12 +228,14 @@ class BioSim:
         plt.show()  # viser plott
     '''
 
-    def add_population(self, population):
+    def adding_population(self, population):
         """
             Adds animal to the cell/island. These animals become the initial population
             """
-        for k in range():
-            Lowland.herbivores_pop.append(Herbivore())
+        self.herbivores_pop = self.island_map_graph.add_population()
+
+        #for k in range(50):
+            #Lowland.herbivores_pop.append(Herbivore())
 
         # self.init_pop = l.adding_animals()
         # self.idk = len(self.init_pop)
