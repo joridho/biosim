@@ -82,7 +82,7 @@ class BioSim:
         self.N_animals = lowland().counting_animals()
 
     '''
-    def simulate(self):
+    def simulate(self, years):
         """
             function for simulating
 
@@ -106,6 +106,8 @@ class BioSim:
         N_herb = []
         N_carn = []
         year = []
+
+
 
         # values needed after stopping:
         number_of_simulated_years = 0
@@ -140,8 +142,8 @@ class BioSim:
             txt.set_text(template.format(k))
             plt.pause(0.1)  # pause required to make update visible
 
-        ax2.plt.plot(N_herb, self.year, 'b')
-        ax2.plt.plot(N_carn, self.year, 'r')
+        ax2.plot(N_herb, self.num_years_simulated, 'b')
+        ax2.plot(N_carn, self.num_years_simulated, 'r')
         ax2.legend('Animals')
 
         ax3.set_xticks(1)
