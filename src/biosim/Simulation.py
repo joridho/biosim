@@ -4,8 +4,9 @@ __author__ = 'Jorid Holmen'
 __email__ = 'jorid.holmen@nmbu.no'
 
 import biosim.animals
+from biosim.animals import herbivore, carnivore
 from biosim.Cell import lowland
-from biosim.Map_Island import Map_Island
+from biosim.Map_Island import map_island
 
 import pandas
 import matplotlib.pyplot as plt
@@ -21,7 +22,7 @@ import textwrap
 
 >>>>>>> origin/Simulation
 '''
-class biosim:
+class BioSim:
 
     def __init__(self, island_geo, init_pop, seed = 10, vis_years=1, ymax_animals=None, cmax_animals=None, hist_specs=None,
                  img_dir=None, img_base=None, img_fmt='png', img_years=None,
@@ -35,9 +36,9 @@ class biosim:
 
         if island_geo == None:
             island_geo = '-----' # vet ikke helt hva det skal bli enda
-            self._island_map_graph = Map_Island(island_geo)
+            self._island_map_graph = map_island(island_geo)
         else: #Går også an å inkl en elif som skal sjekke om island_geo er string
-            self._island_map_graph = Map_Island(island_geo, init_pop)
+            self._island_map_graph = map_island(island_geo, init_pop)
 
         #ELSE RAISE VALUE ERROR
 
@@ -45,7 +46,7 @@ class biosim:
         self.num_years_simulated = 0
 
 
-'''
+    '''
     def set_animal_parameters(self, species, params):
         """
         Set parameters for animal species.
@@ -61,7 +62,7 @@ class biosim:
         :param landscape: String, code letter for landscape
         :param params: Dict with valid parameter specification for landscape
         """
-'''
+    '''
     def add_pop(self):
         """
         Adds animal to the cell/island. These animals become the initial population
@@ -217,7 +218,7 @@ def create_map(self):
         num_animals = num_carnivores + num_herbivores
         return num_animals
 
-@property
+    @property
     def num_animals_per_species(self):
         """Number of animals per species in island, as dictionary."""
         '''
