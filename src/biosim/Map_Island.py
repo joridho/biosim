@@ -35,31 +35,29 @@ class map_island:
 #INSP fra ida. MÅ fortsatt redigeres
     def check_boundaries_are_ocean(self):
         """
-        Checks that all boundary cells for the map are Ocean.
-        :raise ValueError: if a boundary cell is other landscape type than
-            Ocean
+        This is a function that raises an error if the boundary cells are not water.
         """
         map_lines = []
         for line in self.geo.splitlines():
             map_lines.append(line)
 
-        for line_num in range(len(map_lines)):
+        for line_nr in range(len(map_lines)):
             # checks all cells in first line of geography str
-            if line_num == 0:
-                for landscape_type in map_lines[line_num]:
-                    if landscape_type is not "O":
-                        raise ValueError("Map boundary has to be only 'O'")
+            if line_nr == 0: # sjekker linje nr 0 i string
+                for cell_type in map_lines[line_nr]: # iterer gjennom hver bokstav i linjenr 0 og sjekker om det er W
+                    if cell_type is not "W":
+                        raise ValueError("Map boundary has to be only 'W'")
             # checks left- and rightmost cell in middle lines of geography str
-            elif 0 < line_num < (len(map_lines) - 1):
-                if map_lines[line_num][0] is not "O":
-                    raise ValueError("Map boundary has to be only 'O'")
-                elif map_lines[line_num][-1] is not "O":
-                    raise ValueError("Map boundary has to be only 'O'")
+            elif 0 < line_nr < (len(map_lines) - 1): # sjekker fra linje nr 1 til nest siste linje nr
+                if map_lines[line_nr][0] is not "W": # sjekker om de første bokstavene i linjenr er lik W
+                    raise ValueError("Map boundary has to be only 'W'")
+                elif map_lines[line_nr][-1] is not "W": # SJEKKER OM DE SISTE BOKSTAVENE I LINJENR ER LIK W
+                    raise ValueError("Map boundary has to be only 'W'")
             # checks all cells in last line of geography str
             else:
-                for landscape_type in map_lines[line_num]:
-                    if landscape_type is not "O":
-                        raise ValueError("Map boundary has to be only 'O'")
+                for cell_type in map_lines[line_nr]: # sjekker siste linje i string
+                    if cell_type is not "W": # iterer gjennom hver bokstav i linjenr 0 og sjekker om det er W
+                        raise ValueError("Map boundary has to be only 'W'")
 
     def check_map_lines_have_equal_length(self):
         """
@@ -73,6 +71,8 @@ class map_island:
 
         if len(set(line_lengths)) != 1:
             raise ValueError(f"Inconsistent line length.")
+
+
 
     def year_cycle(self):
         """
