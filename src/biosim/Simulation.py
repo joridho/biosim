@@ -34,18 +34,15 @@ class BioSim:
         if init_pop is None:
             self.init_pop = self.add_population()  # usikker på
 
+        self.island_map_graph = Map_Island(island_geo, init_pop)
+
+        self.init_pop = init_pop
+        self.num_years_simulated = 0
+
         # if island_geo == None:  # trenger vi denne? er jo input senere
         # island_geo = '-----' # vet ikke helt hva det skal bli enda, noe med random?
         # self._island_map_graph = Map_Island(island_geo)
         # else: #Går også an å inkl en elif som skal sjekke om island_geo er string
-
-
-        self.island_map_graph = Map_Island(island_geo, init_pop)
-
-        # ELSE RAISE VALUE ERROR
-
-        self.init_pop = init_pop
-        self.num_years_simulated = 0
 
     '''
     def set_animal_parameters(self, species, p):
@@ -117,15 +114,9 @@ class BioSim:
         # N_carn = []
         # V year = []
 
-        self.adding_population(self.init_pop)
-
         self.island_map_graph.year_cycle()
 
-        print(len(self.herbivores_pop))
-
-
-
-        #print(self.num_animals())
+        print("herbivores: ")
 
         self.num_years_simulated += 1
 

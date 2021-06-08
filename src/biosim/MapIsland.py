@@ -110,6 +110,8 @@ class Map_Island:
 
         l = Lowland()
 
+        l.herbivores_pop = self.init_pop
+
         l.make_herbivores_eat()
         l.newborn_animals()
         l.make_animals_age()
