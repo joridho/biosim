@@ -9,6 +9,10 @@ __email__ = 'christianie.torres@nmbu.no'
 
 from biosim.animals import herbivore, carnivore
 
+def test_parameters():
+    h=herbivore()
+    assert h.p['w_birth'] == 8.0
+
 def test_herbivore_age():
     """
     A test that checks that a herbivore has been created with age 0
