@@ -144,7 +144,7 @@ class Map_Island:
                 if location in self.population.keys(): #sjekker om koordinatet i self.geography er et koordinat i self.population
                     self.map[location] = Lowland(self.population[location]) # Vi gir koordinatet i et kart en celletype som tar inn en populasjon (som fins i det samme koordinatet) som argument. populasjon aka en flere lister med ulike dyr med ulik info
                 else:
-                    self.map[location] = Lowland([])
+                    self.map[location] = Lowland([]) # Hvis ikke koordinatet i self.geography fins i self.population betyr det at det ikke fins noen dyr i den cella/koordinatet. Argumentet blir en tom liste. Kan den ta inn en tom liste????
             elif cell_type is "H":
                 if location in self.population.keys():
                     self.map[location] = Highland(self.population[location])
@@ -154,11 +154,11 @@ class Map_Island:
                 if location in self.population.keys():
                     self.map[location] = Desert(self.population[location])
                 else:
-                    self.map[location] = Desert([])
+                    self.map[location] = Desert([]) " HAR ikke en for ørken enda"
             elif cell_type is "W":
-                self.map[location] = Water([])
+                self.map[location] = Water([]) " Har ikke en for water enda"
             else:
-                raise ValueError(f"Invalid landscape type {cell_type}")
+                raise ValueError(f"Invalid landscape type {cell_type}") # Gir feilmelding hvis celletype ikke fins
 
     def year_cycle(self):
         """
