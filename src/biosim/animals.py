@@ -15,7 +15,6 @@ class animal:
     """
     This i a class for animals on the island
     """
-    '''
     p = {  # Dictionary of parameters belonging to the Herbivore class
         "w_birth": 8.0,
         "sigma_birth": 1.5,
@@ -49,6 +48,7 @@ class animal:
         "omega": None,
         "F": None,
     }
+    '''
 
     def __init__(self, weight, a):
 
@@ -178,6 +178,7 @@ class herbivore(animal):
             """
         super().__init__(weight, a)
 
+        '''
         self.p["w_birth"] = 8.0
         self.p["sigma_birth"] = 1.5
         self.p["beta"] = 0.9
@@ -192,6 +193,7 @@ class herbivore(animal):
         self.p["xi"] = 1.2
         self.p["omega"] = 0.4
         self.p["F"] = 10.0
+        '''
 
     def eat_fodder(self, F_cell):
         """
@@ -233,6 +235,7 @@ class carnivore(animal):
             """
         super().__init__(weight, a)
 
+        '''
         self.p["w_birth"] = 8.0
         self.p["sigma_birth"] = 1.5
         self.p["beta"] = 0.9
@@ -247,6 +250,7 @@ class carnivore(animal):
         self.p["xi"] = 1.2
         self.p["omega"] = 0.4
         self.p["F"] = 10.0
+        '''
 
     def eat_herbivores(self):
         """
