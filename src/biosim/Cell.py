@@ -24,6 +24,7 @@ class Cell:
         self.herbivores_pop = []
         self.carnivores_pop = []
 
+    ''' skal ikke være her, brukes senere 
     def adding_animals(self):
         """
             Use of the animal class to add animals to the cell.
@@ -31,6 +32,7 @@ class Cell:
         for k in range(50):
             self.herbivores_pop.append(Herbivore())
         return self.herbivores_pop
+    '''
 
     def sorting_animals(self, pop, sort_by):  # do we need property here?
         """
@@ -39,6 +41,7 @@ class Cell:
             Carnivores are sorted fittest to weakest, since the fittest eats first
             """
         self.sorted_herbivores_pop = sorted(pop, key=operator.attrgetter(sort_by))
+        # my get an error later, just read the error and we will be good
 
     def available_fodder_function(self):
         """
@@ -55,29 +58,24 @@ class Cell:
 
             This function can only be used once per year because of the available_fodder_function
          """
-        self.af = 800
+        self.available_fodder_function()
+        list = self.herbivores_pop
+        random.shuffle(list)
 
-        self.list = self.herbivores_pop
-        random.shuffle(self.list)
-        self.spist = []
-
-        for k in range(len(self.list)):
+        for k in list:
             # make the herbivore eat:
-            self.list[k].eat_fodder(F_cell=800)
-            self.list[k].F_consumption = 10  # skal ikke være her
-            consumption = self.list[k].F_consumption
-            self.spist.append(consumption)  # for testing
+            k.eat_fodder(F_cell=self.af)
+
+            consumption = k.F_consumption
+            # self.spist.append(consumption)  # for testing
 
             # make the herbivore gain weight:
-            self.list[k].weight_gain(consumption)
+            k.weight_gain(consumption)
 
-            # change the animals appetite:
-            self.list[k].p['F'] -= consumption
-
-            # change the amount of fodder in the cell
+            # change the amount of fodder in the cell:
             self.af -= consumption
 
-        self.herbivores_pop = self.list
+        self.herbivores_pop = list
 
     def newborn_animals(self):
         """
@@ -86,27 +84,24 @@ class Cell:
             weight for the mother.
             The newborn must be added to the list of either herbivores or carnivores
             """
-        self.list_h = self.herbivores_pop
+        list_h = self.herbivores_pop
         self.counting_animals()
-        self.reset_given_birth()  # must be removed later. Må egt ikke bli fjernet
-        #length = len(self.list_h)
-        self.new = 0
-        self.list_new = []
-        for k in range(self.N):
-            self.list_h[k].birth_probability(n=self.N)
-            # list_h[k].birth = True
-            if self.list_h[k].given_birth is False and self.list_h[k].birth is True:
-                newborn = Herbivore(weight=self.list_h[k].newborn_birth_weight, a=0)
-                self.list_h[k].birth_weight_loss(n=self.N)
-                self.list_h[k].given_birth is True  # burde være riktig
-                self.list_new.append(newborn)  # skal være riktig
-                self.new += 1
-        # list_h.extend(list_new)
 
-        for k in self.list_new:
-            self.list_h.append(k)
-        self.herbivores_pop = self.list_h
-        return self.herbivores_pop
+        self.new = 0  # for testing
+        list_new = []
+
+        for k in range(self.N):
+            list_h[k].birth_probability(n=self.N)
+            if list_h[k].birth is True:
+                newborn = Herbivore(weight=list_h[k].newborn_birth_weight, a=0)
+                list_h[k].birth_weight_loss(n=self.N)
+                list_new.append(newborn)
+                self.new += 1  # for testing
+
+        for k in list_new:
+            list_h.append(k)
+
+        self.herbivores_pop = list_h
 
     def counting_animals(self):
         """
@@ -114,33 +109,10 @@ class Cell:
             We also need to differentiate between the different animals and provide to
             variables for this
             """
-        # do we need to use property here?
         self.N = len(self.herbivores_pop)
 
+
     # yearly activities:
-
-    def reset_fodder(self):
-        """
-            At the beginning of the year the amount of fodder resets to the default value
-            """
-        self.available_fodder_function()
-
-    def reset_appetite(self):
-        """
-            The appetite is filles every year
-            """
-        for k in range(len(self.herbivores_pop)):
-            Herbivore.p['F'] = 10.0
-            self.herbivores_pop[k].p['F'] = 10.0
-
-        return self.herbivores_pop
-
-    def reset_given_birth(self):
-        """
-        An animal can only give birth once per year
-        """
-        for k in range(len(self.herbivores_pop)):
-            self.herbivores_pop[k].given_birth = False
 
     def make_animals_age(self):
         """
