@@ -139,9 +139,9 @@ class Map_Island:
         self.create_geography_dict() # hvert koordinat har sin celletype
         self.create_population_dict() # Hvert koordinat har sine lister med dyr (med ulik info)
 
-        for location, cell_type in self.geography.items():
+        for location, cell_type in self.geography.items(): #
             if cell_type is "L":
-                if location in self.population.keys():
+                if location in self.population.keys(): #sjekker om koordinatet i self.geography er et koordinat i self.population
                     self.map[location] = Lowland(self.population[location])
                 else:
                     self.map[location] = Lowland([])
