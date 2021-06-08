@@ -32,7 +32,7 @@ class map_island:
 
 
 
-#INSP fra ida. MÅ fortsatt redigeres
+#MÅ fortsatt redigeres
     def check_island_boundaries(self):
         """
         This is a function that raises an error if the boundary cells are not water.
@@ -69,6 +69,13 @@ class map_island:
         for line in self.geo.splitlines():
             line_lengths.append(len(line))
 
+        length = len(line_lengths[0])
+        for line in line_lengths(): # hvordan splitte string til lnjer
+            if length != len(line_lengths[line]):
+                raise ValueError('Map lines are not equal')
+
+
+        #
         if len(set(line_lengths)) != 1:
             raise ValueError(f"Inconsistent line length.")
 
