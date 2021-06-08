@@ -117,6 +117,8 @@ class Map_Island:
         l.make_animals_lose_weight()
         l.dead_animals_natural_cause()
 
+        return l.herbivores_pop
+
     def add_population(self):
         for k in range(50):
             Lowland.herbivores_pop.append(Herbivore())

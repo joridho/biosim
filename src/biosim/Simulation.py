@@ -241,9 +241,8 @@ class BioSim:
     @property
     def num_animals(self):
         """Total number of animals on island."""
-        # num_herbivores = len(Lowland.herbivores_pop)
         num_carnivores = 0  # len(lowland.carnivores_pop)
-        num_herbivores = len(self.island_map_graph.map.values().herbivores_pop)
+        num_herbivores = len(self.island_map_graph.year_cycle())
         num_animals = num_carnivores + num_herbivores
         return num_animals
 
