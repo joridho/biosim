@@ -7,10 +7,10 @@ __email__ = 'jorid.holmen@nmbu.no', 'christianie.torres@nmbu.no'
 import random
 import operator
 
-from biosim.animals import herbivore, carnivore
+from biosim.animals import Herbivore, Carnivore
 
 
-class cell:
+class Cell:
     """
         Class for cells
         """
@@ -29,7 +29,7 @@ class cell:
             Use of the animal class to add animals to the cell.
             """
         for k in range(50):
-            self.herbivores_pop.append(herbivore())
+            self.herbivores_pop.append(Herbivore())
         return self.herbivores_pop
 
     def sorting_animals(self, pop, sort_by):  # do we need property here?
@@ -99,7 +99,7 @@ class cell:
             list_h[k].birth_probability(n=self.N)
             #list_h[k].birth = True
             if list_h[k].given_birth is False and list_h[k].birth is True:
-                newborn = herbivore(weight=list_h[k].newborn_birth_weight, a=0)
+                newborn = Herbivore(weight=list_h[k].newborn_birth_weight, a=0)
                 list_h[k].birth_weight_loss(n=self.N)
                 list_h[k].given_birth is True # burde være riktig
                 list_new.append(newborn)  # skal være riktig
@@ -132,7 +132,7 @@ class cell:
             The appetite is filles every year
             """
         for k in range(len(self.herbivores_pop)):
-            herbivore.p['F'] = 10.0
+            Herbivore.p['F'] = 10.0
             self.herbivores_pop[k].p['F'] = 10.0
 
         return self.herbivores_pop
@@ -185,7 +185,7 @@ class cell:
 
 
 
-class lowland(cell):
+class Lowland(Cell):
     """
     subclass for lowland cells
     """

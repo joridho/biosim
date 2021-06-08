@@ -11,7 +11,7 @@ import random
 import math
 
 
-class animal:
+class Animal:
     """
     This i a class for animals on the island
     """
@@ -166,7 +166,7 @@ class animal:
     # def migration(self):
 
 
-class herbivore(animal):
+class Herbivore(Animal):
     """
     this is a class for herbivores on the island
     """
@@ -224,7 +224,7 @@ class herbivore(animal):
         return self.F_consumption
 
 
-class carnivore(animal):
+class Carnivore(Animal):
     """
     this is a class for carnivores  on the island
     """
