@@ -31,8 +31,8 @@ class Map_Island:
 
 
 
-
-#MÅ fortsatt redigeres
+    '''
+    #MÅ fortsatt redigeres
     def check_island_boundaries(self):
         """
         This is a function that raises an error if the boundary cells are not water.
@@ -70,13 +70,13 @@ class Map_Island:
         if len(set(lengths_of_lines)) != 1:
             raise ValueError(f"Inconsistent line length.")
 
-        '''
         length = len(line_lengths[0])
         for l in line_lengths(): # hvordan splitte string til lnjer
             if length != len(line_lengths[l]):
                 raise ValueError('Map lines are not equal')
+    
 
-        '''
+    
     def create_geography_dict(self):
         """
         Converts geography string to a dictionary with coordinates as keys and
@@ -93,7 +93,7 @@ class Map_Island:
                 self.geography[(x_coord, y_coord)] = landscape_type
                 y_coord += 1
             x_coord += 1
-
+    '''
 
 
     def year_cycle(self):
@@ -110,28 +110,17 @@ class Map_Island:
             """
 
         l = Lowland()
-        l.herbivores_pop = self.init_pop  # må fjernes
 
         l.make_herbivores_eat()
-        self.population_herb = l.herbivores_pop
-        self.weight_year_cycle = [k.weight for k in l.herbivores_pop]  # for testing
-        self.available_fodder = l.af  # for testing
-
         l.newborn_animals()
         l.make_animals_age()
         l.make_animals_lose_weight()
         l.dead_animals_natural_cause()
 
-        # reset
-        # l.reset_fodder()
-        # l.reset_appetite()
-        l.reset_given_birth()
+        l.reset_fodder()
 
-        self.year += 1
 
-        return l.herbivores_pop
-
-    def add_population(self):
-        l = Lowland()
-        self.init_pop = l.adding_animals()
+    # def add_population(self):
+        # l = Lowland()
+        # self.init_pop = l.adding_animals()
 
