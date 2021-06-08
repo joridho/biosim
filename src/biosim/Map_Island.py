@@ -59,7 +59,7 @@ class map_island:
                     if cell_type is not "W": # iterer gjennom hver bokstav i linjenr 0 og sjekker om det er W
                         raise ValueError("Map boundary has to be only 'W'")
 
-    def check_map_lines_have_equal_length(self):
+    def check_for_equal_map_lines(self):
         """
         Checks that all lines in the map's geography string are of equal
         length.
