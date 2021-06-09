@@ -10,7 +10,7 @@ __email__ = 'christianie.torres@nmbu.no'
 from biosim.animals import Herbivore, Carnivore
 
 def test_parameters():
-    h=Herbivore()
+    h = Herbivore()
     assert h.p['w_birth'] == 8.0
 
 def test_herbivore_age():
