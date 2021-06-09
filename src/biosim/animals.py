@@ -55,6 +55,7 @@ class Animal:
             The animal loses weight each year
             """
         self.weight -= self.p['eta'] * self.weight
+        self.fitness()
 
     def weight_gain(self, consumption):
         """
@@ -62,6 +63,7 @@ class Animal:
             what is eaten, but in some cases that is not possible.
             """
         self.weight += self.p['beta'] * consumption
+        self.fitness()
 
     def fitness(self):
         """
@@ -115,6 +117,7 @@ class Animal:
             """
         self.birth_probability(n)
         self.weight -= self.p['zeta'] * self.newborn_birth_weight
+        self.fitness()
 
     def death_probability(self):
         """
@@ -240,4 +243,3 @@ class Carnivore(Animal):
             After eating the carnivore gains weight relative to the eaten herbivore
             """
         self.weight_gain(consumption=herb.weight)
-        self.fitness()
