@@ -44,8 +44,8 @@ def test_population_dict2():
     m.check_for_equal_map_lines()
     m.create_population_dict()
     # assert m.population([2, 2]).age == 2
-    for k in range(len(m.population([2, 2]))):
-        assert k.age == 5
+    for animal in m.population[(2, 2)]:
+        assert animal["age"] == 5
 
 
 
