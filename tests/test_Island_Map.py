@@ -53,8 +53,8 @@ def test_create_geography_dict():
                         WLW
                         WWW"""
     m = Map_Island(island_geo, init_pop=0)
-    #assert m.geography[(2, 2)] == 'L'
-    assert (1,1) in m.geography.keys()
+    assert m.geography[(2, 2)] == 'L'
+    #assert (1,1) in m.geography.keys()
 
 
 
