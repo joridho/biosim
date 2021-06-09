@@ -106,7 +106,7 @@ def test_create_map_dict2():
                           for _ in range(50)]}]
     m = Map_Island(island_geo, init_pop)
     m.create_map_dict()
-    assert m.map[(2, 2)].herbivores_pop == Lowland(m.population[(2, 2)])  # fungerer ikke pga ID, tror vi
+    assert m.map[(2, 2)] == Lowland(m.population[(2, 2)]).herbivores_pop  # fungerer ikke pga ID, tror vi
 
 def test_year_cycle():
     """ test if the coordinates in geography receives location """

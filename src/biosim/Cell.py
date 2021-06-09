@@ -17,9 +17,14 @@ class Cell:
 
     def __init__(self, population):
 
-        # self._accessible = True
-        self.herbivores_pop = population
-        #self.carnivores_pop = population
+        self.herbivores_pop = []
+        self.carnivores_pop = []
+        for animal_info in population:
+            if animal_info['species'] is 'Herbivore':
+                self.herbivores_pop.append(Herbivore(animal_info))
+            else:
+                self.carnivores_pop.append(Carnivore(animal_info))
+
 
     @classmethod
     def set_given_parameters(cls, params):
