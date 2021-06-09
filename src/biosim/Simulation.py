@@ -6,6 +6,7 @@ __email__ = 'jorid.holmen@nmbu.no'
 from biosim.animals import Herbivore, Carnivore
 from biosim.Cell import Lowland, Highland, Desert
 from biosim.MapIsland import Map_Island
+import operator
 
 import pandas
 import matplotlib.pyplot as plt
