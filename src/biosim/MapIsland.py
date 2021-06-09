@@ -9,15 +9,16 @@ __email__ = 'christianie.torres@nmbu.no'
 from biosim.Cell import Lowland, Highland, Desert, Water
 from biosim.animals import Herbivore, Carnivore
 
+
 class Map_Island:
-    def __init__(self, island_geo, init_pop): # Tror init_pop skal være argument her
+    def __init__(self, island_geo, init_pop):  # Tror init_pop skal være argument her
         """
         Initialize map class with given island geography and initial population
         of the various cells.
-        :param island_geography: Specifies island geography
-        :type island_geography: multiline str
-        :param initial_population: Specifies initial population of each cell
-        :type initial_population: list of dicts
+        :param island_geo: Specifies island geography
+        :type island_geo: multiline str
+        :param init_pop: Specifies initial population of each cell
+        :type init_pop: list of dicts
         """
         self.geography = {}
         self.population = {}
@@ -25,8 +26,7 @@ class Map_Island:
         self.geo = island_geo
         self.init_pop = init_pop
 
-
-    #MÅ fortsatt redigeres
+    # MÅ fortsatt redigeres
     def check_island_boundaries(self):
         """
         This is a function that raises an error if the boundary cells are not water.
@@ -37,20 +37,20 @@ class Map_Island:
 
         for line_nr in range(len(lines_map)):
             # checks all cells in first line of geography str
-            if line_nr == 0: # sjekker linje nr 0 i string
-                for cell_type in lines_map[line_nr]: # iterer gjennom hver bokstav i linjenr 0 og sjekker om det er W
+            if line_nr == 0:  # sjekker linje nr 0 i string
+                for cell_type in lines_map[line_nr]:  # iterer gjennom hver bokstav i linjenr 0 og sjekker om det er W
                     if cell_type != "W":
                         raise ValueError("Map boundary has to be only 'W'")
             # checks left- and rightmost cell in middle lines of geography str
-            elif 0 < line_nr < (len(lines_map) - 1): # sjekker fra linje nr 1 til nest siste linje nr
-                if lines_map[line_nr][0] != "W": # sjekker om de første bokstavene i linjenr er lik W
+            elif 0 < line_nr < (len(lines_map) - 1):  # sjekker fra linje nr 1 til nest siste linje nr
+                if lines_map[line_nr][0] != "W":  # sjekker om de første bokstavene i linjenr er lik W
                     raise ValueError("Map boundary has to be only 'W'")
-                elif lines_map[line_nr][-1] != "W": # SJEKKER OM DE SISTE BOKSTAVENE I LINJENR ER LIK W
+                elif lines_map[line_nr][-1] != "W":  # SJEKKER OM DE SISTE BOKSTAVENE I LINJENR ER LIK W
                     raise ValueError("Map boundary has to be only 'W'")
             # checks all cells in last line of geography str
             else:
-                for cell_type in lines_map[line_nr]: # sjekker siste linje i string
-                    if cell_type != "W": # iterer gjennom hver bokstav i linjenr 0 og sjekker om det er W
+                for cell_type in lines_map[line_nr]:  # sjekker siste linje i string
+                    if cell_type != "W":  # iterer gjennom hver bokstav i linjenr 0 og sjekker om det er W
                         raise ValueError("Map boundary has to be only 'W'")
 
     def check_for_equal_map_lines(self):
@@ -64,7 +64,6 @@ class Map_Island:
         if len(set(lengths_of_lines)) != 1:
             raise ValueError('Map lines are not equal')
 
-
     # Gir koordinatene i et kart ulike cell_typer (avh av self.geo = island_geo)
     def create_geography_dict(self):
         """
@@ -75,7 +74,7 @@ class Map_Island:
         self.check_island_boundaries()
         self.check_for_equal_map_lines()
 
-        y_coord = 1 #orginalt er det motsatt: der y koordinatet står
+        y_coord = 1  # orginalt er det motsatt: der y koordinatet står
         for line in self.geo.splitlines():
             x_coord = 1
             for cell_type in line:
@@ -90,15 +89,18 @@ class Map_Island:
         and lists of the properties of the animals at this location as values.
         """
 
-        #self.population skal til slutt være en dictionary med
+        # self.population skal til slutt være en dictionary med
         #                  posisjoner som nøkler
         #                  lister med "properties" of the animal som verdier
-        for pop_info in self.init_pop: # iterer gjennom elementene (dictionaries) i lista. init_pop er en liste med dictionaries
-            if pop_info["loc"] in self.population.keys(): #vi sjekker om verdien som tilhører cell_info['loc'] er en nøkkel i dictionary. Vi sjekker altså om posisjonen allerede er en nøkkel i dictionary
-                self.population[pop_info["loc"]].extend(pop_info["pop"]) # I en allerede eksisterende nøkkel i population, legger vi til den tilhørende lista med properties of animal
+        for pop_info in self.init_pop:  # iterer gjennom elementene (dictionaries) i lista. init_pop er en liste med dictionaries
+            if pop_info["loc"] in self.population.keys():  # vi sjekker om verdien som tilhører cell_info['loc'] er en nøkkel i dictionary. Vi sjekker altså om posisjonen allerede er en nøkkel i dictionary
+                self.population[pop_info["loc"]].extend(pop_info[
+                                                            "pop"])  # I en allerede eksisterende nøkkel i population, legger vi til den tilhørende lista med properties of animal
             else:
-                self.population[pop_info["loc"]] = pop_info["pop"] # vi legger til posisjonen som ny nøkkel i population dictionary
-# vi legger til den tilhørende lista av properties of animal som verdi til nøkkelen
+                self.population[pop_info["loc"]] = pop_info[
+                    "pop"]  # vi legger til posisjonen som ny nøkkel i population dictionary
+
+    # vi legger til den tilhørende lista av properties of animal som verdi til nøkkelen
 
     def add_population(self, population):
         """
@@ -108,19 +110,22 @@ class Map_Island:
         :type population: list of dicts
         """
         # population består av en liste av dictionaries
-        new_population = {} # ny dictionary
-        for pop_info in population: # iterer gjennom hvert element (dictionary) i lista
+        new_population = {}  # ny dictionary
+        for pop_info in population:  # iterer gjennom hvert element (dictionary) i lista
             if pop_info['loc'] in new_population.keys():
                 new_population[pop_info['loc']].extend(pop_info['pop'])
             else:
-                new_population[pop_info["loc"]] = pop_info["pop"] # vi legger posisjonen til pop_info som ny nøkkel i newpopulasjon. Her vil vi legge til den tilhørende lista av properties som verdi
+                new_population[pop_info["loc"]] = pop_info[
+                    "pop"]  # vi legger posisjonen til pop_info som ny nøkkel i newpopulasjon. Her vil vi legge til den tilhørende lista av properties som verdi
 
         for location, population in new_population.items():
-            for animal_info in population: # iterer gjennom elementene (listene med animal info) i lista population
-                if animal_info["species"] == "Herbivore": # Hvis dyret er herbivore, blir den ....
-                    self.map[location].herbivores_pop.append(Herbivore(animal_info)) #Legger populasjon (flere lister med ulike herbivore info) inn i allerede eksisterende kartkoordinat
+            for animal_info in population:  # iterer gjennom elementene (listene med animal info) i lista population
+                if animal_info["species"] == "Herbivore":  # Hvis dyret er herbivore, blir den ....
+                    self.map[location].herbivores_pop.append(Herbivore(
+                        animal_info))  # Legger populasjon (flere lister med ulike herbivore info) inn i allerede eksisterende kartkoordinat
                 else:
-                    self.map[location].carnivores_pop.append(Carnivore(animal_info)) # samme prinsipp som over
+                    self.map[location].carnivores_pop.append(
+                        Carnivore(animal_info))  # samme prinsipp som over
 
     def create_map_dict(self):
         """
@@ -131,29 +136,32 @@ class Map_Island:
         :raise ValueError: if invalid landscape type is given in geography
             string
         """
-        self.create_geography_dict() # hvert koordinat har sin celletype
-        self.create_population_dict() # Hvert koordinat har sine lister med dyr (med ulik info)
+        self.create_geography_dict()  # hvert koordinat har sin celletype
+        self.create_population_dict()  # Hvert koordinat har sine lister med dyr (med ulik info)
 
-        for location, cell_type in self.geography.items(): #
-            if cell_type == "L": #celletype blir bestemt
-                if location in self.population.keys(): #sjekker om koordinatet i self.geography er et koordinat i self.population
-                    self.map[location] = Lowland(self.population[location]) # Vi gir koordinatet i et kart en celletype og denne celletypen tar inn en populasjon (som fins i det samme koordinatet) som argument. populasjon aka en flere lister med ulike dyr med ulik info
+        for location, cell_type in self.geography.items():  #
+            if cell_type == "L":  # celletype blir bestemt
+                if location in self.population.keys():  # sjekker om koordinatet i self.geography er et koordinat i self.population
+                    self.map[location] = Lowland(self.population[
+                                                     location])  # Vi gir koordinatet i et kart en celletype og denne celletypen tar inn en populasjon (som fins i det samme koordinatet) som argument. populasjon aka en flere lister med ulike dyr med ulik info
                 else:
-                    self.map[location] = Lowland([]) # Hvis ikke koordinatet i self.geography fins i self.population betyr det at det ikke fins noen dyr i den cella/koordinatet. Argumentet blir en tom liste. Kan den ta inn en tom liste????
+                    self.map[location] = Lowland(
+                        [])  # Hvis ikke koordinatet i self.geography fins i self.population betyr det at det ikke fins noen dyr i den cella/koordinatet. Argumentet blir en tom liste. Kan den ta inn en tom liste????
             elif cell_type == "H":
                 if location in self.population.keys():
                     self.map[location] = Highland(self.population[location])
                 else:
-                    self.map[location] = Highland([]) #Har ikke highland enda
+                    self.map[location] = Highland([])  # Har ikke highland enda
             elif cell_type == "D":
                 if location in self.population.keys():
                     self.map[location] = Desert(self.population[location])
                 else:
                     self.map[location] = Desert([])  # " HAR ikke en for ørken enda"
             elif cell_type == "W":
-                 self.map[location] = Water([])  # " Har ikke en for water enda"
+                self.map[location] = Water([])  # " Har ikke en for water enda"
             else:
-                raise ValueError(f"Invalid landscape type {cell_type}") # Gir feilmelding hvis celletype ikke fins
+                raise ValueError(
+                    f"Invalid landscape type {cell_type}")  # Gir feilmelding hvis celletype ikke fins
 
     def year_cycle(self):
         """
@@ -181,9 +189,3 @@ class Map_Island:
 
         for cell in self.map.values():
             cell.dead_animals_natural_cause()
-
-
-
-
-
-
