@@ -20,7 +20,7 @@ class Cell:
         self.herbivores_pop = []
         self.carnivores_pop = []
         for animal_info in population:
-            if animal_info['species'] is 'Herbivore':
+            if animal_info['species'] == 'Herbivore':
                 self.herbivores_pop.append(Herbivore(animal_info))
             else:
                 self.carnivores_pop.append(Carnivore(animal_info))
@@ -122,7 +122,7 @@ class Cell:
         list_new = []
         for k in range(self.N_carn):
             list_c[k].birth_probability(n=self.N_carn)
-            list_c[k].birth = True  # there for testing because mocker doesn't work
+            # list_c[k].birth = True  # there for testing because mocker doesn't work
             if list_c[k].birth is True:
                 newborn = Carnivore(weight=list_c[k].newborn_birth_weight, age=0)
                 list_c[k].birth_weight_loss(newborn_birth_weight=newborn.weight)
