@@ -8,6 +8,7 @@ __email__ = 'christianie.torres@nmbu.no'
 
 from biosim.Cell import Lowland, Highland, Desert, Water
 from biosim.animals import Herbivore, Carnivore
+import textwrap
 
 
 class Map_Island:
@@ -23,7 +24,8 @@ class Map_Island:
         self.geography = {}
         self.population = {}
         self.map = {}
-        self.geo = island_geo
+        self.geo = textwrap.dedent(island_geo)
+        #self.geo = island_geo
         self.init_pop = init_pop
 
     # MÅ fortsatt redigeres
