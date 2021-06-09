@@ -42,6 +42,7 @@ class Animal:
             A function for aging the animal
             """
         self.age += 1
+        self.fitness()
 
     def birth_weight_function(self):
         """
