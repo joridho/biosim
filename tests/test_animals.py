@@ -129,8 +129,8 @@ def test_herbivore_birth_weight_loss():
     ' This is a test that checks if the Mother looses the right amount of weight after giving birth'
     h = Herbivore()
     current_weight = h.weight
-    h.birth_weight_loss(n=40)
-    assert h.weight == current_weight - h.p['zeta'] * h.newborn_birth_weight
+    h.birth_weight_loss(newborn_birth_weight=8)
+    assert h.weight == current_weight - h.p['zeta'] * 8
 
 
 def test_death():

@@ -20,7 +20,7 @@ class Cell:
         self.herbivores_pop = []
         self.carnivores_pop = []
         for animal_info in population:
-            if animal_info['species'] is 'Herbivore':
+            if animal_info['species'] == 'Herbivore':
                 self.herbivores_pop.append(Herbivore(animal_info))
             else:
                 self.carnivores_pop.append(Carnivore(animal_info))
@@ -61,8 +61,9 @@ class Cell:
         random.shuffle(self.herbivores_pop)
 
         for k in self.herbivores_pop:
-            k.eat_fodder(F_cell=self.af)  # make the herbivore eat
-            self.af -= k.F_consumption  # change the amount of fodder in the cell
+                k.eat_fodder(F_cell=self.af)  # make the herbivore eat
+                self.af -= k.F_consumption  # change the amount of fodder in the cell
+
 
     def available_herbivores_for_carnivores(self):
         self.herbivores_weight_sum = 0
@@ -109,7 +110,7 @@ class Cell:
             # list_h[k].birth = True # is there for testing since mocker doesn't work
             if list_h[k].birth is True:
                 newborn = Herbivore(weight=list_h[k].newborn_birth_weight, age=0)
-                list_h[k].birth_weight_loss(n=self.N_herb)
+                list_h[k].birth_weight_loss(newborn_birth_weight=newborn.weight)
                 list_new.append(newborn)
                 self.new_h += 1  # for testing
         for k in list_new:
@@ -122,10 +123,10 @@ class Cell:
         list_new = []
         for k in range(self.N_carn):
             list_c[k].birth_probability(n=self.N_carn)
-            #  list_c[k].birth = True  # there for testing because mocker doesn't work
+            # list_c[k].birth = True  # there for testing because mocker doesn't work
             if list_c[k].birth is True:
                 newborn = Carnivore(weight=list_c[k].newborn_birth_weight, age=0)
-                list_c[k].birth_weight_loss(n=self.N_carn)
+                list_c[k].birth_weight_loss(newborn_birth_weight=newborn.weight)
                 list_new.append(newborn)
                 self.new_c += 1  # for testing
         for k in list_new:
