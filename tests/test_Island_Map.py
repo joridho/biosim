@@ -90,6 +90,7 @@ def test_create_geography_dict2():
 
 
 
+
 def test_fodder_in_cell_after_fodder_eaten():
     '''Check if make_herbivores eat works in year_cycle
     by checking if fodder in cell has the right amount'''
