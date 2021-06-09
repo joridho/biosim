@@ -176,6 +176,18 @@ class Map_Island:
                 raise ValueError(
                     f"Invalid landscape type {cell_type}")  # Gir feilmelding hvis celletype ikke fins
 
+            '''
+            for k in self.map.values():
+                # hvis cella er en water celle, ikke gå videre
+                if k != Water:
+                #if cell_type != "W":
+                    for j in k:
+                        species = k.herbivores_pop[j]['species']
+                        weight = k.herbivores_pop[j]['weight']
+                        age = k.herbivores_pop[j]['age']
+                        k.herbivores_pop[j] = Herbivore(species, weight, age)
+            '''
+
     def year_cycle(self):
         """
             simulates one year
