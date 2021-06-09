@@ -118,7 +118,11 @@ class BioSim:
 
         self.island_map_graph.year_cycle()
 
-        print("herbivores: ")
+        pop = []
+        for cell in self.island_map_graph.map.values():
+            pop += cell.herbivores_pop
+
+        print("herbivores: ", len(pop))
 
         self.num_years_simulated += 1
 
