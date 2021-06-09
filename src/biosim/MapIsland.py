@@ -170,12 +170,16 @@ class Map_Island:
         for cell in self.map.values():
             cell.make_herbivores_eat()
 
+        for cell in self.map.values():
             cell.newborn_animals()
 
+        for cell in self.map.values():
             cell.make_animals_age()
 
+        for cell in self.map.values():
             cell.make_animals_lose_weight()
 
+        for cell in self.map.values():
             cell.dead_animals_natural_cause()
 
 
