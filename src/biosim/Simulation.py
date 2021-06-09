@@ -262,9 +262,9 @@ class BioSim:
             num_animals_per_species["Carnivore"] += 0  # len(lowland.pop_carn)
         return num_animals_per_species()
         '''
-        num_animals_per_species = {"Herbivore": 0, "Carnivore": 0}
-        num_animals_per_species["Herbivore"] = len(Lowland.herbivore_pop)
-        num_animals_per_species["Carnivore"] = 0  # len(lowland.carnivore_pop)
+        #num_animals_per_species = {"Herbivore": 0, "Carnivore": 0}
+        #num_animals_per_species["Herbivore"] = len(Lowland.herbivore_pop)
+        #num_animals_per_species["Carnivore"] = 0  # len(lowland.carnivore_pop)
 
         '''
     def make_movie(self): denne er fra Plesser 
