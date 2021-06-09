@@ -89,7 +89,8 @@ class Map_Island:
         self.geo.splitlines()
 
         y_coord = 1  # orginalt er det motsatt: der y koordinatet står
-        for line in self.geo.splitlines():
+        self.geo = self.geo.splitlines()
+        for line in self.geo():
             x_coord = 1
             for cell_type in line.split():
                 self.geography[(x_coord, y_coord)] = cell_type
