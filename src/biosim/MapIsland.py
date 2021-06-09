@@ -151,9 +151,9 @@ class Map_Island:
                 if location in self.population.keys():
                     self.map[location] = Desert(self.population[location])
                 else:
-                    self.map[location] = Desert([]) " HAR ikke en for ørken enda"
+                    self.map[location] = Desert([])  # " HAR ikke en for ørken enda"
             elif cell_type is "W":
-                self.map[location] = Water([]) " Har ikke en for water enda"
+                self.map[location] = Water([])  # " Har ikke en for water enda"
             else:
                 raise ValueError(f"Invalid landscape type {cell_type}") # Gir feilmelding hvis celletype ikke fins
 
