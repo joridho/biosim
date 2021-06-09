@@ -44,7 +44,7 @@ def test_population_dict2():
     m.check_for_equal_map_lines()
     m.create_population_dict()
     for k in m.population([2, 2]):
-        assert k.age == 5
+        assert k[2] == 5
 
 
 
