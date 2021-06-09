@@ -79,7 +79,7 @@ class Cell:
             for herb in list_herb:
                 carn.probability_kill_herbivore(herb)
                 if carn.kill is True:
-                    carn.weight_weight_gain_after_eating_herb()
+                    carn.weight_gain_after_eating_herb(herb)
                     killed.append(herb)
 
         self.herbivores_pop = list(set(list_herb) - set(killed))
