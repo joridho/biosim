@@ -76,6 +76,7 @@ class Map_Island:
             return True
 
     # Gir koordinatene i et kart ulike cell_typer (avh av self.geo = island_geo)
+
     def create_geography_dict(self):
         """
         Converts geography string to a dictionary with coordinates as keys and
@@ -84,6 +85,8 @@ class Map_Island:
         """
         self.check_island_boundaries()
         self.check_for_equal_map_lines()
+
+        self.geo.splitlines()
 
         y_coord = 1  # orginalt er det motsatt: der y koordinatet står
         for line in self.geo.splitlines():
