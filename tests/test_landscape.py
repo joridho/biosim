@@ -136,7 +136,6 @@ def test_newborn_added_to_list_carn():
     l.newborn_animals()
     assert len(l.carnivores_pop) == length + l.new_c
 
-
 def test_mother_lost_weight_herb():  # fungerer hver gang om mocker fungerer
     c = Lowland(population=[{'species': 'Herbivore', 'weight': 35, 'age': 5},
                             {'species': 'Herbivore', 'weight': 41, 'age': 8}])
@@ -145,10 +144,13 @@ def test_mother_lost_weight_herb():  # fungerer hver gang om mocker fungerer
 
     c.newborn_animals()
     mother_after = [c.herbivores_pop[0], c.herbivores_pop[1]]
-    newborn_after = [c.herbivores_pop[2], c.herbivores_pop[3]]
+    #newborn_after = [c.herbivores_pop[1], c.herbivores_pop[3]]
 
-    for k in range(len(weight)):
-        assert mother_after[k].weight == weight[k] - Herbivore.p['zeta'] * newborn_after[k].weight
+    #for k in range(len[weight]):
+    #    assert mother_after[k].weight == weight[k] - Herbivore.p['zeta'] * newborn_after[k].weight
+
+    for k in range(len(c.list_new2)):
+        assert mother_after[k].weight == weight[k] - Herbivore.p['zeta'] * c.list_new2[k].weight
 
 
 def test_mother_lost_weight_carn():  # fungerer hver gang om mocker fungerer
@@ -160,11 +162,19 @@ def test_mother_lost_weight_carn():  # fungerer hver gang om mocker fungerer
     c.newborn_animals()
     c.carnivores_pop = sorted(c.carnivores_pop, key=operator.attrgetter('age'))
     mother_after = [c.carnivores_pop[0], c.carnivores_pop[1]]
-    newborn_after = [c.carnivores_pop[2], c.carnivores_pop[3]]
+    #newborn_after = [k.weight for k in c.list_new] #[c.carnivores_pop[2], c.carnivores_pop[3]]
 
-    for k in range(len(weight)):
-        assert mother_after[k].weight == weight[k] - Carnivore.p['zeta'] * newborn_after[k].weight
+    """if len(weight) == len(c.list_new):
+        for k in range(len(weight)-len(c.list_new)):
+            assert mother_after[k].weight == weight[k] - Carnivore.p['zeta'] * c.list_new[k].weight
 
+    else:
+        for k in range(len(c.list_new)):
+            assert mother_after[k].weight == weight[k] - Carnivore.p['zeta'] * c.list_new[k].weight
+    """
+
+    for k in range(len(c.list_new)):
+        assert mother_after[k].weight == weight[k] - Carnivore.p['zeta'] * c.list_new[k].weight
 
 def test_count_animals_herb():
     l = Lowland(population=[{'species': 'Herbivore', 'weight': 35, 'age': 5},
