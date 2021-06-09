@@ -43,17 +43,24 @@ class Map_Island:
                 for cell_type in lines_map[line_nr]:  # iterer gjennom hver bokstav i linjenr 0 og sjekker om det er W
                     if cell_type != "W":
                         raise ValueError("Map boundary has to be only 'W'")
+                    else:
+                        return True
             # checks left- and rightmost cell in middle lines of geography str
             elif 0 < line_nr < (len(lines_map) - 1):  # sjekker fra linje nr 1 til nest siste linje nr
                 if lines_map[line_nr][0] != "W":  # sjekker om de første bokstavene i linjenr er lik W
                     raise ValueError("Map boundary has to be only 'W'")
                 elif lines_map[line_nr][-1] != "W":  # SJEKKER OM DE SISTE BOKSTAVENE I LINJENR ER LIK W
                     raise ValueError("Map boundary has to be only 'W'")
+                else:
+                    return True
             # checks all cells in last line of geography str
             else:
                 for cell_type in lines_map[line_nr]:  # sjekker siste linje i string
                     if cell_type != "W":  # iterer gjennom hver bokstav i linjenr 0 og sjekker om det er W
                         raise ValueError("Map boundary has to be only 'W'")
+                    else:
+                        return True
+
 
     def check_for_equal_map_lines(self):
         """
@@ -65,6 +72,8 @@ class Map_Island:
             lengths_of_lines.append(len(l))
         if len(set(lengths_of_lines)) != 1:
             raise ValueError('Map lines are not equal')
+        else:
+            return True
 
     # Gir koordinatene i et kart ulike cell_typer (avh av self.geo = island_geo)
     def create_geography_dict(self):
@@ -79,7 +88,7 @@ class Map_Island:
         y_coord = 1  # orginalt er det motsatt: der y koordinatet står
         for line in self.geo.splitlines():
             x_coord = 1
-            for cell_type in line:
+            for cell_type in line.split():
                 self.geography[(x_coord, y_coord)] = cell_type
                 x_coord += 1
             y_coord += 1
