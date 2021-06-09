@@ -63,14 +63,6 @@ def test_check_map_lines():
     m = Map_Island(island_geo, init_pop=0)
     assert m.check_for_equal_map_lines() == True
 
-def test_create_geography_dict1():
-    island_geo = """\
-                            WWW
-                            WLW
-                            WWW"""
-    m = Map_Island(island_geo, init_pop=0)
-    m.create_geography_dict()
-    assert m.geo.splitlines() == island_geo.splitlines()
 
 def test_create_geography_dict2():
     island_geo = """\
@@ -85,6 +77,20 @@ def test_create_geography_dict2():
 
     assert m.geography[(2, 2)] == 'L'
 
+
+def test_create_map_dict1():
+    island_geo = """\
+                    WWW
+                    WLW
+                    WWW"""
+    init_pop = [{'loc': (2, 2),
+                  'pop': [{'species': 'Herbivore',
+                           'age': 5,
+                           'weight': 20}
+                          for _ in range(50)]}]
+    m = Map_Island(island_geo, init_pop)
+
+    assert 1 == 1
 
 
 
