@@ -176,7 +176,7 @@ class Map_Island:
                 raise ValueError(
                     f"Invalid landscape type {cell_type}")  # Gir feilmelding hvis celletype ikke fins
 
-            '''
+            
             for k in self.map.values():
                 # hvis cella er en water celle, ikke gå videre
                 if k != Water:

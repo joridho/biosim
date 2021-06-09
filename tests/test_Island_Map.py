@@ -125,6 +125,7 @@ def test_year_cycle():
     for k in m.map[(2, 2)].herbivores_pop:
         assert k['weight'] == 20
 
+def test_create_map_dict():
 
 
 
