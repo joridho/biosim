@@ -6,7 +6,7 @@
 __author__ = 'Christianie Torres'
 __email__ = 'christianie.torres@nmbu.no'
 
-from biosim.Cell import Lowland, Highland, Desert
+from biosim.Cell import Lowland, Highland, Desert, Water
 from biosim.animals import Herbivore, Carnivore
 
 class Map_Island:
@@ -39,18 +39,18 @@ class Map_Island:
             # checks all cells in first line of geography str
             if line_nr == 0: # sjekker linje nr 0 i string
                 for cell_type in lines_map[line_nr]: # iterer gjennom hver bokstav i linjenr 0 og sjekker om det er W
-                    if cell_type is not "W":
+                    if cell_type != "W":
                         raise ValueError("Map boundary has to be only 'W'")
             # checks left- and rightmost cell in middle lines of geography str
             elif 0 < line_nr < (len(lines_map) - 1): # sjekker fra linje nr 1 til nest siste linje nr
-                if lines_map[line_nr][0] is not "W": # sjekker om de første bokstavene i linjenr er lik W
+                if lines_map[line_nr][0] != "W": # sjekker om de første bokstavene i linjenr er lik W
                     raise ValueError("Map boundary has to be only 'W'")
-                elif lines_map[line_nr][-1] is not "W": # SJEKKER OM DE SISTE BOKSTAVENE I LINJENR ER LIK W
+                elif lines_map[line_nr][-1] != "W": # SJEKKER OM DE SISTE BOKSTAVENE I LINJENR ER LIK W
                     raise ValueError("Map boundary has to be only 'W'")
             # checks all cells in last line of geography str
             else:
                 for cell_type in lines_map[line_nr]: # sjekker siste linje i string
-                    if cell_type is not "W": # iterer gjennom hver bokstav i linjenr 0 og sjekker om det er W
+                    if cell_type != "W": # iterer gjennom hver bokstav i linjenr 0 og sjekker om det er W
                         raise ValueError("Map boundary has to be only 'W'")
 
     def check_for_equal_map_lines(self):
@@ -135,23 +135,23 @@ class Map_Island:
         self.create_population_dict() # Hvert koordinat har sine lister med dyr (med ulik info)
 
         for location, cell_type in self.geography.items(): #
-            if cell_type is "L": #celletype blir bestemt
+            if cell_type == "L": #celletype blir bestemt
                 if location in self.population.keys(): #sjekker om koordinatet i self.geography er et koordinat i self.population
                     self.map[location] = Lowland(self.population[location]) # Vi gir koordinatet i et kart en celletype og denne celletypen tar inn en populasjon (som fins i det samme koordinatet) som argument. populasjon aka en flere lister med ulike dyr med ulik info
                 else:
                     self.map[location] = Lowland([]) # Hvis ikke koordinatet i self.geography fins i self.population betyr det at det ikke fins noen dyr i den cella/koordinatet. Argumentet blir en tom liste. Kan den ta inn en tom liste????
-            elif cell_type is "H":
+            elif cell_type == "H":
                 if location in self.population.keys():
                     self.map[location] = Highland(self.population[location])
                 else:
                     self.map[location] = Highland([]) #Har ikke highland enda
-            elif cell_type is "D":
+            elif cell_type == "D":
                 if location in self.population.keys():
                     self.map[location] = Desert(self.population[location])
                 else:
-                    self.map[location] = Desert([]) " HAR ikke en for ørken enda"
-            elif cell_type is "W":
-                self.map[location] = Water([]) " Har ikke en for water enda"
+                    self.map[location] = Desert([])  # " HAR ikke en for ørken enda"
+            elif cell_type == "W":
+                 self.map[location] = Water([])  # " Har ikke en for water enda"
             else:
                 raise ValueError(f"Invalid landscape type {cell_type}") # Gir feilmelding hvis celletype ikke fins
 
@@ -167,16 +167,16 @@ class Map_Island:
         - Step 5: Animals lose weight
         - Step 6: Animals die
             """
+        for cell in self.map.values():
+            cell.make_herbivores_eat()
 
-        l = Lowland()
+            cell.newborn_animals()
 
-        l.herbivores_pop = self.init_pop
+            cell.make_animals_age()
 
-        l.make_herbivores_eat()
-        l.newborn_animals()
-        l.make_animals_age()
-        l.make_animals_lose_weight()
-        l.dead_animals_natural_cause()
+            cell.make_animals_lose_weight()
+
+            cell.dead_animals_natural_cause()
 
         return l.herbivores_pop
 
