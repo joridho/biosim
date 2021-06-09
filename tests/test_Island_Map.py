@@ -47,6 +47,14 @@ def test_population_dict2():
     for animal in m.population[(2, 2)]:
         assert animal["age"] == 5
 
+def test_create_geography_dict():
+    island_geo = """\
+                        WWW
+                        WLW
+                        WWW"""
+    m = Map_Island(island_geo, init_pop=0)
+    assert m.geography[(2, 2)] == 'L'
+
 
 
 
