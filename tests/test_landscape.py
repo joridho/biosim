@@ -74,6 +74,34 @@ def test_gain_weight_after_eating(): # får den kun til å fungere på ett dyr
 
     assert [k + 9 for k in weight] == weight2
 
+def test_carnivores_gain_weight_after_eating():
+    l = Lowland
+    l.herbivores_pop = [Herbivore(weight=35, age=3), Herbivore(weight=41, age=8),
+                        Herbivore(weight=20, age=6), Herbivore(weight=35, age=3),
+                        Herbivore(weight=41, age=8), Herbivore(weight=20, age=6)]
+    l.carnivores_pop = [Carnivore(weight=35, age=3), Carnivore(weight=41, age=8),
+                        Carnivore(weight=20, age=6), Carnivore(weight=35, age=3),
+                        Carnivore(weight=41, age=8), Carnivore(weight=20, age=6)]
+    carns = l.carnivores_pop
+    herbs = l.herbivores_pop
+    l.feed_carnivores()
+    for k in l.carnivores_pop:
+        if k.kill is True:
+            for m in carns:
+                assert k.weight == m.weight
+
+def test_herbivore_removed_from_list_after_eaten():
+    l = Lowland
+    l.herbivores_pop = [Herbivore(weight=35, age=3), Herbivore(weight=41, age=8),
+                        Herbivore(weight=20, age=6), Herbivore(weight=35, age=3),
+                        Herbivore(weight=41, age=8), Herbivore(weight=20, age=6)]
+    l.carnivores_pop = [Carnivore(weight=35, age=3), Carnivore(weight=41, age=8),
+                        Carnivore(weight=20, age=6), Carnivore(weight=35, age=3),
+                        Carnivore(weight=41, age=8), Carnivore(weight=20, age=6)]
+    l.feed_carnivores()
+    assert 1 == 1
+
+
 def test_newborn_added_to_list_herb():
     l = Lowland()
     l.herbivores_pop = [Herbivore(weight=35, age=3), Herbivore(weight=41, age=8),
@@ -162,4 +190,16 @@ def test_animal_removed_after_death_herb():
     c.dead_animals_natural_cause()
 
     assert len(c.herbivores_pop) == len(list) - c.dead
+
+def test_animal_removed_after_death_herb():
+    l = Lowland()
+    l.carnivores_pop = [Carnivore(weight=35, age=3), Carnivore(weight=41, age=8),
+                        Carnivore(weight=20, age=6), Carnivore(weight=35, age=3),
+                        Carnivore(weight=41, age=8), Carnivore(weight=20, age=6)]
+    list = l.carnivores_pop
+    l.dead_animals_natural_cause()
+
+    assert len(l.carnivores_pop) == len(list) - l.dead
+
+
 
