@@ -61,8 +61,9 @@ class Cell:
         random.shuffle(self.herbivores_pop)
 
         for k in self.herbivores_pop:
-            k.eat_fodder(F_cell=self.af)  # make the herbivore eat
-            self.af -= k.F_consumption  # change the amount of fodder in the cell
+                k.eat_fodder(F_cell=self.af)  # make the herbivore eat
+                self.af -= k.F_consumption  # change the amount of fodder in the cell
+
 
     def available_herbivores_for_carnivores(self):
         self.herbivores_weight_sum = 0
