@@ -43,8 +43,9 @@ def test_population_dict2():
     m.check_island_boundaries()
     m.check_for_equal_map_lines()
     m.create_population_dict()
-    for k in m.population([2, 2]):
-        assert k.age == 5
+    assert m.population([2, 2]) == 2
+    # for k in range(len(m.population([2, 2]))):
+        # assert k.age == 5
 
 
 
