@@ -85,8 +85,6 @@ def test_create_geography_dict2():
 
     assert m.geography[(2, 2)] == 'L'
 
-def
-
 
 
 
