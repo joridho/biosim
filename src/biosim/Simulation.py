@@ -237,7 +237,7 @@ class BioSim:
         plt.show()  # viser plott
     '''
 
-    def adding_population(self, population):
+    def add_population(self, population):
         """
             Adds animal to the cell/island. These animals become the initial population
             """
