@@ -122,10 +122,10 @@ class Cell:
         list_new = []
         for k in range(self.N_carn):
             list_c[k].birth_probability(n=self.N_carn)
-            #  list_c[k].birth = True  # there for testing because mocker doesn't work
+            list_c[k].birth = True  # there for testing because mocker doesn't work
             if list_c[k].birth is True:
                 newborn = Carnivore(weight=list_c[k].newborn_birth_weight, age=0)
-                list_c[k].birth_weight_loss(n=self.N_carn)
+                list_c[k].birth_weight_loss(newborn_birth_weight=newborn.weight)
                 list_new.append(newborn)
                 self.new_c += 1  # for testing
         for k in list_new:
