@@ -15,13 +15,22 @@ class Cell:
         Class for cells
         """
 
-    p = {'f_max': 800.0}
+    # p = {'f_max': 800.0}
 
     def __init__(self):
 
-        self._accessible = True
+        # self._accessible = True
         self.herbivores_pop = []
         self.carnivores_pop = []
+
+    @classmethod
+    def set_given_parameters(cls, params):
+        """
+            Saves the parameters for the different celss for use in Cell class
+            """
+        for parameter in params:
+            if parameter in cls.p:
+                cls.p[parameter] = params[parameter]
 
     def sorting_animals(self):  # pop, sort_by):  # do we need property here?
         """
@@ -179,11 +188,39 @@ class Lowland(Cell):
     """
     subclass for lowland cells
     """
-
-    # should have amount of fodder down here, not up in the cell class
+    p = {'f_max': 800.0}
 
     def __init__(self):
         """
             Initialises lowland class
             """
+        # self._accessible = True  # trengs denne linja??
         super().__init__()
+
+class Highland(Cell):
+    """
+    subclass for highland class
+    """
+    p = {'f_max': 300.0}
+
+    def __init__(self):
+        """
+            Initialises highland class
+            """
+        # self._accessible = True  # trengs denne linja??
+        super().__init__()
+
+class Desert(Cell):
+    """
+    subclass for highland class
+    """
+    p = {'f_max': 0}
+
+    def __init__(self):
+        """
+            Initialises desert class
+            """
+        # self._accessible = True  # trengs denne linja??
+        super().__init__()
+
+

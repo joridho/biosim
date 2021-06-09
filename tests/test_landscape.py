@@ -29,6 +29,10 @@ def test_simple_sorting_herb():
               c.herbivores_pop[2].phi]
     assert liste2 == liste3
 
+def test_parameters_lowland():
+    l = Lowland
+    assert l.p['f_max'] == 800
+
 def test_sorting_carnivores():
     l = Lowland()
     l.carnivores_pop = [Carnivore(weight=5, age=3), Carnivore(weight=15, age=3),
