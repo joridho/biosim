@@ -79,6 +79,7 @@ def test_create_geography_dict2():
 
 
 def test_create_map_dict1():
+    """ test if the coordinates in geography receives population """
     island_geo = """\
                     WWW
                     WLW
@@ -89,10 +90,40 @@ def test_create_map_dict1():
                            'weight': 20}
                           for _ in range(50)]}]
     m = Map_Island(island_geo, init_pop)
+    m.create_map_dict()
+    assert m.population[(2, 2)] == m.map[(2, 2)].herbivores_pop
 
-    assert 1 == 1
+def test_create_map_dict2():
+    """ test if the coordinates in geography receives location """
+    island_geo = """\
+                    WWW
+                    WLW
+                    WWW"""
+    init_pop = [{'loc': (2, 2),
+                  'pop': [{'species': 'Herbivore',
+                           'age': 5,
+                           'weight': 20}
+                          for _ in range(50)]}]
+    m = Map_Island(island_geo, init_pop)
+    m.create_map_dict()
+    assert m.map[(2, 2)].herbivores_pop == Lowland(m.population[(2, 2)])  # fungerer ikke pga ID, tror vi
 
-
+def test_year_cycle():
+    """ test if the coordinates in geography receives location """
+    island_geo = """\
+                    WWW
+                    WLW
+                    WWW"""
+    init_pop = [{'loc': (2, 2),
+                 'pop': [{'species': 'Herbivore',
+                          'age': 5,
+                          'weight': 20}
+                         for _ in range(50)]}]
+    m = Map_Island(island_geo, init_pop)
+    m.create_map_dict()
+    m.year_cycle()
+    for k in m.map[(2, 2)].herbivores_pop:
+        assert k['weight'] == 20
 
 
 

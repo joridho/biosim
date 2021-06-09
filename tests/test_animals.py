@@ -212,5 +212,7 @@ def test_prob_kill_not_work2():
     carn.probability_kill_herbivore(herb)
     assert carn.prob_kill == (carn.phi - herb.phi) / carn.p['DeltaPhiMax']
 
+def test_what_does_herbivore_look_like():
 
-
+    herb = Herbivore(weight=35, age=3)
+    assert herb == 2
