@@ -86,6 +86,7 @@ def test_carnivores_gain_weight_after_eating():
     l.carnivores_pop = [Carnivore(weight=35, age=3), Carnivore(weight=41, age=8),
                         Carnivore(weight=20, age=6), Carnivore(weight=35, age=3),
                         Carnivore(weight=41, age=8), Carnivore(weight=20, age=6)]
+    l.sorting_animals()
     carns = l.carnivores_pop
     herbs = l.herbivores_pop
     l.feed_carnivores()
@@ -94,7 +95,7 @@ def test_carnivores_gain_weight_after_eating():
             for m in carns:
                 assert k.weight == m.weight
 
-def test_herbivore_removed_from_list_after_eaten():
+def test_herbivore_removed_from_list_after_eaten():  # ikke fullført liste
     l = Lowland(population=0)
     l.herbivores_pop = [Herbivore(weight=35, age=3), Herbivore(weight=41, age=8),
                         Herbivore(weight=20, age=6), Herbivore(weight=35, age=3),
@@ -102,8 +103,12 @@ def test_herbivore_removed_from_list_after_eaten():
     l.carnivores_pop = [Carnivore(weight=35, age=3), Carnivore(weight=41, age=8),
                         Carnivore(weight=20, age=6), Carnivore(weight=35, age=3),
                         Carnivore(weight=41, age=8), Carnivore(weight=20, age=6)]
+    l.sorting_animals()
+    liste = l.carnivores_pop
     l.feed_carnivores()
-    assert 1 == 1
+    l.sorting_animals()
+    for k in range(6):
+        assert l.carnivores_pop[k].weight > liste[k].weight
 
 
 def test_newborn_added_to_list_herb():
