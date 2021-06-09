@@ -83,7 +83,7 @@ def test_valid_fitness():
     """
     for _ in range(100):
         h = Herbivore()
-        h.fitness()
+        #h.fitness()
         assert 0 <= h.phi <= 1
 
 def test_no_newborn_when_mother_weighs_too_little():
@@ -186,9 +186,11 @@ def test_carnivore_updated_fitness():
     f1 = carn.phi
     herb = Herbivore(weight=35, age=2)
     carn.weight_gain_after_eating_herb(herb)
-    weight_carn = carn.weight
-    carn2 = Carnivore(weight=weight_carn, age=5)
-    assert carn.phi == carn2.phi
+    #weight_carn = carn.weight
+    carn2 = carn.phi
+    #carn2 = Carnivore(weight=weight_carn, age=5)
+    #assert carn.phi == carn2.phi
+    assert f1 != carn2
 
 def test_prob_kill():
     herb = Herbivore(weight=35, age=3)
