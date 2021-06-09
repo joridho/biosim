@@ -31,15 +31,14 @@ class BioSim:
         # self.seed = random.seed(seed)
         random.seed(seed)  # ??
 
-        if init_pop is None:
-            self.init_pop = self.add_population()  # Trengs ikke
+        #if init_pop is None:
+         #   self.init_pop = self.add_population()  # Trengs ikke
 
         # init_pop = Herbivore(weight=init_pop['weight'], a=init_pop['age'])
 
         self.island_map_graph = Map_Island(island_geo, init_pop)
         self.island_map_graph.create_map_dict() # koordinatene i kart får tilhørende lister med dyr
 
-        self.init_pop = init_pop #Trengs ikke
         self.num_years_simulated = 0
 
         # if island_geo == None:  # trenger vi denne? er jo input senere

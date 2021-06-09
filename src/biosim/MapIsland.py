@@ -8,7 +8,6 @@ __email__ = 'christianie.torres@nmbu.no'
 
 from biosim.Cell import Lowland, Highland, Desert
 from biosim.animals import Herbivore, Carnivore
-import textwrap
 
 class Map_Island:
     def __init__(self, island_geo, init_pop): # Tror init_pop skal være argument her
@@ -25,7 +24,6 @@ class Map_Island:
         self.map = {}
         self.geo = island_geo
         self.init_pop = init_pop
-        #self.geo = textwrap.dedent(island_geo) #føler ikke denne burde funke
 
 
     #MÅ fortsatt redigeres
@@ -181,10 +179,6 @@ class Map_Island:
         l.dead_animals_natural_cause()
 
         return l.herbivores_pop
-
-    def add_population(self):
-        for k in range(50):
-            Lowland.herbivores_pop.append(Herbivore())
 
 
 
