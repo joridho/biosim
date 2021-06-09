@@ -7,6 +7,47 @@ from biosim.MapIsland import Map_Island
 if __name__ == '__main__':
     unittest.main()
 
+def test_population_dict():
+    """
+        Testing if each letter gets it's coordinates
+        """
+    island_geo = """\
+                    WWW
+                    WLW
+                    WWW"""
+    init_pop = [{'loc': (2, 2),
+                  'pop': [{'species': 'Herbivore',
+                           'age': 5,
+                           'weight': 20}
+                          for _ in range(50)]}]
+    m = Map_Island(island_geo, init_pop)
+    m.check_island_boundaries()
+    m.check_for_equal_map_lines()
+    m.create_population_dict()
+    assert len(m.population[(2, 2)]) == 50
+
+def test_population_dict2():
+    """
+        Testing if each letter gets it's coordinates
+        """
+    island_geo = """\
+                    WWW
+                    WLW
+                    WWW"""
+    init_pop = [{'loc': (2, 2),
+                  'pop': [{'species': 'Herbivore',
+                           'age': 5,
+                           'weight': 20}
+                          for _ in range(50)]}]
+    m = Map_Island(island_geo, init_pop)
+    m.check_island_boundaries()
+    m.check_for_equal_map_lines()
+    m.create_population_dict()
+    for k in m.population([2, 2]):
+        assert k.age == 5
+
+
+
 
 
 

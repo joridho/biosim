@@ -123,7 +123,12 @@ class BioSim:
         for cell in self.island_map_graph.map.values():
             pop += cell.herbivores_pop
 
-        print("herbivores: ", len(pop))
+        self.island_map_graph.create_population_dict()
+        assert len(m.population[(2, 2)]) == 50
+
+        print(len(self.island_map_graph.population([2, 2])))
+
+        #print("herbivores: ", len(pop))
 
         self.num_years_simulated += 1
 

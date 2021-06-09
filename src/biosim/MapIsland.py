@@ -99,8 +99,7 @@ class Map_Island:
                 self.population[pop_info["loc"]].extend(pop_info[
                                                             "pop"])  # I en allerede eksisterende nøkkel i population, legger vi til den tilhørende lista med properties of animal
             else:
-                self.population[pop_info["loc"]] = pop_info[
-                    "pop"]  # vi legger til posisjonen som ny nøkkel i population dictionary
+                self.population[pop_info["loc"]] = pop_info["pop"]  # vi legger til posisjonen som ny nøkkel i population dictionary
 
     # vi legger til den tilhørende lista av properties of animal som verdi til nøkkelen
 
