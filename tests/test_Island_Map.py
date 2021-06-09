@@ -125,7 +125,20 @@ def test_year_cycle():
     for k in m.map[(2, 2)].herbivores_pop:
         assert k['weight'] == 20
 
-def test_create_map_dict():
+def test_removing_water():
+    island_geo = """\
+                        WWW
+                        WLW
+                        WWW"""
+    init_pop = [{'loc': (2, 2),
+                 'pop': [{'species': 'Herbivore',
+                          'age': 5,
+                          'weight': 20}
+                         for _ in range(5)]}]
+    m = Map_Island(island_geo, init_pop)
+    m.create_map_dict()
+    assert m.map.values() == 2
+
 
 
 

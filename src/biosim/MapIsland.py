@@ -96,6 +96,15 @@ class Map_Island:
                 x_coord += 1
             y_coord += 1
 
+        water_location = []
+        for location, cell_type in self.geography.items():
+            if cell_type == 'W':
+                water_location.append(location)
+
+        for k in water_location:
+            del self.geography[k]
+
+
     # Gir koordinatene flere lister med dyreinfo. et koordinat kan få flere lister med dyr (med ulik info)
 
     def create_population_dict(self):
@@ -176,17 +185,15 @@ class Map_Island:
                 raise ValueError(
                     f"Invalid landscape type {cell_type}")  # Gir feilmelding hvis celletype ikke fins
 
-            
+
             for k in self.map.values():
                 # hvis cella er en water celle, ikke gå videre
-                if k != Water:
-                #if cell_type != "W":
-                    for j in k:
-                        species = k.herbivores_pop[j]['species']
-                        weight = k.herbivores_pop[j]['weight']
-                        age = k.herbivores_pop[j]['age']
-                        k.herbivores_pop[j] = Herbivore(species, weight, age)
-            '''
+                for j in k.herbivores_pop:
+                    species = j['species']
+                    weight = j['weight']
+                    age = j['age']
+                    j = Herbivore(species, weight, age)
+
 
     def year_cycle(self):
         """
