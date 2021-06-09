@@ -15,9 +15,7 @@ class Cell:
         Class for cells
         """
 
-    # p = {'f_max': 800.0}
-
-    def __init__(self):
+    def __init__(self, population):
 
         # self._accessible = True
         self.herbivores_pop = []
@@ -190,12 +188,12 @@ class Lowland(Cell):
     """
     p = {'f_max': 800.0}
 
-    def __init__(self):
+    def __init__(self, population):
         """
             Initialises lowland class
             """
         # self._accessible = True  # trengs denne linja??
-        super().__init__()
+        super().__init__(population)
 
 class Highland(Cell):
     """
@@ -203,12 +201,12 @@ class Highland(Cell):
     """
     p = {'f_max': 300.0}
 
-    def __init__(self):
+    def __init__(self, population):
         """
             Initialises highland class
             """
         # self._accessible = True  # trengs denne linja??
-        super().__init__()
+        super().__init__(population)
 
 class Desert(Cell):
     """
@@ -216,11 +214,23 @@ class Desert(Cell):
     """
     p = {'f_max': 0}
 
-    def __init__(self):
+    def __init__(self, population):
         """
             Initialises desert class
             """
         # self._accessible = True  # trengs denne linja??
-        super().__init__()
+        super().__init__(population)
 
+class Water(Cell):
+    """
+    subclass for highland class
+    """
+    p = {'f_max': 0}
+
+    def __init__(self, population):
+        """
+            Initialises water class
+            """
+        # self._accessible = True  # trengs denne linja??
+        super().__init__(population)
 
