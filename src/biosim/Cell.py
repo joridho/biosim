@@ -15,13 +15,22 @@ class Cell:
         Class for cells
         """
 
-    p = {'f_max': 800.0}
+    # p = {'f_max': 800.0}
 
     def __init__(self):
 
-        self._accessible = True
+        # self._accessible = True
         self.herbivores_pop = []
         self.carnivores_pop = []
+
+    @classmethod
+    def set_given_parameters(cls, params):
+        """
+            Saves the parameters for the different celss for use in Cell class
+            """
+        for parameter in params:
+            if parameter in cls.p:
+                cls.p[parameter] = params[parameter]
 
     def sorting_animals(self):  # pop, sort_by):  # do we need property here?
         """
@@ -58,11 +67,11 @@ class Cell:
             self.herbivores_weight_sum += k.weight
 
     def feed_carnivores(self):  # må testes!!
-        '''
+        """
             1. sort herbivores and carnivores by fitness
             2. make the carnivores eat
             3. remove all eaten herbivores
-        '''
+        """
         self.sorting_animals()
         list_carn = self.carnivores_pop
         list_herb = self.herbivores_pop
@@ -70,18 +79,19 @@ class Cell:
 
         for carn in list_carn:
             for herb in list_herb:
-                carn.probability_kill_herbivore()
-                if carn.kill == True:
+                carn.probability_kill_herbivore(herb)
+                if carn.kill is True:
                     carn.weight_weight_gain_after_eating_herb()
                     killed.append(herb)
 
         self.herbivores_pop = list(set(list_herb) - set(killed))
         self.carnivores_pop = list_carn
 
+
     def newborn_animals(self):  # make it work for both species
         """
             An animal gives birth maximum one time per year.The function birth_probability
-            calculates if the animal will give birth or not and birth_weightloss calculates the new
+            calculates if the animal will give birth or not and birth_weight_loss calculates the new
             weight for the mother.
             The newborn must be added to the list of either herbivores or carnivores
             """
@@ -93,7 +103,7 @@ class Cell:
         list_new = []
         for k in range(self.N_herb):
             list_h[k].birth_probability(n=self.N_herb)
-            # list_h[k].birth = True # har den der for testing siden jeg ikke får til mocker
+            # list_h[k].birth = True # is there for testing since mocker doesn't work
             if list_h[k].birth is True:
                 newborn = Herbivore(weight=list_h[k].newborn_birth_weight, age=0)
                 list_h[k].birth_weight_loss(n=self.N_herb)
@@ -109,7 +119,7 @@ class Cell:
         list_new = []
         for k in range(self.N_carn):
             list_c[k].birth_probability(n=self.N_carn)
-            #  list_c[k].birth = True  # har den der for testing siden jeg ikke får til mocker
+            #  list_c[k].birth = True  # there for testing because mocker doesn't work
             if list_c[k].birth is True:
                 newborn = Carnivore(weight=list_c[k].newborn_birth_weight, age=0)
                 list_c[k].birth_weight_loss(n=self.N_carn)
@@ -128,12 +138,9 @@ class Cell:
         self.N_herb = len(self.herbivores_pop)
         self.N_carn = len(self.carnivores_pop)
 
-
     # yearly activities:
 
-    # make the yealy activities work for both species
-
-    def make_animals_age(self):  # blir alderen bare oppdatert på herbivore_pop nå? testes!
+    def make_animals_age(self):
         """
             Each year the animals ages. Here we use the aging function from the herbivore class
             """
@@ -141,7 +148,7 @@ class Cell:
         for animal in animals:
             animal.aging()
 
-    def make_animals_lose_weight(self):  # testes!!
+    def make_animals_lose_weight(self):
         """
             Each year the animal loses weight based on their own weight and eta
             """
@@ -155,38 +162,65 @@ class Cell:
         by using the function death_probability. After we need to remove them from the from the
         list of animals
         """
+        self.dead = 0  # for testing
 
-        '''
-        list_animals = self.herbivores_pop + self.carnivores_pop
-        length = len(list_animals)
-        list_dead = []
-        self.dead = 0  # for testing?
+        herbs = []
+        for herb in self.herbivores_pop:
+            herb.death_probability()
+            if herb.death is False:
+                herbs.append(herb)
+            else:
+                self.dead += 1
 
-        for k in range(length):
-            list_animals[k].death_probability()
-            if list_animals[k].death is True:
-                list_dead.append(list_animals[k])
-                self.dead += 1  # for testing
+        carns = []
+        for carn in self.carnivores_pop:
+            carn.death_probability()
+            if carn.death is False:
+                carns.append(carn)
+            else:
+                self.dead += 1
 
-        self.herbivores_pop = list(set(list_a) - set(list_dead))
-        '''
-        # bruke death_probability
-
-        # self.herbivores_pop = [herb for herb in self.herbivores_pop
-                                # if herb.death is True]
-        # self.carnivores_pop = [carn for carn in self.carnivores_pop
-                                # if carn.death is True]
+        self.herbivores_pop = herbs
+        self.carnivores_pop = carns
 
 
 class Lowland(Cell):
     """
     subclass for lowland cells
     """
-
-    # should have amount of fodder down here, not up in the cell class
+    p = {'f_max': 800.0}
 
     def __init__(self):
         """
             Initialises lowland class
             """
+        # self._accessible = True  # trengs denne linja??
         super().__init__()
+
+class Highland(Cell):
+    """
+    subclass for highland class
+    """
+    p = {'f_max': 300.0}
+
+    def __init__(self):
+        """
+            Initialises highland class
+            """
+        # self._accessible = True  # trengs denne linja??
+        super().__init__()
+
+class Desert(Cell):
+    """
+    subclass for highland class
+    """
+    p = {'f_max': 0}
+
+    def __init__(self):
+        """
+            Initialises desert class
+            """
+        # self._accessible = True  # trengs denne linja??
+        super().__init__()
+
+
