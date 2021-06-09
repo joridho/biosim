@@ -96,6 +96,7 @@ class Map_Island:
                 x_coord += 1
             y_coord += 1
 
+
         water_location = []
         for location, cell_type in self.geography.items():
             if cell_type == 'W':
@@ -105,7 +106,7 @@ class Map_Island:
             del self.geography[k]
 
 
-    # Gir koordinatene flere lister med dyreinfo. et koordinat kan få flere lister med dyr (med ulik info)
+    #Gir koordinatene flere lister med dyreinfo. et koordinat kan få flere lister med dyr (med ulik info)
 
     def create_population_dict(self):
         """
