@@ -78,12 +78,14 @@ def test_create_geography_dict2():
                                 WLW
                                 WWW"""
     m = Map_Island(island_geo, init_pop=0)
-    #m.create_geography_dict()
-    assert m.geo == [1,2,3]
+    m.create_geography_dict()
+    #assert m.geo.splitlines() == list('hei')
     #for line1 in m.geo:
         #assert line1 == 'W'
 
-    #assert m.geography[(2, 2)] == 'L'
+    assert m.geography[(2, 2)] == 'L'
+
+def
 
 
 

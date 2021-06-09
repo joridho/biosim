@@ -92,7 +92,7 @@ class Map_Island:
         self.geo = self.geo.splitlines()
         for line in self.geo():
             x_coord = 1
-            for cell_type in line.split():
+            for cell_type in list(line):
                 self.geography[(x_coord, y_coord)] = cell_type
                 x_coord += 1
             y_coord += 1
