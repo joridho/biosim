@@ -85,6 +85,7 @@ class Map_Island:
             y_coord += 1
 
     # Gir koordinatene flere lister med dyreinfo. et koordinat kan få flere lister med dyr (med ulik info)
+
     def create_population_dict(self):
         """
         Converts list of populations to a population dictionary that has coordinates as keys
@@ -94,6 +95,7 @@ class Map_Island:
         # self.population skal til slutt være en dictionary med
         #                  posisjoner som nøkler
         #                  lister med "properties" of the animal som verdier
+
         for pop_info in self.init_pop:  # iterer gjennom elementene (dictionaries) i lista. init_pop er en liste med dictionaries
             if pop_info["loc"] in self.population.keys():  # vi sjekker om verdien som tilhører cell_info['loc'] er en nøkkel i dictionary. Vi sjekker altså om posisjonen allerede er en nøkkel i dictionary
                 self.population[pop_info["loc"]].extend(pop_info[
