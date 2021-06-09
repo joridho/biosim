@@ -128,7 +128,9 @@ class BioSim:
         #print("herbivores: ", len(pop))
 
         celle = self.island_map_graph.map[(2, 2)]
-        print('herbivores: ', len(celle.herbivores_pop))
+        print('herbivores: ', len(celle.herbivores_pop),
+              'Carnivores: ', len(celle.carnivores_pop))
+
 
         self.num_years_simulated += 1
 
