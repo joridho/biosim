@@ -4,7 +4,7 @@ __author__ = 'Jorid Holmen'
 __email__ = 'jorid.holmen@nmbu.no'
 
 from biosim.animals import Herbivore, Carnivore
-from biosim.Cell import Lowland
+from biosim.Cell import Lowland, Highland, Desert
 from biosim.MapIsland import Map_Island
 
 import pandas
