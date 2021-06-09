@@ -47,12 +47,29 @@ def test_population_dict2():
     for animal in m.population[(2, 2)]:
         assert animal["age"] == 5
 
+def test_check_island_boundaries():
+    island_geo = """\
+                            WWW
+                            WLW
+                            WWW"""
+    m = Map_Island(island_geo, init_pop=0)
+    assert m.check_island_boundaries() == True
+
+def test_check_map_lines():
+    island_geo = """\
+                            WWW
+                            WLW
+                            WWW"""
+    m = Map_Island(island_geo, init_pop=0)
+    assert m.check_for_equal_map_lines() == True
+
 def test_create_geography_dict():
     island_geo = """\
                         WWW
                         WLW
                         WWW"""
     m = Map_Island(island_geo, init_pop=0)
+
     assert m.geography[(2, 2)] == 'L'
 
 
