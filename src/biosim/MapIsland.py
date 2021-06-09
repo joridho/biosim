@@ -178,8 +178,6 @@ class Map_Island:
 
             cell.dead_animals_natural_cause()
 
-        return l.herbivores_pop
-
 
 
 
