@@ -22,7 +22,7 @@ class Animal:
 
         if weight is None:
             self.birth_weight_function()
-            self.weight = self.birth_weight
+            self.weight = self.birth_weight # kan sette self.birth_weight_function() her siden den returnerer self.birth_weight
         else:
             self.weight = weight  # unsure about float
 
