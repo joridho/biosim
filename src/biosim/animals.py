@@ -90,7 +90,7 @@ class Animal:
             The animals can give birth with a probability, which depends on fitness and weight.
             If the newborn weighs more than the mother, the probability of birth is zero.
             """
-        self.variable = self.p['gamma'] * self.phi * (n - 1)
+        variable = self.p['gamma'] * self.phi * (n - 1)
         self.newborn_birth_weight = self.birth_weight_function()
         # this is the weight of the possible newborn
 
@@ -100,8 +100,8 @@ class Animal:
             self.prob_birth = 0
         elif n < 2:
             self.prob_birth = 0
-        elif self.variable < 1:
-            self.prob_birth = self.variable
+        elif variable < 1:
+            self.prob_birth = variable
         else:
             self.prob_birth = 1
 
@@ -112,12 +112,11 @@ class Animal:
         else:
             self.birth = False
 
-    def birth_weight_loss(self, n):
+    def birth_weight_loss(self, newborn_birth_weight):
         """
             If the mother gives birth, she looses weight
             """
-        self.birth_probability(n)
-        self.weight -= self.p['zeta'] * self.newborn_birth_weight
+        self.weight -= self.p['zeta'] * newborn_birth_weight
         self.fitness()
 
     def death_probability(self):
