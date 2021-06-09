@@ -18,8 +18,8 @@ class Cell:
     def __init__(self, population):
 
         # self._accessible = True
-        self.herbivores_pop = population
-        #self.carnivores_pop = population
+        self.herbivores_pop = []
+        self.carnivores_pop = []
 
     @classmethod
     def set_given_parameters(cls, params):
