@@ -209,3 +209,10 @@ def test_prob_kill_not_work2():
     assert carn.prob_kill == (carn.phi - herb.phi) / carn.p['DeltaPhiMax']
 
 
+def test_set_age():
+    herb = Herbivore(weight=35, age=3)
+    assert herb.age == 3
+
+def test_set_weight():
+    herb = Herbivore(weight=35, age=3)
+    assert herb.weight == 35

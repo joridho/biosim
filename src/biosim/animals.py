@@ -16,7 +16,7 @@ class Animal:
     This i a class for animals on the island
     """
 
-    def __init__(self, species, weight, age):
+    def __init__(self, weight, age):
 
         self.age = age
 
@@ -157,6 +157,7 @@ class Herbivore(Animal):
     """
     this is a class for herbivores on the island
     """
+    species = 'Herbivore'
     p = {  # Dictionary of parameters belonging to the Herbivore class
         "w_birth": 8.0,
         "sigma_birth": 1.5,
@@ -174,11 +175,11 @@ class Herbivore(Animal):
         "F": 10.0,
     }
 
-    def __init__(self, species='Herbivore', weight=None, age=0):
+    def __init__(self, weight=None, age=0):
         """
         initialisation of weight and age for a new herbivore
             """
-        super().__init__(species, weight, age)
+        super().__init__(weight, age)
 
     def eat_fodder(self, F_cell):
         """
@@ -208,7 +209,7 @@ class Carnivore(Animal):
     """
     this is a class for carnivores  on the island
     """
-
+    species = 'Carnivore'
     p = {  # Dictionary of parameters belonging to the Herbivore class
         "w_birth": 6.0,
         "sigma_birth": 1.0,
@@ -227,11 +228,11 @@ class Carnivore(Animal):
         "DeltaPhiMax": 10.0
     }
 
-    def __init__(self, species='Carnivore', weight=None, age=0):
+    def __init__(self, weight=None, age=0):
         """
         initialisation of weight and age for a new herbivore
             """
-        super().__init__(species, weight, age)
+        super().__init__(weight, age)
 
     def eat_herbivores(self):
         """
