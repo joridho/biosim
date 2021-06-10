@@ -105,7 +105,7 @@ class Cell:
         self.list_new_h = []
         for k in range(self.N_herb):
             self.herbivores_pop[k].will_the_animal_give_birth(n=self.N_herb)
-            # list_h[k].birth = True # is there for testing since mocker doesn't work
+            #list_h[k].birth = True # is there for testing since mocker doesn't work
             if self.herbivores_pop[k].birth is True:
                 newborn = Herbivore(weight=self.herbivores_pop[k].newborn_birth_weight, age=0)
                 self.herbivores_pop[k].birth_weight_loss(newborn_birth_weight=newborn.weight)

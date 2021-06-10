@@ -119,21 +119,20 @@ def test_herbivore_removed_from_list_after_eaten():  # ikke fullført liste
 
 
 def test_newborn_added_to_list_herb():
-    l = Lowland(population=[{'species': 'Herbivore', 'weight': 35, 'age': 5},
-                            {'species': 'Herbivore', 'weight': 41, 'age': 8},
-                            {'species': 'Herbivore', 'weight': 50, 'age': 9},
-                            {'species': 'Herbivore', 'weight': 35, 'age': 5},
-                            {'species': 'Herbivore', 'weight': 41, 'age': 8},
+    l = Lowland(population=[{'species': 'Herbivore', 'weight': 35, 'age': 3},
+                            {'species': 'Herbivore', 'weight': 41, 'age': 3},
+                            {'species': 'Herbivore', 'weight': 50, 'age': 3},
+                            {'species': 'Herbivore', 'weight': 35, 'age': 3},
+                            {'species': 'Herbivore', 'weight': 41, 'age': 3},
                             {'species': 'Herbivore', 'weight': 50, 'age': 9},
                             {'species': 'Herbivore', 'weight': 67, 'age': 5},
                             {'species': 'Herbivore', 'weight': 41, 'age': 8},
                             {'species': 'Herbivore', 'weight': 50, 'age': 9}])
     length = len(l.herbivores_pop)
     y = 0
-    l.newborn_animals()
     for _ in range(10):
         l.newborn_animals()
-        if len(l.herbivores_pop) > length: #+ l.new_h
+        if len(l.herbivores_pop) > length: # + l.new_h
             y += 1  # there has to be added at least one newborn at least once
     assert y > 0
 
