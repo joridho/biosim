@@ -157,7 +157,8 @@ class Animal:
 
     def move_single_animal(self):
         prob_move = self.p['mu']*self.phi
-        if random.random() < prob_move:
+        self.m = random.random()
+        if self.m < prob_move:
             self.move = True
         else:
             self.move = False

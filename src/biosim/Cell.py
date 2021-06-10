@@ -163,20 +163,27 @@ class Cell:
 
         for herb in herbs_move:
             arrived_cell = random.choice()
-            # hvordan kalle på de 4 andre cellene?
-            arrived_cell = random.choice() #sette liste over de andre cellene her
-            if arrived_cell == Water: # hvordan vite om celle er vann?
-                self.move = False
-            else:
+            if arrived_cell.Habitable == True:
                 self.move = True
-
-        herbs_stay_in_cell = self.herbivores_pop - herbs_move
-        herbs_in_new_cell = herbs_move
+                arrived_cell.herbivores_pop.append(herb)
+                self.herbivores_pop.remove(herb)
+            else:
+                self.move = False
 
         carns_move = []
         for carn in self.carnivores_pop:
             if carn.move_single_animal() == True:
-                carns_move.append(carn)    # Hvordan få dem til å bevege seg til hver sin celle? Lister?
+                carns_move.append(carn)
+
+        for carn in carns_move:
+            arrived_cell = random.choice() # hvordan kalle på naboceller
+            if arrived_cell.Habitable == True:
+                self.move = True
+            else:
+                self.move = False
+
+        herbs_stay_in_cell = self.herbivores_pop - herbs_move
+        herbs_in_new_cell = herbs_move
 
         carns_stay_in_cell = self.carnivores_pop - carns_move
         carns_in_new_cell = carns_move # Hvordan legge denne lista til i en ny celle`?
