@@ -105,16 +105,19 @@ def test_carnivores_gain_weight_after_eating():
 '''
 
 
-def test_herbivore_removed_from_list_after_eaten():  # ikke fullført liste
+def test_carnivore_weight_gain():  # ikke fullført liste
     population = [{'species': 'Carnivore', 'weight': 35, 'age': 5},
                   {'species': 'Carnivore', 'weight': 41, 'age': 8},
-                  {'species': 'Carnivore', 'weight': 50, 'age': 9}]
+                  {'species': 'Carnivore', 'weight': 50, 'age': 9},
+                  {'species': 'Herbivore', 'weight': 10, 'age': 3},
+                  {'species': 'Herbivore', 'weight': 14, 'age': 3},
+                  {'species': 'Herbivore', 'weight': 13, 'age': 3}]
     l = Lowland(population)
     l.sorting_animals()
     liste = l.carnivores_pop
     l.feed_carnivores()
     l.sorting_animals()
-    for k in range(len(l.herbivores_pop)):
+    for k in range(len(l.carnivores_pop)):
         assert l.carnivores_pop[k].weight > liste[k].weight
 
 
