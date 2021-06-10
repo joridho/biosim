@@ -131,6 +131,24 @@ class Cell:
             list_c.append(k)
         self.carnivores_pop = list_c
 
+    def move_animals(self):
+        herbs_move = []
+        for herb in self.herbivores_pop:
+            if herb.move_single_animal() == True:
+                herbs_move.append(herb)
+
+        herbs_stay_in_cell = self.herbivores_pop - herbs_move
+        herbs_in_new_cell = herbs_move
+
+        carns_move = []
+        for carn in self.carnivores_pop:
+            if carn.move_single_animal() == True:
+                carns_move.append(carn)    # Hvordan få dem til å bevege seg til hver sin celle? Lister?
+
+        carns_stay_in_cell = self.carnivores_pop - carns_move
+        carns_in_new_cell = carns_move # Hvordan legge denne lista til i en ny celle`?
+
+
     def counting_animals(self):
         """
             A function for counting how many animals there are in the cell.
