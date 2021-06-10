@@ -16,6 +16,14 @@ class Cell:
         """
 
     def __init__(self, population):
+        """
+        Repeat given text a given number of times.
+
+        :param population: A list with dictionaries
+        :param herbivores_pop: a string
+        :param copies: an integer
+        :return: string, text concatenated copies times
+        """
 
         self.herbivores_pop = []
         self.carnivores_pop = []
