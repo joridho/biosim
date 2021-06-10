@@ -145,7 +145,7 @@ class Cell:
         carns_move = []
         for carn in self.carnivores_pop:
             if carn.move_single_animal() == True:
-                carns_move.append(carn)    # Hvordan få dem til å bevege seg til hver sin celle
+                carns_move.append(carn)    # Hvordan få dem til å bevege seg til hver sin celle? Lister?
 
         carns_stay_in_cell = self.carnivores_pop - carns_move
         carns_in_new_cell = carns_move
