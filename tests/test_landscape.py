@@ -78,7 +78,6 @@ def test_gain_weight_after_eating():  # får den kun til å fungere på ett dyr
                             {'species': 'Herbivore', 'weight': 41, 'age': 8},
                             {'species': 'Herbivore', 'weight': 50, 'age': 9}])
     weight = [k.weight for k in l.herbivores_pop]
-
     #l.make_herbivores_eat()
     weight2 = [k.weight for k in l.herbivores_pop]
     #weight.sort()
