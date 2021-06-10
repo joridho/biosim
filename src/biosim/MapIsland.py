@@ -6,9 +6,10 @@
 __author__ = 'Christianie Torres'
 __email__ = 'christianie.torres@nmbu.no'
 
-from biosim.Cell import Lowland, Highland, Desert, Water
+from biosim.Cell import Cell, Lowland, Highland, Desert, Water
 from biosim.animals import Herbivore, Carnivore
 import textwrap
+import random
 
 
 class Map_Island:
@@ -174,14 +175,15 @@ class Map_Island:
                 raise ValueError(
                     f"Invalid landscape type {cell_type}")  # Gir feilmelding hvis celletype ikke fins
 
+
     def move_animals(self):
         herbs_move = []
-        for herb in self.herbivores_pop:
+        for herb in Cell.herbivores_pop:
             if herb.move_single_animal() == True:
                 herbs_move.append(herb)
 
         for herb in herbs_move:
-            # bruke neighbours_of_current cells function
+            self.neighbours_of_current_cell()# Mangler input her
             arrived_cell = random.choice(self.neighbour_cells)
             if arrived_cell.Habitable() == True:
                 # self.move = True
@@ -191,15 +193,16 @@ class Map_Island:
             #   self.move = False
 
         carns_move = []
-        for carn in self.carnivores_pop:
+        for carn in Cell.carnivores_pop:
             if carn.move_single_animal() == True:
-                carns_move.append(herb)
+                carns_move.append(carn)
 
         for carn in carns_move:
-            arrived_cell = random.choice()
+            self.neighbours_of_current_cell() # Mangler input her
+            arrived_cell = random.choice(self.neighbour_cells)
             if arrived_cell.Habitable() == True:
                 # self.move = True
-                arrived_cell.carnivores_pop.append(herb)
+                arrived_cell.carnivores_pop.append(carn)
                 self.carnivores_pop.remove(carn)
             # else:
             #   self.move = False
@@ -243,6 +246,7 @@ class Map_Island:
 
         for cell in self.map.values():
             cell.newborn_animals()
+
 
         for cell in self.map.values():
             cell.make_animals_age()
