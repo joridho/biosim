@@ -172,9 +172,9 @@ def test_herbivore_gains_weight_after_eat_fodder():
 
 def test_weight_gain_after_eating():
     h = Herbivore(weight=37)
-    h.p['F']= 10
+    #h.p['F']= 10
     h.eat_fodder(F_cell = 800)
-    assert h.weight == 37 + 0.9 * 10
+    assert h.weight == 37 + h.p['beta'] * h.F_consumption
 
 
 def test_if_carnivore_gains_correct_weight():
