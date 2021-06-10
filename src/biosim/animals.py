@@ -101,6 +101,7 @@ class Animal:
             return min(1, variable)
 
     def will_the_animal_give_birth(self, n):
+
         p = self.birth_probability(n)
 
         # self.r = random.random()
@@ -117,24 +118,6 @@ class Animal:
             """
         self.weight -= self.p['zeta'] * newborn_birth_weight
         self.fitness()
-
-    def move_single_animal(self):
-        prob_move = self.p['mu']*self.phi
-        if random.random() < prob_move:
-            self.move = True
-        else:
-            self.move = False
-
-        if self.move == True:
-            # hvordan kalle på de 4 andre cellene?
-            arrived_cell = random.choice() #sette liste over de andre cellene her
-            if arrived_cell == Water: # hvordan vite om celle er vann?
-                self.move = False
-            else:
-                self.move = True
-        return self.move
-
-
 
     def death_probability(self):
         """
@@ -154,6 +137,21 @@ class Animal:
         else:
             return False
 
+    def move_single_animal(self):
+        prob_move = self.p['mu']*self.phi
+        if random.random() < prob_move:
+            self.move = True
+        else:
+            self.move = False
+
+        if self.move == True:
+            # hvordan kalle på de 4 andre cellene?
+            arrived_cell = random.choice() #sette liste over de andre cellene her
+            if arrived_cell == Water: # hvordan vite om celle er vann?
+                self.move = False
+            else:
+                self.move = True
+        return self.move
 
 class Herbivore(Animal):
     """

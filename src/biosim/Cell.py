@@ -15,8 +15,6 @@ class Cell:
         Class for cells
         """
 
-    p = None
-
     def __init__(self, population):
 
         self.herbivores_pop = []
