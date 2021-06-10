@@ -21,10 +21,9 @@ class Animal:
         self.age = age
 
         if weight is None:
-            self.birth_weight_function()
-            self.weight = self.birth_weight # kan sette self.birth_weight_function() her siden den returnerer self.birth_weight
+            self.weight = self.birth_weight_function()
         else:
-            self.weight = weight  # unsure about float
+            self.weight = weight
 
         self.fitness()
 
@@ -95,17 +94,10 @@ class Animal:
         # this is the weight of the possible newborn
 
         if self.weight < self.p['zeta'] * (self.p['w_birth'] + self.p['sigma_birth']):
-            # self.prob_birth = 0
             return 0
-        elif self.weight <= self.newborn_birth_weight:  # birth weight to newborn
-            # self.prob_birth = 0
+        elif self.weight <= self.newborn_birth_weight * self.p['zeta']:  # birth weight to newborn
             return 0
-        #elif n < 2:
-            #self.prob_birth = 0
-        #elif variable < 1:
-            #self.prob_birth = variable
         else:
-            #self.prob_birth = 1
             return min(1, variable)
 
     def will_the_animal_give_birth(self, n):
@@ -148,19 +140,19 @@ class Animal:
         """
             The animal dies if it weighs nothing, but also with a probability of prob_death
             """
-        if self.weight == 0:
-            self.prob_death = 1
+        if self.phi == 0:
+            return 1
         else:
-            self.prob_death = self.p['omega'] * (1 - self.phi)
+            return self.p['omega'] * (1 - self.phi)
 
-        self.d = random.random()
+    def will_the_animal_die(self):
+        p = self.death_probability()
+        d = random.random()
 
-        if self.d < self.prob_death:
-            self.death = True
+        if d < p:
+            return True
         else:
-            self.death = False  # self.prob_death
-
-    # def migration(self):
+            return False
 
 
 class Herbivore(Animal):

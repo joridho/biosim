@@ -190,7 +190,7 @@ class Cell:
         herbs = []
         for herb in self.herbivores_pop:
             herb.death_probability()
-            if herb.death is False:
+            if herb.will_the_animal_die() is False:
                 herbs.append(herb)
             else:
                 self.dead += 1
@@ -198,7 +198,7 @@ class Cell:
         carns = []
         for carn in self.carnivores_pop:
             carn.death_probability()
-            if carn.death is False:
+            if carn.will_the_animal_die() is False:
                 carns.append(carn)
             else:
                 self.dead += 1
