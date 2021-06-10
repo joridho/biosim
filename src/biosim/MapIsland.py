@@ -25,10 +25,8 @@ class Map_Island:
         self.population = {}
         self.map = {}
         self.geo = textwrap.dedent(island_geo)
-        #self.geo = island_geo
         self.init_pop = init_pop
 
-    # MÅ fortsatt redigeres
     def check_island_boundaries(self):
         """
         This is a function that raises an error if the boundary cells are not water.

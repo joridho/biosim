@@ -273,7 +273,7 @@ class Carnivore(Animal):
 
         self.r = random.random()
 
-        if self.r < 1:#self.prob_kill:
+        if self.r < self.prob_kill:
             return True
         else:
             return False

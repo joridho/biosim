@@ -70,7 +70,7 @@ class BioSim:
 
         self.num_years_simulated = 0
 
-    '''
+
     def set_animal_parameters(self, species, p):
         """
         Set parameters for animal species.
@@ -78,33 +78,7 @@ class BioSim:
         :param species: String, name of animal species
         :param p: Dict with valid parameter specification for species
         """
-        
-        class_names = {'Herbivores': Herbivore,
-                       'Carnivore': Carnivore}
-        for param_name in p.keys():
-            if param_name in class_names[species].p:
-                if p[param_name] >= 0 and param_name is not "DeltaPhiMax" \
-                        and param_name is not "eta" and param_name is not "F":
-                    class_names[species].p[param_name] = p[
-                        param_name]
-                # checks special criteria for eta
-                elif param_name is "eta" and 0 <= p[param_name] <= 1:
-                    class_names[species].p[param_name] = p[
-                        param_name]
-                # checks special criteria for F
-                elif param_name is "F" and 0 < p[param_name]:
-                    class_names[species].p[param_name] = p[
-                        param_name]
-                # checks special criteria for DeltaPhiMax
-                elif param_name is "DeltaPhiMax" and p[param_name] > 0:
-                    class_names[species].p[param_name] = p[
-                        param_name]
-                else:
-                    raise ValueError(f'{p[param_name]} is an invalid '
-                                     f'parameter value for parameter '
-                                     f'{param_name}!')
-            else:
-                raise ValueError(f'{param_name} is an invalid parameter name!')
+        # we think that we do this in the respective classes
 
     def set_landscape_parameters(self, landscape, params):
         """
@@ -113,7 +87,7 @@ class BioSim:
         :param landscape: String, code letter for landscape
         :param params: Dict with valid parameter specification for landscape
         """
-    '''
+        # we think that we do this in the respective classes
 
     def simulate(self, years):
         """
