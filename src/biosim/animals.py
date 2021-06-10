@@ -22,6 +22,7 @@ class Animal:
         :param properties dictionary
         :
         """
+        random.seed()
 
         if properties["age"] < 0:
             raise ValueError('Age must be nonnegative')

@@ -9,6 +9,7 @@ __email__ = 'christianie.torres@nmbu.no'
 from biosim.Cell import Lowland, Highland, Desert, Water
 from biosim.animals import Herbivore, Carnivore
 import textwrap
+import random
 
 
 class Map_Island:
@@ -21,6 +22,7 @@ class Map_Island:
         :param init_pop: Specifies initial population of each cell
         :type init_pop: list of dicts
         """
+        random.seed()
         self.geography = {}
         self.population = {}
         self.map = {}

@@ -16,6 +16,7 @@ class Cell:
         """
 
     def __init__(self, population):
+        random.seed()
         """
         Repeat given text a given number of times.
 
@@ -85,7 +86,7 @@ class Cell:
             4. remove all eaten herbivores
         """
         self.sorting_animals()
-        #list_carn = []
+        # list_carn = []
         list_herb = self.herbivores_pop
         killed = []
         self.eaten = 0  # for testing
@@ -97,20 +98,15 @@ class Cell:
                     if len(killed) <= len(list_herb):
                         if carn.probability_kill_herbivore(herb) is True:
                             if herb not in killed:
-                                carn.weight_gain_after_eating_herb(herb) #spiser Carnivores for mange herbivores. skal kunne spise kun F
+                                carn.weight_gain_after_eating_herb(herb)  # spiser Carnivores for mange herbivores. skal kunne spise kun F
                                 weight_of_herbs += herb.weight
                                 killed.append(herb)
-                                self.eaten +=1
+                                self.eaten += 1
+                                carn.fitness()
 
-            #list_carn.append(carn)
-                    #eaten.append(carn)
-                    #list_carn.remove(carn)
-
-        self.herbivores_pop = list(set(list_herb) - set(killed))
-        #for k in killed:
-         #   list_herb.remove(k)
-        #self.herbivores_pop = list_herb
-        #self.carnivores_pop = list_carn
+        for herb in killed:
+            list_herb.append(herb)
+        self.herbivores_pop = list_herb
 
     def newborn_animals(self):  # make it work for both species
         """
@@ -127,7 +123,7 @@ class Cell:
         self.list_new_h = []
         for k in range(self.N_herb):
             list_h[k].will_the_animal_give_birth(n=self.N_herb)
-            #list_h[k].birth = True # is there for testing since mocker doesn't work
+            # list_h[k].birth = True # is there for testing since mocker doesn't work
             if list_h[k].birth is True:
                 newborn = Herbivore({'species': 'Herbivore',
                                      'weight': list_h[k].newborn_birth_weight, 'age': 0})
@@ -167,11 +163,11 @@ class Cell:
         carns_move = []
         for carn in self.carnivores_pop:
             if carn.move_single_animal() == True:
-                carns_move.append(carn)    # Hvordan få dem til å bevege seg til hver sin celle? Lister?
+                carns_move.append(
+                    carn)  # Hvordan få dem til å bevege seg til hver sin celle? Lister?
 
         carns_stay_in_cell = self.carnivores_pop - carns_move
-        carns_in_new_cell = carns_move # Hvordan legge denne lista til i en ny celle`?
-
+        carns_in_new_cell = carns_move  # Hvordan legge denne lista til i en ny celle`?
 
     def counting_animals(self):
         """
