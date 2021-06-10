@@ -100,7 +100,7 @@ def test_no_newborn_when_to_few_animals(): #too
     a cell.
     """
 
-    h = Herbivore(weight=32, age=3)
+    h = Herbivore(weight=35, age=3)
     h.birth_probability(n=1)
     assert h.prob_birth == 0
 
