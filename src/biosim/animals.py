@@ -13,19 +13,37 @@ import math
 
 class Animal:
     """
-    This i a class for animals on the island
+    This is a class for animals on the island. Parent class for Herbivore and Carnivore
     """
 
-    def __init__(self, weight, age):
+    def __init__(self, properties):
+        """
+        Initializing animal class for given values
+        :param properties dictionary
+        :
+        """
 
+        if properties["age"] < 0:
+            raise ValueError('Age must be nonnegative')
+        else:
+            self.age = properties["age"]
+
+        if properties["weight"] <= 0:
+            raise ValueError('Weight must be positive')
+        else:
+            self.weight = properties["weight"]
+
+
+        '''
         self.age = age
 
         if weight is None:
             self.weight = self.birth_weight_function()
         else:
             self.weight = weight
-
+        '''
         self.fitness()
+
 
     @classmethod
     def set_given_parameters(cls, params):
@@ -157,7 +175,6 @@ class Herbivore(Animal):
     """
     this is a class for herbivores on the island
     """
-    species = 'Herbivore'
     p = {  # Dictionary of parameters belonging to the Herbivore class
         "w_birth": 8.0,
         "sigma_birth": 1.5,
@@ -175,11 +192,12 @@ class Herbivore(Animal):
         "F": 10.0,
     }
 
-    def __init__(self, weight=None, age=0):
+    #def __init__(self, species='Herbivore', weight=None, age=0):
+    def __init__(self, properties):
         """
         initialisation of weight and age for a new herbivore
             """
-        super().__init__(weight, age)
+        super().__init__(properties)
 
     def eat_fodder(self, F_cell):
         """
@@ -209,7 +227,7 @@ class Carnivore(Animal):
     """
     this is a class for carnivores  on the island
     """
-    species = 'Carnivore'
+
     p = {  # Dictionary of parameters belonging to the Herbivore class
         "w_birth": 6.0,
         "sigma_birth": 1.0,
@@ -228,11 +246,13 @@ class Carnivore(Animal):
         "DeltaPhiMax": 10.0
     }
 
-    def __init__(self, weight=None, age=0):
+    #def __init__(self, species='Carnivore', weight=None, age=0):
+    def __init__(self, properties):
         """
         initialisation of weight and age for a new herbivore
             """
-        super().__init__(weight, age)
+        #super().__init__(species, weight, age)
+        super().__init__(properties)
 
     def eat_herbivores(self):
         """

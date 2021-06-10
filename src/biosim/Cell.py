@@ -122,7 +122,7 @@ class Cell:
             list_h[k].will_the_animal_give_birth(n=self.N_herb)
             #list_h[k].birth = True # is there for testing since mocker doesn't work
             if list_h[k].birth is True:
-                newborn = Herbivore(weight=list_h[k].newborn_birth_weight, age=0)
+                newborn = Herbivore({'species': 'Herbivore', 'weight': list_h[k].newborn_birth_weight, 'age':0})
                 list_h[k].birth_weight_loss(newborn_birth_weight=newborn.weight)
                 self.list_new_h.append(newborn)
                 self.new_h += 1  # for testing
