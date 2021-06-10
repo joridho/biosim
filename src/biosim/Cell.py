@@ -156,10 +156,15 @@ class Cell:
         self.carnivores_pop = list_c
 
     def move_animals(self):
-        herbs_move = []
+        self.herbs_move = []
         for herb in self.herbivores_pop:
             if herb.move_single_animal() == True:
-                herbs_move.append(herb)
+                self.herbs_move.append(herb)
+
+        self.carns_move = []
+        for carn in self.carnivores_pop:
+            if carn.move_single_animal() == True:
+                self.carns_move.append(carn)
 
     def counting_animals(self):
         """

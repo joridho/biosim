@@ -220,12 +220,9 @@ class Map_Island:
 
         # MIGRATION
         for cell in self.map.values():
-            herbs_move = []
-            for herb in cell.herbivores_pop:
-                if herb.move_single_animal() == True:
-                    herbs_move.append(herb)
+            cell.move_animals()
 
-            for herb in herbs_move:
+            for herb in cell.herbs_move:
                 self.neighbours_of_current_cell()  # Mangler input her
                 arrived_cell = random.choice(self.neighbour_cells)
                 if arrived_cell.Habitable() == True:
@@ -235,12 +232,8 @@ class Map_Island:
                 # else:
                 #   self.move = False
 
-            carns_move = []
-            for carn in cell.carnivores_pop:
-                if carn.move_single_animal() == True:
-                    carns_move.append(carn)
-
-            for carn in carns_move:
+            cell.move_animals()
+            for carn in cell.carns_move:
                 self.neighbours_of_current_cell()  # Mangler input her
                 arrived_cell = random.choice(self.neighbour_cells)
                 if arrived_cell.Habitable() == True:
