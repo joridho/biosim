@@ -95,19 +95,26 @@ class Animal:
         # this is the weight of the possible newborn
 
         if self.weight < self.p['zeta'] * (self.p['w_birth'] + self.p['sigma_birth']):
-            self.prob_birth = 0
+            # self.prob_birth = 0
+            return 0
         elif self.weight <= self.newborn_birth_weight:  # birth weight to newborn
-            self.prob_birth = 0
-        elif n < 2:
-            self.prob_birth = 0
-        elif variable < 1:
-            self.prob_birth = variable
+            # self.prob_birth = 0
+            return 0
+        #elif n < 2:
+            #self.prob_birth = 0
+        #elif variable < 1:
+            #self.prob_birth = variable
         else:
-            self.prob_birth = 1
+            #self.prob_birth = 1
+            return min(1, variable)
 
-        self.r = random.random()
+    def will_the_animal_give_birth(self, n):
+        p = self.birth_probability(n)
 
-        if self.r < self.prob_birth:
+        # self.r = random.random()
+        r = random.random()
+
+        if r <= p:
             self.birth = True
         else:
             self.birth = False

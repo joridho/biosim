@@ -121,10 +121,21 @@ def test_herbivore_removed_from_list_after_eaten():  # ikke fullført liste
 def test_newborn_added_to_list_herb():
     l = Lowland(population=[{'species': 'Herbivore', 'weight': 35, 'age': 5},
                             {'species': 'Herbivore', 'weight': 41, 'age': 8},
+                            {'species': 'Herbivore', 'weight': 50, 'age': 9},
+                            {'species': 'Herbivore', 'weight': 35, 'age': 5},
+                            {'species': 'Herbivore', 'weight': 41, 'age': 8},
+                            {'species': 'Herbivore', 'weight': 50, 'age': 9},
+                            {'species': 'Herbivore', 'weight': 67, 'age': 5},
+                            {'species': 'Herbivore', 'weight': 41, 'age': 8},
                             {'species': 'Herbivore', 'weight': 50, 'age': 9}])
     length = len(l.herbivores_pop)
+    y = 0
     l.newborn_animals()
-    assert len(l.herbivores_pop) == length + l.new_h
+    for _ in range(10):
+        l.newborn_animals()
+        if len(l.herbivores_pop) > length: #+ l.new_h
+            y += 1  # there has to be added at least one newborn at least once
+    assert y > 0
 
 
 def test_newborn_added_to_list_carn():
@@ -149,8 +160,8 @@ def test_mother_lost_weight_herb():  # fungerer hver gang om mocker fungerer
     #for k in range(len[weight]):
     #    assert mother_after[k].weight == weight[k] - Herbivore.p['zeta'] * newborn_after[k].weight
 
-    for k in range(len(c.list_new2)):
-        assert mother_after[k].weight == weight[k] - Herbivore.p['zeta'] * c.list_new2[k].weight
+    for k in range(len(c.list_new_h)):
+        assert mother_after[k].weight == weight[k] - Herbivore.p['zeta'] * c.list_new_h[k].weight
 
 
 def test_mother_lost_weight_carn():  # fungerer hver gang om mocker fungerer
@@ -173,8 +184,8 @@ def test_mother_lost_weight_carn():  # fungerer hver gang om mocker fungerer
             assert mother_after[k].weight == weight[k] - Carnivore.p['zeta'] * c.list_new[k].weight
     """
 
-    for k in range(len(c.list_new)):
-        assert mother_after[k].weight == weight[k] - Carnivore.p['zeta'] * c.list_new[k].weight
+    for k in range(len(c.list_new_c)):
+        assert mother_after[k].weight == weight[k] - Carnivore.p['zeta'] * c.list_new_c[k].weight
 
 def test_count_animals_herb():
     l = Lowland(population=[{'species': 'Herbivore', 'weight': 35, 'age': 5},
