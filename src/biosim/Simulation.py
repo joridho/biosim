@@ -70,12 +70,7 @@ class BioSim:
 
         self.num_years_simulated = 0
 
-        # if island_geo == None:  # trenger vi denne? er jo input senere
-        # island_geo = '-----' # vet ikke helt hva det skal bli enda, noe med random?
-        # self._island_map_graph = Map_Island(island_geo)
-        # else: #Går også an å inkl en elif som skal sjekke om island_geo er string
-
-
+    '''
     def set_animal_parameters(self, species, p):
         """
         Set parameters for animal species.
@@ -118,25 +113,14 @@ class BioSim:
         :param landscape: String, code letter for landscape
         :param params: Dict with valid parameter specification for landscape
         """
+    '''
 
     def simulate(self, years):
         """
-            function for simulating
+        Run simulation while visualizing the result.
 
-            1. start time
-            2. add arrays for plotting
-            3. add initial population (i eksempelet fra Plesser er dette i island class)
-            4. initiate year_cycle
-            5. plot
-
-            plots:
-            1. line graph for number of animals
-            2. heat map for one cell with distribution of herbivores
-            3. write down number of years
-            4. map of island
-            5. later heat map for one cell with distribution of carnivores
-            """
-
+        :param years: number of years to simulate
+        """
         # phi_array_herb = []
         # age_array_herb = []
         # weight_array_herb = []
@@ -151,17 +135,19 @@ class BioSim:
 
             self.num_years_simulated += 1
 
-        num_herb = len(self.island_map_graph.map[(2, 2)].herbivores_pop)
-        num_carn = len(self.island_map_graph.map[(2, 2)].carnivores_pop)
-        print('Herbivores: ', num_herb, 'Carnivores: ', num_carn)
+        print(self.num_animals_per_species)
 
-        '''
+
         # values needed after stopping:
-        number_of_simulated_years = 0
-        total_number_of_animals = 0
-        total_number_of_herbivores = 0
-        total_number_of_carnivores = 0
-
+        number_of_simulated_years = self.num_years_simulated
+        total_number_of_animals = self.num_animals
+        total_number_of_herbivores = self.num_animals_per_species['Herbivore']
+        total_number_of_carnivores = self.num_animals_per_species['Carnivore']
+        #print(number_of_simulated_years)
+        #print(total_number_of_animals)
+        #print(total_number_of_herbivores)
+        #print(total_number_of_carnivores)
+        '''
         fig = plt.figure()
         ax1 = fig.add_subplot(3, 3, 1)  # map
         ax2 = fig.add_subplot(3, 3, 3)  # animal count
@@ -256,9 +242,11 @@ class BioSim:
 
     def add_population(self, population):
         """
-            Adds animal to the cell/island. These animals become the initial population
-            """
-        #self.herbivores_pop = self.island_map_graph.add_population() # feil
+        Add a population to the island
+
+        :param population: List of dictionaries specifying population
+        """
+
         return self.island_map_graph.add_population(population)
 
         #for k in range(50):
@@ -278,22 +266,20 @@ class BioSim:
         """Total number of animals on island."""
         num_carnivores = 0
         num_herbivores = 0
-        for cell in self.island_map_graph.map:
+        for cell in self.island_map_graph.map.values():
             num_carnivores += len(cell.carnivores_pop)
             num_herbivores += len(cell.herbivores_pop)
-        self.number_of_animals = num_carnivores + num_herbivores
-        return self.number_of_animals
+        number_of_animals = num_carnivores + num_herbivores
+        return number_of_animals
 
     @property
     def num_animals_per_species(self):
         """Number of animals per species in island, as dictionary."""
-        self.num_animals_per_species = {"Herbivore": 0, "Carnivore": 0}
-        num_carnivores = 0
-        num_herbivores = 0
+        num_animals_per_species = {"Herbivore": 0, "Carnivore": 0}
         for cell in self.island_map_graph.map.values():
-            self.num_animals_per_species["Herbivore"] += len(cell.herbivores_pop)
-            self.num_animals_per_species["Carnivore"] += len(cell.carnivores_pop)
-        return self.num_animals_per_species
+            num_animals_per_species["Herbivore"] += len(cell.herbivores_pop)
+            num_animals_per_species["Carnivore"] += len(cell.carnivores_pop)
+        return num_animals_per_species
 
 
     '''
