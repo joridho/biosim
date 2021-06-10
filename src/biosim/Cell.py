@@ -72,6 +72,8 @@ class Cell:
         for animal in self.herbivores_pop:
             animal.eat_fodder(F_cell=self.af)  # make the herbivore eat
             self.af -= animal.F_consumption  # change the amount of fodder in the cell
+            if self.af <= 0:
+                return ValueError
 
     def available_herbivores_for_carnivores(self):
         self.herbivores_weight_sum = 0
@@ -98,7 +100,7 @@ class Cell:
                     if len(killed) <= len(list_herb):
                         if carn.probability_kill_herbivore(herb) is True:
                             if herb not in killed:
-                                carn.weight_gain_after_eating_herb(herb)  # spiser Carnivores for mange herbivores. skal kunne spise kun F
+                                #carn.weight_gain_after_eating_herb(herb)  # spiser Carnivores for mange herbivores. skal kunne spise kun F
                                 weight_of_herbs += herb.weight
                                 killed.append(herb)
                                 self.eaten += 1
