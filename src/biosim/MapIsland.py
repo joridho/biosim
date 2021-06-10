@@ -219,11 +219,11 @@ class Map_Island:
             cell.newborn_animals()
 
         # MIGRATION
-        for cell in self.map.values():
+        for loc, cell in self.map.values():
             cell.move_animals()
 
             for herb in cell.herbs_move:
-                self.neighbours_of_current_cell()  # Mangler input her
+                self.neighbours_of_current_cell(loc)  # Mangler input her
                 arrived_cell = random.choice(self.neighbour_cells)
                 if arrived_cell.Habitable() == True:
                     # self.move = True
@@ -233,7 +233,7 @@ class Map_Island:
                 #   self.move = False
 
             for carn in cell.carns_move:
-                self.neighbours_of_current_cell()  # Mangler input her
+                self.neighbours_of_current_cell(loc)  # Mangler input her
                 arrived_cell = random.choice(self.neighbour_cells)
                 if arrived_cell.Habitable() == True:
                     # self.move = True
