@@ -120,6 +120,21 @@ def test_carnivore_weight_gain():  # ikke fullført liste
     for k in range(len(l.carnivores_pop)):
         assert l.carnivores_pop[k].weight > liste[k].weight
 
+def test_herbivores_removed_after_feed_carnivores():  # ikke fullført liste
+    population = [{'species': 'Carnivore', 'weight': 35, 'age': 5},
+                  {'species': 'Carnivore', 'weight': 41, 'age': 8},
+                  {'species': 'Carnivore', 'weight': 50, 'age': 9},
+                  {'species': 'Herbivore', 'weight': 10, 'age': 3},
+                  {'species': 'Herbivore', 'weight': 14, 'age': 3},
+                  {'species': 'Herbivore', 'weight': 13, 'age': 3}]
+    l = Lowland(population)
+    l.sorting_animals()
+    liste2 = l.herbivores_pop
+    l.make_herbivores_eat()
+    l.feed_carnivores()
+    l.sorting_animals()
+    assert len(liste2) > len(l.herbivores_pop)
+
 def test_available_fodder():
     l = Lowland(population=[{'species': 'Herbivore', 'weight': 35, 'age': 5},
                             {'species': 'Herbivore', 'weight': 41, 'age': 8},
@@ -152,6 +167,8 @@ def test_newborn_added_to_list_carn():
     length = len(l.carnivores_pop)
     l.newborn_animals()
     assert len(l.carnivores_pop) == length + l.new_c
+
+
 
 def test_mother_lost_weight_herb():  # fungerer hver gang om mocker fungerer
     c = Lowland(population=[{'species': 'Herbivore', 'weight': 70, 'age': 5},
