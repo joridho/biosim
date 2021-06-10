@@ -127,8 +127,8 @@ class Animal:
             self.move = False
 
         if self.move == True:
-            # hvordan kalle på de 4 andre cellene
-            arrived_cell = random.choice()
+            # hvordan kalle på de 4 andre cellene?
+            arrived_cell = random.choice() #sette liste over de andre cellene her
             if arrived_cell == Water: # hvordan vite om celle er vann?
                 self.move = False
             else:
