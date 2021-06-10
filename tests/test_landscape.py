@@ -161,17 +161,13 @@ def test_mother_lost_weight_herb():  # fungerer hver gang om mocker fungerer
     #    assert mother_after[k].weight == weight[k] - Herbivore.p['zeta'] * newborn_after[k].weight
 
     for k in range(len(c.list_new_h)):
-        assert mother_after[k].weight == weight[k] - Herbivore.p['zeta'] * c.list_new_h[k].weight
-
-
-def test_mother_lost_weight_carn():  # fungerer hver gang om mocker fungerer
-    c = Lowland(population=[{'species': 'Carnivore', 'weight': 35, 'age': 5},
-                            {'species': 'Carnivore', 'weight': 41, 'age': 8}])
+        c = Lowland(population=[{'species': 'Carnivore', 'weight': 35, 'age': 5},
+                                {'species': 'Carnivore', 'weight': 41, 'age': 8}])
 
     weight = [k.weight for k in c.carnivores_pop]
 
     c.newborn_animals()
-    c.carnivores_pop = sorted(c.carnivores_pop, key=operator.attrgetter('age'))
+    #c.carnivores_pop = sorted(c.carnivores_pop, key=operator.attrgetter('age'))
     mother_after = [c.carnivores_pop[0], c.carnivores_pop[1]]
     #newborn_after = [k.weight for k in c.list_new] #[c.carnivores_pop[2], c.carnivores_pop[3]]
 

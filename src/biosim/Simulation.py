@@ -119,26 +119,13 @@ class BioSim:
 
         self.island_map_graph.year_cycle()
 
-        #pop = []
-        #for cell in self.island_map_graph.map.values():
-            #pop += cell.herbivores_pop
+        num_herb = self.num_animals_per_species['Herbivores']
+        #num_herb = len(self.island_map_graph.map[(2, 2)].herbivores_pop)
 
-        #print(len(self.island_map_graph.population([2, 2])))
-
-        #print("herbivores: ", len(pop))
-
-        celle = self.island_map_graph.map[(2, 2)]
-        print('herbivores: ', len(celle.herbivores_pop),
-              'Carnivores: ', len(celle.carnivores_pop))
-
+        print('Herbivores: ', num_herb)
 
         self.num_years_simulated += 1
 
-        #for animal in m.population[(2, 2)]:
-            #assert animal["age"] == 5
-
-        #pop = []
-        #for cell in
 
         '''
         # values needed after stopping:
@@ -261,26 +248,31 @@ class BioSim:
     @property
     def num_animals(self):
         """Total number of animals on island."""
-        num_carnivores = 0  # len(lowland.carnivores_pop)
-        num_herbivores = len(self.island_map_graph.year_cycle())
-        num_animals = num_carnivores + num_herbivores
-        return num_animals
+        num_carnivores = 0
+        num_herbivores = 0
+        for cell in self.island_map_graph.map:
+            num_carnivores += len(cell.carnivores_pop)
+            num_herbivores += len(cell.herbivores_pop)
+        self.number_of_animals = num_carnivores + num_herbivores
+        return self.number_of_animals
 
     @property
     def num_animals_per_species(self):
         """Number of animals per species in island, as dictionary."""
-        '''
-        num_animals_per_species = {"Herbivore": 0, "Carnivore": 0}
-        for k in self.island_map.map.values():
-            num_animals_per_species["Herbivore"] += len(lowland.pop_herb)
-            num_animals_per_species["Carnivore"] += 0  # len(lowland.pop_carn)
-        return num_animals_per_species()
-        '''
-        #num_animals_per_species = {"Herbivore": 0, "Carnivore": 0}
-        #num_animals_per_species["Herbivore"] = len(Lowland.herbivore_pop)
-        #num_animals_per_species["Carnivore"] = 0  # len(lowland.carnivore_pop)
+        self.num_animals_per_species = {"Herbivore": 0, "Carnivore": 0}
+        num_carnivores = 0
+        num_herbivores = 0
+        for cell in self.island_map_graph.map.values():
+            self.num_animals_per_species["Herbivore"] += len(cell.herbivores_pop)
+            self.num_animals_per_species["Carnivore"] += len(cell.carnivores_pop)
+        return self.num_animals_per_species
 
-        '''
+
+    '''
     def make_movie(self): denne er fra Plesser 
         """Create MPEG4 movie from visualization images saved."""
     '''
+
+    @num_animals_per_species.setter
+    def num_animals_per_species(self, value):
+        self._num_animals_per_species = value
