@@ -147,10 +147,10 @@ class Animal:
             return self.p['omega'] * (1 - self.phi)
 
     def will_the_animal_die(self):
-        p = self.death_probability()
+        self.p = self.death_probability()
         self.d = random.random()
 
-        if self.d < p:
+        if self.d < self.p:
             return True
         else:
             return False
