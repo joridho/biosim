@@ -32,7 +32,8 @@ def test_simple_sorting_herb():
     c.sorting_animals()
     liste3 = [c.herbivores_pop[0].phi, c.herbivores_pop[1].phi,
               c.herbivores_pop[2].phi]
-    assert liste2 == liste3
+    #assert liste2 == liste3
+    assert c.herbivores_pop[0].age != c.herbivores_pop[0].age
 
 
 def test_parameters_lowland():
@@ -73,7 +74,7 @@ def test_fodder_eaten():
 
 
 def test_gain_weight_after_eating():  # får den kun til å fungere på ett dyr
-    l = Lowland(population=[{'species': 'Herbivore', 'weight': 35, 'age': 5},
+    l = Lowland(population=[{'age': 5, 'species': 'Herbivore', 'weight': 20},
                             {'species': 'Herbivore', 'weight': 41, 'age': 8},
                             {'species': 'Herbivore', 'weight': 50, 'age': 9}])
     weight = [k.weight for k in l.herbivores_pop]
