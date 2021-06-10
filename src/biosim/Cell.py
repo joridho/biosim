@@ -155,35 +155,6 @@ class Cell:
             list_c.append(k)
         self.carnivores_pop = list_c
 
-    def move_animals(self):
-        herbs_move = []
-        for herb in self.herbivores_pop:
-            if herb.move_single_animal() == True:
-                herbs_move.append(herb)
-
-        for herb in herbs_move:
-            arrived_cell = random.choice()
-            if arrived_cell.Habitable() == True:
-                #self.move = True
-                arrived_cell.herbivores_pop.append(herb)
-                self.herbivores_pop.remove(herb)
-            #else:
-             #   self.move = False
-
-        carns_move = []
-        for carn in self.carnivores_pop:
-            if carn.move_single_animal() == True:
-                carns_move.append(herb)
-
-        for carn in carns_move:
-            arrived_cell = random.choice()
-            if arrived_cell.Habitable() == True:
-                #self.move = True
-                arrived_cell.carnivores_pop.append(herb)
-                self.carnivores_pop.remove(carn)
-            #else:
-             #   self.move = False
-
     def counting_animals(self):
         """
             A function for counting how many animals there are in the cell.

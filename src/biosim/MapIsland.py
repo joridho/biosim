@@ -174,6 +174,54 @@ class Map_Island:
                 raise ValueError(
                     f"Invalid landscape type {cell_type}")  # Gir feilmelding hvis celletype ikke fins
 
+    def move_animals(self):
+        herbs_move = []
+        for herb in self.herbivores_pop:
+            if herb.move_single_animal() == True:
+                herbs_move.append(herb)
+
+        for herb in herbs_move:
+            # bruke neighbours_of_current cells function
+            arrived_cell = random.choice(self.neighbour_cells)
+            if arrived_cell.Habitable() == True:
+                # self.move = True
+                arrived_cell.herbivores_pop.append(herb)
+                self.herbivores_pop.remove(herb)
+            # else:
+            #   self.move = False
+
+        carns_move = []
+        for carn in self.carnivores_pop:
+            if carn.move_single_animal() == True:
+                carns_move.append(herb)
+
+        for carn in carns_move:
+            arrived_cell = random.choice()
+            if arrived_cell.Habitable() == True:
+                # self.move = True
+                arrived_cell.carnivores_pop.append(herb)
+                self.carnivores_pop.remove(carn)
+            # else:
+            #   self.move = False
+
+    def neighbours_of_current_cell(self, current_coordinates):
+        """
+        Finds all neighbouring coordinates of a given cell. Checks the
+        landscape type of each coordinate. The neighbours
+        with landscape types an animal can move to, are returned.
+        :param current_coordinates: Location of current cell
+        :type current_coordinates: tuple
+        :return: Locations as keys and landscape class instance as values
+        :rtype: dict
+        """
+        neighbours_of_current_cell = {}
+        n, m = current_coordinates[0], current_coordinates[1]
+        neighbours = [(n - 1, m), (n, m - 1), (n, m + 1), (n + 1, m)]
+        self.neighbour_cells = []
+        for neighbour_cell in neighbours:
+            if neighbour_cell in self.map.keys():
+                self.neighbour_cells.append(self.map[neighbour_cell])
+        return self.neighbour_cells
 
     def year_cycle(self):
         """
