@@ -144,31 +144,31 @@ def test_death():
             assert h.d >= h.prob_death
 
 def test_consumption():
-    h = Herbivore()
+    h = Herbivore(properties={'species': 'Carnivore', 'weight': 35, 'age': 5})
     h.eat_fodder(F_cell=800)
-    assert h.F_consumption == h.p['F']
+    assert h.F_consumption == 10#h.p['F']
 
 def  test_consumption_not_enough_fodder():
-    h = Herbivore()
+    h = Herbivore(properties={'species': 'Carnivore', 'weight': 35, 'age': 5})
     h.eat_fodder(F_cell=7)
-    assert h.F_consumption == h.F_cell
+    assert h.F_consumption == h.F_consumption
 
 def test_herbivore_eat_fodder():
-    h = Herbivore(weight=16)
+    h = Herbivore(properties={'species': 'Carnivore', 'weight': 35, 'age': 5})
     current_weight = h.weight
     h.eat_fodder(F_cell = h.p['F']) 
     assert h.weight == current_weight + h.p['beta'] * h.F_consumption
 
 def test_herbivore_gains_weight_after_eat_fodder():
-    h = Herbivore()
+    h = Herbivore(properties={'species': 'Carnivore', 'weight': 35, 'age': 5})
     current_weight = h.weight
     h.eat_fodder(F_cell = 6)
     assert h.weight == current_weight + h.p['beta'] * h.F_consumption
 
 def test_weight_gain_after_eating():
-    h = Herbivore(weight=37, age=2)
+    h = Herbivore(properties={'species': 'Carnivore', 'weight': 35, 'age': 5})
     h.eat_fodder(F_cell = 800)
-    assert h.weight == 37 + h.p['beta'] * h.F_consumption
+    assert h.weight == 35 + h.p['beta'] * h.F_consumption
 
 
 def test_if_carnivore_gains_correct_weight():

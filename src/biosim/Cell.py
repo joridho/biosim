@@ -33,6 +33,8 @@ class Cell:
             else:
                 self.carnivores_pop.append(Carnivore(animal_info))
 
+        self.af = self.p['f_max']
+
     @classmethod
     def set_given_parameters(cls, params):
         """
