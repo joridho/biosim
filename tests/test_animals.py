@@ -121,11 +121,10 @@ def test_birth():
     false = 0
     for _ in range(100):
         h.birth_probability(n=4)
+        h.will_the_animal_give_birth(n=4)
         if h.birth == True:
-            h.r < h.prob_birth
             true += 1
         else:
-            h.r >= h.prob_birth
             false +=1
     assert true == false  # bare en test for å sjekke hva som ikke fungerer
 
@@ -190,11 +189,7 @@ def test_carnivore_updated_fitness():
     f1 = carn.phi
     herb = Herbivore(weight=35, age=2)
     carn.weight_gain_after_eating_herb(herb)
-    #weight_carn = carn.weight
-    carn2 = carn.phi
-    #carn2 = Carnivore(weight=weight_carn, age=5)
-    #assert carn.phi == carn2.phi
-    assert f1 != carn2
+    assert f1 != carn.phi
 
 def test_prob_kill():
     herb = Herbivore(weight=35, age=3)
@@ -209,6 +204,7 @@ def test_prob_kill():
 def test_prob_kill_not_work1():
     herb = Herbivore(weight=35, age=3)
     carn = Carnivore(weight=8, age=1)
+    # have calculated that the herbivore has greater fitness than the carnivore
     carn.probability_kill_herbivore(herb)
     assert carn.prob_kill == 0
 

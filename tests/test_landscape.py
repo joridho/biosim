@@ -119,21 +119,20 @@ def test_herbivore_removed_from_list_after_eaten():  # ikke fullført liste
 
 
 def test_newborn_added_to_list_herb():
-    l = Lowland(population=[{'species': 'Herbivore', 'weight': 35, 'age': 5},
-                            {'species': 'Herbivore', 'weight': 41, 'age': 8},
-                            {'species': 'Herbivore', 'weight': 50, 'age': 9},
-                            {'species': 'Herbivore', 'weight': 35, 'age': 5},
-                            {'species': 'Herbivore', 'weight': 41, 'age': 8},
+    l = Lowland(population=[{'species': 'Herbivore', 'weight': 35, 'age': 3},
+                            {'species': 'Herbivore', 'weight': 41, 'age': 3},
+                            {'species': 'Herbivore', 'weight': 50, 'age': 3},
+                            {'species': 'Herbivore', 'weight': 35, 'age': 3},
+                            {'species': 'Herbivore', 'weight': 41, 'age': 3},
                             {'species': 'Herbivore', 'weight': 50, 'age': 9},
                             {'species': 'Herbivore', 'weight': 67, 'age': 5},
                             {'species': 'Herbivore', 'weight': 41, 'age': 8},
                             {'species': 'Herbivore', 'weight': 50, 'age': 9}])
     length = len(l.herbivores_pop)
     y = 0
-    l.newborn_animals()
     for _ in range(10):
         l.newborn_animals()
-        if len(l.herbivores_pop) > length: #+ l.new_h
+        if len(l.herbivores_pop) > length: # + l.new_h
             y += 1  # there has to be added at least one newborn at least once
     assert y > 0
 
@@ -161,17 +160,13 @@ def test_mother_lost_weight_herb():  # fungerer hver gang om mocker fungerer
     #    assert mother_after[k].weight == weight[k] - Herbivore.p['zeta'] * newborn_after[k].weight
 
     for k in range(len(c.list_new_h)):
-        assert mother_after[k].weight == weight[k] - Herbivore.p['zeta'] * c.list_new_h[k].weight
-
-
-def test_mother_lost_weight_carn():  # fungerer hver gang om mocker fungerer
-    c = Lowland(population=[{'species': 'Carnivore', 'weight': 35, 'age': 5},
-                            {'species': 'Carnivore', 'weight': 41, 'age': 8}])
+        c = Lowland(population=[{'species': 'Carnivore', 'weight': 35, 'age': 5},
+                                {'species': 'Carnivore', 'weight': 41, 'age': 8}])
 
     weight = [k.weight for k in c.carnivores_pop]
 
     c.newborn_animals()
-    c.carnivores_pop = sorted(c.carnivores_pop, key=operator.attrgetter('age'))
+    #c.carnivores_pop = sorted(c.carnivores_pop, key=operator.attrgetter('age'))
     mother_after = [c.carnivores_pop[0], c.carnivores_pop[1]]
     #newborn_after = [k.weight for k in c.list_new] #[c.carnivores_pop[2], c.carnivores_pop[3]]
 
