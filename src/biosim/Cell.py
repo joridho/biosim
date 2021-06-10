@@ -94,20 +94,22 @@ class Cell:
             weight_of_herbs = 0
             for herb in self.herbivores_pop:
                 if weight_of_herbs < carn.p['F']:
-                    if carn.probability_kill_herbivore(herb) is True:
-                        if herb not in killed:
-                            carn.weight_gain_after_eating_herb(herb) #spiser Carnivores for mange herbivores. skal kunne spise kun F
-                            weight_of_herbs += herb.weight
-                            killed.append(herb)
-                            self.eaten +=1
+                    if len(killed) <= len(list_herb):
+                        if carn.probability_kill_herbivore(herb) is True:
+                            if herb not in killed:
+                                carn.weight_gain_after_eating_herb(herb) #spiser Carnivores for mange herbivores. skal kunne spise kun F
+                                weight_of_herbs += herb.weight
+                                killed.append(herb)
+                                self.eaten +=1
 
             #list_carn.append(carn)
                     #eaten.append(carn)
                     #list_carn.remove(carn)
 
         self.herbivores_pop = list(set(list_herb) - set(killed))
-        #for k in eaten:
-            #list_carn.append(k)
+        #for k in killed:
+         #   list_herb.remove(k)
+        #self.herbivores_pop = list_herb
         #self.carnivores_pop = list_carn
 
     def newborn_animals(self):  # make it work for both species

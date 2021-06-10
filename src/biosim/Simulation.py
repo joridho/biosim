@@ -75,7 +75,6 @@ class BioSim:
         # self._island_map_graph = Map_Island(island_geo)
         # else: #Går også an å inkl en elif som skal sjekke om island_geo er string
 
-    '''
     def set_animal_parameters(self, species, p):
         """
         Set parameters for animal species.
@@ -88,20 +87,20 @@ class BioSim:
                        'Carnivore': Carnivore}
         for param_name in p.keys():
             if param_name in class_names[species].p:
-                if p[param_name] >= 0 and param_name is not "DeltaPhiMax" \
-                        and param_name is not "eta" and param_name is not "F":
+                if p[param_name] >= 0 and param_name != "DeltaPhiMax" \
+                        and param_name != "eta" and param_name != "F":
                     class_names[species].p[param_name] = p[
                         param_name]
                 # checks special criteria for eta
-                elif param_name is "eta" and 0 <= p[param_name] <= 1:
+                elif param_name == "eta" and 0 <= p[param_name] <= 1:
                     class_names[species].p[param_name] = p[
                         param_name]
                 # checks special criteria for F
-                elif param_name is "F" and 0 < p[param_name]:
+                elif param_name == "F" and 0 < p[param_name]:
                     class_names[species].p[param_name] = p[
                         param_name]
                 # checks special criteria for DeltaPhiMax
-                elif param_name is "DeltaPhiMax" and p[param_name] > 0:
+                elif param_name == "DeltaPhiMax" and p[param_name] > 0:
                     class_names[species].p[param_name] = p[
                         param_name]
                 else:
@@ -118,7 +117,6 @@ class BioSim:
         :param landscape: String, code letter for landscape
         :param params: Dict with valid parameter specification for landscape
         """
-    '''
 
     def simulate(self, years):
         """
