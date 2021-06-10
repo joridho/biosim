@@ -249,9 +249,9 @@ class Carnivore(Animal):
         self.r = random.random()
 
         if self.r < self.prob_kill:
-            self.kill = True
+            return True
         else:
-            self.kill = False
+            return False
 
     def weight_gain_after_eating_herb(self, herb):
         """

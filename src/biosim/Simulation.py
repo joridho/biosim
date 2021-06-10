@@ -148,7 +148,7 @@ class BioSim:
         for year in range(years):
             self.island_map_graph.year_cycle()
 
-        # num_herb = self.num_animals_per_species['Herbivores']
+            # num_herb = self.num_animals_per_species['Herbivores']
 
             self.num_years_simulated += 1
 
@@ -301,6 +301,3 @@ class BioSim:
         """Create MPEG4 movie from visualization images saved."""
     '''
 
-    #@num_animals_per_species.setter
-    #def num_animals_per_species(self, value):
-        #self._num_animals_per_species = value

@@ -71,25 +71,31 @@ class Cell:
         """
             1. sort herbivores and carnivores by fitness
             2. make the carnivores eat
-            3. remove all eaten herbivores
+            3. make the carnivores gain weight
+            4. remove all eaten herbivores
         """
         self.sorting_animals()
-        list_carn = self.carnivores_pop
+        #list_carn = []
         list_herb = self.herbivores_pop
         killed = []
-        eaten = []
+        self.eaten = 0  # for testing
+
 
         for carn in self.carnivores_pop:
-            for herb in list_herb:
-                carn.probability_kill_herbivore(herb)
-                if carn.kill is True:
-                    carn.weight_gain_after_eating_herb(herb)
-                    killed.append(herb)
-                    eaten.append(carn)
-                    list_carn.remove(carn)
+            for herb in self.herbivores_pop:
+                if carn.probability_kill_herbivore(herb) is True:
+                    if herb not in killed:
+                        carn.weight_gain_after_eating_herb(herb)
+                        killed.append(herb)
+                        self.eaten +=1
+            #list_carn.append(carn)
+                    #eaten.append(carn)
+                    #list_carn.remove(carn)
 
         self.herbivores_pop = list(set(list_herb) - set(killed))
-        self.carnivores_pop = list_carn.extend(eaten)
+        #for k in eaten:
+            #list_carn.append(k)
+        #self.carnivores_pop = list_carn
 
     def newborn_animals(self):  # make it work for both species
         """
