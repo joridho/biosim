@@ -91,13 +91,14 @@ class Cell:
         weight_of_herbs = 0
         for carn in self.carnivores_pop:
             for herb in self.herbivores_pop:
-                if weight_of_herbs >= carn.p['F']:
+                if weight_of_herbs < carn.p['F']:
                     if carn.probability_kill_herbivore(herb) is True:
                         if herb not in killed:
                             carn.weight_gain_after_eating_herb(herb) #spiser Carnivores for mange herbivores. skal kunne spise kun F
                             weight_of_herbs += herb.weight
                             killed.append(herb)
                             self.eaten +=1
+
             #list_carn.append(carn)
                     #eaten.append(carn)
                     #list_carn.remove(carn)
