@@ -161,6 +161,15 @@ class Cell:
             if herb.move_single_animal() == True:
                 herbs_move.append(herb)
 
+        for herb in herbs_move:
+            arrived_cell = random.choice()
+            # hvordan kalle på de 4 andre cellene?
+            arrived_cell = random.choice() #sette liste over de andre cellene her
+            if arrived_cell == Water: # hvordan vite om celle er vann?
+                self.move = False
+            else:
+                self.move = True
+
         herbs_stay_in_cell = self.herbivores_pop - herbs_move
         herbs_in_new_cell = herbs_move
 

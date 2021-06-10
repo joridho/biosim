@@ -161,14 +161,6 @@ class Animal:
             self.move = True
         else:
             self.move = False
-
-        if self.move == True:
-            # hvordan kalle på de 4 andre cellene?
-            arrived_cell = random.choice() #sette liste over de andre cellene her
-            if arrived_cell == Water: # hvordan vite om celle er vann?
-                self.move = False
-            else:
-                self.move = True
         return self.move
 
 class Herbivore(Animal):
