@@ -189,7 +189,6 @@ class Map_Island:
         - Step 5: Animals lose weight
         - Step 6: Animals die
             """
-
         for cell in self.map.values():
             cell.make_herbivores_eat()
 
