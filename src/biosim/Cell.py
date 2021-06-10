@@ -88,8 +88,6 @@ class Cell:
             4. remove all eaten herbivores
         """
         self.sorting_animals()
-        # list_carn = []
-        list_herb = self.herbivores_pop
         killed = []
         self.eaten = 0  # for testing
 
@@ -97,18 +95,17 @@ class Cell:
             weight_of_herbs = 0
             for herb in self.herbivores_pop:
                 if weight_of_herbs < carn.p['F']:
-                    if len(killed) <= len(list_herb):
+                    if len(killed) <= len(self.herbivores_pop):
                         if carn.probability_kill_herbivore(herb) is True:
                             if herb not in killed:
-                                #carn.weight_gain_after_eating_herb(herb)  # spiser Carnivores for mange herbivores. skal kunne spise kun F
+                                carn.weight_gain_after_eating_herb(herb)
                                 weight_of_herbs += herb.weight
                                 killed.append(herb)
                                 self.eaten += 1
                                 carn.fitness()
 
         for herb in killed:
-            list_herb.append(herb)
-        self.herbivores_pop = list_herb
+            self.herbivores_pop.remove(herb)
 
     def newborn_animals(self):  # make it work for both species
         """
