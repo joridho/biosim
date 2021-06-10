@@ -175,39 +175,7 @@ class Map_Island:
                 raise ValueError(
                     f"Invalid landscape type {cell_type}")  # Gir feilmelding hvis celletype ikke fins
 
-
-    def move_animals(self):
-        herbs_move = []
-        for herb in Cell.herbivores_pop:
-            if herb.move_single_animal() == True:
-                herbs_move.append(herb)
-
-        for herb in herbs_move:
-            self.neighbours_of_current_cell()# Mangler input her
-            arrived_cell = random.choice(self.neighbour_cells)
-            if arrived_cell.Habitable() == True:
-                # self.move = True
-                arrived_cell.herbivores_pop.append(herb)
-                self.herbivores_pop.remove(herb)
-            # else:
-            #   self.move = False
-
-        carns_move = []
-        for carn in Cell.carnivores_pop:
-            if carn.move_single_animal() == True:
-                carns_move.append(carn)
-
-        for carn in carns_move:
-            self.neighbours_of_current_cell() # Mangler input her
-            arrived_cell = random.choice(self.neighbour_cells)
-            if arrived_cell.Habitable() == True:
-                # self.move = True
-                arrived_cell.carnivores_pop.append(carn)
-                self.carnivores_pop.remove(carn)
-            # else:
-            #   self.move = False
-
-    def neighbours_of_current_cell(self, current_coordinates):
+    def neighbours_of_current_cell(self, current_coordinates): # Hva skal input være her?
         """
         Finds all neighbouring coordinates of a given cell. Checks the
         landscape type of each coordinate. The neighbours
@@ -238,21 +206,59 @@ class Map_Island:
         - Step 5: Animals lose weight
         - Step 6: Animals die
             """
+
+        # FEEDING
         for cell in self.map.values():
             cell.make_herbivores_eat()
 
         for cell in self.map.values():
             cell.feed_carnivores()
 
+        # PROCREATION
         for cell in self.map.values():
             cell.newborn_animals()
 
+        # MIGRATION
+        for cell in self.map.values():
+            herbs_move = []
+            for herb in cell.herbivores_pop:
+                if herb.move_single_animal() == True:
+                    herbs_move.append(herb)
 
+            for herb in herbs_move:
+                self.neighbours_of_current_cell()  # Mangler input her
+                arrived_cell = random.choice(self.neighbour_cells)
+                if arrived_cell.Habitable() == True:
+                    # self.move = True
+                    arrived_cell.herbivores_pop.append(herb)
+                    cell.herbivores_pop.remove(herb)
+                # else:
+                #   self.move = False
+
+            carns_move = []
+            for carn in cell.carnivores_pop:
+                if carn.move_single_animal() == True:
+                    carns_move.append(carn)
+
+            for carn in carns_move:
+                self.neighbours_of_current_cell()  # Mangler input her
+                arrived_cell = random.choice(self.neighbour_cells)
+                if arrived_cell.Habitable() == True:
+                    # self.move = True
+                    arrived_cell.carnivores_pop.append(carn)
+                    cell.carnivores_pop.remove(carn)
+                # else:
+                #   self.move = False
+
+
+        # AGING
         for cell in self.map.values():
             cell.make_animals_age()
 
+        # LOOSE WEIGHT
         for cell in self.map.values():
             cell.make_animals_lose_weight()
 
+        #DEAD
         for cell in self.map.values():
             cell.dead_animals_natural_cause()
