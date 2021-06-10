@@ -153,7 +153,8 @@ class BioSim:
             self.num_years_simulated += 1
 
         num_herb = len(self.island_map_graph.map[(2, 2)].herbivores_pop)
-        print('Herbivores: ', num_herb)
+        num_carn = len(self.island_map_graph.map[(2, 2)].carnivores_pop)
+        print('Herbivores: ', num_herb, 'Carnivores: ', num_carn)
 
         '''
         # values needed after stopping:
