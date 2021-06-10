@@ -148,7 +148,7 @@ class Cell:
                 carns_move.append(carn)    # Hvordan få dem til å bevege seg til hver sin celle? Lister?
 
         carns_stay_in_cell = self.carnivores_pop - carns_move
-        carns_in_new_cell = carns_move
+        carns_in_new_cell = carns_move # Hvordan legge denne lista til i en ny celle`?
 
 
     def counting_animals(self):
