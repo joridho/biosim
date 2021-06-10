@@ -13,7 +13,7 @@ from biosim.Simulation import BioSim
 
 geogr = """\
             WWW
-            WLW
+            L
             WWW"""
 #geogr = textwrap.dedent(geogr)
 
