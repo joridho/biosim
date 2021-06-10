@@ -75,6 +75,7 @@ class BioSim:
         # self._island_map_graph = Map_Island(island_geo)
         # else: #Går også an å inkl en elif som skal sjekke om island_geo er string
 
+'''
     def set_animal_parameters(self, species, p):
         """
         Set parameters for animal species.
@@ -117,6 +118,7 @@ class BioSim:
         :param landscape: String, code letter for landscape
         :param params: Dict with valid parameter specification for landscape
         """
+'''
 
     def simulate(self, years):
         """
