@@ -214,6 +214,9 @@ class Map_Island:
             cell.make_herbivores_eat()
 
         for cell in self.map.values():
+            cell.feed_carnivores()
+
+        for cell in self.map.values():
             cell.newborn_animals()
 
         for cell in self.map.values():
