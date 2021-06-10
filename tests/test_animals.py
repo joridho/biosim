@@ -45,13 +45,20 @@ def test_herbivore_aging():
         h.aging()
         assert h.age == n + 1
 
+''''
+
+DENNE TESTEN FUNKER IKKE LENGER PGA PROPERTIES. HERBIVORE FÅR IKKE LENGER GITT EN BIRTH.WEIGHT
+
 def test_herbivore_birth_weight():
     """
     A test that checks that the herbivore have been given a birth_weight
     """
-    h = Herbivore()
+    h = Herbivore({'species': 'Herbivore',
+                       'age': 5,
+                       'weight': 20})
     birth_w = h.birth_weight
     assert h.birth_weight == birth_w
+'''
 
 def test_herbivore_weight_loss():
     '''
@@ -172,29 +179,29 @@ def test_death():
             assert h.d >= h.p
 
 def test_consumption():
-    h = Herbivore(properties={'species': 'Carnivore', 'weight': 35, 'age': 5})
+    h = Herbivore(properties={'species': 'Herbivore', 'weight': 35, 'age': 5})
     h.eat_fodder(F_cell=800)
     assert h.F_consumption == 10#h.p['F']
 
 def  test_consumption_not_enough_fodder():
-    h = Herbivore(properties={'species': 'Carnivore', 'weight': 35, 'age': 5})
+    h = Herbivore(properties={'species': 'Herbivore', 'weight': 35, 'age': 5})
     h.eat_fodder(F_cell=7)
     assert h.F_consumption == h.F_consumption
 
 def test_herbivore_eat_fodder():
-    h = Herbivore(properties={'species': 'Carnivore', 'weight': 35, 'age': 5})
+    h = Herbivore(properties={'species': 'Herbivore', 'weight': 35, 'age': 5})
     current_weight = h.weight
     h.eat_fodder(F_cell = h.p['F']) 
     assert h.weight == current_weight + h.p['beta'] * h.F_consumption
 
 def test_herbivore_gains_weight_after_eat_fodder():
-    h = Herbivore(properties={'species': 'Carnivore', 'weight': 35, 'age': 5})
+    h = Herbivore(properties={'species': 'Herbivore', 'weight': 35, 'age': 5})
     current_weight = h.weight
     h.eat_fodder(F_cell = 6)
     assert h.weight == current_weight + h.p['beta'] * h.F_consumption
 
 def test_weight_gain_after_eating():
-    h = Herbivore(properties={'species': 'Carnivore', 'weight': 35, 'age': 5})
+    h = Herbivore(properties={'species': 'Herbivore', 'weight': 35, 'age': 5})
     h.eat_fodder(F_cell = 800)
     assert h.weight == 35 + h.p['beta'] * h.F_consumption
 
@@ -211,9 +218,13 @@ def test_if_carnivore_gains_correct_weight():
     assert carn.weight == w + herb.weight * carn.p['beta']
 
 def test_carnivore_updated_fitness():
-    carn = Carnivore(weight=70, age=5)
+    carn = Carnivore({'species': 'Carnivore',
+                       'age': 5,
+                       'weight': 70})
     f1 = carn.phi
-    herb = Herbivore(weight=35, age=2)
+    herb = Herbivore({'species': 'Herbivore',
+                       'age': 2,
+                       'weight': 35})
     carn.weight_gain_after_eating_herb(herb)
     assert f1 != carn.phi
 
@@ -221,26 +232,34 @@ def test_prob_kill():
     herb = Herbivore({'species': 'Herbivore',
                        'age': 3,
                        'weight': 15})
-    carn = Carnivore({'species': 'Herbivore',
+    carn = Carnivore({'species': 'Carnivore',
                        'age': 3,
                        'weight': 15})
     for _ in range(100):
-        carn.probability_kill_herbivore(herb)
-        if carn.prob_kill == True:
+        if carn.probability_kill_herbivore(herb) == True:
+        #if carn.prob_kill == True:
             assert carn.r < carn.prob_kill
         else:
             assert carn.r >= carn.prob_kill
 
 def test_prob_kill_not_work1():
-    herb = Herbivore(weight=35, age=3)
-    carn = Carnivore(weight=8, age=1)
+    herb = Herbivore({'species': 'Herbivore',
+                       'age': 3,
+                       'weight': 35})
+    carn = Carnivore({'species': 'Carnivore',
+                       'age': 1,
+                       'weight': 8})
     # have calculated that the herbivore has greater fitness than the carnivore
     carn.probability_kill_herbivore(herb)
     assert carn.prob_kill == 0
 
 def test_prob_kill_not_work2():
-    herb = Herbivore(weight=35, age=3)
-    carn = Carnivore(weight=60, age=4)
+    herb = Herbivore({'species': 'Herbivore',
+                       'age': 3,
+                       'weight': 35})
+    carn = Carnivore({'species': 'Carnivore',
+                       'age': 4,
+                       'weight': 60})
     carn.probability_kill_herbivore(herb)
     assert carn.prob_kill == (carn.phi - herb.phi) / carn.p['DeltaPhiMax']
 
