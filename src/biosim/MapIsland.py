@@ -232,7 +232,6 @@ class Map_Island:
                 # else:
                 #   self.move = False
 
-            cell.move_animals()
             for carn in cell.carns_move:
                 self.neighbours_of_current_cell()  # Mangler input her
                 arrived_cell = random.choice(self.neighbour_cells)
