@@ -244,16 +244,6 @@ def test_prob_kill_not_work2():
     carn.probability_kill_herbivore(herb)
     assert carn.prob_kill == (carn.phi - herb.phi) / carn.p['DeltaPhiMax']
 
-
-def test_set_age():
-    herb = Herbivore(weight=35, age=3)
-    assert herb.age == 3
-
-def test_set_weight():
-    herb = Herbivore(weight=35, age=3)
-    assert herb.weight == 35
-
-
 def test_to_much_fitness():
     h = Herbivore(properties={'species': 'Carnivore', 'weight': 29, 'age': 5})
     assert h.phi == 0.8698915249774015
