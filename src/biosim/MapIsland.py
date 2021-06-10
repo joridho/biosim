@@ -53,6 +53,7 @@ class Map_Island:
                     raise ValueError("Map boundary has to be only 'W'")
                 else:
                     return True
+            '''
             # checks all cells in last line of geography str
             else:
                 for cell_type in lines_map[line_nr]:  # sjekker siste linje i string
@@ -60,6 +61,7 @@ class Map_Island:
                         raise ValueError("Map boundary has to be only 'W'")
                     else:
                         return True
+            '''
 
 
     def check_for_equal_map_lines(self):
@@ -96,11 +98,11 @@ class Map_Island:
                 x_coord += 1
             y_coord += 1
 
-'''
+        '''
             for loc, cell_type in self.geography:
                 if cell_type == 'W':
                     del self.geography[loc]
-'''
+        '''
 
     #Gir koordinatene flere lister med dyreinfo. et koordinat kan få flere lister med dyr (med ulik info)
 
@@ -225,6 +227,8 @@ class Map_Island:
         for cell in self.map.values():
             cell.newborn_animals()
 
+        '''
+
         # MIGRATION
         for loc, cell in self.map.values():
             cell.move_animals()
@@ -248,7 +252,7 @@ class Map_Island:
                     cell.carnivores_pop.remove(carn)
                 # else:
                 #   self.move = False
-
+        '''
 
         # AGING
         for cell in self.map.values():
@@ -261,3 +265,5 @@ class Map_Island:
         #DEAD
         for cell in self.map.values():
             cell.dead_animals_natural_cause()
+
+
