@@ -83,7 +83,6 @@ def test_valid_fitness():
     """
     for _ in range(100):
         h = Herbivore()
-        #h.fitness()
         assert 0 <= h.phi <= 1
 
 def test_no_newborn_when_mother_weighs_too_little():
