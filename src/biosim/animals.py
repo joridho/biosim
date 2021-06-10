@@ -22,6 +22,7 @@ class Animal:
         :param properties dictionary
         :
         """
+        random.seed()
 
         if properties["age"] < 0:
             raise ValueError('Age must be nonnegative')
@@ -257,7 +258,7 @@ class Carnivore(Animal):
         """
             The carnivore kills a herbivore with probability prob_kill
             """
-        if self.phi <= herb.phi:
+        if self.phi < herb.phi:
             self.prob_kill = 0
         elif 0 < self.phi - herb.phi < self.p['DeltaPhiMax']:
             self.prob_kill = (self.phi - herb.phi) / self.p['DeltaPhiMax']
@@ -267,6 +268,7 @@ class Carnivore(Animal):
         self.r = random.random()
 
         if self.r < self.prob_kill:
+            self.weight_gain(consumption=herb.weight)
             return True
         else:
             return False

@@ -22,6 +22,7 @@ class Map_Island:
         :param init_pop: Specifies initial population of each cell
         :type init_pop: list of dicts
         """
+        random.seed()
         self.geography = {}
         self.population = {}
         self.map = {}

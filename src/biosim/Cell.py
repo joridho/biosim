@@ -16,6 +16,7 @@ class Cell:
         """
 
     def __init__(self, population):
+        random.seed()
         """
         Repeat given text a given number of times.
 
@@ -71,6 +72,8 @@ class Cell:
         for animal in self.herbivores_pop:
             animal.eat_fodder(F_cell=self.af)  # make the herbivore eat
             self.af -= animal.F_consumption  # change the amount of fodder in the cell
+            if self.af <= 0:
+                return ValueError
 
     def available_herbivores_for_carnivores(self):
         self.herbivores_weight_sum = 0
@@ -85,8 +88,6 @@ class Cell:
             4. remove all eaten herbivores
         """
         self.sorting_animals()
-        #list_carn = []
-        list_herb = self.herbivores_pop
         killed = []
         self.eaten = 0  # for testing
 
@@ -94,23 +95,17 @@ class Cell:
             weight_of_herbs = 0
             for herb in self.herbivores_pop:
                 if weight_of_herbs < carn.p['F']:
-                    #if len(killed) <= len(list_herb):
-                    if carn.probability_kill_herbivore(herb) is True:
-                        if herb not in killed:
-                            carn.weight_gain_after_eating_herb(herb) #spiser Carnivores for mange herbivores. skal kunne spise kun F
-                            weight_of_herbs += herb.weight
-                            killed.append(herb)
-                            self.eaten +=1
+                    if len(killed) <= len(self.herbivores_pop):
+                        if carn.probability_kill_herbivore(herb) is True:
+                            if herb not in killed:
+                                carn.weight_gain_after_eating_herb(herb)
+                                weight_of_herbs += herb.weight
+                                killed.append(herb)
+                                self.eaten += 1
+                                carn.fitness()
 
-            #list_carn.append(carn)
-                    #eaten.append(carn)
-                    #list_carn.remove(carn)
-
-        self.herbivores_pop = list(set(list_herb) - set(killed))
-        #for k in killed:
-         #   list_herb.remove(k)
-        #self.herbivores_pop = list_herb
-        #self.carnivores_pop = list_carn
+        for herb in killed:
+            self.herbivores_pop.remove(herb)
 
     def newborn_animals(self):  # make it work for both species
         """
@@ -127,7 +122,7 @@ class Cell:
         self.list_new_h = []
         for k in range(self.N_herb):
             list_h[k].will_the_animal_give_birth(n=self.N_herb)
-            #list_h[k].birth = True # is there for testing since mocker doesn't work
+            # list_h[k].birth = True # is there for testing since mocker doesn't work
             if list_h[k].birth is True:
                 newborn = Herbivore({'species': 'Herbivore',
                                      'weight': list_h[k].newborn_birth_weight, 'age': 0})
@@ -148,7 +143,7 @@ class Cell:
             if list_c[k].birth is True:
                 newborn = Carnivore({'species': 'Carnivore',
                                      'weight': list_c[k].newborn_birth_weight, 'age': 0})
-                list_c[k].birth_weight_loss(newborn_birth_weight=newborn.weight)
+                # list_c[k].birth_weight_loss(newborn_birth_weight=newborn.weight)
                 self.list_new_c.append(newborn)
                 self.new_c += 1  # for testing
         for k in self.list_new_c:

@@ -45,7 +45,6 @@ def test_herbivore_aging():
         h.aging()
         assert h.age == n + 1
 
-'''
 def test_herbivore_birth_weight():
     """
     A test that checks that the herbivore have been given a birth_weight
@@ -53,7 +52,6 @@ def test_herbivore_birth_weight():
     h = Herbivore()
     birth_w = h.birth_weight
     assert h.birth_weight == birth_w
-'''
 
 def test_herbivore_weight_loss():
     '''
@@ -213,13 +211,9 @@ def test_if_carnivore_gains_correct_weight():
     assert carn.weight == w + herb.weight * carn.p['beta']
 
 def test_carnivore_updated_fitness():
-    carn = Carnivore({'species': 'Herbivore',
-                       'age': 3,
-                       'weight': 15})
+    carn = Carnivore(weight=70, age=5)
     f1 = carn.phi
-    herb = Herbivore({'species': 'Herbivore',
-                       'age': 3,
-                       'weight': 15})
+    herb = Herbivore(weight=35, age=2)
     carn.weight_gain_after_eating_herb(herb)
     assert f1 != carn.phi
 
@@ -251,7 +245,6 @@ def test_prob_kill_not_work2():
     assert carn.prob_kill == (carn.phi - herb.phi) / carn.p['DeltaPhiMax']
 
 
-'''
 def test_set_age():
     herb = Herbivore(weight=35, age=3)
     assert herb.age == 3
@@ -259,4 +252,8 @@ def test_set_age():
 def test_set_weight():
     herb = Herbivore(weight=35, age=3)
     assert herb.weight == 35
-'''
+
+
+def test_to_much_fitness():
+    h = Herbivore(properties={'species': 'Carnivore', 'weight': 29, 'age': 5})
+    assert h.phi == 0.8698915249774015

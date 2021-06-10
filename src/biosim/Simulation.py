@@ -64,6 +64,7 @@ class BioSim:
 
         img_dir and img_base must either be both None or both strings.
         """
+        random.seed()
 
         self.island_map_graph = Map_Island(island_geo, init_pop)
         self.island_map_graph.create_map_dict() # koordinatene i kart får tilhørende lister med dyr

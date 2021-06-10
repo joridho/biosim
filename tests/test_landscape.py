@@ -18,7 +18,7 @@ def test_simple_sorting_herb():
     This is a test that checks if the herbivores get sorted in a list based on ascending
     phi-value.
     """
-    population = [{'species': 'Herbivore', 'weight': 35, 'age': 5},
+    population = [{'species': 'Herbivore', 'weight': 60, 'age': 5},
                   {'species': 'Herbivore', 'weight': 41, 'age': 8},
                   {'species': 'Herbivore', 'weight': 50, 'age': 9},
                   {'species': 'Carnivore', 'weight': 35, 'age': 5},
@@ -32,8 +32,28 @@ def test_simple_sorting_herb():
     c.sorting_animals()
     liste3 = [c.herbivores_pop[0].phi, c.herbivores_pop[1].phi,
               c.herbivores_pop[2].phi]
-    #assert liste2 == liste3
-    assert c.herbivores_pop[0].age != c.herbivores_pop[0].age
+    assert liste2 == liste3
+
+def test_simple_sorting_herb():
+    """
+    This is a test that checks if the carnivores get sorted in a list based on descending
+    phi-value.
+    """
+    population = [{'species': 'Herbivore', 'weight': 60, 'age': 5},
+                  {'species': 'Herbivore', 'weight': 41, 'age': 8},
+                  {'species': 'Herbivore', 'weight': 50, 'age': 9},
+                  {'species': 'Carnivore', 'weight': 35, 'age': 5},
+                  {'species': 'Carnivore', 'weight': 41, 'age': 8},
+                  {'species': 'Carnivore', 'weight': 50, 'age': 9}]
+    c = Lowland(population)
+
+    liste1 = c.carnivores_pop
+    liste2 = [liste1[0].phi, liste1[1].phi, liste1[2].phi]
+    liste2.sort()
+    c.sorting_animals()
+    liste3 = [c.carnivores_pop[0].phi, c.carnivores_pop[1].phi,
+              c.carnivores_pop[2].phi]
+    assert liste2 != liste3
 
 
 def test_parameters_lowland():
@@ -42,11 +62,12 @@ def test_parameters_lowland():
 
 
 def test_sorting_carnivores():
-    l = Lowland(population=[{'species': 'Herbivore', 'weight': 35, 'age': 5},
-                            {'species': 'Herbivore', 'weight': 41, 'age': 8},
-                            {'species': 'Herbivore', 'weight': 50, 'age': 9}])
+    l = Lowland(population=[{'species': 'Carnivore', 'weight': 35, 'age': 5},
+                            {'species': 'Carnivore', 'weight': 41, 'age': 8},
+                            {'species': 'Carnivore', 'weight': 50, 'age': 9}])
     liste1 = l.carnivores_pop
     pop1 = [k.phi for k in liste1]
+    pop1.sort()
     pop1.reverse()
     l.sorting_animals()
     liste2 = l.carnivores_pop
@@ -72,18 +93,37 @@ def test_fodder_eaten():
     l.make_herbivores_eat()
     assert l.af == 800 - 3 * 10
 
+def test_fodder_will_stop_at_zero():
+    l = Lowland(population=[{'species': 'Herbivore', 'weight': 35, 'age': 5},
+                            {'species': 'Herbivore', 'weight': 41, 'age': 8},
+                            {'species': 'Herbivore', 'weight': 50, 'age': 9}])
+    l.make_herbivores_eat()
+    assert l.af == 0  # to test this I changed self.af to 25 in cell class. Not optimal, i know.
 
-def test_gain_weight_after_eating():  # får den kun til å fungere på ett dyr
+
+def test_gain_weight_after_eating_herb():  # får den kun til å fungere på ett dyr
     l = Lowland(population=[{'age': 5, 'species': 'Herbivore', 'weight': 20},
                             {'species': 'Herbivore', 'weight': 41, 'age': 8},
                             {'species': 'Herbivore', 'weight': 50, 'age': 9}])
     weight = [k.weight for k in l.herbivores_pop]
-    #l.make_herbivores_eat()
+    l.make_herbivores_eat()
     weight2 = [k.weight for k in l.herbivores_pop]
-    #weight.sort()
-    #weight2.sort()
-    assert l.herbivores_pop == weight
-    #assert [k + 8 for k in weight] == weight2
+    weight.sort()
+    weight2.sort()
+    assert [k + 9 for k in weight] == weight2
+    # if i change the available fodder to 25, the last herb will not gain 9 kg, as the other two
+
+def test_fitness_change_after_eating():
+    l = Lowland(population=[{'age': 5, 'species': 'Herbivore', 'weight': 20},
+                            {'species': 'Herbivore', 'weight': 41, 'age': 8},
+                            {'species': 'Herbivore', 'weight': 50, 'age': 9}])
+    fitness1 = [k.phi for k in l.herbivores_pop]
+    l.make_herbivores_eat()
+    fitness2 = [k.phi for k in l.herbivores_pop]
+    fitness1.sort()
+    fitness2.sort()
+    for k in range(len(fitness1)):
+        assert fitness1[k] < fitness2[k]
 
 ''' tror det er noe med sannsynlighet her
 def test_carnivores_gain_weight_after_eating():
@@ -113,14 +153,14 @@ def test_carnivore_weight_gain():  # ikke fullført liste
                   {'species': 'Herbivore', 'weight': 14, 'age': 3},
                   {'species': 'Herbivore', 'weight': 13, 'age': 3}]
     l = Lowland(population)
-    l.sorting_animals()
+    #l.sorting_animals()
     liste = l.carnivores_pop
     l.feed_carnivores()
-    l.sorting_animals()
+    #l.sorting_animals()
     for k in range(len(l.carnivores_pop)):
         assert l.carnivores_pop[k].weight > liste[k].weight
 
-def test_herbivores_removed_after_feed_carnivores():  # ikke fullført liste
+def test_herbivores_removed_after_feed_carnivores():
     population = [{'species': 'Carnivore', 'weight': 35, 'age': 5},
                   {'species': 'Carnivore', 'weight': 41, 'age': 8},
                   {'species': 'Carnivore', 'weight': 50, 'age': 9},
