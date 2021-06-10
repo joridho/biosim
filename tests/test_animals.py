@@ -216,3 +216,8 @@ def test_set_age():
 def test_set_weight():
     herb = Herbivore(weight=35, age=3)
     assert herb.weight == 35
+
+
+def test_to_much_fitness():
+    h = Herbivore(properties={'species': 'Carnivore', 'weight': 29, 'age': 5})
+    assert h.phi == 0.8698915249774015
