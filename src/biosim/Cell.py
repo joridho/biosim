@@ -15,6 +15,8 @@ class Cell:
         Class for cells
         """
 
+    p = None
+
     def __init__(self, population):
 
         self.herbivores_pop = []
@@ -25,11 +27,10 @@ class Cell:
             else:
                 self.carnivores_pop.append(Carnivore(animal_info))
 
-
     @classmethod
     def set_given_parameters(cls, params):
         """
-            Saves the parameters for the different celss for use in Cell class
+            Saves the parameters for the different cells for use in Cell class
             """
         for parameter in params:
             if parameter in cls.p:
@@ -49,7 +50,6 @@ class Cell:
         # my get an error later, just read the error and we will be good
 
     def make_herbivores_eat(self):
-
         """
             The animals eats available fodder until their appetite is filled.
             The eat_fodder-function from the Herbivore class does this.
@@ -60,10 +60,9 @@ class Cell:
         self.af = self.p['f_max']
         random.shuffle(self.herbivores_pop)
 
-        for k in self.herbivores_pop:
-                k.eat_fodder(F_cell=self.af)  # make the herbivore eat
-                self.af -= k.F_consumption  # change the amount of fodder in the cell
-
+        for animal in self.herbivores_pop:
+            animal.eat_fodder(F_cell=self.af)  # make the herbivore eat
+            self.af -= animal.F_consumption  # change the amount of fodder in the cell
 
     def available_herbivores_for_carnivores(self):
         self.herbivores_weight_sum = 0
@@ -91,7 +90,6 @@ class Cell:
         self.herbivores_pop = list(set(list_herb) - set(killed))
         self.carnivores_pop = list_carn
 
-
     def newborn_animals(self):  # make it work for both species
         """
             An animal gives birth maximum one time per year.The function birth_probability
@@ -104,32 +102,32 @@ class Cell:
         # for herbivores
         list_h = self.herbivores_pop
         self.new_h = 0  # for testing
-        self.list_new2 = []
+        self.list_new_h = []
         for k in range(self.N_herb):
-            list_h[k].birth_probability(n=self.N_herb)
+            list_h[k].will_the_animal_give_birth(n=self.N_herb)
             # list_h[k].birth = True # is there for testing since mocker doesn't work
             if list_h[k].birth is True:
                 newborn = Herbivore(weight=list_h[k].newborn_birth_weight, age=0)
                 list_h[k].birth_weight_loss(newborn_birth_weight=newborn.weight)
-                self.list_new2.append(newborn)
+                self.list_new_h.append(newborn)
                 self.new_h += 1  # for testing
-        for k in self.list_new2:
+        for k in self.list_new_h:
             list_h.append(k)
         self.herbivores_pop = list_h
 
         # for carnivores
         list_c = self.carnivores_pop
         self.new_c = 0  # for testing
-        self.list_new = [] #for testing
+        self.list_new_c = []  # for testing
         for k in range(self.N_carn):
-            list_c[k].birth_probability(n=self.N_carn)
+            list_c[k].will_the_animal_give_birth(n=self.N_carn)
             # list_c[k].birth = True  # there for testing because mocker doesn't work
             if list_c[k].birth is True:
                 newborn = Carnivore(weight=list_c[k].newborn_birth_weight, age=0)
                 list_c[k].birth_weight_loss(newborn_birth_weight=newborn.weight)
-                self.list_new.append(newborn)
+                self.list_new_c.append(newborn)
                 self.new_c += 1  # for testing
-        for k in self.list_new: #for testing
+        for k in self.list_new_c:
             list_c.append(k)
         self.carnivores_pop = list_c
 
@@ -166,16 +164,19 @@ class Cell:
         """
             Each year the animals ages. Here we use the aging function from the herbivore class
             """
-        animals = self.herbivores_pop + self.carnivores_pop
-        for animal in animals:
+        # animals = self.herbivores_pop + self.carnivores_pop
+        for animal in self.herbivores_pop:
+            animal.aging()
+        for animal in self.carnivores_pop:
             animal.aging()
 
     def make_animals_lose_weight(self):
         """
             Each year the animal loses weight based on their own weight and eta
             """
-        animals = self.herbivores_pop + self.carnivores_pop
-        for animal in animals:
+        for animal in self.herbivores_pop:
+            animal.weight_loss()
+        for animal in self.carnivores_pop:
             animal.weight_loss()
 
     def dead_animals_natural_cause(self):
@@ -216,8 +217,8 @@ class Lowland(Cell):
         """
             Initialises lowland class
             """
-        # self._accessible = True  # trengs denne linja??
         super().__init__(population)
+
 
 class Highland(Cell):
     """
@@ -229,8 +230,8 @@ class Highland(Cell):
         """
             Initialises highland class
             """
-        # self._accessible = True  # trengs denne linja??
         super().__init__(population)
+
 
 class Desert(Cell):
     """
@@ -242,8 +243,8 @@ class Desert(Cell):
         """
             Initialises desert class
             """
-        # self._accessible = True  # trengs denne linja??
         super().__init__(population)
+
 
 class Water(Cell):
     """
@@ -255,6 +256,4 @@ class Water(Cell):
         """
             Initialises water class
             """
-        # self._accessible = True  # trengs denne linja??
         super().__init__(population)
-

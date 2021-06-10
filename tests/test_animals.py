@@ -118,12 +118,17 @@ def test_no_newborn_if_newborn_too_fat():
 def test_birth():
     'This is a test that checks if the Herbivore gives birth when it is supposed to'
     h = Herbivore(weight=35, age=3)
+    true = 0
+    false = 0
     for _ in range(100):
         h.birth_probability(n=4)
         if h.birth == True:
-            assert h.r < h.prob_birth
+            h.r < h.prob_birth
+            true += 1
         else:
-            assert h.r >= h.prob_birth
+            h.r >= h.prob_birth
+            false +=1
+    assert true == false  # bare en test for å sjekke hva som ikke fungerer
 
 def test_herbivore_birth_weight_loss():
     ' This is a test that checks if the Mother looses the right amount of weight after giving birth'
