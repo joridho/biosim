@@ -163,31 +163,26 @@ class Cell:
 
         for herb in herbs_move:
             arrived_cell = random.choice()
-            if arrived_cell.Habitable == True:
-                self.move = True
+            if arrived_cell.Habitable() == True:
+                #self.move = True
                 arrived_cell.herbivores_pop.append(herb)
                 self.herbivores_pop.remove(herb)
-            else:
-                self.move = False
+            #else:
+             #   self.move = False
 
         carns_move = []
         for carn in self.carnivores_pop:
             if carn.move_single_animal() == True:
-                carns_move.append(carn)
+                carns_move.append(herb)
 
         for carn in carns_move:
-            arrived_cell = random.choice() # hvordan kalle på naboceller
-            if arrived_cell.Habitable == True:
-                self.move = True
-            else:
-                self.move = False
-
-        herbs_stay_in_cell = self.herbivores_pop - herbs_move
-        herbs_in_new_cell = herbs_move
-
-        carns_stay_in_cell = self.carnivores_pop - carns_move
-        carns_in_new_cell = carns_move # Hvordan legge denne lista til i en ny celle`?
-
+            arrived_cell = random.choice()
+            if arrived_cell.Habitable() == True:
+                #self.move = True
+                arrived_cell.carnivores_pop.append(herb)
+                self.carnivores_pop.remove(carn)
+            #else:
+             #   self.move = False
 
     def counting_animals(self):
         """
