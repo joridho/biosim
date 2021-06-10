@@ -94,13 +94,13 @@ class Cell:
             weight_of_herbs = 0
             for herb in self.herbivores_pop:
                 if weight_of_herbs < carn.p['F']:
-                    if len(killed) <= len(list_herb):
-                        if carn.probability_kill_herbivore(herb) is True:
-                            if herb not in killed:
-                                carn.weight_gain_after_eating_herb(herb) #spiser Carnivores for mange herbivores. skal kunne spise kun F
-                                weight_of_herbs += herb.weight
-                                killed.append(herb)
-                                self.eaten +=1
+                    #if len(killed) <= len(list_herb):
+                    if carn.probability_kill_herbivore(herb) is True:
+                        if herb not in killed:
+                            carn.weight_gain_after_eating_herb(herb) #spiser Carnivores for mange herbivores. skal kunne spise kun F
+                            weight_of_herbs += herb.weight
+                            killed.append(herb)
+                            self.eaten +=1
 
             #list_carn.append(carn)
                     #eaten.append(carn)
@@ -243,6 +243,9 @@ class Lowland(Cell):
             """
         super().__init__(population)
 
+    def Habitable(self):
+        return self.habitable == True
+
 
 class Highland(Cell):
     """
@@ -255,6 +258,9 @@ class Highland(Cell):
             Initialises highland class
             """
         super().__init__(population)
+
+    def Habitable(self):
+        return self.habitable == True
 
 
 class Desert(Cell):
@@ -269,6 +275,9 @@ class Desert(Cell):
             """
         super().__init__(population)
 
+    def Habitable(self):
+        return self.habitable == True
+
 
 class Water(Cell):
     """
@@ -281,3 +290,6 @@ class Water(Cell):
             Initialises water class
             """
         super().__init__(population)
+
+    def Habitable(self):
+        return self.habitable == False
