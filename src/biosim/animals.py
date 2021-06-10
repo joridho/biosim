@@ -20,13 +20,10 @@ class Animal:
 
         self.age = age
 
-        """
         if weight is None:
             self.weight = self.birth_weight_function()
         else:
             self.weight = weight
-        """
-        self.weight = weight
 
         self.fitness()
 
