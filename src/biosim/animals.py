@@ -159,7 +159,7 @@ class Animal:
         prob_move = self.p['mu']*self.phi
         self.m = random.random()
         if self.m < prob_move:
-            self.move = True
+            self.move = True #it has moved once this year
         else:
             self.move = False
         return self.move
