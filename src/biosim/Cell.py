@@ -90,8 +90,9 @@ class Cell:
         killed = []
         self.eaten = 0  # for testing
 
-        weight_of_herbs = 0
+
         for carn in self.carnivores_pop:
+            weight_of_herbs = 0
             for herb in self.herbivores_pop:
                 if weight_of_herbs < carn.p['F']:
                     if carn.probability_kill_herbivore(herb) is True:
@@ -145,7 +146,7 @@ class Cell:
             # list_c[k].birth = True  # there for testing because mocker doesn't work
             if list_c[k].birth is True:
                 newborn = Carnivore({'species': 'Carnivore',
-                                     'weight': list_h[k].newborn_birth_weight, 'age':0})
+                                     'weight': list_c[k].newborn_birth_weight, 'age':0})
                 list_c[k].birth_weight_loss(newborn_birth_weight=newborn.weight)
                 self.list_new_c.append(newborn)
                 self.new_c += 1  # for testing
