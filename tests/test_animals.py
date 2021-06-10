@@ -108,11 +108,9 @@ def test_no_newborn_if_newborn_too_fat():
     This is a test that checks if the birth probability equals zero when the newborn weighs more
     than the mother
     """
-    h = Herbivore(weight=3, age=3)
-    h.birth_probability(n=3)
-    h.newborn_birth_weight = 5
-    assert h.prob_birth == 0
-
+    # the newborn will weigh more than 15/3.5
+    h = Herbivore(weight=15, age=3)
+    assert h.birth_probability(n=3) == 0
 
 def test_birth():
     'This is a test that checks if the Herbivore gives birth when it is supposed to'
