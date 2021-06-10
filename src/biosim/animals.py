@@ -20,10 +20,13 @@ class Animal:
 
         self.age = age
 
+        """
         if weight is None:
             self.weight = self.birth_weight_function()
         else:
             self.weight = weight
+        """
+        self.weight = weight
 
         self.fitness()
 
@@ -130,9 +133,9 @@ class Animal:
 
     def will_the_animal_die(self):
         p = self.death_probability()
-        d = random.random()
+        self.d = random.random()
 
-        if d < p:
+        if self.d < p:
             return True
         else:
             return False
@@ -195,9 +198,13 @@ class Herbivore(Animal):
         if self.F_cell >= self.p['F']:
             self.F_consumption = self.p['F']
             self.weight_gain(consumption=self.F_consumption)
+            if self.F_consumption < 0:
+                return ValueError
         else:
             self.F_consumption = self.F_cell
             self.weight_gain(consumption=self.F_consumption)
+            if self.F_consumption < 0:
+                return ValueError
 
 
 class Carnivore(Animal):

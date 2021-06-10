@@ -90,9 +90,7 @@ def test_no_newborn_when_mother_weighs_too_little():
     This is a test that checks if the birth probability equals zero when the mother weighs to little.
     """
     h = Herbivore(weight=3.5, age=3)
-    h.birth_probability(n=3)
-    assert h.prob_birth == 0
-
+    assert h.birth_probability(n=3) ==0
 def test_no_newborn_when_to_few_animals(): #too
     """
     This is a test that checks if the birth probability equals zero when there are too few animals
@@ -100,8 +98,7 @@ def test_no_newborn_when_to_few_animals(): #too
     """
 
     h = Herbivore(weight=35, age=3)
-    h.birth_probability(n=1)
-    assert h.prob_birth == 0
+    assert h.birth_probability(n=1) == 0
 
 def test_no_newborn_if_newborn_too_fat():
     """
@@ -141,7 +138,7 @@ def test_death():
     h = Herbivore(weight=10)
     for _ in range(100):
         h.death_probability()
-        if h.death == True:
+        if h.will_the_animal_die() == True:
             assert h.d < h.prob_death
         else:
             assert h.d >= h.prob_death
@@ -157,7 +154,7 @@ def  test_consumption_not_enough_fodder():
     assert h.F_consumption == h.F_cell
 
 def test_herbivore_eat_fodder():
-    h = Herbivore()
+    h = Herbivore(weight=16)
     current_weight = h.weight
     h.eat_fodder(F_cell = h.p['F']) 
     assert h.weight == current_weight + h.p['beta'] * h.F_consumption
@@ -169,7 +166,7 @@ def test_herbivore_gains_weight_after_eat_fodder():
     assert h.weight == current_weight + h.p['beta'] * h.F_consumption
 
 def test_weight_gain_after_eating():
-    h = Herbivore(weight=37)
+    h = Herbivore(weight=37, age=2)
     #h.p['F']= 10
     h.eat_fodder(F_cell = 800)
     assert h.weight == 37 + h.p['beta'] * h.F_consumption
@@ -194,7 +191,7 @@ def test_prob_kill():
     carn = Carnivore()
     for _ in range(100):
         carn.probability_kill_herbivore(herb)
-        if carn.kill == True:
+        if carn.prob_kill == True:
             assert carn.r < carn.prob_kill
         else:
             assert carn.r >= carn.prob_kill
