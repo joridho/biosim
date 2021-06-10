@@ -90,8 +90,8 @@ class Cell:
         killed = []
         self.eaten = 0  # for testing
 
-        weight_of_herbs = 0
         for carn in self.carnivores_pop:
+            weight_of_herbs = 0
             for herb in self.herbivores_pop:
                 if weight_of_herbs < carn.p['F']:
                     if carn.probability_kill_herbivore(herb) is True:
