@@ -7,7 +7,7 @@
 __author__ = 'Christianie Torres'
 __email__ = 'christianie.torres@nmbu.no'
 
-from biosim.Animals import Herbivore, Carnivore
+from biosim.Animals import Animal, Herbivore, Carnivore
 
 class test_animals:
     alpha = 0.01  # Significance level
@@ -51,12 +51,13 @@ animals = [{'species': 'Herbivore', 'age': 0, 'weight': 5},
             {'species': 'Herbivore', 'age': 100, 'weight': 5},
             {'species': 'Herbivore', 'age': 100, 'weight': 1000}]
 
+# Tests for initial value:
 def test_parameters_herb():
     """
     Checking if the correct parameters for herbivores is given
         It is given that the w_birth is 8.0 for herbivores
     """
-    h = Herbivore({'species': 'Herbivore', 'age': 5, 'weight': 20})
+    h = Herbivore({'age': 5, 'weight': 20})
     assert h.p['w_birth'] == 8.0
 
 def test_parameters_carn():
@@ -64,44 +65,97 @@ def test_parameters_carn():
     Checking if the correct parameters for carnivores is given
     It is given that the w_birth is 6.0 for carnivores
     """
-    h = Animal({'species': 'Carnivore', 'age': 5, 'weight': 20})
+    h = Carnivore({'age': 10, 'weight': 40})
     assert h.p['w_birth'] == 6.0
 
 def test_herbivore_age():
     """
-    A test that checks that a herbivore has been created with age 0
+    The herbivore shall be given an age when it is created
+    It is given age = 5
     """
-    h = Herbivore({'species': 'Herbivore','age': 5,'weight': 20})
+    h = Herbivore({'age': 5, 'weight': 20})
     assert h.age == 5
 
-def test_update_fitness_when_aging():
-    h = Herbivore({'species': 'Herbivore',
-                       'age': 5,
-                       'weight': 35})
-    herb_phi = h.phi
-    h.aging()
-    assert h.phi < herb_phi
+def test_carnivore_age():
+    """
+    The herbivore shall be given an age when it is created
+    It is given age = 10
+    """
+    c = Carnivore({'age': 10, 'weight': 40})
+    assert c.age == 10
 
 def test_herbivore_weight():
-    '''
-        test to check if the herbivore has been given a weight
-        '''
-    h = Herbivore({'species': 'Herbivore',
-                       'age': 5,
-                       'weight': 20})
-    #b = h.birth_weight
+    """
+    The herbivore shall be given an weight when it is created
+    It is given weight = 20
+    """
+    h = Herbivore({'age': 5, 'weight': 20})
     assert h.weight == 20
 
+def test_carnivore_weight():
+    """
+    The carnivore shall be given an weight when it is created
+    It is given weight = 40
+    """
+    c = Carnivore({'age': 10,'weight': 40})
+    assert c.weight == 40
+
+def test_herb_given_fitness():
+    """
+    When a herbivore is created the fitness is automatically updated
+    """
+    h = Herbivore({'age': 5, 'weight': 20})
+    assert h.phi != None
+
+def test_carn_given_fitness():
+    """
+    When a carnivore is created the fitness is automatically updated
+    """
+    c = Carnivore({'age': 10, 'weight': 40})
+    assert c.phi != None
+
+# Tests for aging function
 def test_herbivore_aging():
     """
-    A test that checks that the herbivore ages for each year
+    A herbivore ages each year, and there are therefore created a function for it
+    The herbivore has age = 0, each year it ages and the age should be year + 1
     """
-    h = Herbivore({'species': 'Herbivore',
-                       'age': 0,
-                       'weight': 20})
-    for n in range(10):
+    h = Herbivore({'age': 0, 'weight': 20})
+    for year in range(10):
         h.aging()
-        assert h.age == n + 1
+        assert h.age == year + 1
+
+def test_carnivore_aging():
+    """
+    A carnivore ages each year, and there are therefore created a function for it
+    The carnivore has age = 0, each year it ages and the age should be year + 1
+    """
+    c = Carnivore({'age': 0, 'weight': 20})
+    for year in range(10):
+        c.aging()
+        assert c.age == year + 1
+
+def test_update_fitness_when_aging_herb():
+    """
+    When a herbivore ages the fitness changes, since age is used to calculate fitness
+    First the initial fitness is saved in init_phi, and compared with the new fitness after aging
+    The initial fitness should ble slightly greater than the new fitness
+    """
+    h = Herbivore({'age': 5, 'weight': 35})
+    init_phi = h.phi
+    h.aging()
+    assert h.phi < init_phi
+
+def test_update_fitness_when_aging_carn():
+    """
+    When a carnivore ages the fitness changes, since age is used to calculate fitness
+    First the initial fitness is saved in init_phi, and compared with the new fitness after aging
+    The initial fitness should ble slightly greater than the new fitness
+    """
+    c = Carnivore({'age': 10, 'weight': 40})
+    init_phi = c.phi
+    c.aging()
+    assert c.phi < init_phi
 
 ''''
 
@@ -118,32 +172,102 @@ def test_herbivore_birth_weight():
     assert h.birth_weight == birth_w
 '''
 
+# Tests for birth_weight_function:
+def test_birth_weight_function_herb():
+    """
+    When a new herbivore is born it needs to be given a weight
+    The newborns weight is calculated with the birth_weight_function function
+    To use this function the newborn has to be given a mother, which is h
+    """
+    h = Herbivore({'age': 5, 'weight': 20})
+    newborn = Herbivore({'age': 0, 'weight': h.birth_weight_function()})
+    assert newborn.weight != None
+
+def test_birth_weight_function_carn():
+    """
+    When a new carnivore is born it needs to be given a weight
+    The newborns weight is calculated with the birth_weight_function function
+    To use this function the newborn has to be given a mother, which is c
+    """
+    c = Carnivore({'age': 10, 'weight': 40})
+    newborn = Herbivore({'age': 0, 'weight': c.birth_weight_function()})
+    assert newborn.weight != None
+
+# Tests for weight_loss function:
 def test_herbivore_weight_loss():
     '''
-        this is a test for testing if the herbivore looses weight each year
+    The herbivore loses weight each year.
+    The weight loss is equivalent to the initial weight times eta = 0.05
     '''
-    h = Herbivore({'species': 'Herbivore',
-                       'age': 5,
-                       'weight': 20})
-    current_weight = h.weight
+    h = Herbivore({'age': 5, 'weight': 20})
+    initial_weight = h.weight
     eta = h.p['eta']
     h.weight_loss()
-    assert h.weight == current_weight - current_weight * eta
+    assert h.weight == initial_weight - initial_weight * eta
 
-def test_herbivore_weight_gain():
+def test_carnivore_weight_loss():
     '''
-        this is a test for testing if the herbivore gains weight when it eats as much as it wants to
-        '''
-    h = Herbivore({'species': 'Herbivore',
-                       'age': 5,
-                       'weight': 20})
-    current_weight = h.weight
+    The carnivore loses weight each year.
+    The weight loss is equivalent to the initial weight times eta = 0.125
+    '''
+    c = Carnivore({'age': 10, 'weight': 40})
+    initial_weight = c.weight
+    eta = c.p['eta']
+    c.weight_loss()
+    assert c.weight == initial_weight - initial_weight * eta
+
+def test_update_fitness_during_weight_loss_herb():
+    """
+    When the herbivore loses weight the fitness must be updates.
+    It is updated in the weight_loss function.
+    The initial fitness should be greater than the new fitness.
+    """
+    h = Herbivore({'age': 5, 'weight': 20})
+    init_phi = h.phi
+    h.weight_loss()
+    assert h.phi < init_phi
+
+def test_update_fitness_during_weight_loss_carn():
+    """
+    When the carnivore loses weight the fitness must be updates.
+    It is updated in the weight_loss function.
+    The initial fitness should be greater than the new fitness.
+    """
+    c = Carnivore({'age': 10, 'weight': 40})
+    init_phi = c.phi
+    c.weight_loss()
+    assert c.phi < init_phi
+
+# Tests for weight_gain function
+def test_weight_gain_herb():
+    """
+    When the herbivore eats it gains weight.
+    Before it eats we save the initial weight in init_weight.
+    We use the weight_gain function to calculate the new weight, where the input is the amount
+    it eats. For convenience the amount it eats is the same as the appetite.
+    """
+    h = Herbivore({'age': 5, 'weight': 20})
+    init_weight = h.weight
     beta = h.p['beta']
     F = h.p['F']
-    new_weight = current_weight + beta * F
+    new_weight = init_weight + beta * F  # for comparing with the weight given in the function
     h.weight_gain(consumption=F)
     assert h.weight == new_weight
 
+def test_weight_gain_carn():
+    """
+    When the carnivore eats it gains weight.
+    Before it eats we save the initial weight in init_weight.
+    We use the weight_gain function to calculate the new weight, where the input is the amount
+    it eats. For convenience the amount it eats is the same as the appetite.
+    """
+    c = Carnivore({'age': 10, 'weight': 40})
+    init_weight = c.weight
+    beta = c.p['beta']
+    F = c.p['F']
+    new_weight = init_weight + beta * F  # for comparing with the weight given in the function
+    c.weight_gain(consumption=F)
+    assert c.weight == new_weight
 
 def test_herbivore_fitness():
     """
