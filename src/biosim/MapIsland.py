@@ -239,7 +239,7 @@ class Map_Island:
             cell.newborn_animals()
 
         # MIGRATION
-        for loc, cell in self.map.values():
+        for loc, cell in self.map.items():
             self.neighbours_of_current_cell(loc)
             if self.arrived_cell.Habitable() == True:
                 liste = cell.move_animals_from_cell()
