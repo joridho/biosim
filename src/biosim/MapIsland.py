@@ -201,7 +201,9 @@ class Map_Island:
         for neighbour_cell in neighbours:
             if neighbour_cell in self.map.keys():
                 self.neighbour_cells.append(self.map[neighbour_cell])
-        return self.neighbour_cells
+
+        arrived_cell = random.choice(self.neighbour_cells)
+        return arrived_cell
 
     def year_cycle(self):
         """
@@ -227,7 +229,7 @@ class Map_Island:
         for cell in self.map.values():
             cell.newborn_animals()
 
-        '''
+
 
         # MIGRATION
         for loc, cell in self.map.values():
@@ -265,5 +267,5 @@ class Map_Island:
         #DEAD
         for cell in self.map.values():
             cell.dead_animals_natural_cause()
-
+'''
 

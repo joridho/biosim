@@ -150,7 +150,7 @@ class Cell:
             list_c.append(k)
         self.carnivores_pop = list_c
 
-    def move_animals(self):
+    def move_animals_from_cell(self):
         self.herbs_move = []
         for herb in self.herbivores_pop:
             if herb.move_single_animal() == True:
@@ -160,6 +160,10 @@ class Cell:
         for carn in self.carnivores_pop:
             if carn.move_single_animal() == True:
                 self.carns_move.append(carn)
+
+
+    def move_animals_to_cell(self):
+        self.herbs_move
 
     def counting_animals(self):
         """
