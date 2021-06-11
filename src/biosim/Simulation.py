@@ -71,7 +71,7 @@ class BioSim:
 
         self.num_years_simulated = 0
 
-
+    @staticmethod
     def set_animal_parameters(self, species, p):
         """
         Set parameters for animal species.
@@ -85,17 +85,18 @@ class BioSim:
             if param_name in class_names[species].p:
                 class_names[species].p[param_name] = p[param_name]
 
-    def set_landscape_parameters(self, landscape, params):
+    @staticmethod
+    def set_landscape_parameters(self, landscape, p):
         """
         Set parameters for landscape type.
 
         :param landscape: String, code letter for landscape
-        :param params: Dict with valid parameter specification for landscape
+        :param p: Dict with valid parameter specification for landscape
         """
         class_names = {'L': Lowland, 'H': Highland, 'D': Desert, 'W': Water}
-        for param_name in params.keys():
-            if param_name in class_names[landscape].params.keys():
-                class_names[landscape].params[param_name] = params[param_name]
+        for param_name in p.keys():
+            if param_name in class_names[landscape].p.keys():
+                class_names[landscape].p[param_name] = p[param_name]
 
     def simulate(self, years):
         """
@@ -185,6 +186,7 @@ class BioSim:
         ax2.plot(N_carn, V_year, 'r')
         ax2.legend('Animals')
 
+        '''
         ax3.set_xticks(1)
         ax3.set_xticks(1)
         ax3.set_title("Herbivore distribution")
@@ -196,7 +198,7 @@ class BioSim:
         ax4.set_title("Carnivore distribution")
         fig.tight_layout()
         ax3.plt.imshow(N_carn, V_year)
-
+        '''
 
     '''
 
