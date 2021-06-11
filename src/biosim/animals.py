@@ -148,10 +148,10 @@ class Animal:
             return 0.4 * (1-self.phi)#self.p['omega'] * (1 - self.phi)
 
     def will_the_animal_die(self):
-        self.p = self.death_probability()
-        self.d = random.random()
+        p = self.death_probability()
+        d = random.random()
 
-        if self.d < self.p:
+        if d < p:
             return True
         else:
             return False
@@ -209,8 +209,8 @@ class Herbivore(Animal):
             after the consumption the herbivore gains weight
             """
         self.F_cell = F_cell
-        if self.F_cell >= 10:  #self.p['F']:
-            self.F_consumption = 10  # self.p['F']
+        if self.F_cell >= self.p['F']:
+            self.F_consumption = self.p['F']
             self.weight_gain(consumption=self.F_consumption)
             if self.F_consumption < 0:
                 return ValueError
