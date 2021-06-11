@@ -244,9 +244,9 @@ class Map_Island:
             if self.arrived_cell.Habitable() == True:
                 liste = cell.move_animals_from_cell()
                 self.arrived_cell.move_animals_to_cell(liste)
-            #   if self.arrived_cell.Habitable() == True
-            #    for herb in self.herbs_move:
-            #        self.arrived_cell.herbivores_pop.append(herb)
+
+        for loc, cell in self.map.items():
+            cell.reset_already_moved()
 
             '''
             for herb in cell.herbs_move:
