@@ -155,8 +155,9 @@ class Cell:
         list = self.herbivores_pop
         for herb in list:
             if herb.move_single_animal() == True:
-                self.herbs_move.append(herb)
-                self.herbivores_pop.remove(herb)
+                if herb.times_moved < 1:
+                    self.herbs_move.append(herb)
+                    self.herbivores_pop.remove(herb)
 
         self.carns_move = []
         list2 = self.carnivores_pop
