@@ -290,8 +290,9 @@ class Lowland(Cell):
             """
         super().__init__(population)
 
-    def habitable(self):
-        return self.habitable is True
+    def Habitable(self):
+        self.habitable = True
+        return self.habitable
 
 
 class Highland(Cell):
@@ -306,8 +307,9 @@ class Highland(Cell):
             """
         super().__init__(population)
 
-    def habitable(self):
-        return self.habitable is True
+    def Habitable(self):
+        self.habitable = True
+        return self.habitable
 
 
 class Desert(Cell):
@@ -322,8 +324,9 @@ class Desert(Cell):
             """
         super().__init__(population)
 
-    def habitable(self):
-        return self.habitable is True
+    def Habitable(self):
+        self.habitable = True
+        return self.habitable
 
 
 class Water(Cell):
@@ -338,5 +341,6 @@ class Water(Cell):
             """
         super().__init__(population)
 
-    def habitable(self):
-        return self.habitable is False
+    def Habitable(self):
+        self.habitable = False
+        return self.habitable

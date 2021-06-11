@@ -184,7 +184,7 @@ class Map_Island:
                 raise ValueError(
                     f"Invalid landscape type {cell_type}")  # Gir feilmelding hvis celletype ikke fins
 
-    def neighbours_of_current_cell(self, current_coordinates, list): # Hva skal input være her?
+    def neighbours_of_current_cell(self, current_coordinates): # Hva skal input være her?
         """
         Finds all neighbouring coordinates of a given cell. Checks the
         landscape type of each coordinate. The neighbours
