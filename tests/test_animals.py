@@ -24,6 +24,14 @@ def test_herbivore_age():
                        'weight': 20})
     assert h.age == 5
 
+def test_update_fitness_when_aging():
+    h = Herbivore({'species': 'Herbivore',
+                       'age': 5,
+                       'weight': 35})
+    herb_phi = h.phi
+    h.aging()
+    assert h.phi < herb_phi
+
 def test_herbivore_weight():
     '''
         test to check if the herbivore has been given a weight

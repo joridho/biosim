@@ -29,7 +29,7 @@ class Animal:
         else:
             self.age = properties["age"]
 
-        if properties["weight"] <= 0:
+        if properties["weight"] < 0:
             raise ValueError('Weight must be positive')
         else:
             self.weight = properties["weight"]
@@ -97,7 +97,7 @@ class Animal:
         else:
             self.phi = q_plus * q_minus
 
-        if 0 >= self.phi or self.phi >= 1:
+        if 0 > self.phi or self.phi >= 1:
             return False
         else:
             return self.phi

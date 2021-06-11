@@ -179,8 +179,16 @@ class Cell:
         # animals = self.herbivores_pop + self.carnivores_pop
         for animal in self.herbivores_pop:
             animal.aging()
+            animal.fitness()
         for animal in self.carnivores_pop:
             animal.aging()
+            animal.fitness()
+
+    def update_fitness(self):
+        for animal in self.herbivores_pop:
+            animal.fitness()
+        for animal in self.carnivores_pop:
+            animal.fitness()
 
     def make_animals_lose_weight(self):
         """
