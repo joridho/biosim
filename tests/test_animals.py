@@ -338,6 +338,16 @@ def test_no_newborn_when_mother_weighs_too_little_carn():
     c = Carnivore({'age': 10, 'weight': 15})
     assert c.birth_probability(n=3) == 0
 
+
+
+
+
+
+
+
+
+
+
 def test_no_newborn_when_to_few_animals(): #too
     """
     This is a test that checks if the birth probability equals zero when there are too few animals
