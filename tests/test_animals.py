@@ -24,6 +24,14 @@ def test_herbivore_age():
                        'weight': 20})
     assert h.age == 5
 
+def test_update_fitness_when_aging():
+    h = Herbivore({'species': 'Herbivore',
+                       'age': 5,
+                       'weight': 35})
+    herb_phi = h.phi
+    h.aging()
+    assert h.phi < herb_phi
+
 def test_herbivore_weight():
     '''
         test to check if the herbivore has been given a weight
@@ -116,6 +124,7 @@ def test_no_newborn_when_mother_weighs_too_little():
                        'age': 3,
                        'weight': 3.5})        #weight=3.5, age=3
     assert h.birth_probability(n=3) ==0
+
 def test_no_newborn_when_to_few_animals(): #too
     """
     This is a test that checks if the birth probability equals zero when there are too few animals

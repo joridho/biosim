@@ -71,7 +71,7 @@ class BioSim:
 
         self.num_years_simulated = 0
 
-    '''
+
     def set_animal_parameters(self, species, p):
         """
         Set parameters for animal species.
@@ -80,32 +80,10 @@ class BioSim:
         :param p: Dict with valid parameter specification for species
         """
         
-        class_names = {'Herbivores': Herbivore,
-                       'Carnivore': Carnivore}
+        class_names = {'Herbivores': Herbivore, 'Carnivore': Carnivore}
         for param_name in p.keys():
             if param_name in class_names[species].p:
-                if p[param_name] >= 0 and param_name is not "DeltaPhiMax" \
-                        and param_name is not "eta" and param_name is not "F":
-                    class_names[species].p[param_name] = p[
-                        param_name]
-                # checks special criteria for eta
-                elif param_name is "eta" and 0 <= p[param_name] <= 1:
-                    class_names[species].p[param_name] = p[
-                        param_name]
-                # checks special criteria for F
-                elif param_name is "F" and 0 < p[param_name]:
-                    class_names[species].p[param_name] = p[
-                        param_name]
-                # checks special criteria for DeltaPhiMax
-                elif param_name is "DeltaPhiMax" and p[param_name] > 0:
-                    class_names[species].p[param_name] = p[
-                        param_name]
-                else:
-                    raise ValueError(f'{p[param_name]} is an invalid '
-                                     f'parameter value for parameter '
-                                     f'{param_name}!')
-            else:
-                raise ValueError(f'{param_name} is an invalid parameter name!')
+                class_names[species].p[param_name] = p[param_name]
 
     def set_landscape_parameters(self, landscape, params):
         """
@@ -114,7 +92,10 @@ class BioSim:
         :param landscape: String, code letter for landscape
         :param params: Dict with valid parameter specification for landscape
         """
-    '''
+        class_names = {'L': Lowland, 'H': Highland, 'D': Desert, 'W': Water}
+        for param_name in params.keys():
+            if param_name in class_names[landscape].params.keys():
+                class_names[landscape].params[param_name] = params[param_name]
 
     def simulate(self, years):
         """
@@ -122,15 +103,40 @@ class BioSim:
 
         :param years: number of years to simulate
         """
-        # phi_array_herb = []
-        # age_array_herb = []
-        # weight_array_herb = []
-        # N_herb = []
-        # N_carn = []
-        # V year = []
+        phi_array_herb = []
+        age_array_herb = []
+        weight_array_herb = []
+        N_herb = []
+        N_carn = []
+        N_total = []
+        V_year = []
 
+        # self.set_animal_parameters(species='Herbivore, Carnivore', p=)
         for year in range(years):
             self.island_map_graph.year_cycle()
+
+            # creating arrays for plotting
+            total_phi = 0
+            total_age = 0
+            total_weight = 0
+            for cell in self.island_map_graph.map.values():
+                for animal in cell.herbivores_pop:
+                    total_phi += animal.phi
+                    total_age += animal.age
+                    total_weight += animal.weight
+                for animal in cell.carnivores_pop:
+                    total_phi += animal.phi
+                    total_age += animal.age
+                    total_weight += animal.weight
+
+            N_herb.append(self.num_animals_per_species['Herbivore'])
+            N_carn.append(self.num_animals_per_species['Carnivore'])
+            N_total.append(self.num_animals)
+            V_year.append(self.num_years_simulated)
+            phi_array_herb.append(total_phi)
+            age_array_herb.append(total_age)
+            weight_array_herb.append(total_weight)
+
             self.num_years_simulated += 1
 
         print(self.num_animals_per_species)
@@ -145,7 +151,7 @@ class BioSim:
         #print(total_number_of_animals)
         #print(total_number_of_herbivores)
         #print(total_number_of_carnivores)
-        '''
+
         fig = plt.figure()
         ax1 = fig.add_subplot(3, 3, 1)  # map
         ax2 = fig.add_subplot(3, 3, 3)  # animal count
@@ -159,7 +165,7 @@ class BioSim:
         axt = fig.add_axes([0.4, 0.8, 0.2, 0.2])  # llx, lly, w, h
         axt.axis('off')
 
-        template = 'Count: {:5d}'
+        template = 'Years: {:5d}'
         txt = axt.text(0.5, 0.5, template.format(0),
                        horizontalalignment='center',
                        verticalalignment='center',
@@ -169,24 +175,30 @@ class BioSim:
 
         input('Press ENTER to begin counting')
 
+
         for k in range(30):
             txt.set_text(template.format(k))
             plt.pause(0.1)  # pause required to make update visible
 
-        ax2.plot(N_herb, self.num_years_simulated, 'b')
-        ax2.plot(N_carn, self.num_years_simulated, 'r')
+
+        ax2.plot(N_herb, V_year, 'b')
+        ax2.plot(N_carn, V_year, 'r')
         ax2.legend('Animals')
 
         ax3.set_xticks(1)
         ax3.set_xticks(1)
         ax3.set_title("Herbivore distribution")
         fig.tight_layout()
-        ax3.plt.imshow(N_herb,)
-        '''
+        ax3.plt.imshow(N_herb,V_year)
+
+        ax4.set_xticks(1)
+        ax4.set_xticks(1)
+        ax4.set_title("Carnivore distribution")
+        fig.tight_layout()
+        ax3.plt.imshow(N_carn, V_year)
+
 
     '''
-    def setup_graphics(self): ikke fra plesser 
-        self.create_map()
 
     def create_map(self): ikke fra plesser 
         # geography

@@ -66,14 +66,14 @@ class Cell:
 
             This function can only be used once per year because of the available_fodder_function
          """
-        self.af = self.p['f_max']
+        self.af = 10 #self.p['f_max']
         random.shuffle(self.herbivores_pop)
 
         for animal in self.herbivores_pop:
             animal.eat_fodder(F_cell=self.af)  # make the herbivore eat
             self.af -= animal.F_consumption  # change the amount of fodder in the cell
             if self.af <= 0:
-                return ValueError
+                return ValueError('There has to be a positive amount of fodder')
 
     def available_herbivores_for_carnivores(self):
         self.herbivores_weight_sum = 0
@@ -227,8 +227,16 @@ class Cell:
         # animals = self.herbivores_pop + self.carnivores_pop
         for animal in self.herbivores_pop:
             animal.aging()
+            animal.fitness()
         for animal in self.carnivores_pop:
             animal.aging()
+            animal.fitness()
+
+    def update_fitness(self):
+        for animal in self.herbivores_pop:
+            animal.fitness()
+        for animal in self.carnivores_pop:
+            animal.fitness()
 
     def make_animals_lose_weight(self):
         """
@@ -279,8 +287,8 @@ class Lowland(Cell):
             """
         super().__init__(population)
 
-    def Habitable(self):
-        return self.habitable == True
+    def habitable(self):
+        return self.habitable is True
 
 
 class Highland(Cell):
@@ -295,8 +303,8 @@ class Highland(Cell):
             """
         super().__init__(population)
 
-    def Habitable(self):
-        return self.habitable == True
+    def habitable(self):
+        return self.habitable is True
 
 
 class Desert(Cell):
@@ -311,8 +319,8 @@ class Desert(Cell):
             """
         super().__init__(population)
 
-    def Habitable(self):
-        return self.habitable == True
+    def habitable(self):
+        return self.habitable is True
 
 
 class Water(Cell):
@@ -327,5 +335,5 @@ class Water(Cell):
             """
         super().__init__(population)
 
-    def Habitable(self):
-        return self.habitable == False
+    def habitable(self):
+        return self.habitable is False

@@ -25,27 +25,18 @@ class Animal:
         random.seed()
 
         if properties["age"] < 0:
-            raise ValueError('Age must be nonnegative')
+            raise ValueError('Age must be positive')
         else:
             self.age = properties["age"]
 
-        if properties["weight"] <= 0:
+        if properties["weight"] < 0:
             raise ValueError('Weight must be positive')
         else:
             self.weight = properties["weight"]
 
-
-        '''
-        self.age = age
-
-        if weight is None:
-            self.weight = self.birth_weight_function()
-        else:
-            self.weight = weight
-        '''
         self.fitness()
 
-
+    '''
     @classmethod
     def set_given_parameters(cls, params):
         """
@@ -54,6 +45,15 @@ class Animal:
         for parameter in params:
             if parameter in cls.p:
                 cls.p[parameter] = params[parameter]
+    '''
+
+    @classmethod
+    def get_params(cls):
+        """Getter function for the class parameters.
+        :return: Dictionary with current parameters for class
+        :rtype: dict
+        """
+        return cls.p
 
     def aging(self):
         """
@@ -97,7 +97,7 @@ class Animal:
         else:
             self.phi = q_plus * q_minus
 
-        if 0 >= self.phi or self.phi >= 1:
+        if 0 > self.phi or self.phi >= 1:
             return False
         else:
             return self.phi
@@ -145,7 +145,7 @@ class Animal:
         if self.phi == 0:
             return 1
         else:
-            return self.p['omega'] * (1 - self.phi)
+            return 0.4 * (1-self.phi)#self.p['omega'] * (1 - self.phi)
 
     def will_the_animal_die(self):
         self.p = self.death_probability()
@@ -167,10 +167,12 @@ class Animal:
             self.move = False
         return self.move
 
+
 class Herbivore(Animal):
     """
     this is a class for herbivores on the island
     """
+
     p = {  # Dictionary of parameters belonging to the Herbivore class
         "w_birth": 8.0,
         "sigma_birth": 1.5,
@@ -188,7 +190,7 @@ class Herbivore(Animal):
         "F": 10.0,
     }
 
-    #def __init__(self, species='Herbivore', weight=None, age=0):
+    # def __init__(self, species='Herbivore', weight=None, age=0):
     def __init__(self, properties):
         """
         initialisation of weight and age for a new herbivore
@@ -207,8 +209,8 @@ class Herbivore(Animal):
             after the consumption the herbivore gains weight
             """
         self.F_cell = F_cell
-        if self.F_cell >= self.p['F']:
-            self.F_consumption = self.p['F']
+        if self.F_cell >= 10:  #self.p['F']:
+            self.F_consumption = 10  # self.p['F']
             self.weight_gain(consumption=self.F_consumption)
             if self.F_consumption < 0:
                 return ValueError
@@ -242,19 +244,18 @@ class Carnivore(Animal):
         "DeltaPhiMax": 10.0
     }
 
-    #def __init__(self, species='Carnivore', weight=None, age=0):
+    # def __init__(self, species='Carnivore', weight=None, age=0):
     def __init__(self, properties):
         """
         initialisation of weight and age for a new herbivore
             """
-        #super().__init__(species, weight, age)
+        # super().__init__(species, weight, age)
         super().__init__(properties)
 
     def eat_herbivores(self):
         """
             Carnivores eats herbivores
             """
-
 
     def probability_kill_herbivore(self, herb):
         """
