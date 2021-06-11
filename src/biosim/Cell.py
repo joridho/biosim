@@ -155,7 +155,7 @@ class Cell:
         list = self.herbivores_pop
         for herb in list:
             if herb.move_single_animal() == True:
-                if herb.times_moved < 1:
+                #if herb not in self.herbs_that_cant_move:
                     self.herbs_move.append(herb)
                     self.herbivores_pop.remove(herb)
 
@@ -163,7 +163,7 @@ class Cell:
         list2 = self.carnivores_pop
         for carn in list2:
             if carn.move_single_animal() == True:
-                if carn.times_moved < 1: #sjekker om dyrte har flyttet allerede det året. Må gjøres annerledes
+                #if carn not in self.carns_that_cant_move: #sjekker om dyrte har flyttet allerede det året. Må gjøres annerledes
                     self.carns_move.append(carn)
                     self.carnivores_pop.remove(carn)
 
@@ -178,9 +178,11 @@ class Cell:
 
         for herb in herbs_moved:
             self.herbivores_pop.append(herb)
+            #self.herbs_that_cant_move.append(herb)
 
         for carn in carns_moved:
             self.carnivores_pop.append(carn)
+            #self.carns_that_cant_move.append(carn)
 
         '''
         list1 = [], list2 = [], list3 = [], list4 = []
