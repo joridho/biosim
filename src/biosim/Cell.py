@@ -15,6 +15,8 @@ class Cell:
         Class for cells
         """
 
+    p = None
+
     def __init__(self, population):
         random.seed()
         """
@@ -153,12 +155,12 @@ class Cell:
     def move_animals(self):
         self.herbs_move = []
         for herb in self.herbivores_pop:
-            if herb.move_single_animal() == True:
+            if herb.move_single_animal() is True:
                 self.herbs_move.append(herb)
 
         self.carns_move = []
         for carn in self.carnivores_pop:
-            if carn.move_single_animal() == True:
+            if carn.move_single_animal() is True:
                 self.carns_move.append(carn)
 
     def counting_animals(self):
@@ -239,8 +241,8 @@ class Lowland(Cell):
             """
         super().__init__(population)
 
-    def Habitable(self):
-        return self.habitable == True
+    def habitable(self):
+        return self.habitable is True
 
 
 class Highland(Cell):
@@ -255,8 +257,8 @@ class Highland(Cell):
             """
         super().__init__(population)
 
-    def Habitable(self):
-        return self.habitable == True
+    def habitable(self):
+        return self.habitable is True
 
 
 class Desert(Cell):
@@ -271,8 +273,8 @@ class Desert(Cell):
             """
         super().__init__(population)
 
-    def Habitable(self):
-        return self.habitable == True
+    def habitable(self):
+        return self.habitable is True
 
 
 class Water(Cell):
@@ -287,5 +289,5 @@ class Water(Cell):
             """
         super().__init__(population)
 
-    def Habitable(self):
-        return self.habitable == False
+    def habitable(self):
+        return self.habitable is False

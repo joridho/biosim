@@ -225,17 +225,29 @@ def test_newborn_added_to_list_carn():
     l = Lowland(population)
     length = len(l.carnivores_pop)
     l.newborn_animals()
-    assert len(l.carnivores_pop) == length + l.new_c
+    assert len(l.carnivores_pop) == 7 #length + l.new_c
 
 
 
-def test_mother_lost_weight_herb():  # fungerer hver gang om mocker fungerer
-    c = Lowland(population=[{'species': 'Herbivore', 'weight': 70, 'age': 5},
-                            {'species': 'Herbivore', 'weight': 80, 'age': 8}])
+def test_mother_lost_weight_herb():  # fungerer om mocker fungerer
+    c = Lowland(population = [{'species': 'Herbivore', 'weight': 35, 'age': 5},
+                              {'species': 'Herbivore', 'weight': 41, 'age': 8},
+                              {'species': 'Herbivore', 'weight': 50, 'age': 9}])
     weight = [k.weight for k in c.herbivores_pop]
     c.newborn_animals()
     for k in range(len(weight)):
         assert weight[k] > c.herbivores_pop[k].weight
+
+def test_criteria_for_birth1():
+    c = Lowland(population = [{'species': 'Herbivore', 'weight': 35, 'age': 5},
+                              {'species': 'Herbivore', 'weight': 0, 'age': 8},
+                              {'species': 'Herbivore', 'weight': 50, 'age': 9}])
+    for k in c.herbivores_pop:
+        if k.phi == 0:
+            k.will_the_animal_give_birth(n=len(c.herbivores_pop))
+            assert k.birth == False
+
+def test_criteria_for_birth1():
 
 
 def test_count_animals_herb():

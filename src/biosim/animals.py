@@ -16,6 +16,8 @@ class Animal:
     This is a class for animals on the island. Parent class for Herbivore and Carnivore
     """
 
+    p = None
+
     def __init__(self, properties):
         """
         Initializing animal class for given values
@@ -25,7 +27,7 @@ class Animal:
         random.seed()
 
         if properties["age"] < 0:
-            raise ValueError('Age must be nonnegative')
+            raise ValueError('Age must be positive')
         else:
             self.age = properties["age"]
 
@@ -34,17 +36,7 @@ class Animal:
         else:
             self.weight = properties["weight"]
 
-
-        '''
-        self.age = age
-
-        if weight is None:
-            self.weight = self.birth_weight_function()
-        else:
-            self.weight = weight
-        '''
         self.fitness()
-
 
     @classmethod
     def set_given_parameters(cls, params):
@@ -157,13 +149,14 @@ class Animal:
             return False
 
     def move_single_animal(self):
-        prob_move = self.p['mu']*self.phi
+        prob_move = self.p['mu'] * self.phi
         self.m = random.random()
         if self.m < prob_move:
-            self.move = True #it has moved once this year
+            self.move = True  # it has moved once this year
         else:
             self.move = False
         return self.move
+
 
 class Herbivore(Animal):
     """
@@ -186,7 +179,7 @@ class Herbivore(Animal):
         "F": 10.0,
     }
 
-    #def __init__(self, species='Herbivore', weight=None, age=0):
+    # def __init__(self, species='Herbivore', weight=None, age=0):
     def __init__(self, properties):
         """
         initialisation of weight and age for a new herbivore
@@ -240,19 +233,18 @@ class Carnivore(Animal):
         "DeltaPhiMax": 10.0
     }
 
-    #def __init__(self, species='Carnivore', weight=None, age=0):
+    # def __init__(self, species='Carnivore', weight=None, age=0):
     def __init__(self, properties):
         """
         initialisation of weight and age for a new herbivore
             """
-        #super().__init__(species, weight, age)
+        # super().__init__(species, weight, age)
         super().__init__(properties)
 
     def eat_herbivores(self):
         """
             Carnivores eats herbivores
             """
-
 
     def probability_kill_herbivore(self, herb):
         """
