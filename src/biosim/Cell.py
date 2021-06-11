@@ -163,7 +163,7 @@ class Cell:
         list2 = self.carnivores_pop
         for carn in list2:
             if carn.move_single_animal() == True:
-                if carn.times_moved < 1:
+                if carn.times_moved < 1: #sjekker om dyrte har flyttet allerede det året. Må gjøres annerledes
                     self.carns_move.append(carn)
                     self.carnivores_pop.remove(carn)
 
