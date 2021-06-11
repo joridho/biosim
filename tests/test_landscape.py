@@ -144,6 +144,21 @@ def test_carnivores_gain_weight_after_eating():
                 assert k.weight == m.weight
 '''
 
+def test_eats_random():
+    population = [{'species': 'Herbivore', 'weight': 35, 'age': 5},
+                  {'species': 'Herbivore', 'weight': 41, 'age': 8},
+                  {'species': 'Herbivore', 'weight': 50, 'age': 9},
+                  {'species': 'Herbivore', 'weight': 10, 'age': 3},
+                  {'species': 'Herbivore', 'weight': 14, 'age': 3},
+                  {'species': 'Herbivore', 'weight': 13, 'age': 3}]
+    l = Lowland(population)
+    liste = l.herbivores_pop
+    l.make_herbivores_eat()
+    for k in range(len(l.herbivores_pop)):
+        assert l.herbivores_pop[k].weight > liste[k].weight
+
+
+
 
 def test_carnivore_weight_gain():  # de går opp i vekt, men ikke hver gang, og det er forsåvidt riktig
     population = [{'species': 'Carnivore', 'weight': 35, 'age': 5},

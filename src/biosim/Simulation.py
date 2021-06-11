@@ -71,7 +71,7 @@ class BioSim:
 
         self.num_years_simulated = 0
 
-    '''
+
     def set_animal_parameters(self, species, p):
         """
         Set parameters for animal species.
@@ -80,24 +80,23 @@ class BioSim:
         :param p: Dict with valid parameter specification for species
         """
         
-        class_names = {'Herbivores': Herbivore,
-                       'Carnivore': Carnivore}
+        class_names = {'Herbivores': Herbivore, 'Carnivore': Carnivore}
         for param_name in p.keys():
             if param_name in class_names[species].p:
-                if p[param_name] >= 0 and param_name is not "DeltaPhiMax" \
-                        and param_name is not "eta" and param_name is not "F":
+                if p[param_name] >= 0 and param_name != "DeltaPhiMax" \
+                        and param_name != "eta" and param_name != "F":
                     class_names[species].p[param_name] = p[
                         param_name]
                 # checks special criteria for eta
-                elif param_name is "eta" and 0 <= p[param_name] <= 1:
+                elif param_name == "eta" and 0 <= p[param_name] <= 1:
                     class_names[species].p[param_name] = p[
                         param_name]
                 # checks special criteria for F
-                elif param_name is "F" and 0 < p[param_name]:
+                elif param_name == "F" and 0 < p[param_name]:
                     class_names[species].p[param_name] = p[
                         param_name]
                 # checks special criteria for DeltaPhiMax
-                elif param_name is "DeltaPhiMax" and p[param_name] > 0:
+                elif param_name == "DeltaPhiMax" and p[param_name] > 0:
                     class_names[species].p[param_name] = p[
                         param_name]
                 else:
@@ -106,7 +105,7 @@ class BioSim:
                                      f'{param_name}!')
             else:
                 raise ValueError(f'{param_name} is an invalid parameter name!')
-
+    '''
     def set_landscape_parameters(self, landscape, params):
         """
         Set parameters for landscape type.
@@ -122,15 +121,40 @@ class BioSim:
 
         :param years: number of years to simulate
         """
-        # phi_array_herb = []
-        # age_array_herb = []
-        # weight_array_herb = []
-        # N_herb = []
-        # N_carn = []
-        # V year = []
+        phi_array_herb = []
+        age_array_herb = []
+        weight_array_herb = []
+        N_herb = []
+        N_carn = []
+        N_total = []
+        V_year = []
 
+        # self.set_animal_parameters(species='Herbivore, Carnivore', p=)
         for year in range(years):
             self.island_map_graph.year_cycle()
+
+            # creating arrays for plotting
+            total_phi = 0
+            total_age = 0
+            total_weight = 0
+            for cell in self.island_map_graph.map:
+                for animal in cell.herbivores_pop:
+                    total_phi += animal.phi
+                    total_age += animal.age
+                    total_weight += animal.weight
+                for animal in cell.carnivores_pop:
+                    total_phi += animal.phi
+                    total_age += animal.age
+                    total_weight += animal.weight
+
+            N_herb.append(self.num_animals_per_species['Herbivore'])
+            N_carn.append(self.num_animals_per_species['Carnivore'])
+            N_total.append(self.num_animals)
+            V_year.append(self.num_years_simulated)
+            phi_array_herb.append(total_phi)
+            age_array_herb.append(total_age)
+            weight_array_herb.append(total_weight)
+
             self.num_years_simulated += 1
 
         print(self.num_animals_per_species)
