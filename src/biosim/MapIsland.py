@@ -86,7 +86,7 @@ class Map_Island:
         coordinates.
         """
         self.check_island_boundaries()
-        self.check_for_equal_map_lines()
+        #self.check_for_equal_map_lines()
 
         self.geo.splitlines()
 
