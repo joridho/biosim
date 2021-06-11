@@ -111,10 +111,7 @@ class Animal:
             return min(1, variable)
 
     def will_the_animal_give_birth(self, n):
-
         p = self.birth_probability(n)
-
-        # self.r = random.random()
         r = random.random()
 
         if r <= p:

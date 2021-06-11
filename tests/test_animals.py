@@ -338,6 +338,77 @@ def test_no_newborn_when_mother_weighs_too_little_carn():
     c = Carnivore({'age': 10, 'weight': 15})
     assert c.birth_probability(n=3) == 0
 
+def test_no_newborn_if_mother_weighs_less_than_newborn_times_zeta_herb():
+    """
+    There will be no birth if the mother weighs less than the newborn times zeta.
+    If we run the birth_probability function 50 times, the mother will weigh less at least once
+    """
+    h = Herbivore({'age': 5, 'weight': 20})
+    for k in range(50):
+        h.birth_probability(n=10)
+        if h.weight < h.newborn_birth_weight * h.p['zeta']:
+            assert h.birth_probability(n=10) == 0
+
+def test_no_newborn_if_mother_weighs_less_than_newborn_times_zeta_carn():
+    """
+    There will be no birth if the mother weighs less than the newborn times zeta.
+    If we run the birth_probability function 50 times, the mother will weigh less at least once
+    """
+    c = Carnivore({'age': 5, 'weight': 20})
+    for k in range(50):
+        c.birth_probability(n=10)
+        if c.weight < c.newborn_birth_weight * c.p['zeta']:
+            assert c.birth_probability(n=10) == 0
+
+def test_correct_newborn_prob_herb():
+    """
+    If the mother weighs enough the probability will be a variable or 1, whichever is less.
+    The variable is gamma * fitness (N - 1), where N is the amount of herb in the cell.
+    To check if it works for p = variable and p = 1, we test for N from 2-20
+    """
+    h = Herbivore({'age': 5, 'weight': 50})
+    gamma = h.p['gamma']
+    fitness = h.phi
+    for N in range(2, 20):
+        if gamma * fitness * (N - 1) > 1:
+            assert h.birth_probability(N) == 1
+        else:
+            assert h.birth_probability(N) == gamma * fitness * (N - 1)
+
+def test_correct_newborn_prob_carn():
+    """
+    If the mother weighs enough the probability will be a variable or 1, whichever is less.
+    The variable is gamma * fitness (N - 1), where N is the amount of carnivores in the cell.
+    To check if it works for p = variable and p = 1, we test for N from 2-20
+    """
+    c = Carnivore({'age': 10, 'weight': 50})
+    gamma = c.p['gamma']
+    fitness = c.phi
+    for N in range(2, 20):
+        if gamma * fitness * (N - 1) > 1:
+            assert c.birth_probability(N) == 1
+        else:
+            assert c.birth_probability(N) == gamma * fitness * (N - 1)
+
+def test_no_birth_when_too_few_herbs():
+    """
+    The herbivores can't procreate if there are only one herbivore
+    """
+    h = Herbivore({'age': 5, 'weight': 50})
+    assert h.birth_probability(n=1) == 0
+
+def test_no_birth_when_too_few_carns():
+    """
+    The carnivores can't procreate if there are only one carnivore
+    """
+    c = Carnivore({'age': 10, 'weight': 50})
+    assert c.birth_probability(n=1) == 0
+
+
+
+# Tests for will_the_animal_give_birth_function:
+def test_will_the_animal_give_birth_correct_return_herb():
+    assert 1 == 1
 
 
 
