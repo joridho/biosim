@@ -109,6 +109,7 @@ class BioSim:
         N_carn = []
         N_total = []
         V_year = []
+        self.create_map()
 
         # self.set_animal_parameters(species='Herbivore, Carnivore', p=)
         for year in range(years):
@@ -215,7 +216,7 @@ class BioSim:
 
         # hver bokstav I geography får rgb_value
         map_rgb = [[rgb_value[column] for column in row]
-            for row in self.island_map_graph.splitlines()] # vet ikke hv Map_Island returnere enda
+            for row in self.island_map_graph.geo.splitlines()] # vet ikke hv Map_Island returnere enda
 
         # lager tom figur
         fig = plt.figure()
