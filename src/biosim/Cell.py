@@ -155,7 +155,7 @@ class Cell:
         list = self.herbivores_pop
         for herb in list:
             if herb.move_single_animal() == True:
-                if herb.times_moved < 1:
+                #if herb not in self.herbs_that_cant_move:
                     self.herbs_move.append(herb)
                     self.herbivores_pop.remove(herb)
 
@@ -163,8 +163,9 @@ class Cell:
         list2 = self.carnivores_pop
         for carn in list2:
             if carn.move_single_animal() == True:
-                self.carns_move.append(carn)
-                self.carnivores_pop.remove(carn)
+                #if carn not in self.carns_that_cant_move: #sjekker om dyrte har flyttet allerede det året. Må gjøres annerledes
+                    self.carns_move.append(carn)
+                    self.carnivores_pop.remove(carn)
 
         tot_animals = [self.herbs_move, self.carns_move]
         return tot_animals
@@ -177,9 +178,11 @@ class Cell:
 
         for herb in herbs_moved:
             self.herbivores_pop.append(herb)
+            #self.herbs_that_cant_move.append(herb)
 
         for carn in carns_moved:
             self.carnivores_pop.append(carn)
+            #self.carns_that_cant_move.append(carn)
 
         '''
         list1 = [], list2 = [], list3 = [], list4 = []
@@ -287,8 +290,9 @@ class Lowland(Cell):
             """
         super().__init__(population)
 
-    def habitable(self):
-        return self.habitable is True
+    def Habitable(self):
+        self.habitable = True
+        return self.habitable
 
 
 class Highland(Cell):
@@ -303,8 +307,9 @@ class Highland(Cell):
             """
         super().__init__(population)
 
-    def habitable(self):
-        return self.habitable is True
+    def Habitable(self):
+        self.habitable = True
+        return self.habitable
 
 
 class Desert(Cell):
@@ -319,8 +324,9 @@ class Desert(Cell):
             """
         super().__init__(population)
 
-    def habitable(self):
-        return self.habitable is True
+    def Habitable(self):
+        self.habitable = True
+        return self.habitable
 
 
 class Water(Cell):
@@ -335,5 +341,6 @@ class Water(Cell):
             """
         super().__init__(population)
 
-    def habitable(self):
-        return self.habitable is False
+    def Habitable(self):
+        self.habitable = False
+        return self.habitable
