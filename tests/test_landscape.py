@@ -9,7 +9,7 @@ if __name__ == '__main__':
 """
 
 from biosim.Cell import Lowland
-from biosim.test_animals import Herbivore, Carnivore
+from biosim.Animals import Herbivore, Carnivore
 import operator
 
 

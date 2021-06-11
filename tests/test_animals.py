@@ -7,7 +7,7 @@
 __author__ = 'Christianie Torres'
 __email__ = 'christianie.torres@nmbu.no'
 
-from biosim.test_animals import Herbivore, Carnivore
+from biosim.Animals import Herbivore, Carnivore
 
 class test_animals:
     alpha = 0.01  # Significance level
@@ -16,15 +16,15 @@ class test_animals:
     Tests for animal class
 
     """
-    @pytest.fixture
+    #@pytest.fixture
     def carnivore(self):
         return Carnivore()
 
-    @pytest.fixture
+    #@pytest.fixture
     def herbivore(self):
         return Herbivore()
 
-    @pytest.fixture
+    #@pytest.fixture
     def animals(self):
         """
         create animals of different type, age and weight to use in test of fitness
@@ -41,19 +41,37 @@ class test_animals:
                    Carnivore(age=100, weight=1000)]
         return animals
 
-def test_parameters(self):
-    h = Herbivore({'species': 'Herbivore',
-                       'age': 5,
-                       'weight': 20})
+animals = [{'species': 'Herbivore', 'age': 0, 'weight': 5},
+            {'species': 'Herbivore', 'age': 0, 'weight': 1000},
+            {'species': 'Herbivore', 'age': 100, 'weight': 1000},
+            {'species': 'Herbivore', 'age': 100, 'weight': 5},
+            {'species': 'Herbivore', 'age': 0, 'weight': 5},
+            {'species': 'Herbivore', 'age': 0, 'weight': 5},
+            {'species': 'Herbivore', 'age': 0, 'weight': 1000},
+            {'species': 'Herbivore', 'age': 100, 'weight': 5},
+            {'species': 'Herbivore', 'age': 100, 'weight': 1000}]
+
+def test_parameters_herb():
+    """
+    Checking if the correct parameters for herbivores is given
+        It is given that the w_birth is 8.0 for herbivores
+    """
+    h = Herbivore({'species': 'Herbivore', 'age': 5, 'weight': 20})
     assert h.p['w_birth'] == 8.0
+
+def test_parameters_carn():
+    """
+    Checking if the correct parameters for carnivores is given
+    It is given that the w_birth is 6.0 for carnivores
+    """
+    h = Animal({'species': 'Carnivore', 'age': 5, 'weight': 20})
+    assert h.p['w_birth'] == 6.0
 
 def test_herbivore_age():
     """
     A test that checks that a herbivore has been created with age 0
     """
-    h = Herbivore({'species': 'Herbivore',
-                       'age': 5,
-                       'weight': 20})
+    h = Herbivore({'species': 'Herbivore','age': 5,'weight': 20})
     assert h.age == 5
 
 def test_update_fitness_when_aging():

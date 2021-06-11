@@ -1,5 +1,5 @@
 import unittest
-from biosim.test_animals import Herbivore, Carnivore
+from biosim.Animals import Herbivore, Carnivore
 from biosim.Cell import Lowland
 from biosim.MapIsland import Map_Island
 
