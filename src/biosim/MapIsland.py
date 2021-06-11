@@ -202,7 +202,7 @@ class Map_Island:
             if neighbour_cell in self.map.keys():
                 self.neighbour_cells.append(self.map[neighbour_cell])
 
-'''
+        '''
         for cell in self.neighbour_cells:
             d = random.choice(list)
             if cell.Habitable() == True:
@@ -210,8 +210,7 @@ class Map_Island:
                 list.remove(d)
             else:
                 return 
-'''
-
+        '''
         self.arrived_cell = random.choice(self.neighbour_cells)
         return self.arrived_cell
 
@@ -243,12 +242,12 @@ class Map_Island:
 
         # MIGRATION
         for loc, cell in self.map.values():
-            cell.move_animals_from_cell()
+            liste = cell.move_animals_from_cell()
             self.neighbours_of_current_cell(loc) # Riktig posisjon her?
             #if self.arrived_cell.Habitable() == True
             #    for herb in self.herbs_move:
             #        self.arrived_cell.herbivores_pop.append(herb)
-            self.arrived_cell.move_animals_to_cell()
+            self.arrived_cell.move_animals_to_cell(liste)
 
 '''
             for herb in cell.herbs_move:

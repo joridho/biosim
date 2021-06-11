@@ -165,9 +165,22 @@ class Cell:
                 self.carns_move.append(carn)
                 self.carnivores_pop.remove(carn)
 
+        tot_animals = [self.herbs_move, self.carns_move]
+        return tot_animals
 
-    def move_animals_to_cell(self):
-        self.move_animals_from_cell()
+
+    def move_animals_to_cell(self, liste):
+
+        herbs_moved = liste[0]
+        carns_moved = liste[1]
+
+        for herb in herbs_moved:
+            self.herbivores_pop.append(herb)
+
+        for carn in carns_moved:
+            self.carnivores_pop.append(carn)
+
+        '''
         list1 = [], list2 = [], list3 = [], list4 = []
         for herb in self.herbs_move:
             p = random.choice(list1, list2, list3, list4)
@@ -186,15 +199,13 @@ class Cell:
 
             # lag fire lister som representerer cellene og fordel til tilfedlig i de
 
-
-
-        '''
         if self.Habitable() == True:
             for herb in self.herbs_move:
                 self.herbivores_pop.append(herb)
 
             for carn in self.carns_move:
                 self.carnivores_pop.append(carn)
+    
         '''
 
     def counting_animals(self):
