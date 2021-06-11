@@ -226,6 +226,7 @@ class Map_Island:
         - Step 5: Animals lose weight
         - Step 6: Animals die
             """
+
         # FEEDING
         for cell in self.map.values():
             cell.make_herbivores_eat()
@@ -266,6 +267,7 @@ class Map_Island:
                 # else:
                 #   self.move = False
         '''
+
 
         # AGING
         for cell in self.map.values():

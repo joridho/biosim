@@ -66,7 +66,7 @@ class Cell:
 
             This function can only be used once per year because of the available_fodder_function
          """
-        self.af = 10 #self.p['f_max']
+        self.af = self.p['f_max']
         random.shuffle(self.herbivores_pop)
 
         for animal in self.herbivores_pop:

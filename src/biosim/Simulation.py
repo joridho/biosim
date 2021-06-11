@@ -64,14 +64,13 @@ class BioSim:
 
         img_dir and img_base must either be both None or both strings.
         """
-        random.seed()
+        random.seed(seed)
 
         self.island_map_graph = Map_Island(island_geo, init_pop)
-        self.island_map_graph.create_map_dict() # koordinatene i kart får tilhørende lister med dyr
+        self.island_map_graph.create_map_dict()  # koordinatene i kart får tilhørende lister med dyr
 
         self.num_years_simulated = 0
 
-    @staticmethod
     def set_animal_parameters(self, species, p):
         """
         Set parameters for animal species.
@@ -79,13 +78,12 @@ class BioSim:
         :param species: String, name of animal species
         :param p: Dict with valid parameter specification for species
         """
-        
+
         class_names = {'Herbivores': Herbivore, 'Carnivore': Carnivore}
         for param_name in p.keys():
             if param_name in class_names[species].p:
                 class_names[species].p[param_name] = p[param_name]
 
-    @staticmethod
     def set_landscape_parameters(self, landscape, p):
         """
         Set parameters for landscape type.
@@ -114,6 +112,7 @@ class BioSim:
 
         # self.set_animal_parameters(species='Herbivore, Carnivore', p=)
         for year in range(years):
+
             self.island_map_graph.year_cycle()
 
             # creating arrays for plotting
@@ -142,17 +141,17 @@ class BioSim:
 
         print(self.num_animals_per_species)
 
-
         # values needed after stopping:
         number_of_simulated_years = self.num_years_simulated
         total_number_of_animals = self.num_animals
         total_number_of_herbivores = self.num_animals_per_species['Herbivore']
         total_number_of_carnivores = self.num_animals_per_species['Carnivore']
-        #print(number_of_simulated_years)
-        #print(total_number_of_animals)
-        #print(total_number_of_herbivores)
-        #print(total_number_of_carnivores)
+        # print(number_of_simulated_years)
+        # print(total_number_of_animals)
+        # print(total_number_of_herbivores)
+        # print(total_number_of_carnivores)
 
+        '''
         fig = plt.figure()
         ax1 = fig.add_subplot(3, 3, 1)  # map
         ax2 = fig.add_subplot(3, 3, 3)  # animal count
@@ -176,17 +175,15 @@ class BioSim:
 
         input('Press ENTER to begin counting')
 
-
         for k in range(30):
             txt.set_text(template.format(k))
             plt.pause(0.1)  # pause required to make update visible
-
 
         ax2.plot(N_herb, V_year, 'b')
         ax2.plot(N_carn, V_year, 'r')
         ax2.legend('Animals')
 
-        '''
+        
         ax3.set_xticks(1)
         ax3.set_xticks(1)
         ax3.set_title("Herbivore distribution")
@@ -218,7 +215,7 @@ class BioSim:
 
         # hver bokstav I geography får rgb_value
         map_rgb = [[rgb_value[column] for column in row]
-                   for row in self.island_map_graph.splitlines()] # vet ikke hv Map_Island returnere enda
+            for row in self.island_map_graph.splitlines()] # vet ikke hv Map_Island returnere enda
 
         # lager tom figur
         fig = plt.figure()
@@ -235,7 +232,8 @@ class BioSim:
         ax_im.set_yticks(range(len(map_rgb)))
         ax_im.set_yticklabels(range(1, 1 + len(map_rgb)))
 
-        # lager nytt koordinatsystem i figuren (x akse starter ved 80 % bredde (v->h) av figuren, y akse starter i 10 prosent høyde av figuren, har bredde som er på 10% av figuren, har høyde som er på 80% av figuren)
+        # lager nytt koordinatsystem i figuren (x akse starter ved 80 % bredde (v->h) av figuren, y 
+        # akse starter i 10 prosent høyde av figuren, har bredde som er på 10% av figuren, har høyde som er på 80% av figuren)
         ax_lg = fig.add_axes([0.85, 0.1, 0.1, 0.8])  # llx, lly, w, h
         ax_lg.axis('off')  # fjerner selve koordinatsystemet
         for ix, name in enumerate(('Water', 'Lowland',
@@ -261,8 +259,8 @@ class BioSim:
 
         return self.island_map_graph.add_population(population)
 
-        #for k in range(50):
-            #Lowland.herbivores_pop.append(Herbivore())
+        # for k in range(50):
+        # Lowland.herbivores_pop.append(Herbivore())
 
         # self.init_pop = l.adding_animals()
         # self.idk = len(self.init_pop)
@@ -293,9 +291,7 @@ class BioSim:
             num_animals_per_species["Carnivore"] += len(cell.carnivores_pop)
         return num_animals_per_species
 
-
     '''
     def make_movie(self): denne er fra Plesser 
         """Create MPEG4 movie from visualization images saved."""
     '''
-
