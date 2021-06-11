@@ -167,12 +167,35 @@ class Cell:
 
 
     def move_animals_to_cell(self):
+        self.move_animals_from_cell()
+        list1 = [], list2 = [], list3 = [], list4 = []
+        for herb in self.herbs_move:
+            p = random.choice(list1, list2, list3, list4)
+            if p == list1:
+                list1.append(herb)
+            elif p == list2:
+                list2.append(herb)
+            elif p == list3:
+                list3.append(herb)
+            else:
+                list4.append(herb)
+
+        tot_list = [list1, list2, list3, list4]
+        return tot_list
+
+
+            # lag fire lister som representerer cellene og fordel til tilfedlig i de
+
+
+
+        '''
         if self.Habitable() == True:
             for herb in self.herbs_move:
                 self.herbivores_pop.append(herb)
 
             for carn in self.carns_move:
                 self.carnivores_pop.append(carn)
+        '''
 
     def counting_animals(self):
         """

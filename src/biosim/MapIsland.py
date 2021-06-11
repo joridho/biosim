@@ -184,7 +184,7 @@ class Map_Island:
                 raise ValueError(
                     f"Invalid landscape type {cell_type}")  # Gir feilmelding hvis celletype ikke fins
 
-    def neighbours_of_current_cell(self, current_coordinates): # Hva skal input være her?
+    def neighbours_of_current_cell(self, current_coordinates, list): # Hva skal input være her?
         """
         Finds all neighbouring coordinates of a given cell. Checks the
         landscape type of each coordinate. The neighbours
@@ -201,6 +201,12 @@ class Map_Island:
         for neighbour_cell in neighbours:
             if neighbour_cell in self.map.keys():
                 self.neighbour_cells.append(self.map[neighbour_cell])
+
+        for cell in self.neighbour_cells:
+            d = random.choice(list)
+            cell.herbivores_pop.extend(d)
+            list.remove(d)
+
 
         self.arrived_cell = random.choice(self.neighbour_cells)
         return self.arrived_cell
@@ -235,6 +241,9 @@ class Map_Island:
         for loc, cell in self.map.values():
             cell.move_animals_from_cell()
             self.neighbours_of_current_cell(loc) # Riktig posisjon her?
+            #if self.arrived_cell.Habitable() == True
+            #    for herb in self.herbs_move:
+            #        self.arrived_cell.herbivores_pop.append(herb)
             self.arrived_cell.move_animals_to_cell()
 
 '''
