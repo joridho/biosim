@@ -197,9 +197,9 @@ class BioSim:
         ax3.plt.imshow(N_carn, V_year)
         '''
 
-    '''
 
-    def create_map(self): ikke fra plesser 
+
+    def create_map(self):
         # geography
         #island_map = """WWWWW
         #WWLHW
@@ -248,7 +248,7 @@ class BioSim:
                        transform=ax_lg.transAxes)  # legger til navn ved x akse... og yakse ...
 
         plt.show()  # viser plott
-    '''
+
 
     def add_population(self, population):
         """
@@ -291,7 +291,7 @@ class BioSim:
             num_animals_per_species["Carnivore"] += len(cell.carnivores_pop)
         return num_animals_per_species
 
-    '''
-    def make_movie(self): denne er fra Plesser 
-        """Create MPEG4 movie from visualization images saved."""
-    '''
+
+    #def make_movie(self): denne er fra Plesser
+        #Create MPEG4 movie from visualization images saved."""
+
