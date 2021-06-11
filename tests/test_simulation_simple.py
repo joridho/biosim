@@ -1,7 +1,7 @@
 import unittest
 from biosim.Simulation import BioSim
 from biosim.Cell import Lowland
-from biosim.test_animals import Herbivore, Carnivore
+from biosim.Animals import Herbivore, Carnivore
 
 '''
 class MyTestCase(unittest.TestCase):
