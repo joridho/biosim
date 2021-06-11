@@ -7,9 +7,41 @@
 __author__ = 'Christianie Torres'
 __email__ = 'christianie.torres@nmbu.no'
 
-from biosim.animals import Herbivore, Carnivore
+from biosim.test_animals import Herbivore, Carnivore
 
-def test_parameters():
+class test_animals:
+    alpha = 0.01  # Significance level
+
+    """
+    Tests for animal class
+
+    """
+    @pytest.fixture
+    def carnivore(self):
+        return Carnivore()
+
+    @pytest.fixture
+    def herbivore(self):
+        return Herbivore()
+
+    @pytest.fixture
+    def animals(self):
+        """
+        create animals of different type, age and weight to use in test of fitness
+        """
+
+        animals = [Herbivore(age=0, weight=5),
+                   Herbivore(age=0, weight=1000),
+                   Herbivore(age=100, weight=5),
+                   Herbivore(age=100, weight=1000),
+                   Herbivore(age=0, weight=5),
+                   Carnivore(age=0, weight=5),
+                   Carnivore(age=0, weight=1000),
+                   Carnivore(age=100, weight=5),
+                   Carnivore(age=100, weight=1000)]
+        return animals
+
+def test_parameters(self):
     h = Herbivore({'species': 'Herbivore',
                        'age': 5,
                        'weight': 20})

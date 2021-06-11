@@ -37,7 +37,6 @@ class Animal:
         self.fitness()
         self.already_moved = False
 
-    '''
     @classmethod
     def set_given_parameters(cls, params):
         """
@@ -46,15 +45,6 @@ class Animal:
         for parameter in params:
             if parameter in cls.p:
                 cls.p[parameter] = params[parameter]
-    '''
-
-    @classmethod
-    def get_params(cls):
-        """Getter function for the class parameters.
-        :return: Dictionary with current parameters for class
-        :rtype: dict
-        """
-        return cls.p
 
     def aging(self):
         """

@@ -7,7 +7,7 @@ __email__ = 'jorid.holmen@nmbu.no', 'christianie.torres@nmbu.no'
 import random
 import operator
 
-from biosim.animals import Herbivore, Carnivore
+from biosim.test_animals import Herbivore, Carnivore
 
 
 class Cell:

@@ -3,7 +3,7 @@
 __author__ = 'Jorid Holmen'
 __email__ = 'jorid.holmen@nmbu.no'
 
-from biosim.animals import Herbivore, Carnivore
+from biosim.test_animals import Herbivore, Carnivore
 from biosim.Cell import Lowland, Highland, Desert, Water
 from biosim.MapIsland import Map_Island
 import operator
