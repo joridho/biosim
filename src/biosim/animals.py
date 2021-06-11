@@ -252,26 +252,22 @@ class Carnivore(Animal):
         # super().__init__(species, weight, age)
         super().__init__(properties)
 
-    def eat_herbivores(self):
-        """
-            Carnivores eats herbivores
-            """
-
     def probability_kill_herbivore(self, herb):
         """
             The carnivore kills a herbivore with probability prob_kill
             """
         if self.phi < herb.phi:
-            self.prob_kill = 0
-        elif 0 < self.phi - herb.phi < self.p['DeltaPhiMax']:
-            self.prob_kill = (self.phi - herb.phi) / self.p['DeltaPhiMax']
-        else:
-            self.prob_kill = 1
+            return 0
+        elif 0 <= self.phi - herb.phi <= self.p['DeltaPhiMax']:
+            return (self.phi - herb.phi) / self.p['DeltaPhiMax']
+        #else:
+            #return 1
 
-        self.r = random.random()
+    def will_carn_kill(self, herb):
+        p = self.probability_kill_herbivore(herb)
+        r = random.random()
 
-        if self.r < self.prob_kill:
-            self.weight_gain(consumption=herb.weight)
+        if r < p:
             return True
         else:
             return False

@@ -79,6 +79,7 @@ class Cell:
         self.herbivores_weight_sum = 0
         for k in self.herbivores_pop:
             self.herbivores_weight_sum += k.weight
+        return self.herbivores_weight_sum
 
     def feed_carnivores(self):  # må testes!!
         """
@@ -89,20 +90,19 @@ class Cell:
         """
         self.sorting_animals()
         killed = []
-        self.eaten = 0  # for testing
-
+        sum_weight_herbs = self.available_herbivores_for_carnivores()
+        consumed = 0
         for carn in self.carnivores_pop:
-            weight_of_herbs = 0
+            appetite = carn.p['F']
+            weight_of_eaten_herbs = 0
             for herb in self.herbivores_pop:
-                if weight_of_herbs < carn.p['F']:
-                    if len(killed) <= len(self.herbivores_pop):
-                        if carn.probability_kill_herbivore(herb) is True:
-                            if herb not in killed:
-                                carn.weight_gain_after_eating_herb(herb)
-                                weight_of_herbs += herb.weight
-                                killed.append(herb)
-                                self.eaten += 1
-                                carn.fitness()
+                if herb not in killed:
+                    if weight_of_eaten_herbs < appetite:
+                        if carn.will_carn_kill(herb) is True:
+                            carn.weight_gain_after_eating_herb(herb)
+                            weight_of_eaten_herbs += herb.weight
+                            killed.append(herb)
+                            consumed += herb.weight
 
         for herb in killed:
             self.herbivores_pop.remove(herb)
