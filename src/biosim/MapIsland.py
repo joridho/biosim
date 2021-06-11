@@ -7,7 +7,7 @@ __author__ = 'Christianie Torres'
 __email__ = 'christianie.torres@nmbu.no'
 
 from biosim.Cell import Cell, Lowland, Highland, Desert, Water
-from biosim.animals import Herbivore, Carnivore
+from biosim.test_animals import Herbivore, Carnivore
 import textwrap
 import random
 
