@@ -71,8 +71,7 @@ class BioSim:
 
         self.num_years_simulated = 0
 
-    @staticmethod
-    def set_animal_parameters(species, p):
+    def set_animal_parameters(self, species, p):
         """
         Set parameters for animal species.
 
@@ -85,8 +84,7 @@ class BioSim:
             if param_name in class_names[species].p:
                 class_names[species].p[param_name] = p[param_name]
 
-    @staticmethod
-    def set_landscape_parameters(landscape, p):
+    def set_landscape_parameters(self, landscape, p):
         """
         Set parameters for landscape type.
 
@@ -114,6 +112,7 @@ class BioSim:
 
         # self.set_animal_parameters(species='Herbivore, Carnivore', p=)
         for year in range(years):
+
             self.island_map_graph.year_cycle()
 
             # creating arrays for plotting
