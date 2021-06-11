@@ -51,6 +51,8 @@ animals = [{'species': 'Herbivore', 'age': 0, 'weight': 5},
             {'species': 'Herbivore', 'age': 100, 'weight': 5},
             {'species': 'Herbivore', 'age': 100, 'weight': 1000}]
 
+
+
 # Tests for initial value:
 def test_parameters_herb():
     """
@@ -114,6 +116,8 @@ def test_carn_given_fitness():
     c = Carnivore({'age': 10, 'weight': 40})
     assert c.phi != None
 
+
+
 # Tests for aging function
 def test_herbivore_aging():
     """
@@ -157,20 +161,7 @@ def test_update_fitness_when_aging_carn():
     c.aging()
     assert c.phi < init_phi
 
-''''
 
-DENNE TESTEN FUNKER IKKE LENGER PGA PROPERTIES. HERBIVORE FÅR IKKE LENGER GITT EN BIRTH.WEIGHT
-
-def test_herbivore_birth_weight():
-    """
-    A test that checks that the herbivore have been given a birth_weight
-    """
-    h = Herbivore({'species': 'Herbivore',
-                       'age': 5,
-                       'weight': 20})
-    birth_w = h.birth_weight
-    assert h.birth_weight == birth_w
-'''
 
 # Tests for birth_weight_function:
 def test_birth_weight_function_herb():
@@ -192,6 +183,8 @@ def test_birth_weight_function_carn():
     c = Carnivore({'age': 10, 'weight': 40})
     newborn = Herbivore({'age': 0, 'weight': c.birth_weight_function()})
     assert newborn.weight != None
+
+
 
 # Tests for weight_loss function:
 def test_herbivore_weight_loss():
@@ -238,7 +231,9 @@ def test_update_fitness_during_weight_loss_carn():
     c.weight_loss()
     assert c.phi < init_phi
 
-# Tests for weight_gain function
+
+
+# Tests for weight_gain function:
 def test_weight_gain_herb():
     """
     When the herbivore eats it gains weight.
@@ -269,35 +264,79 @@ def test_weight_gain_carn():
     c.weight_gain(consumption=F)
     assert c.weight == new_weight
 
-def test_herbivore_fitness():
+def test_updated_fitness_during_weight_gain_herb():
     """
-    A test that checks that the herbivore have been given a fitness
+    When the herbivore gains weight the fitness must be updates.
+    It is updated in the weight_gain function.
+    The initial fitness should be lower than the new fitness.
     """
-    h = Herbivore({'species': 'Herbivore',
-                       'age': 5,
-                       'weight': 20})
-    fitness = h.phi
-    h.fitness()
-    assert fitness == h.phi
+    h = Herbivore({'age': 5, 'weight': 20})
+    init_phi = h.phi
+    h.weight_gain(consumption=h.p['F'])
+    assert h.phi > init_phi
 
-def test_valid_fitness():
+def test_updated_fitness_during_weight_gain_carn():
     """
-    This is a test for checking that the fitness-function returns a phi-value between 0 and 1
+    When the carnivore gains weight the fitness must be updates.
+    It is updated in the weight_gain function.
+    The initial fitness should be lower than the new fitness.
     """
-    for _ in range(100):
-        h = Herbivore({'species': 'Herbivore',
-                       'age': 5,
-                       'weight': 20})
-        assert 0 <= h.phi <= 1
+    c = Carnivore({'age': 10, 'weight': 40})
+    init_phi = c.phi
+    c.weight_gain(consumption=c.p['F'])
+    assert c.phi > init_phi
 
-def test_no_newborn_when_mother_weighs_too_little():
+
+# Tests for fitness function:
+def test_valid_fitness_carn():
     """
-    This is a test that checks if the birth probability equals zero when the mother weighs to little.
+    The phi-value should be between 0 and zero.
+    To test this we calculate the fitness for several herbivores
     """
-    h = Herbivore({'species': 'Herbivore',
-                       'age': 3,
-                       'weight': 3.5})        #weight=3.5, age=3
-    assert h.birth_probability(n=3) ==0
+    for age in range(0, 50):
+        for weight in range(10,60):
+            h = Herbivore({'age': age, 'weight': weight})
+            assert 0 <= h.phi <= 1
+
+def test_valid_fitness_carn():
+    """
+    The phi-value should be between 0 and zero.
+    To test this we calculate the fitness for several carnivores
+    """
+    for age in range(0, 50):
+        for weight in range(10,60):
+            c = Carnivore({'age': age, 'weight': weight})
+            assert 0 <= c.phi <= 1
+
+def test_fitness_when_weight_is_zero():
+    """
+    When the weight = 0, the fitness should be zero
+    """
+    h = Herbivore({'age': 5, 'weight': 0})
+    assert h.phi == 0
+
+
+
+# Tests for birth_probability function:
+def test_no_newborn_when_mother_weighs_too_little_herb():
+    """
+    If the mother weighs less than zeta * (w_birth + sigma_birth) the birth will not take place
+    For herbivores: zeta * (w_birth * sigma_birth) = 3.5 * (8 - 1.5) = 22.75
+    For the test we use weight = 20, since 20 < 22.75
+    The input in birth_probability is how many herbivores in the cell.
+    """
+    h = Herbivore({'age': 5, 'weight': 20})
+    assert h.birth_probability(n=3) == 0
+
+def test_no_newborn_when_mother_weighs_too_little_carn():
+    """
+    If the mother weighs less than zeta * (w_birth + sigma_birth) the birth will not take place
+    For carnivores: zeta * (w_birth * sigma_birth) = 3.5 * (6 - 1) = 17.5
+    For the test we use weight = 15, since 15 < 17.5
+    The input in birth_probability is how many carnivores in the cell.
+    """
+    c = Carnivore({'age': 10, 'weight': 15})
+    assert c.birth_probability(n=3) == 0
 
 def test_no_newborn_when_to_few_animals(): #too
     """

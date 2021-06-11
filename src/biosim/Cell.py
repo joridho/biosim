@@ -96,13 +96,14 @@ class Cell:
             appetite = carn.p['F']
             weight_of_eaten_herbs = 0
             for herb in self.herbivores_pop:
-                if herb not in killed:
-                    if weight_of_eaten_herbs < appetite:
+                if herb.weight <= appetite:
+                    if herb not in killed:
+                        # if weight_of_eaten_herbs < appetite:
                         if carn.will_carn_kill(herb) is True:
                             carn.weight_gain_after_eating_herb(herb)
-                            weight_of_eaten_herbs += herb.weight
+                            # weight_of_eaten_herbs += herb.weight
+                            appetite -= herb.weight
                             killed.append(herb)
-                            consumed += herb.weight
 
         for herb in killed:
             self.herbivores_pop.remove(herb)
