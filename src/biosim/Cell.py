@@ -152,18 +152,27 @@ class Cell:
 
     def move_animals_from_cell(self):
         self.herbs_move = []
-        for herb in self.herbivores_pop:
+        list = self.herbivores_pop
+        for herb in list:
             if herb.move_single_animal() == True:
                 self.herbs_move.append(herb)
+                self.herbivores_pop.remove(herb)
 
         self.carns_move = []
-        for carn in self.carnivores_pop:
+        list2 = self.carnivores_pop
+        for carn in list2:
             if carn.move_single_animal() == True:
                 self.carns_move.append(carn)
+                self.carnivores_pop.remove(carn)
 
 
     def move_animals_to_cell(self):
-        self.herbs_move
+        if self.habitable == True:
+            for herb in self.herbs_move:
+                self.herbivores_pop.append(herb)
+
+            for carn in self.carns_move:
+                self.carnivores_pop.append(carn)
 
     def counting_animals(self):
         """
