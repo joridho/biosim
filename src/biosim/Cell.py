@@ -167,7 +167,7 @@ class Cell:
 
 
     def move_animals_to_cell(self):
-        if self.habitable == True:
+        if self.Habitable() == True:
             for herb in self.herbs_move:
                 self.herbivores_pop.append(herb)
 
