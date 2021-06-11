@@ -226,7 +226,6 @@ class Map_Island:
         - Step 5: Animals lose weight
         - Step 6: Animals die
             """
-
         # FEEDING
         for cell in self.map.values():
             cell.make_herbivores_eat()
@@ -238,18 +237,15 @@ class Map_Island:
         for cell in self.map.values():
             cell.newborn_animals()
 
-
-
         # MIGRATION
-        for loc, cell in self.map.values():
-            liste = cell.move_animals_from_cell()
-            self.neighbours_of_current_cell(loc) # Riktig posisjon her?
-            #if self.arrived_cell.Habitable() == True
-            #    for herb in self.herbs_move:
-            #        self.arrived_cell.herbivores_pop.append(herb)
-            self.arrived_cell.move_animals_to_cell(liste)
-
-'''
+        # for loc, cell in self.map.values():
+        #     liste = cell.move_animals_from_cell()
+        #     self.neighbours_of_current_cell(loc) # Riktig posisjon her?
+        #     #if self.arrived_cell.Habitable() == True
+        #     #    for herb in self.herbs_move:
+        #     #        self.arrived_cell.herbivores_pop.append(herb)
+        #     self.arrived_cell.move_animals_to_cell(liste)
+            '''
             for herb in cell.herbs_move:
                 self.neighbours_of_current_cell(loc)  # Mangler input her
                 arrived_cell = random.choice(self.neighbour_cells)
