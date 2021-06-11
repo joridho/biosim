@@ -202,11 +202,15 @@ class Map_Island:
             if neighbour_cell in self.map.keys():
                 self.neighbour_cells.append(self.map[neighbour_cell])
 
+'''
         for cell in self.neighbour_cells:
             d = random.choice(list)
-            cell.herbivores_pop.extend(d)
-            list.remove(d)
-
+            if cell.Habitable() == True:
+                cell.herbivores_pop.extend(d)
+                list.remove(d)
+            else:
+                return 
+'''
 
         self.arrived_cell = random.choice(self.neighbour_cells)
         return self.arrived_cell

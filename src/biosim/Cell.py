@@ -180,8 +180,8 @@ class Cell:
             else:
                 list4.append(herb)
 
-        tot_list = [list1, list2, list3, list4]
-        return tot_list
+        self.tot_list = [list1, list2, list3, list4]
+        return self.tot_list
 
 
             # lag fire lister som representerer cellene og fordel til tilfedlig i de
