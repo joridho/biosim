@@ -16,7 +16,7 @@ class Animal:
     This is a class for animals on the island. Parent class for Herbivore and Carnivore
     """
 
-    p = None
+    p = {}
 
     def __init__(self, properties):
         """
@@ -38,6 +38,7 @@ class Animal:
 
         self.fitness()
 
+    '''
     @classmethod
     def set_given_parameters(cls, params):
         """
@@ -46,6 +47,15 @@ class Animal:
         for parameter in params:
             if parameter in cls.p:
                 cls.p[parameter] = params[parameter]
+    '''
+
+    @classmethod
+    def get_params(cls):
+        """Getter function for the class parameters.
+        :return: Dictionary with current parameters for class
+        :rtype: dict
+        """
+        return cls.p
 
     def aging(self):
         """
@@ -137,7 +147,7 @@ class Animal:
         if self.phi == 0:
             return 1
         else:
-            return self.p['omega'] * (1 - self.phi)
+            return 0.4 * (1-self.phi)#self.p['omega'] * (1 - self.phi)
 
     def will_the_animal_die(self):
         self.p = self.death_probability()
@@ -162,6 +172,7 @@ class Herbivore(Animal):
     """
     this is a class for herbivores on the island
     """
+
     p = {  # Dictionary of parameters belonging to the Herbivore class
         "w_birth": 8.0,
         "sigma_birth": 1.5,

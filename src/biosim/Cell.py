@@ -15,8 +15,6 @@ class Cell:
         Class for cells
         """
 
-    p = None
-
     def __init__(self, population):
         random.seed()
         """
@@ -75,7 +73,7 @@ class Cell:
             animal.eat_fodder(F_cell=self.af)  # make the herbivore eat
             self.af -= animal.F_consumption  # change the amount of fodder in the cell
             if self.af <= 0:
-                return ValueError
+                return ValueError('There has to be a positive amount of fodder')
 
     def available_herbivores_for_carnivores(self):
         self.herbivores_weight_sum = 0

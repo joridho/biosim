@@ -204,14 +204,14 @@ def test_available_fodder():
 
 
 def test_newborn_added_to_list_herb():
-    l = Lowland(population=[{'species': 'Herbivore', 'weight': 35, 'age': 3},
+    l = Lowland(population=[{'species': 'Herbivore', 'weight': 15, 'age': 3},
                             {'species': 'Herbivore', 'weight': 41, 'age': 3},
                             {'species': 'Herbivore', 'weight': 50, 'age': 3},
-                            {'species': 'Herbivore', 'weight': 35, 'age': 3},
+                            {'species': 'Herbivore', 'weight': 0, 'age': 3},
                             {'species': 'Herbivore', 'weight': 41, 'age': 3},
                             {'species': 'Herbivore', 'weight': 50, 'age': 9},
                             {'species': 'Herbivore', 'weight': 67, 'age': 5},
-                            {'species': 'Herbivore', 'weight': 41, 'age': 8},
+                            {'species': 'Herbivore', 'weight': 21, 'age': 8},
                             {'species': 'Herbivore', 'weight': 50, 'age': 9}])
     length = len(l.herbivores_pop)
     l.newborn_animals()
@@ -247,8 +247,24 @@ def test_criteria_for_birth1():
             k.will_the_animal_give_birth(n=len(c.herbivores_pop))
             assert k.birth == False
 
-def test_criteria_for_birth1():
+def test_criteria_for_birth2():
+    c = Lowland(population = [{'species': 'Herbivore', 'weight': 35, 'age': 5},
+                              {'species': 'Herbivore', 'weight': 10, 'age': 8},
+                              {'species': 'Herbivore', 'weight': 50, 'age': 9}])
+    for k in c.herbivores_pop:
+        k.will_the_animal_give_birth(n=len(c.herbivores_pop))
+        if k.weight <= k.newborn_birth_weight * k.p['zeta']:
+            assert k.birth == False
 
+def test_criteria_for_birth2():
+    c = Lowland(population = [{'species': 'Herbivore', 'weight': 75, 'age': 5},
+                              {'species': 'Herbivore', 'weight': 60, 'age': 8},
+                              {'species': 'Herbivore', 'weight': 50, 'age': 9}])
+    for k in c.herbivores_pop:
+        if k.birth_probability(n=len(c.herbivores_pop)) != 0:
+            assert k.birth_probability(n=len(c.herbivores_pop)) == k.p['gamma'] * k.phi * (len(c.herbivores_pop) - 1)
+        else:
+            assert 1 == 2
 
 def test_count_animals_herb():
     l = Lowland(population=[{'species': 'Herbivore', 'weight': 35, 'age': 5},
