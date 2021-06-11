@@ -163,8 +163,9 @@ class Cell:
         list2 = self.carnivores_pop
         for carn in list2:
             if carn.move_single_animal() == True:
-                self.carns_move.append(carn)
-                self.carnivores_pop.remove(carn)
+                if carn.times_moved < 1:
+                    self.carns_move.append(carn)
+                    self.carnivores_pop.remove(carn)
 
         tot_animals = [self.herbs_move, self.carns_move]
         return tot_animals
