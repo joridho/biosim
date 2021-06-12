@@ -166,8 +166,10 @@ class BioSim:
 
 
 
-        fig = plt.figure()
-        self.ax1 = fig.add_subplot(3, 3, 1)  # map
+        self.fig = plt.figure()
+        self.create_map()
+        fig = self.fig
+        #self.ax1 = fig.add_subplot(3, 3, 1)  # map
         ax2 = fig.add_subplot(3, 3, 3)  # animal count
         ax3 = fig.add_subplot(3, 3, 4)  # herbivore distribution
         ax4 = fig.add_subplot(3, 3, 6)  # carnivore distribution
@@ -210,7 +212,7 @@ class BioSim:
         self.create_map()
         ax2.plot(V_year, N_herb, 'b') # antall herb
         ax2.plot(V_year, N_carn, 'r') # antall carn
-        plt.legend('Animals')
+        ax2.legend('Animals')
         ax2.set_title('Animal count')
 
         '''
@@ -245,7 +247,7 @@ class BioSim:
         ax7.set_title('weight')
         handles, labels = ax7.get_legend_handles_labels()
         ax7.legend(labels = labels)
-        #fig.tight_layout()  # Fikk feilmld
+        fig.tight_layout()  # Fikk feilmld
         plt.show()
 
 
@@ -272,7 +274,7 @@ class BioSim:
         #fig = plt.figure()
 
         # adder akser til tom figur (skal bli øy)
-        ax_im = self.ax1.add_axes([0.1, 0.1, 0.7, 0.8])  # llx, lly, w, h
+        ax_im = self.fig.add_axes([0.045, 0.65, 0.3, 0.3])  # llx, lly, w, h
 
         # viser øya m/vann
         ax_im.imshow(map_rgb)
@@ -285,7 +287,7 @@ class BioSim:
 
         # lager nytt koordinatsystem i figuren (x akse starter ved 80 % bredde (v->h) av figuren, y 
         # akse starter i 10 prosent høyde av figuren, har bredde som er på 10% av figuren, har høyde som er på 80% av figuren)
-        ax_lg = self.ax1.add_axes([0.85, 0.1, 0.1, 0.8])  # llx, lly, w, h
+        ax_lg = self.fig.add_axes([0.35, 0.65, 0.1, 0.3])  # llx, lly, w, h
         ax_lg.axis('off')  # fjerner selve koordinatsystemet
         for ix, name in enumerate(('Water', 'Lowland',
                                    'Highland',
@@ -298,7 +300,7 @@ class BioSim:
             ax_lg.text(0.35, ix * 0.2, name,
                        transform=ax_lg.transAxes)  # legger til navn ved x akse... og yakse ...
 
-        #plt.show()  # viser plott
+
 
 
     def add_population(self, population):
