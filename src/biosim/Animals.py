@@ -203,7 +203,7 @@ class Herbivore(Animal):
             self.F_consumption = self.p['F']
             self.weight_gain(consumption=self.F_consumption)
             if self.F_consumption < 0:
-                return ValueError
+                return ValueError('There has to be a nonnegative amount of fodder')
         else:
             self.F_consumption = F_cell
             self.weight_gain(consumption=self.F_consumption)
