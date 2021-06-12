@@ -364,27 +364,55 @@ def test_update_fitness_after_eating_carnivores(mocker):
 
 # Tests for newborn_animals_function for herbs
 def test_newborn_added_to_list_herb():
-    l = Lowland(population=[{'species': 'Herbivore', 'weight': 15, 'age': 3},
+    """
+    When an animal gives birth the newborn must be added to the list. When there are 9 herbivores
+    the probability for birth is 1, if the weight is acceptable, and therefore there will be added
+    9 herbivores to the list.
+    """
+    l = Lowland(population=[{'species': 'Herbivore', 'weight': 65, 'age': 3},
                             {'species': 'Herbivore', 'weight': 41, 'age': 3},
                             {'species': 'Herbivore', 'weight': 50, 'age': 3},
-                            {'species': 'Herbivore', 'weight': 0, 'age': 3},
+                            {'species': 'Herbivore', 'weight': 40, 'age': 3},
                             {'species': 'Herbivore', 'weight': 41, 'age': 3},
                             {'species': 'Herbivore', 'weight': 50, 'age': 9},
                             {'species': 'Herbivore', 'weight': 67, 'age': 5},
-                            {'species': 'Herbivore', 'weight': 21, 'age': 8},
+                            {'species': 'Herbivore', 'weight': 41, 'age': 8},
                             {'species': 'Herbivore', 'weight': 50, 'age': 9}])
     length = len(l.herbivores_pop)
     l.newborn_animals()
-    assert len(l.herbivores_pop) > length
+    assert len(l.herbivores_pop) == length * 2
 
-def test_mother_lost_weight_herb():  # fungerer om mocker fungerer
-    c = Lowland(population = [{'species': 'Herbivore', 'weight': 35, 'age': 5},
-                              {'species': 'Herbivore', 'weight': 41, 'age': 8},
-                              {'species': 'Herbivore', 'weight': 50, 'age': 9}])
-    weight = [k.weight for k in c.herbivores_pop]
-    c.newborn_animals()
+def test_mother_lost_weight_herb():
+    """
+    When an animal gives birth the mother loses weight equivalent to the weight of the
+    newborn * zeta. When there are 9 herbivores the probability for birth is 1, if the weight is
+    acceptable, and therefore all 9 herbivores will give birth
+    """
+    l = Lowland(population=[{'species': 'Herbivore', 'weight': 65, 'age': 3},
+                            {'species': 'Herbivore', 'weight': 41, 'age': 3},
+                            {'species': 'Herbivore', 'weight': 50, 'age': 3},
+                            {'species': 'Herbivore', 'weight': 40, 'age': 3},
+                            {'species': 'Herbivore', 'weight': 41, 'age': 3},
+                            {'species': 'Herbivore', 'weight': 50, 'age': 9},
+                            {'species': 'Herbivore', 'weight': 67, 'age': 5},
+                            {'species': 'Herbivore', 'weight': 41, 'age': 8},
+                            {'species': 'Herbivore', 'weight': 50, 'age': 9}])
+    weight = [k.weight for k in l.herbivores_pop]
+    zeta = l.herbivores_pop[0].p['zeta']
+
+    l.newborn_animals()
+
+    sorted_herbivores_pop = sorted(l.herbivores_pop, key=operator.attrgetter('age'))
+    sorted_herbivores_pop.reverse()
+    mothers = sorted_herbivores_pop[0:8]
+
+    newborn_weight = [herb.newborn_birth_weight for herb in mothers]
+
+    weight.sort()
+    newborn_weight.sort()
+
     for k in range(len(weight)):
-        assert weight[k] > c.herbivores_pop[k].weight
+        assert weight[k] - newborn_weight[k] * zeta == mothers[k].weight
 
 def test_mother_lost_fitness_herb():
     assert 1 == 1
