@@ -127,8 +127,14 @@ class BioSim:
             phi_array_herb = []
             age_array_herb = []
             weight_array_herb = []
+            colors = []
+            colors1 = []
 
-            for cell in self.island_map_graph.map.values():
+            for loc, cell in self.island_map_graph.map.items():
+                nr_herbs_cell = len(cell.herbivores_pop)
+                nr_carns_cell = len(cell.carnivores_pop)
+                colors.append(nr_herbs_cell)
+                colors1.append(nr_carns_cell)
                 for herb in cell.herbivores_pop:
                     phi_array_herb.append(herb.phi)
                     age_array_herb.append(herb.age)
@@ -215,19 +221,30 @@ class BioSim:
         ax2.legend('Animals')
         ax2.set_title('Animal count')
 
-        '''
-        ax3.set_xticks(1)                          # skjønne hva som skjer her, aka set_xticks()
-        ax3.set_xticks(1)
-        ax3.set_title("Herbivore distribution")
-        fig.tight_layout()
-        ax3.plt.imshow(N_herb,V_year)
+        listfarge = []
+        for rute in colors:
+            if 0 < rute < 50:
+                listfarge.append([0.4, 0.0, 1.0])
+            if 50 < rute < 100:
+                listfarge.append([0.0, 0.6, 0.0])
+            if 100 < rute < 150:
+                listfarge.append([0.5, 1.0, 0.5])
+            if 150 < rute < 200:
+                listfarge.append([1.0, 1.0, 0.5])
 
-        ax4.set_xticks(1)                          # skjønne hva som skjer her, aka set_xticks()
-        ax4.set_xticks(1)
+
+
+        #ax3.set_xticks([1 5 10])                          # skjønne hva som skjer her, aka set_xticks()
+        #ax3.set_yticks(1)
+        ax3.set_title("Herbivore distribution")
+        #fig.tight_layout()
+        ax3.imshow(listfarge)
+
+        #ax3.set_xticks([1 5 10])                         # skjønne hva som skjer her, aka set_xticks()
+        #ax4.set_yticks(1)
         ax4.set_title("Carnivore distribution")
-        fig.tight_layout()
-        ax3.plt.imshow(N_carn, V_year)
-        '''
+        #fig.tight_layout()
+        ax3.imshow(listfarge)
 
         ax5.hist(phi_array_herb, bins= 20, label ='phi herbs', histtype ='step', edgecolor = 'b') # ordne bins,  int(math.sqrt(N_herb_1))
         ax5.hist(phi_array_carn, bins= 20,label ='phi carns', histtype ='step', edgecolor = 'r')     #int(math.sqrt(N_carn_1))
