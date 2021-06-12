@@ -33,4 +33,4 @@ for seed in range(100, 103):
                  img_dir='results', img_base=f'mono_hc_{seed:05d}', img_years=300)
     sim.simulate(50)
     sim.add_population(ini_carns)
-    sim.simulate(10)
+    sim.simulate(251)

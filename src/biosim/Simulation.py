@@ -3,6 +3,8 @@
 __author__ = 'Jorid Holmen'
 __email__ = 'jorid.holmen@nmbu.no'
 
+import math
+
 from biosim.Animals import Herbivore, Carnivore
 from biosim.Cell import Lowland, Highland, Desert, Water
 from biosim.MapIsland import Map_Island
@@ -107,9 +109,14 @@ class BioSim:
         weight_array_herb = []
         N_herb = []
         N_carn = []
-        N_total = []
+        N_herb_1 = 0
+        N_carn_1 = 0
+
+        phi_array_carn = []
+        age_array_carn = []
+        weight_array_carn = []
+        N_total = [] # hvorfor brukes denne
         V_year = []
-        self.create_map()
 
         # self.set_animal_parameters(species='Herbivore, Carnivore', p=)
         for year in range(years):
@@ -117,56 +124,63 @@ class BioSim:
             self.island_map_graph.year_cycle()
 
             # creating arrays for plotting
-            total_phi = 0
-            total_age = 0
-            total_weight = 0
+            phi_array_herb = []
+            age_array_herb = []
+            weight_array_herb = []
+
             for cell in self.island_map_graph.map.values():
-                for animal in cell.herbivores_pop:
-                    total_phi += animal.phi
-                    total_age += animal.age
-                    total_weight += animal.weight
-                for animal in cell.carnivores_pop:
-                    total_phi += animal.phi
-                    total_age += animal.age
-                    total_weight += animal.weight
+                for herb in cell.herbivores_pop:
+                    phi_array_herb.append(herb.phi)
+                    age_array_herb.append(herb.age)
+                    weight_array_herb.append(herb.weight)
+                    N_herb_1 += 1
+                for carn in cell.carnivores_pop:
+                    phi_array_herb.append(carn.phi)
+                    age_array_herb.append(carn.age)
+                    weight_array_herb.append(carn.weight)
+                    N_herb_1 += 1
 
             N_herb.append(self.num_animals_per_species['Herbivore']) # Hvorfor kan vi bruke den metoden på den måten
             N_carn.append(self.num_animals_per_species['Carnivore'])
             N_total.append(self.num_animals)
             V_year.append(self.num_years_simulated)
-            phi_array_herb.append(total_phi)
-            age_array_herb.append(total_age)
-            weight_array_herb.append(total_weight)
+            #phi_array_herb.append(total_phi)
+            #age_array_herb.append(total_age)
+            #weight_array_herb.append(total_weight)
 
             self.num_years_simulated += 1
 
-        print(self.num_animals_per_species)
 
         # values needed after stopping:
         number_of_simulated_years = self.num_years_simulated
         total_number_of_animals = self.num_animals
-        total_number_of_herbivores = self.num_animals_per_species['Herbivore']
+        total_number_of_herbivores = self.num_animals_per_species['Herbivore'] # Hvorfor kan vi bruke den metoden på den måten
         total_number_of_carnivores = self.num_animals_per_species['Carnivore']
-        # print(number_of_simulated_years)
-        # print(total_number_of_animals)
-        # print(total_number_of_herbivores)
-        # print(total_number_of_carnivores)
 
-        '''
+        print('Number of animals:', total_number_of_animals)
+        print(self.num_animals_per_species)
+        print('Number of simulated years:', number_of_simulated_years)
+        #print(\n) Hvordan få til at det blir mellomrom her
+
+
+
+
+
         fig = plt.figure()
-        ax1 = fig.add_subplot(3, 3, 1)  # map
+        self.ax1 = fig.add_subplot(3, 3, 1)  # map
         ax2 = fig.add_subplot(3, 3, 3)  # animal count
         ax3 = fig.add_subplot(3, 3, 4)  # herbivore distribution
-        ax4 = fig.add_subplot(3, 3, 5)  # carnivore distribution
-        ax5 = fig.add_subplot(3, 3, 6)  # fitness
-        ax6 = fig.add_subplot(3, 3, 7)  # age
-        ax7 = fig.add_subplot(3, 3, 8)  # weight
+        ax4 = fig.add_subplot(3, 3, 6)  # carnivore distribution
+        ax5 = fig.add_subplot(3, 3, 7)  # fitness
+        ax6 = fig.add_subplot(3, 3, 8)  # age
+        ax7 = fig.add_subplot(3, 3, 9)  # weight
 
-        # time counter
-        axt = fig.add_axes([0.4, 0.8, 0.2, 0.2])  # llx, lly, w, h
+        # time counter                                               # skjønne fra time counter til map
+        axt = fig.add_axes([0.4, 0.8, 0.2, 0.2])  # llx, lly, w, h          
         axt.axis('off')
 
-        template = 'Years: {:5d}'
+        '''
+        template = 'Years: {:5d}'                         #er det her "years kommer inn?
         txt = axt.text(0.5, 0.5, template.format(0),
                        horizontalalignment='center',
                        verticalalignment='center',
@@ -176,27 +190,57 @@ class BioSim:
 
         input('Press ENTER to begin counting')
 
-        for k in range(30):
+        for k in range(30):                           
             txt.set_text(template.format(k))
             plt.pause(0.1)  # pause required to make update visible
-
-        ax2.plot(N_herb, V_year, 'b')
-        ax2.plot(N_carn, V_year, 'r')
-        ax2.legend('Animals')
-
         
-        ax3.set_xticks(1)
+        
+        # hvordan sette map her
+        '''
+
+        '''
+        fig = plt.figure()
+        ax1 = fig.add_subplot(3, 3, 1)  # map
+        ax3 = fig.add_subplot(3, 3, 4)  # herbivore distribution
+        ax4 = fig.add_subplot(3, 3, 5)  # carnivore distribution
+        ax5 = fig.add_subplot(3,3, 6)   # fitness
+        ax6 = fig.add_subplot(3, 3, 7)  # age
+        ax7 = fig.add_subplot(3, 3, 8)  # weight
+        '''
+        #self.create_map()
+        #plt.subplot(2,2,1)
+        ax2.plot(V_year, N_herb, 'b') # antall herb
+        ax2.plot(V_year, N_carn, 'r') # antall carn
+        plt.legend('Animals')
+
+        '''
+        ax3.set_xticks(1)                          # skjønne hva som skjer her, aka set_xticks()
         ax3.set_xticks(1)
         ax3.set_title("Herbivore distribution")
         fig.tight_layout()
         ax3.plt.imshow(N_herb,V_year)
 
-        ax4.set_xticks(1)
+        ax4.set_xticks(1)                          # skjønne hva som skjer her, aka set_xticks()
         ax4.set_xticks(1)
         ax4.set_title("Carnivore distribution")
         fig.tight_layout()
         ax3.plt.imshow(N_carn, V_year)
         '''
+
+        R = math.sqrt(N_herb_1)
+        ax5.hist(phi_array_herb, bins= int(R)) # ordne bins, ordne slik at binsene blir gjennomsiktige, tekst
+        ax5.hist(phi_array_carn, bins= int(R))
+        #ax5.legend('phi total')
+
+
+        ax6.hist(age_array_herb, bins=int(math.sqrt(N_herb_1)))
+        ax6.hist(age_array_carn, bins=int(math.sqrt(N_herb_1)))
+        #ax6.legend('age total')
+
+        ax7.hist(weight_array_herb, bins=int(math.sqrt(N_herb_1)))
+        ax7.hist(weight_array_herb, bins=int(math.sqrt(N_herb_1)))
+        #ax7.legend('weight total')
+        plt.show()
 
 
 
@@ -219,10 +263,10 @@ class BioSim:
             for row in self.island_map_graph.geo.splitlines()] # vet ikke hv Map_Island returnere enda
 
         # lager tom figur
-        fig = plt.figure()
+        #fig = plt.figure()
 
         # adder akser til tom figur (skal bli øy)
-        ax_im = fig.add_axes([0.1, 0.1, 0.7, 0.8])  # llx, lly, w, h
+        ax_im = self.ax1.add_axes([0.1, 0.1, 0.7, 0.8])  # llx, lly, w, h
 
         # viser øya m/vann
         ax_im.imshow(map_rgb)
@@ -235,7 +279,7 @@ class BioSim:
 
         # lager nytt koordinatsystem i figuren (x akse starter ved 80 % bredde (v->h) av figuren, y 
         # akse starter i 10 prosent høyde av figuren, har bredde som er på 10% av figuren, har høyde som er på 80% av figuren)
-        ax_lg = fig.add_axes([0.85, 0.1, 0.1, 0.8])  # llx, lly, w, h
+        ax_lg = self.ax1.add_axes([0.85, 0.1, 0.1, 0.8])  # llx, lly, w, h
         ax_lg.axis('off')  # fjerner selve koordinatsystemet
         for ix, name in enumerate(('Water', 'Lowland',
                                    'Highland',
@@ -248,7 +292,7 @@ class BioSim:
             ax_lg.text(0.35, ix * 0.2, name,
                        transform=ax_lg.transAxes)  # legger til navn ved x akse... og yakse ...
 
-        plt.show()  # viser plott
+        #plt.show()  # viser plott
 
 
     def add_population(self, population):
@@ -258,7 +302,7 @@ class BioSim:
         :param population: List of dictionaries specifying population
         """
 
-        return self.island_map_graph.add_population(population)
+        return self.island_map_graph.add_population(population)   # Blir brukt for å legge til carnivores
 
         # for k in range(50):
         # Lowland.herbivores_pop.append(Herbivore())
@@ -267,10 +311,10 @@ class BioSim:
         # self.idk = len(self.init_pop)
         # return self.init_pop
 
-    @property
-    def year(self):
-        """Last year simulated."""           # skjønne denne her
-        return self.num_years_simulated
+   # @property
+   # def year(self):
+     #   """Last year simulated."""           # Denne kan egt fjernes
+     #   return self.num_years_simulated
 
     @property
     def num_animals(self):
