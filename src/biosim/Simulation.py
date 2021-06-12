@@ -276,7 +276,7 @@ class BioSim:
     def num_animals(self):
         """Total number of animals on island."""
         num_carnivores = 0
-        num_herbivores = 0                                      # Når skal disse 2 her bli brukt
+        num_herbivores = 0                                      # Når skal disse 1 her bli brukt
         for cell in self.island_map_graph.map.values():         # hvorfor ikke kun den nederste
             num_carnivores += len(cell.carnivores_pop)
             num_herbivores += len(cell.herbivores_pop)
