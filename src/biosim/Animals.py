@@ -246,12 +246,12 @@ class Carnivore(Animal):
         """
             The carnivore kills a herbivore with probability prob_kill
             """
-        if self.phi < herb.phi:
+        if self.phi <= herb.phi:
             return 0
-        elif 0 <= self.phi - herb.phi <= self.p['DeltaPhiMax']:
+        elif 0 < self.phi - herb.phi < self.p['DeltaPhiMax']:
             return (self.phi - herb.phi) / self.p['DeltaPhiMax']
-        #else:
-            #return 1
+        else:
+            return 1
 
     def will_carn_kill(self, herb):
         p = self.probability_kill_herbivore(herb)
