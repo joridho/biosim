@@ -208,10 +208,10 @@ class BioSim:
         ax7 = fig.add_subplot(3, 3, 8)  # weight
         '''
         #self.create_map()
-        #plt.subplot(2,2,1)
         ax2.plot(V_year, N_herb, 'b') # antall herb
         ax2.plot(V_year, N_carn, 'r') # antall carn
         plt.legend('Animals')
+        ax2.set_title('Animal count')
 
         '''
         ax3.set_xticks(1)                          # skjønne hva som skjer her, aka set_xticks()
@@ -227,19 +227,25 @@ class BioSim:
         ax3.plt.imshow(N_carn, V_year)
         '''
 
-        R = math.sqrt(N_herb_1)
-        ax5.hist(phi_array_herb, bins= int(R)) # ordne bins, ordne slik at binsene blir gjennomsiktige, tekst
-        ax5.hist(phi_array_carn, bins= int(R))
-        #ax5.legend('phi total')
+        ax5.hist(phi_array_herb, bins= 20, label ='phi herbs', histtype ='step', edgecolor = 'b') # ordne bins
+        ax5.hist(phi_array_carn, bins= 20,label ='phi carns', histtype ='step', edgecolor = 'r')     #int(math.sqrt(N_carn_1))
+        ax5.set_title('fitness')
+        handles, labels = ax5.get_legend_handles_labels()
+        ax5.legend(labels = labels)
 
 
-        ax6.hist(age_array_herb, bins=int(math.sqrt(N_herb_1)))
-        ax6.hist(age_array_carn, bins=int(math.sqrt(N_herb_1)))
-        #ax6.legend('age total')
+        ax6.hist(age_array_herb, bins= 20, label ='age herbs',histtype ='step', edgecolor = 'b')
+        ax6.hist(age_array_carn, bins = 20, label ='age carns', histtype ='step', edgecolor = 'r') #int(math.sqrt(N_carn_1))
+        ax6.set_title('age')
+        handles, labels = ax6.get_legend_handles_labels()
+        ax6.legend(handles = handles, labels =labels) # Kan ta med handles også, men blir d samme med og uten
 
-        ax7.hist(weight_array_herb, bins=int(math.sqrt(N_herb_1)))
-        ax7.hist(weight_array_herb, bins=int(math.sqrt(N_herb_1)))
-        #ax7.legend('weight total')
+        ax7.hist(weight_array_herb, bins= 20, label ='weight herbs',histtype ='step', edgecolor = 'b') #int(math.sqrt(N_herb_1))
+        ax7.hist(weight_array_herb, bins= 20, label ='weight herbs',histtype ='step', edgecolor = 'r') #int(math.sqrt(N_carn_1))
+        ax7.set_title('weight')
+        handles, labels = ax7.get_legend_handles_labels()
+        ax7.legend(labels = labels)
+        #fig.tight_layout()  # Fikk feilmld
         plt.show()
 
 
