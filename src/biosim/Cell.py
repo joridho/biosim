@@ -132,19 +132,17 @@ class Cell:
 
         # for carnivores
         list_c = self.carnivores_pop
-        self.new_c = 0  # for testing
-        self.list_new_c = []  # for testing
+        list_new_c = []
         for k in range(self.N_carn):
-            list_c[k].will_the_animal_give_birth(n=self.N_carn)
-            # list_c[k].birth = True  # there for testing because mocker doesn't work
-            if list_c[k].will_the_animal_give_birth is True:
+            if list_c[k].will_the_animal_give_birth(n=self.N_carn) is True:
                 newborn = Carnivore({'species': 'Carnivore',
                                      'weight': list_c[k].newborn_birth_weight, 'age': 0})
-                # list_c[k].birth_weight_loss(newborn_birth_weight=newborn.weight)
-                self.list_new_c.append(newborn)
-                self.new_c += 1  # for testing
-        for k in self.list_new_c:
+                list_c[k].birth_weight_loss(newborn_birth_weight=newborn.weight)
+                list_new_c.append(newborn)
+
+        for k in list_new_c:
             list_c.append(k)
+
         self.carnivores_pop = list_c
 
     def move_animals_from_cell(self):
@@ -240,6 +238,7 @@ class Cell:
             animal.aging()
             animal.fitness()
 
+    # tror ikke vi trenger denne
     def update_fitness(self):
         for animal in self.herbivores_pop:
             animal.fitness()
