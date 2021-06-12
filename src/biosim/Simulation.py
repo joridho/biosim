@@ -71,7 +71,7 @@ class BioSim:
 
         self.num_years_simulated = 0
 
-    def set_animal_parameters(self, species, p):
+    def set_animal_parameters(self, species, p): # skjønne denne
         """
         Set parameters for animal species.
 
@@ -102,7 +102,7 @@ class BioSim:
 
         :param years: number of years to simulate
         """
-        phi_array_herb = []
+        phi_array_herb = []  # hvorfor kun for herb
         age_array_herb = []
         weight_array_herb = []
         N_herb = []
@@ -276,7 +276,7 @@ class BioSim:
     def num_animals(self):
         """Total number of animals on island."""
         num_carnivores = 0
-        num_herbivores = 0
+        num_herbivores = 0                                      # Når skal disse 2 her bli brukt
         for cell in self.island_map_graph.map.values():         # hvorfor ikke kun den nederste
             num_carnivores += len(cell.carnivores_pop)
             num_herbivores += len(cell.herbivores_pop)
