@@ -72,8 +72,6 @@ class Cell:
         for animal in self.herbivores_pop:
             animal.eat_fodder(F_cell=self.af)  # make the herbivore eat
             self.af -= animal.F_consumption  # change the amount of fodder in the cell
-            if self.af <= 0:
-                return ValueError('There has to be a positive amount of fodder')
 
     def available_herbivores_for_carnivores(self):
         self.herbivores_weight_sum = 0
@@ -96,13 +94,14 @@ class Cell:
             appetite = carn.p['F']
             weight_of_eaten_herbs = 0
             for herb in self.herbivores_pop:
-                if herb not in killed:
-                    if weight_of_eaten_herbs < appetite:
+                #if herb.weight <= appetite: # denne skal bort
+                if weight_of_eaten_herbs < appetite:
+                    if herb not in killed:
                         if carn.will_carn_kill(herb) is True:
                             carn.weight_gain_after_eating_herb(herb)
-                            weight_of_eaten_herbs += herb.weight
+                            # weight_of_eaten_herbs += herb.weight
+                            appetite -= herb.weight
                             killed.append(herb)
-                            consumed += herb.weight
 
         for herb in killed:
             self.herbivores_pop.remove(herb)
@@ -118,56 +117,53 @@ class Cell:
 
         # for herbivores
         list_h = self.herbivores_pop
-        self.new_h = 0  # for testing
-        self.list_new_h = []
+        list_new_h = []
         for k in range(self.N_herb):
-            list_h[k].will_the_animal_give_birth(n=self.N_herb)
-            # list_h[k].birth = True # is there for testing since mocker doesn't work
-            if list_h[k].birth is True:
+            if list_h[k].will_the_animal_give_birth(n=self.N_herb) is True:
                 newborn = Herbivore({'species': 'Herbivore',
                                      'weight': list_h[k].newborn_birth_weight, 'age': 0})
                 list_h[k].birth_weight_loss(newborn_birth_weight=newborn.weight)
-                self.list_new_h.append(newborn)
-                self.new_h += 1  # for testing
-        for k in self.list_new_h:
-            list_h.append(k)
+                list_new_h.append(newborn)
+
+        for newborn in list_new_h:
+            list_h.append(newborn)
+
         self.herbivores_pop = list_h
 
         # for carnivores
         list_c = self.carnivores_pop
-        self.new_c = 0  # for testing
-        self.list_new_c = []  # for testing
+        list_new_c = []
         for k in range(self.N_carn):
-            list_c[k].will_the_animal_give_birth(n=self.N_carn)
-            # list_c[k].birth = True  # there for testing because mocker doesn't work
-            if list_c[k].birth is True:
+            if list_c[k].will_the_animal_give_birth(n=self.N_carn) is True:
                 newborn = Carnivore({'species': 'Carnivore',
                                      'weight': list_c[k].newborn_birth_weight, 'age': 0})
-                # list_c[k].birth_weight_loss(newborn_birth_weight=newborn.weight)
-                self.list_new_c.append(newborn)
-                self.new_c += 1  # for testing
-        for k in self.list_new_c:
+                list_c[k].birth_weight_loss(newborn_birth_weight=newborn.weight)
+                list_new_c.append(newborn)
+
+        for k in list_new_c:
             list_c.append(k)
+
         self.carnivores_pop = list_c
 
     def move_animals_from_cell(self):
         self.herbs_move = []
-        list = self.herbivores_pop
-        for herb in list:
+        herbs = self.herbivores_pop
+        for herb in herbs:
             if herb.move_single_animal() == True:
                 #if herb not in self.herbs_that_cant_move:
-                    herb.already_moved = True
-                    self.herbs_move.append(herb)
-                    self.herbivores_pop.remove(herb)
+                herb.already_moved = True
+                self.herbs_move.append(herb)
+                self.herbivores_pop.remove(herb)
 
 
         self.carns_move = []
-        list2 = self.carnivores_pop
-        for carn in list2:
+        carns = self.carnivores_pop
+        for carn in carns:
             if carn.move_single_animal() == True:
                 #if carn not in self.carns_that_cant_move: #sjekker om dyrte har flyttet allerede det året. Må gjøres annerledes
-                    self.carns_move.append(carn)
-                    self.carnivores_pop.remove(carn)
+                carn.already_moved = True
+                self.carns_move.append(carn)
+                self.carnivores_pop.remove(carn)
 
         tot_animals = [self.herbs_move, self.carns_move]
         return tot_animals
@@ -185,6 +181,7 @@ class Cell:
         for carn in carns_moved:
             self.carnivores_pop.append(carn)
             #self.carns_that_cant_move.append(carn)
+
 
     def reset_already_moved(self):
         for animal in self.herbivores_pop:
@@ -243,6 +240,7 @@ class Cell:
             animal.aging()
             animal.fitness()
 
+    # tror ikke vi trenger denne
     def update_fitness(self):
         for animal in self.herbivores_pop:
             animal.fitness()

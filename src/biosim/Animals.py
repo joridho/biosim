@@ -111,16 +111,13 @@ class Animal:
             return min(1, variable)
 
     def will_the_animal_give_birth(self, n):
-
         p = self.birth_probability(n)
-
-        # self.r = random.random()
         r = random.random()
 
         if r <= p:
-            self.birth = True
+            return True
         else:
-            self.birth = False
+            return False
 
     def birth_weight_loss(self, newborn_birth_weight):
         """
@@ -136,7 +133,7 @@ class Animal:
         if self.phi == 0:
             return 1
         else:
-            return 0.4 * (1-self.phi)#self.p['omega'] * (1 - self.phi)
+            return self.p['omega'] * (1 - self.phi)
 
     def will_the_animal_die(self):
         p = self.death_probability()
@@ -153,11 +150,12 @@ class Animal:
         #self.times_moved = 0
         if self.already_moved is False:
             if self.m < prob_move:
-                self.move = True #it has moved once this year
+                return True #it has moved once this year
                 #self.times_moved += 1
             else:
-                self.move = False
-        return self.move
+                return False
+        else:
+            return False
 
 
 class Herbivore(Animal):
@@ -200,14 +198,14 @@ class Herbivore(Animal):
 
             after the consumption the herbivore gains weight
             """
-        self.F_cell = F_cell
-        if self.F_cell >= self.p['F']:
+        #self.F_cell = F_cell
+        if F_cell >= self.p['F']:
             self.F_consumption = self.p['F']
             self.weight_gain(consumption=self.F_consumption)
             if self.F_consumption < 0:
-                return ValueError
+                return ValueError('There has to be a nonnegative amount of fodder')
         else:
-            self.F_consumption = self.F_cell
+            self.F_consumption = F_cell
             self.weight_gain(consumption=self.F_consumption)
             if self.F_consumption < 0:
                 return ValueError
@@ -248,12 +246,12 @@ class Carnivore(Animal):
         """
             The carnivore kills a herbivore with probability prob_kill
             """
-        if self.phi < herb.phi:
+        if self.phi <= herb.phi:
             return 0
-        elif 0 <= self.phi - herb.phi <= self.p['DeltaPhiMax']:
+        elif 0 < self.phi - herb.phi < self.p['DeltaPhiMax']:
             return (self.phi - herb.phi) / self.p['DeltaPhiMax']
-        #else:
-            #return 1
+        else:
+            return 1
 
     def will_carn_kill(self, herb):
         p = self.probability_kill_herbivore(herb)
