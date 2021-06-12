@@ -130,7 +130,7 @@ class BioSim:
                     total_age += animal.age
                     total_weight += animal.weight
 
-            N_herb.append(self.num_animals_per_species['Herbivore'])
+            N_herb.append(self.num_animals_per_species['Herbivore']) # Hvorfor kan vi bruke den metoden på den måten
             N_carn.append(self.num_animals_per_species['Carnivore'])
             N_total.append(self.num_animals)
             V_year.append(self.num_years_simulated)
@@ -276,7 +276,7 @@ class BioSim:
     def num_animals(self):
         """Total number of animals on island."""
         num_carnivores = 0
-        num_herbivores = 0                                      # Når skal disse 1 her bli brukt
+        num_herbivores = 0
         for cell in self.island_map_graph.map.values():         # hvorfor ikke kun den nederste
             num_carnivores += len(cell.carnivores_pop)
             num_herbivores += len(cell.herbivores_pop)
