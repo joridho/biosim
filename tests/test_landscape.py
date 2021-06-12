@@ -48,7 +48,7 @@ def test_sorting_herb():
                               {'species': 'Carnivore', 'weight': 35, 'age': 5},
                               {'species': 'Carnivore', 'weight': 41, 'age': 8},
                               {'species': 'Carnivore', 'weight': 50, 'age': 9}])
-    unsorted_herbs = c.herbivores_pop
+    unsorted_herbs = l.herbivores_pop
     herbs_fitness = [k.phi for k in unsorted_herbs]
     herbs_fitness.sort()
     l.sorting_animals()
@@ -397,7 +397,8 @@ def test_mother_lost_weight_herb():
                             {'species': 'Herbivore', 'weight': 67, 'age': 5},
                             {'species': 'Herbivore', 'weight': 41, 'age': 8},
                             {'species': 'Herbivore', 'weight': 50, 'age': 9}])
-    weight = [k.weight for k in l.herbivores_pop]
+    sorted_herbivores_pop = sorted(l.herbivores_pop, key=operator.attrgetter('age'))
+    weight = [k.weight for k in sorted_herbivores_pop]
     zeta = l.herbivores_pop[0].p['zeta']
 
     l.newborn_animals()
@@ -408,8 +409,8 @@ def test_mother_lost_weight_herb():
 
     newborn_weight = [herb.newborn_birth_weight for herb in mothers]
 
-    weight.sort()
-    newborn_weight.sort()
+    #weight.sort()
+    #newborn_weight.sort()
 
     for k in range(len(weight)):
         assert weight[k] - newborn_weight[k] * zeta == mothers[k].weight
