@@ -467,6 +467,16 @@ def test_birth_weight_loss_carn():
     c.birth_weight_loss(c.newborn_birth_weight)
     assert c.weight == weight_mother - zeta * c.newborn_birth_weight
 
+def test_fitness_after_birth_herb():
+    """
+    When the herbivore loses weight after birth the fitness should be less
+    """
+    h = Herbivore({'age': 5, 'weight': 50})
+    fitness_mother = h.phi
+    h.will_the_animal_give_birth(n=10)
+    h.birth_weight_loss(h.newborn_birth_weight)
+    assert h.phi < fitness_mother
+
 
 
 # Tests for death_probability function
@@ -576,36 +586,65 @@ def test_already_moved(mocker):
 
 
 # Tests for eat_fodder function
-
-
-
-
 def test_consumption():
-    h = Herbivore(properties={'species': 'Herbivore', 'weight': 35, 'age': 5})
+    """
+    If the available fodder in the cell is greater than the appetite, f_consumption should be
+    the same as the appetite.
+    """
+    h = Herbivore({'age': 5, 'weight': 50})
     h.eat_fodder(F_cell=800)
-    assert h.F_consumption == 10#h.p['F']
+    assert h.F_consumption == h.p['F']
 
-def  test_consumption_not_enough_fodder():
-    h = Herbivore(properties={'species': 'Herbivore', 'weight': 35, 'age': 5})
-    h.eat_fodder(F_cell=7)
-    assert h.F_consumption == h.F_consumption
+def test_negative_consumption():
+    """
+    The herbivore should stop eating if there is no more available fodder. Therefore there
+    the eat_fodder function should give an error if the fodder is negative
+    """
+    h = Herbivore({'age': 5, 'weight': 50})
+    assert h.eat_fodder(F_cell=-10) == ValueError
 
-def test_herbivore_eat_fodder():
-    h = Herbivore(properties={'species': 'Herbivore', 'weight': 35, 'age': 5})
-    current_weight = h.weight
-    h.eat_fodder(F_cell = h.p['F']) 
-    assert h.weight == current_weight + h.p['beta'] * h.F_consumption
+def test_to_little_fodder():
+    """
+    If there is not enough fodder in the cell, F_consumption should be the same as the available
+    fodder
+    """
+    h = Herbivore({'age': 5, 'weight': 50})
+    F_cell = 2
+    h.eat_fodder(F_cell)
+    assert h.F_consumption == F_cell
 
-def test_herbivore_gains_weight_after_eat_fodder():
-    h = Herbivore(properties={'species': 'Herbivore', 'weight': 35, 'age': 5})
-    current_weight = h.weight
-    h.eat_fodder(F_cell = 6)
-    assert h.weight == current_weight + h.p['beta'] * h.F_consumption
+def test_weight_gain_when_after_eat_fodder():
+    """
+    When the herbivore eats, it should gain weight = consumption * beta
+    """
+    h = Herbivore({'age': 5, 'weight': 50})
+    init_weight = h.weight
+    beta = h.p['beta']
+    h.eat_fodder(F_cell=800)
+    assert h.weight == init_weight + beta * h.F_consumption
 
-def test_weight_gain_after_eating():
-    h = Herbivore(properties={'species': 'Herbivore', 'weight': 35, 'age': 5})
-    h.eat_fodder(F_cell = 800)
-    assert h.weight == 35 + h.p['beta'] * h.F_consumption
+def test_fitness_after_eating():
+    """
+    When the herbivore gains weight after eating the fitness should be greater
+    """
+    h = Herbivore({'age': 5, 'weight': 50})
+    init_fitness = h.phi
+    h.eat_fodder(F_cell=800)
+    assert h.phi > init_fitness
+
+
+
+# Tests for probability_kill_herbivore:
+
+
+
+
+
+
+
+
+
+
 
 
 def test_if_carnivore_gains_correct_weight():
