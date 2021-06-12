@@ -257,7 +257,7 @@ class BioSim:
         #ax3.set_yticks(1)
         ax3.set_title("Herbivore distribution")
         #fig.tight_layout()
-        newplot = ax3.imshow(np.array(listfarge), interpolation="nearest",cmap=plt.cm.gray_r)
+        newplot = ax3.imshow(np.array(listfarge), interpolation="nearest")   #cmap=plt.cm.gray_r)
         plt.colorbar(newplot)
 
         #ax3.set_xticks([1 5 10])                         # skjønne hva som skjer her, aka set_xticks()
