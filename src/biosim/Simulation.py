@@ -14,6 +14,7 @@ import pandas
 import matplotlib.pyplot as plt
 # import subprocess
 import random
+import numpy as np
 import time
 # import os
 import textwrap
@@ -221,6 +222,7 @@ class BioSim:
         ax2.legend('Animals')
         ax2.set_title('Animal count')
 
+
         listfarge = []
         for rute in colors:
             if 0 < rute < 50:
@@ -232,19 +234,38 @@ class BioSim:
             if 150 < rute < 200:
                 listfarge.append([1.0, 1.0, 0.5])
 
-
+        '''
+        @property
+        def animal_distribution(self):
+            """
+            Pandas DataFrame with animal count per species for each cell on island.
+            """
+            data_all_cells = []
+            i = 0
+            for coord, cell in self.island_map.map.items():
+                row = coord[0]
+                col = coord[1]
+                herb = len(cell.pop_herb)
+                carn = len(cell.pop_carn)
+                data_all_cells.append([row, col, herb, carn])
+                i += 1
+            return pandas.DataFrame(data=data_all_cells, columns=[
+                'Row', 'Col', 'Herbivore', 'Carnivore'])
+        '''
 
         #ax3.set_xticks([1 5 10])                          # skjønne hva som skjer her, aka set_xticks()
         #ax3.set_yticks(1)
         ax3.set_title("Herbivore distribution")
         #fig.tight_layout()
-        ax3.imshow(listfarge)
+        newplot = ax3.imshow(np.array(listfarge), interpolation="nearest",cmap=plt.cm.gray_r)
+        plt.colorbar(newplot)
 
         #ax3.set_xticks([1 5 10])                         # skjønne hva som skjer her, aka set_xticks()
         #ax4.set_yticks(1)
         ax4.set_title("Carnivore distribution")
         #fig.tight_layout()
-        ax3.imshow(listfarge)
+        #newplot1 = ax4.imshow((np.colors, interpolation="nearest", cmap=plt.cm.gray_r)
+        #plt.colorbar(newplot1)
 
         ax5.hist(phi_array_herb, bins= 20, label ='phi herbs', histtype ='step', edgecolor = 'b') # ordne bins,  int(math.sqrt(N_herb_1))
         ax5.hist(phi_array_carn, bins= 20,label ='phi carns', histtype ='step', edgecolor = 'r')     #int(math.sqrt(N_carn_1))
