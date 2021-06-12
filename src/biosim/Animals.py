@@ -115,9 +115,9 @@ class Animal:
         r = random.random()
 
         if r <= p:
-            self.birth = True
+            return True
         else:
-            self.birth = False
+            return False
 
     def birth_weight_loss(self, newborn_birth_weight):
         """
@@ -133,7 +133,7 @@ class Animal:
         if self.phi == 0:
             return 1
         else:
-            return 0.4 * (1-self.phi)#self.p['omega'] * (1 - self.phi)
+            return self.p['omega'] * (1 - self.phi)
 
     def will_the_animal_die(self):
         p = self.death_probability()
@@ -154,7 +154,8 @@ class Animal:
                 #self.times_moved += 1
             else:
                 self.move = False
-        return self.move
+        else:
+            self.move = False
 
 
 class Herbivore(Animal):

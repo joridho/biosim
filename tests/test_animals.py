@@ -408,78 +408,177 @@ def test_no_birth_when_too_few_carns():
 
 # Tests for will_the_animal_give_birth_function:
 def test_will_the_animal_give_birth_correct_return_herb():
-    assert 1 == 1
-
-
-
-
-
-
-
-
-
-
-def test_no_newborn_when_to_few_animals(): #too
     """
-    This is a test that checks if the birth probability equals zero when there are too few animals
-    a cell.
+    If the birth_probability returns 1 the will_the_animal_give_birth function will return True.
+    The birth_probability=1 if N=10
     """
+    h = Herbivore({'age': 5, 'weight': 50})
+    N = 10
+    for _ in range(10):
+        assert h.will_the_animal_give_birth(N) == True
 
-    h = Herbivore({'species': 'Herbivore',
-                       'age': 3,
-                       'weight': 35})                      #weight=35, age=3
-    assert h.birth_probability(n=1) == 0
-
-def test_no_newborn_if_newborn_too_fat():
+def test_will_the_animal_give_birth_correct_return_carn():
     """
-    This is a test that checks if the birth probability equals zero when the newborn weighs more
-    than the mother
+    If the birth_probability returns 1 the will_the_animal_give_birth function will return True.
+    The birth_probability=1 if N=10
     """
-    # the newborn will weigh more than 15/3.5
-    h = Herbivore({'species': 'Herbivore',
-                       'age': 3,
-                       'weight': 15})                          #weight=15, age=3
-    assert h.birth_probability(n=3) == 0
+    c = Carnivore({'age': 10, 'weight': 50})
+    N = 10
+    for _ in range(10):
+        assert c.will_the_animal_give_birth(N) == True
 
-def test_birth():
-    'This is a test that checks if the Herbivore gives birth when it is supposed to'
-    h = Herbivore({'species': 'Herbivore',
-                       'age': 5,
-                       'weight': 35})    #weight=35, age=3
-    true = 0
-    false = 0
-    for _ in range(100):
-        h.birth_probability(n=4)
-        h.will_the_animal_give_birth(n=4)
-        if h.birth == True:
-            true += 1
-        else:
-            false +=1
-    assert true == false  # bare en test for å sjekke hva som ikke fungerer
-
-def test_herbivore_birth_weight_loss():
-    ' This is a test that checks if the Mother looses the right amount of weight after giving birth'
-    h = Herbivore({'species': 'Herbivore',
-                       'age': 3,
-                       'weight': 15})   #Bare å endre alder og vekt hvis du føler for det
-    current_weight = h.weight
-    h.birth_weight_loss(newborn_birth_weight=8)
-    assert h.weight == current_weight - h.p['zeta'] * 8
+def test_will_the_animal_give_birth_return_false_carn():
+    """
+    If the birth_probability=0 the will_the_animal_give_birth function should return False.
+    birth_probability=0 happens eg. when N=1
+    """
+    c = Carnivore({'age': 10, 'weight': 50})
+    N = 1
+    for _ in range(10):
+        assert c.will_the_animal_give_birth(N) == False
 
 
-def test_death():
-    '''
-    This is a test that checks if the Herbivore dies when it is supposed to'
-    '''
-    h = Herbivore({'species': 'Herbivore',
-                       'age': 3,
-                       'weight': 10})
-    for _ in range(100):
-        h.death_probability()
-        if h.will_the_animal_die() == True:
-            assert h.d < h.p
-        else:
-            assert h.d >= h.p
+# Tests for birth_weight_loss function
+def test_birth_weight_loss_herb():
+    """
+    If the birth_probability returns 1 and will_the_animal_give_birth is True, the mother should
+    lose weight.
+    She loses zeta times the weight of the newborn. The weight is calculated in birth_probability
+    which we use in will_the_animal_give_birth
+    """
+    h = Herbivore({'age': 5, 'weight': 50})
+    weight_mother = h.weight
+    zeta = h.p['zeta']
+    h.will_the_animal_give_birth(n=10)
+    h.birth_weight_loss(h.newborn_birth_weight)
+    assert h.weight == weight_mother - zeta * h.newborn_birth_weight
+
+def test_birth_weight_loss_carn():
+    """
+    If the birth_probability returns 1 and will_the_animal_give_birth is True, the mother should
+    lose weight.
+    She loses zeta times the weight of the newborn. The weight is calculated in birth_probability
+    which we use in will_the_animal_give_birth
+    """
+    c = Herbivore({'age': 10, 'weight': 50})
+    weight_mother = c.weight
+    zeta = c.p['zeta']
+    c.will_the_animal_give_birth(n=10)
+    c.birth_weight_loss(c.newborn_birth_weight)
+    assert c.weight == weight_mother - zeta * c.newborn_birth_weight
+
+
+
+# Tests for death_probability function
+def test_return_1_when_phi_zero_herb():
+    """
+    When the fitness of a herbivore is zero the animal will definitely die. When a herbivore dies
+    death_probability = 1. The fitness=0 if the weight of the herbivore is zero
+    """
+    h = Herbivore({'age': 5, 'weight': 0})
+    assert h.death_probability() == 1
+
+def test_return_1_when_phi_zero_carn():
+    """
+    When the fitness of a carnivore is zero the animal will definitely die. When a carnivore dies
+    death_probability = 1. The fitness=0 if the weight of the carnivore is zero
+    """
+    c = Carnivore({'age': 10, 'weight': 0})
+    assert c.death_probability() == 1
+
+def test_return_correct_death_probability_herb():
+    """
+    If the fitness is not 0, p = omega * (1 - fitness)
+    """
+    h = Herbivore({'age': 5, 'weight': 50})
+    omega = h.p['omega']
+    fitness = h.phi
+    assert h.death_probability() == omega * (1 - fitness)
+
+def test_return_correct_death_probability_carn():
+    """
+    If the fitness is not 0, p = omega * (1 - fitness)
+    """
+    c = Carnivore({'age': 10, 'weight': 50})
+    omega = c.p['omega']
+    fitness = c.phi
+    assert c.death_probability() == omega * (1 - fitness)
+
+
+
+# Tests for will_the_animal_die_function:
+def test_will_the_animal_die_herb(mocker):
+    """
+    When finding out if a herbivore will die or not, we get a random number and if it's less than
+    p, will_the_animal_die = True. If not it returns False.
+    If the animal weighs 10, p will be approximately 0.2 and therefore I use mocker to make the
+    random number 0.1
+    """
+    mocker.patch('random.random', return_value=0.1)
+    h = Herbivore({'age': 5, 'weight': 10})
+    for _ in range(50):
+        assert h.will_the_animal_die() == True
+
+def test_will_the_animal_die_carn(mocker):
+    """
+    When finding out if a carnivore will die or not, we get a random number and if it's less than
+    p, will_the_animal_die = True. If not it returns False.
+    If the animal weighs 10, p will be approximately 0.321 and therefore I use mocker to make the
+    random number 0.1
+    """
+    mocker.patch('random.random', return_value=0.1)
+    c = Carnivore({'age': 10, 'weight': 5})
+    for _ in range(50):
+        assert c.will_the_animal_die() == True
+
+
+
+# Tests for move_move_single_animal function
+def test_will_animal_move_herb(mocker):
+    """
+    The probability of a animal moving is mu * fitness. In the function we draw a random number. If
+    the random number is less than the probability the animal will move. In addition the animal
+    can't have moved earlier that year and the variable already_moved must be false.
+    When the animal weighs 50 and has age 5, p = 0.2455.
+    """
+    mocker.patch('random.random', return_value=0.1)
+    h = Herbivore({'age': 5, 'weight': 50})
+    h.already_moved = False
+    for _ in range(20):
+        h.move_single_animal()
+        assert h.move == True
+
+def test_will_animal_move_carn(mocker):
+    """
+    The probability of a animal moving is mu * fitness. In the function we draw a random number. If
+    the random number is less than the probability the animal will move. In addition the animal
+    can't have moved earlier that year and the variable already_moved must be false.
+    When the animal weighs 50 and has age 10, p = 0.4.
+    """
+    mocker.patch('random.random', return_value=0.1)
+    c = Carnivore({'age': 10, 'weight': 50})
+    c.already_moved = False
+    for _ in range(20):
+        c.move_single_animal()
+        assert c.move == True
+
+def test_already_moved(mocker):
+    """
+    if the animal has already moved, move=False
+    """
+    mocker.patch('random.random', return_value=0.1)
+    c = Carnivore({'age': 10, 'weight': 50})
+    c.already_moved = True
+    for _ in range(20):
+        c.move_single_animal()
+        assert c.move == False
+
+
+
+# Tests for eat_fodder function
+
+
+
 
 def test_consumption():
     h = Herbivore(properties={'species': 'Herbivore', 'weight': 35, 'age': 5})
