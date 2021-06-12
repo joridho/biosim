@@ -147,22 +147,23 @@ class Cell:
 
     def move_animals_from_cell(self):
         self.herbs_move = []
-        list = self.herbivores_pop
-        for herb in list:
+        herbs = self.herbivores_pop
+        for herb in herbs:
             if herb.move_single_animal() == True:
                 #if herb not in self.herbs_that_cant_move:
-                    herb.already_moved = True
-                    self.herbs_move.append(herb)
-                    self.herbivores_pop.remove(herb)
+                herb.already_moved = True
+                self.herbs_move.append(herb)
+                self.herbivores_pop.remove(herb)
 
 
         self.carns_move = []
-        list2 = self.carnivores_pop
-        for carn in list2:
+        carns = self.carnivores_pop
+        for carn in carns:
             if carn.move_single_animal() == True:
                 #if carn not in self.carns_that_cant_move: #sjekker om dyrte har flyttet allerede det året. Må gjøres annerledes
-                    self.carns_move.append(carn)
-                    self.carnivores_pop.remove(carn)
+                carn.already_moved = True
+                self.carns_move.append(carn)
+                self.carnivores_pop.remove(carn)
 
         tot_animals = [self.herbs_move, self.carns_move]
         return tot_animals
@@ -180,6 +181,7 @@ class Cell:
         for carn in carns_moved:
             self.carnivores_pop.append(carn)
             #self.carns_that_cant_move.append(carn)
+
 
     def reset_already_moved(self):
         for animal in self.herbivores_pop:

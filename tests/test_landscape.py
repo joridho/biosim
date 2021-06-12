@@ -145,7 +145,8 @@ def test_update_fodder():
                   {'species': 'Herbivore', 'weight': 14, 'age': 3},
                   {'species': 'Herbivore', 'weight': 13, 'age': 3}]
     l = Lowland(population)
-    appetite = Herbivore({'species': 'Herbivore', 'weight': 41, 'age': 8}).p['F']
+    l.af == 800
+    appetite = Herbivore.p['F']
     l.make_herbivores_eat()
     assert l.af == 800 - len(l.herbivores_pop) * appetite
 
@@ -585,35 +586,132 @@ def test_criteria_for_birth_prob_carn():
 
 
 # Tests for move_animals_from_cell:
-def test_herbs_removed_from_list():
-    assert 1 == 1
+def test_herbs_removed_from_list(mocker):
+    """
+    The animal will move with a probability, when choosing mocker for 0.1 there will definitly some
+    animals moving. When animals are moving the list will be shorter
+    """
+    mocker.patch('random.random', return_value=0.1)
+    l = Lowland(population=[{'species': 'Herbivore', 'weight': 65, 'age': 3},
+                            {'species': 'Herbivore', 'weight': 41, 'age': 3},
+                            {'species': 'Herbivore', 'weight': 50, 'age': 3},
+                            {'species': 'Herbivore', 'weight': 40, 'age': 3},
+                            {'species': 'Herbivore', 'weight': 41, 'age': 3},
+                            {'species': 'Herbivore', 'weight': 50, 'age': 9},
+                            {'species': 'Herbivore', 'weight': 67, 'age': 5},
+                            {'species': 'Herbivore', 'weight': 41, 'age': 8},
+                            {'species': 'Herbivore', 'weight': 50, 'age': 9}])
+    length = len(l.herbivores_pop)
+    l.move_animals_from_cell()
+    assert len(l.herbivores_pop) < length
 
 
-def test_carns_removed_from_list():
-    assert 1 == 1
+def test_carns_removed_from_list(mocker):
+    """
+    The animal will move with a probability, when choosing mocker for 0.1 there will definitly some
+    animals moving. When animals are moving the list will be shorter
+    """
+    mocker.patch('random.random', return_value=0.1)
+    l = Lowland(population=[{'species': 'Carnivore', 'weight': 65, 'age': 3},
+                            {'species': 'Carnivore', 'weight': 41, 'age': 3},
+                            {'species': 'Carnivore', 'weight': 50, 'age': 3},
+                            {'species': 'Carnivore', 'weight': 40, 'age': 3},
+                            {'species': 'Carnivore', 'weight': 41, 'age': 3},
+                            {'species': 'Carnivore', 'weight': 50, 'age': 9},
+                            {'species': 'Carnivore', 'weight': 67, 'age': 5},
+                            {'species': 'Carnivore', 'weight': 41, 'age': 8},
+                            {'species': 'Carnivore', 'weight': 50, 'age': 9}])
+    length = len(l.carnivores_pop)
+    l.move_animals_from_cell()
+    assert len(l.carnivores_pop) < length
 
 
-def test_total_moving_animals():
-    assert 1 == 1
-
+def test_total_moving_animals(mocker):
+    """
+    The move_animal_from_cell function returns a list with one list for moving herbivores and one
+    list for moving carnivores
+    """
+    mocker.patch('random.random', return_value=0.1)
+    l = Lowland(population=[{'species': 'Carnivore', 'weight': 65, 'age': 3},
+                            {'species': 'Carnivore', 'weight': 41, 'age': 3},
+                            {'species': 'Carnivore', 'weight': 50, 'age': 3},
+                            {'species': 'Carnivore', 'weight': 40, 'age': 3},
+                            {'species': 'Carnivore', 'weight': 41, 'age': 3},
+                            {'species': 'Herbivore', 'weight': 50, 'age': 9},
+                            {'species': 'Herbivore', 'weight': 67, 'age': 5},
+                            {'species': 'Herbivore', 'weight': 41, 'age': 8},
+                            {'species': 'Herbivore', 'weight': 50, 'age': 9}])
+    init_length_herb = len(l.herbivores_pop)
+    init_length_carn = len(l.carnivores_pop)
+    total_moving = l.move_animals_from_cell()
+    difference_herb = init_length_herb - len(l.herbivores_pop)
+    difference_carn = init_length_carn - len(l.carnivores_pop)
+    assert len(total_moving[0]) == difference_herb
+    assert len(total_moving[1]) == difference_carn
 
 # tests for move_animals_to_cell:
 def test_herb_added_to_cell():
-    assert 1 == 1
+    """
+    The function move_animals_to_cell is given a list with one list with herbivores and one
+    list for carnivores. These animals are from a different cell and needs to be added to this cell
+    """
+    new_herbivores = [{'species': 'Herbivore', 'weight': 65, 'age': 3},
+                      {'species': 'Herbivore', 'weight': 41, 'age': 3}]
+    new_carnivores = [{'species': 'Carnivore', 'weight': 65, 'age': 3},
+                      {'species': 'Carnivore', 'weight': 41, 'age': 3}]
+    new_animals = [new_herbivores, new_carnivores]
+    l = Lowland([])
+    l.move_animals_to_cell(new_animals)
+    assert l.herbivores_pop == new_herbivores
 
 
 def test_carns_added_to_cell():
-    assert 1 == 1
-
+    """
+    The function move_animals_to_cell is given a list with one list with herbivores and one
+    list for carnivores. These animals are from a different cell and needs to be added to this cell
+    """
+    new_herbivores = [{'species': 'Herbivore', 'weight': 65, 'age': 3},
+                      {'species': 'Herbivore', 'weight': 41, 'age': 3}]
+    new_carnivores = [{'species': 'Carnivore', 'weight': 65, 'age': 3},
+                      {'species': 'Carnivore', 'weight': 41, 'age': 3}]
+    new_animals = [new_herbivores, new_carnivores]
+    l = Lowland([])
+    l.move_animals_to_cell(new_animals)
+    assert l.carnivores_pop == new_carnivores
 
 # Tests for reset_already_moved:
-def test_reset_already_moved_herb():
-    assert 1 == 1
+def test_reset_already_moved_herb(mocker):
+    mocker.patch('random.random', return_value=0.1)
+    l = Lowland(population=[{'species': 'Carnivore', 'weight': 65, 'age': 3},
+                            {'species': 'Carnivore', 'weight': 41, 'age': 3},
+                            {'species': 'Carnivore', 'weight': 50, 'age': 3},
+                            {'species': 'Carnivore', 'weight': 40, 'age': 3},
+                            {'species': 'Carnivore', 'weight': 41, 'age': 3},
+                            {'species': 'Herbivore', 'weight': 50, 'age': 9},
+                            {'species': 'Herbivore', 'weight': 67, 'age': 5},
+                            {'species': 'Herbivore', 'weight': 41, 'age': 8},
+                            {'species': 'Herbivore', 'weight': 50, 'age': 9}])
+    total_moving = l.move_animals_from_cell()
+    l.move_animals_to_cell(total_moving)
+    for herb in l.herbivores_pop:
+        assert herb.already_moved == True
 
 
-def test_reset_already_moved_carn():
-    assert 1 == 1
-
+def test_reset_already_moved_carn(mocker):
+    mocker.patch('random.random', return_value=0.1)
+    l = Lowland(population=[{'species': 'Carnivore', 'weight': 65, 'age': 3},
+                            {'species': 'Carnivore', 'weight': 41, 'age': 3},
+                            {'species': 'Carnivore', 'weight': 50, 'age': 3},
+                            {'species': 'Carnivore', 'weight': 40, 'age': 3},
+                            {'species': 'Carnivore', 'weight': 41, 'age': 3},
+                            {'species': 'Herbivore', 'weight': 50, 'age': 9},
+                            {'species': 'Herbivore', 'weight': 67, 'age': 5},
+                            {'species': 'Herbivore', 'weight': 41, 'age': 8},
+                            {'species': 'Herbivore', 'weight': 50, 'age': 9}])
+    total_moving = l.move_animals_from_cell()
+    l.move_animals_to_cell(total_moving)
+    for carn in l.carnivores_pop:
+        assert carn.already_moved == True
 
 # Tests for counting_animals function
 def test_count_animals_herb():

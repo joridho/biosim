@@ -150,12 +150,12 @@ class Animal:
         #self.times_moved = 0
         if self.already_moved is False:
             if self.m < prob_move:
-                self.move = True #it has moved once this year
+                return True #it has moved once this year
                 #self.times_moved += 1
             else:
-                self.move = False
+                return False
         else:
-            self.move = False
+            return False
 
 
 class Herbivore(Animal):
