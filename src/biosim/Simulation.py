@@ -269,7 +269,7 @@ class BioSim:
 
     @property
     def year(self):
-        """Last year simulated."""
+        """Last year simulated."""           # skjønne denne her
         return self.num_years_simulated
 
     @property
@@ -277,7 +277,7 @@ class BioSim:
         """Total number of animals on island."""
         num_carnivores = 0
         num_herbivores = 0
-        for cell in self.island_map_graph.map.values():
+        for cell in self.island_map_graph.map.values():         # hvorfor ikke kun den nederste
             num_carnivores += len(cell.carnivores_pop)
             num_herbivores += len(cell.herbivores_pop)
         number_of_animals = num_carnivores + num_herbivores
