@@ -169,10 +169,10 @@ class Cell:
         return tot_animals
 
 
-    def move_animals_to_cell(self, liste):
+    def move_animals_to_cell(self, list_of_moving_animals):
 
-        herbs_moved = liste[0]
-        carns_moved = liste[1]
+        herbs_moved = list_of_moving_animals[0]
+        carns_moved = list_of_moving_animals[1]
 
         for herb in herbs_moved:
             self.herbivores_pop.append(herb)
