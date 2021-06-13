@@ -217,22 +217,11 @@ class BioSim:
         ax7 = fig.add_subplot(3, 3, 8)  # weight
         '''
         self.create_map()
-        ax2.plot(V_year, N_herb, 'b') # antall herb
-        ax2.plot(V_year, N_carn, 'r') # antall carn
-        ax2.legend('Animals')
+        ax2.plot(V_year, N_herb, 'b', label = 'herbs') # antall herb
+        ax2.plot(V_year, N_carn, 'r', label = 'carn') # antall carn
+        handles, labels = ax2.get_legend_handles_labels()
+        ax2.legend(handles = handles, labels =labels)
         ax2.set_title('Animal count')
-
-
-        listfarge = []
-        for rute in colors:
-            if 0 < rute < 50:
-                listfarge.append([0.4, 0.0, 1.0])
-            if 50 < rute < 100:
-                listfarge.append([0.0, 0.6, 0.0])
-            if 100 < rute < 150:
-                listfarge.append([0.5, 1.0, 0.5])
-            if 150 < rute < 200:
-                listfarge.append([1.0, 1.0, 0.5])
 
         '''
         @property
@@ -253,19 +242,33 @@ class BioSim:
                 'Row', 'Col', 'Herbivore', 'Carnivore'])
         '''
 
+
+        M = int(math.sqrt(self.island_map_graph.letter_count))
+        print(M)
+
         #ax3.set_xticks([1 5 10])                          # skjønne hva som skjer her, aka set_xticks()
         #ax3.set_yticks(1)
         ax3.set_title("Herbivore distribution")
-        #fig.tight_layout()
-        newplot = ax3.imshow(np.array(listfarge), interpolation="nearest")   #cmap=plt.cm.gray_r)
-        plt.colorbar(newplot)
+        #ax3 = fig.add_axes([0.15, 0.35, 0.1, 0.3])
+        newplot = ax3.imshow(np.array(colors).reshape(3, 3),extent=[1,self.island_map_graph.x_coord,self.island_map_graph.y_coord, 1], vmin = 0, vmax=200, cmap = 'viridis', interpolation="nearest")   #cmap=plt.cm.gray_r)
+        cbaxes = fig.add_axes([0.3, 0.4, 0.01, 0.2])
+        plt.colorbar(newplot, cax = cbaxes)
 
-        #ax3.set_xticks([1 5 10])                         # skjønne hva som skjer her, aka set_xticks()
-        #ax4.set_yticks(1)
-        ax4.set_title("Carnivore distribution")
         #fig.tight_layout()
-        #newplot1 = ax4.imshow((np.colors, interpolation="nearest", cmap=plt.cm.gray_r)
+        #ax4.set_xticks([1 5 10])                         # skjønne hva som skjer her, aka set_xticks()
+        #ax4.set_yticks(1)
+        #ax4.set_title("Carnivore distribution")
+        #fig.tight_layout()
+        #newplot1 = ax4.imshow((np.colors, interpolation="nearest", cmap= 'viridis')
         #plt.colorbar(newplot1)
+
+        #ax3.set_xticks([1 5 10])                          # skjønne hva som skjer her, aka set_xticks()
+        #ax3.set_yticks(1)
+        ax4.set_title("Carnivore distribution")
+        #ax4 = fig.add_axes([0.15, 0.35, 0.1, 0.3])
+        new1plot = ax4.imshow(np.array(colors).reshape(3, 3),extent=[1,self.island_map_graph.x_coord,self.island_map_graph.y_coord, 1], vmin = 0, vmax=200, cmap = 'viridis', interpolation="nearest")   #cmap=plt.cm.gray_r)
+        cbaxes = fig.add_axes([0.6, 0.4, 0.01, 0.2])
+        plt.colorbar(new1plot, cax = cbaxes)
 
         ax5.hist(phi_array_herb, bins= 20, label ='phi herbs', histtype ='step', edgecolor = 'b') # ordne bins,  int(math.sqrt(N_herb_1))
         ax5.hist(phi_array_carn, bins= 20,label ='phi carns', histtype ='step', edgecolor = 'r')     #int(math.sqrt(N_carn_1))
@@ -312,7 +315,7 @@ class BioSim:
         #fig = plt.figure()
 
         # adder akser til tom figur (skal bli øy)
-        ax_im = self.fig.add_axes([0.045, 0.65, 0.3, 0.3])  # llx, lly, w, h
+        ax_im = self.fig.add_axes([0.045, 0.69, 0.3, 0.3])  # llx, lly, w, h
 
         # viser øya m/vann
         ax_im.imshow(map_rgb)
@@ -325,7 +328,7 @@ class BioSim:
 
         # lager nytt koordinatsystem i figuren (x akse starter ved 80 % bredde (v->h) av figuren, y 
         # akse starter i 10 prosent høyde av figuren, har bredde som er på 10% av figuren, har høyde som er på 80% av figuren)
-        ax_lg = self.fig.add_axes([0.35, 0.65, 0.1, 0.3])  # llx, lly, w, h
+        ax_lg = self.fig.add_axes([0.35, 0.69, 0.1, 0.3])  # llx, lly, w, h
         ax_lg.axis('off')  # fjerner selve koordinatsystemet
         for ix, name in enumerate(('Water', 'Lowland',
                                    'Highland',

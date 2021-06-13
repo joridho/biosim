@@ -86,17 +86,19 @@ class Map_Island:
         coordinates.
         """
         self.check_island_boundaries()
-        #self.check_for_equal_map_lines()
-
+        self.check_for_equal_map_lines()
+        a = "some string"
+        self.letter_count = len(self.geo)
         self.geo.splitlines()
 
-        y_coord = 1  # orginalt er det motsatt: der y koordinatet står
+        self.y_coord = 1  # orginalt er det motsatt: der y koordinatet står
         for line in self.geo.splitlines():
-            x_coord = 1
+            self.x_coord = 1
             for cell_type in list(line):
-                self.geography[(x_coord, y_coord)] = cell_type
-                x_coord += 1
-            y_coord += 1
+                self.geography[(self.x_coord, self.y_coord)] = cell_type
+                self.x_coord += 1
+                #self.letter_count += 1
+            self.y_coord += 1
 
         '''
             for loc, cell_type in self.geography:
