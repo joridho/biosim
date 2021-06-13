@@ -178,27 +178,25 @@ class BioSim:
         ax6 = fig.add_subplot(3, 3, 8)  # age
         ax7 = fig.add_subplot(3, 3, 9)  # weight
 
-        # time counter                                               # skjønne fra time counter til map
-        axt = fig.add_axes([0.4, 0.8, 0.2, 0.2])  # llx, lly, w, h          
+        # years                                              # skjønne fra time counter til map
+        axt = fig.add_axes([0.4, 0.8, 0.2, 0.2])  # llx, lly, w, h
         axt.axis('off')
-
-        '''
-        template = 'Years: {:5d}'                         #er det her "years kommer inn?
+        template = 'Years: %s' %(self.num_years_simulated)                      #er det her "years kommer inn?
         txt = axt.text(0.5, 0.5, template.format(0),
                        horizontalalignment='center',
                        verticalalignment='center',
                        transform=axt.transAxes)  # relative coordinates
 
+
+        '''
         plt.pause(0.01)  # pause required to make figure visible
 
         input('Press ENTER to begin counting')
 
+        
         for k in range(30):                           
             txt.set_text(template.format(k))
             plt.pause(0.1)  # pause required to make update visible
-        
-        
-        # hvordan sette map her
         '''
 
         self.create_map()
