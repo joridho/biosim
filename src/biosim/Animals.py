@@ -19,7 +19,9 @@ class Animal:
     def __init__(self, properties):
         """
         Initializing animal class for given values
+
         :param properties: dictionary containing species, age and weight for an animal
+        :type properties: dict
         """
         random.seed()
 
@@ -40,7 +42,6 @@ class Animal:
     def set_given_parameters(cls, params):
         """
         Saves the parameters for the different animals for use in Animals class
-        :param params:
         """
         for parameter in params:
             if parameter in cls.p:
@@ -71,6 +72,7 @@ class Animal:
         """
         The animal gains weight everytime they eat. In this function, appetite is described as
         what is eaten, but in some cases that is not possible.
+
         :param consumption: amount of fodder the animal consumes
         :type consumtion: float
         """
@@ -100,8 +102,11 @@ class Animal:
         Animals can mate if there are two or more animals of the same species in the same cell.
         The animals can give birth with a probability, which depends on fitness and weight.
         If the newborn weighs more than the mother, the probability of birth is zero.
+
         :param n: number of animals in the cell
-        type n: float
+        :type n: float
+        :return: the probability of birth
+        :rtype: float
         """
         variable = self.p['gamma'] * self.phi * (n - 1)
         self.newborn_birth_weight = self.birth_weight_function()
@@ -118,6 +123,11 @@ class Animal:
         """
         If the random number generated is less than the probability for birth, the birth will not
         take place
+
+        :param n: number of animals in the cell
+        :type n: float
+        :return: True if the birth takes place, False if not
+        :rtype: bool
         """
         p = self.birth_probability(n)
         r = random.random()
@@ -130,6 +140,7 @@ class Animal:
     def birth_weight_loss(self, newborn_birth_weight):
         """
         If the mother gives birth, she looses weight
+
         :params newborn_birth_weight: the weight of the newborn
         :type newborn_birth_weight: float
         """
@@ -139,6 +150,9 @@ class Animal:
     def death_probability(self):
         """
         The animal dies if it weighs nothing, but also with a probability
+
+        :return: the probability of dying
+        :rtype: float
         """
         if self.phi == 0:
             return 1
@@ -147,7 +161,8 @@ class Animal:
 
     def will_the_animal_die(self):
         """
-        If the number generated is less than the probability the animal will die
+        If the random number generated is less than the probability the animal will die
+
         :return: True if animal dies, False if it survives
         :rtype: bool
         """
@@ -160,13 +175,17 @@ class Animal:
             return False
 
     def move_single_animal(self):
+        """
+        If the random number generated is less than prob_move, the animal will try to move
+
+        :return: True if the animal will try to move, False if not
+        :rtype: bool
+        """
         prob_move = self.p['mu'] * self.phi
         self.m = random.random()
-        #self.times_moved = 0
         if self.already_moved is False:
             if self.m < prob_move:
-                return True #it has moved once this year
-                #self.times_moved += 1
+                return True
             else:
                 return False
         else:
@@ -178,7 +197,7 @@ class Herbivore(Animal):
     this is a class for herbivores on the island
     """
 
-    p = {  # Dictionary of parameters belonging to the Herbivore class
+    p = {
         "w_birth": 8.0,
         "sigma_birth": 1.5,
         "beta": 0.9,
@@ -195,25 +214,29 @@ class Herbivore(Animal):
         "F": 10.0,
     }
 
-    # def __init__(self, species='Herbivore', weight=None, age=0):
     def __init__(self, properties):
         """
-        initialisation of weight and age for a new herbivore
-            """
+        Initialisation of weight and age for a new herbivore
+
+        :param properties: dictionary containing species, weight and age
+        :type properties: dict
+        """
         super().__init__(properties)
 
     def eat_fodder(self, F_cell):
         """
-            Herbivores tries to eat a certain amount in a year. However, how much the animal
-            actually consumes depends on how much fodder is available in the cell.
+        Herbivores tries to eat a certain amount in a year. However, how much the animal
+        actually consumes depends on how much fodder is available in the cell.
 
-            F_cell: how much food in the cell
-            F: how much the herbivore wants to eat in a year (appetite)
-            F_consumption: how much the herbivore actually eats
+        F_cell: how much food in the cell
+        F: how much the herbivore wants to eat in a year (appetite)
+        F_consumption: how much the herbivore actually eats
 
-            after the consumption the herbivore gains weight
-            """
-        #self.F_cell = F_cell
+        After the consumption the herbivore gains weight
+
+        :param F_cell: the amount of fodder available in the cell
+        :type F_cell: float
+        """
         if F_cell >= self.p['F']:
             self.F_consumption = self.p['F']
             self.weight_gain(consumption=self.F_consumption)
@@ -231,7 +254,7 @@ class Carnivore(Animal):
     this is a class for carnivores  on the island
     """
 
-    p = {  # Dictionary of parameters belonging to the Herbivore class
+    p = {
         "w_birth": 6.0,
         "sigma_birth": 1.0,
         "beta": 0.75,
@@ -249,18 +272,25 @@ class Carnivore(Animal):
         "DeltaPhiMax": 10.0
     }
 
-    # def __init__(self, species='Carnivore', weight=None, age=0):
     def __init__(self, properties):
         """
         initialisation of weight and age for a new herbivore
-            """
+
+        :param properties: dictionary containing species, weight and age
+        :type properties: dict
+        """
         # super().__init__(species, weight, age)
         super().__init__(properties)
 
     def probability_kill_herbivore(self, herb):
         """
-            The carnivore kills a herbivore with probability prob_kill
-            """
+        The carnivore kills a herbivore with probability prob_kill
+
+        :param herb: the herbivore the carnivore will try to kill
+        :type herb: class Herbivore
+        :return: probability of killing
+        :rtype: float
+        """
         if self.phi <= herb.phi:
             return 0
         elif 0 < self.phi - herb.phi < self.p['DeltaPhiMax']:
@@ -269,6 +299,15 @@ class Carnivore(Animal):
             return 1
 
     def will_carn_kill(self, herb):
+        """
+        If the generated number is less than the probability for killing the carnivore will eat the
+        herbivore
+
+        :param herb: the herbivore the carnivore will try to kill
+        :type herb: class Herbivore
+        :return: True if it will eat, False if not
+        :rtype: bool
+        """
         p = self.probability_kill_herbivore(herb)
         r = random.random()
 
@@ -279,6 +318,9 @@ class Carnivore(Animal):
 
     def weight_gain_after_eating_herb(self, herb):
         """
-            After eating the carnivore gains weight relative to the eaten herbivore
-            """
+        After eating the carnivore gains weight relative to the eaten herbivore
+
+        :param herb: the herbiovre the carnivore eats
+        :type herb: class herbivore
+        """
         self.weight_gain(consumption=herb.weight)
