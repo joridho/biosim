@@ -157,9 +157,9 @@ class BioSim:
 
 
         # values needed after stopping:
-        number_of_simulated_years = self.num_years_simulated
-        total_number_of_animals = self.num_animals
-        total_number_of_herbivores = self.num_animals_per_species['Herbivore'] # Hvorfor kan vi bruke den metoden på den måten
+        number_of_simulated_years = self.num_years_simulated   #self.year her
+        total_number_of_animals = self.num_animals # property
+        total_number_of_herbivores = self.num_animals_per_species['Herbivore'] # pga property
         total_number_of_carnivores = self.num_animals_per_species['Carnivore']
 
         print('Number of animals:', total_number_of_animals)
@@ -183,7 +183,7 @@ class BioSim:
         # years                                              # skjønne fra time counter til map
         axt = fig.add_axes([0.4, 0.8, 0.2, 0.2])  # llx, lly, w, h
         axt.axis('off')
-        template = 'Years: %s' %(self.num_years_simulated)                      #er det her "years kommer inn?
+        template = 'Years: %s' %(self.num_years_simulated)                      #sette self.year her
         txt = axt.text(0.5, 0.5, template.format(0),
                        horizontalalignment='center',
                        verticalalignment='center',
