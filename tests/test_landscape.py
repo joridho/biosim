@@ -680,38 +680,75 @@ def test_carns_added_to_cell():
     assert l.carnivores_pop == new_carnivores
 
 # Tests for reset_already_moved:
-def test_reset_already_moved_herb(mocker):
-    mocker.patch('random.random', return_value=0.1)
+def test_reset_already_moved_herb():
+    """
+    After moving, animal.already_moved should be True, so they don't move again from the new cell
+    in the same year
+    """
     l = Lowland(population=[{'species': 'Carnivore', 'weight': 65, 'age': 3},
                             {'species': 'Carnivore', 'weight': 41, 'age': 3},
                             {'species': 'Carnivore', 'weight': 50, 'age': 3},
                             {'species': 'Carnivore', 'weight': 40, 'age': 3},
                             {'species': 'Carnivore', 'weight': 41, 'age': 3},
                             {'species': 'Herbivore', 'weight': 50, 'age': 9},
-                            {'species': 'Herbivore', 'weight': 67, 'age': 5},
+                            {'species': 'Herbivore', 'weight': 21, 'age': 5},
                             {'species': 'Herbivore', 'weight': 41, 'age': 8},
                             {'species': 'Herbivore', 'weight': 50, 'age': 9}])
     total_moving = l.move_animals_from_cell()
+
+    # Reset list for new cell
+    l.herbivores_pop = []
+    l.carnivores_pop = []
     l.move_animals_to_cell(total_moving)
     for herb in l.herbivores_pop:
         assert herb.already_moved == True
 
 
-def test_reset_already_moved_carn(mocker):
-    mocker.patch('random.random', return_value=0.1)
+def test_reset_already_moved_carn():
+    """
+    After moving, animal.already_moved should be True, so they don't move again from the new cell
+    in the same year
+    """
     l = Lowland(population=[{'species': 'Carnivore', 'weight': 65, 'age': 3},
                             {'species': 'Carnivore', 'weight': 41, 'age': 3},
                             {'species': 'Carnivore', 'weight': 50, 'age': 3},
                             {'species': 'Carnivore', 'weight': 40, 'age': 3},
                             {'species': 'Carnivore', 'weight': 41, 'age': 3},
                             {'species': 'Herbivore', 'weight': 50, 'age': 9},
-                            {'species': 'Herbivore', 'weight': 67, 'age': 5},
+                            {'species': 'Herbivore', 'weight': 21, 'age': 5},
                             {'species': 'Herbivore', 'weight': 41, 'age': 8},
                             {'species': 'Herbivore', 'weight': 50, 'age': 9}])
     total_moving = l.move_animals_from_cell()
+
+    # Reset list for new cell
+    l.herbivores_pop = []
+    l.carnivores_pop = []
     l.move_animals_to_cell(total_moving)
-    for carn in l.carnivores_pop:
-        assert carn.already_moved == True
+    for herb in l.carnivores_pop:
+        assert herb.already_moved == True
+
+def test_reset_already_moved():
+    """
+    Every year we must reset already moved so that they can move again
+    """
+    l = Lowland(population=[{'species': 'Carnivore', 'weight': 65, 'age': 3},
+                            {'species': 'Carnivore', 'weight': 41, 'age': 3},
+                            {'species': 'Carnivore', 'weight': 50, 'age': 3},
+                            {'species': 'Carnivore', 'weight': 40, 'age': 3},
+                            {'species': 'Carnivore', 'weight': 41, 'age': 3},
+                            {'species': 'Herbivore', 'weight': 50, 'age': 9},
+                            {'species': 'Herbivore', 'weight': 21, 'age': 5},
+                            {'species': 'Herbivore', 'weight': 41, 'age': 8},
+                            {'species': 'Herbivore', 'weight': 50, 'age': 9}])
+    total_moving = l.move_animals_from_cell()
+
+    # Reset list for new cell
+    l.herbivores_pop = []
+    l.carnivores_pop = []
+    l.move_animals_to_cell(total_moving)
+    l.reset_already_moved()
+    for herb in l.carnivores_pop:
+        assert herb.already_moved == False
 
 # Tests for counting_animals function
 def test_count_animals_herb():
