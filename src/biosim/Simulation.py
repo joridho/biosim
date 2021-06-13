@@ -73,6 +73,10 @@ class BioSim:
         self.island_map_graph.create_map_dict()  # koordinatene i kart får tilhørende lister med dyr
 
         self.num_years_simulated = 0
+        if hist_specs == None:
+            self.hist_specs = 1
+        else:
+            self.hist_specs = hist_specs
 
     def set_animal_parameters(self, species, p): # skjønne denne
         """
@@ -117,19 +121,16 @@ class BioSim:
         N_total = [] # hvorfor brukes denne
         V_year = []
 
+
         # self.set_animal_parameters(species='Herbivore, Carnivore', p=)
         for year in range(years):
 
             self.island_map_graph.year_cycle()
-
-            # creating arrays for plotting
-            phi_array_herb = []
-            age_array_herb = []
-            weight_array_herb = []
             data_heat_map_herb = []
             data_heat_map_carn = []
 
             for loc, cell in self.island_map_graph.map.items():
+
                 nr_herbs_cell = len(cell.herbivores_pop)
                 nr_carns_cell = len(cell.carnivores_pop)
                 data_heat_map_herb.append(nr_herbs_cell)
@@ -154,6 +155,7 @@ class BioSim:
             self.num_years_simulated += 1
 
 
+
         # values needed after stopping:
         number_of_simulated_years = self.num_years_simulated
         total_number_of_animals = self.num_animals
@@ -168,8 +170,8 @@ class BioSim:
 
 
 
-
         self.fig = plt.figure()
+        self.create_map()
         fig = self.fig
         ax2 = fig.add_subplot(3, 3, 3)  # animal count
         ax3 = fig.add_subplot(3, 3, 4)  # herbivore distribution
@@ -185,7 +187,7 @@ class BioSim:
         txt = axt.text(0.5, 0.5, template.format(0),
                        horizontalalignment='center',
                        verticalalignment='center',
-                       transform=axt.transAxes)  # relative coordinates
+                       transform= axt.transAxes)  # relative coordinates
 
 
         '''
@@ -199,7 +201,6 @@ class BioSim:
             plt.pause(0.1)  # pause required to make update visible
         '''
 
-        self.create_map()
         ax2.axis('off')
         ax2 = fig.add_axes([0.67, 0.72, 0.28, 0.22])
         ax2.plot(V_year, N_herb, 'b', label = 'herbs') # antall herb
@@ -253,7 +254,7 @@ class BioSim:
         ax7.axis('off')
         ax7 = fig.add_axes([0.7, 0.052, 0.28, 0.2])
         ax7.hist(weight_array_herb, bins= 20, label ='weight herbs',histtype ='step', edgecolor = 'b') #ordne bins, int(math.sqrt(N_herb_1))
-        ax7.hist(weight_array_herb, bins= 20, label ='weight herbs',histtype ='step', edgecolor = 'r') #int(math.sqrt(N_carn_1))
+        ax7.hist(weight_array_carn, bins= 20, label ='weight carns',histtype ='step', edgecolor = 'r') #int(math.sqrt(N_carn_1))
         ax7.set_title('weight')
         handles, labels = ax7.get_legend_handles_labels()
         ax7.legend(labels = labels)
