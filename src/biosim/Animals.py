@@ -74,7 +74,7 @@ class Animal:
         what is eaten, but in some cases that is not possible.
 
         :param consumption: amount of fodder the animal consumes
-        :type consumtion: float
+        :type consumption: float
         """
         self.weight += self.p['beta'] * consumption
         self.fitness()
@@ -182,9 +182,9 @@ class Animal:
         :rtype: bool
         """
         prob_move = self.p['mu'] * self.phi
-        self.m = random.random()
+        m = random.random()
         if self.already_moved is False:
-            if self.m < prob_move:
+            if m < prob_move:
                 return True
             else:
                 return False
@@ -320,7 +320,7 @@ class Carnivore(Animal):
         """
         After eating the carnivore gains weight relative to the eaten herbivore
 
-        :param herb: the herbiovre the carnivore eats
+        :param herb: the herbivore the carnivore eats
         :type herb: class herbivore
         """
         self.weight_gain(consumption=herb.weight)

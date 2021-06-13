@@ -666,7 +666,7 @@ def test_will_carn_kill_false():
     If p = 0, will_carn_kill returns False
     """
     h = Herbivore({'age': 5, 'weight': 40})
-    c = Carnivore({'age': 10, 'weight': 70})
+    c = Carnivore({'age': 10, 'weight': 30})
     for _ in range(50):
         assert c.will_carn_kill(h) is False
 
