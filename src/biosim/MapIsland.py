@@ -148,30 +148,30 @@ class Map_Island:
         the population list of it's coordinate as input.
         :raise ValueError: if invalid landscape type is given in geography string
         """
-        self.create_geography_dict()  # hvert koordinat har sin celletype
-        self.create_population_dict()  # Hvert koordinat har sine lister med dyr (med ulik info)
+        self.create_geography_dict()
+        self.create_population_dict()
 
-        for location, cell_type in self.geography.items():  #
-            if cell_type == "L":  # celletype blir bestemt
-                if location in self.population.keys():  # sjekker om koordinatet i self.geography er et koordinat i self.population
-                    self.map[location] = Lowland(self.population[location])  # Vi gir koordinatet i et kart en celletype og denne celletypen tar inn en populasjon (som fins i det samme koordinatet) som argument. populasjon aka en flere lister med ulike dyr med ulik info
-                #else:
-                    #self.map[location] = Lowland([])  # Hvis ikke koordinatet i self.geography fins i self.population betyr det at det ikke fins noen dyr i den cella/koordinatet. Argumentet blir en tom liste. Kan den ta inn en tom liste????
+        for location, cell_type in self.geography.items():
+            if cell_type == "L":
+                if location in self.population.keys():
+                    self.map[location] = Lowland(self.population[location])
+                else:
+                    self.map[location] = Lowland([])
             elif cell_type == "H":
                 if location in self.population.keys():
                     self.map[location] = Highland(self.population[location])
-                #else:
-                    #self.map[location] = Highland([])  # Har ikke highland enda
+                else:
+                    self.map[location] = Highland([])  # Har ikke highland enda
             elif cell_type == "D":
                 if location in self.population.keys():
                     self.map[location] = Desert(self.population[location])
-                #else:
-                    #self.map[location] = Desert([])  # " HAR ikke en for ørken enda"
+                else:
+                    self.map[location] = Desert([])
             elif cell_type == "W":
-                self.map[location] = Water([])  # " Har ikke en for water enda"
+                self.map[location] = Water([])
             else:
-                raise ValueError(
-                    f"Invalid landscape type {cell_type}")  # Gir feilmelding hvis celletype ikke fins
+                raise ValueError(f"Invalid landscape type {cell_type}")
+
 
     def neighbours_of_current_cell(self, current_coordinates): # Hva skal input være her?
         """
