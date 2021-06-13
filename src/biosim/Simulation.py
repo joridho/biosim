@@ -29,14 +29,14 @@ import textwrap
 
 class BioSim:
 
-    def __init__(self, island_geo, init_pop, seed,
+    def __init__(self, island_map, ini_pop, seed,
                  vis_years=1, ymax_animals=None, cmax_animals=None, hist_specs=None,
                  img_dir=None, img_base=None, img_fmt='png', img_years=None,
                  log_file=None):
 
         """
-        :param island_geo: Multi-line string specifying island geography
-        :param init_pop: List of dictionaries specifying initial population
+        :param island_map: Multi-line string specifying island geography
+        :param ini_pop: List of dictionaries specifying initial population
         :param seed: Integer used as random number seed
         :param ymax_animals: Number specifying y-axis limit for graph showing animal numbers
         :param cmax_animals: Dict specifying color-code limits for animal densities
@@ -69,7 +69,7 @@ class BioSim:
         """
         random.seed(seed)
 
-        self.island_map_graph = Map_Island(island_geo, init_pop)
+        self.island_map_graph = Map_Island(island_map, ini_pop)
         self.island_map_graph.create_map_dict()  # koordinatene i kart får tilhørende lister med dyr
 
         self.num_years_simulated = 0
@@ -86,7 +86,7 @@ class BioSim:
         :param p: Dict with valid parameter specification for species
         """
 
-        class_names = {'Herbivores': Herbivore, 'Carnivore': Carnivore}
+        class_names = {'Herbivore': Herbivore, 'Carnivore': Carnivore}
         for param_name in p.keys():
             if param_name in class_names[species].p:
                 class_names[species].p[param_name] = p[param_name]
@@ -103,11 +103,11 @@ class BioSim:
             if param_name in class_names[landscape].p.keys():
                 class_names[landscape].p[param_name] = p[param_name]
 
-    def simulate(self, years):
+    def simulate(self, num_years):
         """
         Run simulation while visualizing the result.
 
-        :param years: number of years to simulate
+        :param num_years: number of years to simulate
         """
         phi_array_herb = []
         age_array_herb = []
@@ -123,7 +123,7 @@ class BioSim:
 
 
         # self.set_animal_parameters(species='Herbivore, Carnivore', p=)
-        for year in range(years):
+        for year in range(num_years):
 
             self.island_map_graph.year_cycle()
             data_heat_map_herb = []
@@ -216,7 +216,10 @@ class BioSim:
         ax3.axis('off')
         ax3 = fig.add_axes([0.045, 0.35, 0.3, 0.25])
         ax3.set_title("Herbivore distribution")
-        heatmap_herb = ax3.imshow(np.array(data_heat_map_herb).reshape(3, 3),extent=[1,self.island_map_graph.x_coord,self.island_map_graph.y_coord, 1], vmin = 0, vmax=200, cmap = 'viridis', interpolation="nearest")   #cmap=plt.cm.gray_r)
+        heatmap_herb = ax3.imshow(np.array(data_heat_map_herb).reshape(3, 3),
+                                  extent=[1,self.island_map_graph.x_coord,
+                                  self.island_map_graph.y_coord, 1], vmin = 0, vmax=200,
+                                  cmap = 'viridis', interpolation="nearest")   #cmap=plt.cm.gray_r)
         axes_bar = fig.add_axes([0.31, 0.35, 0.01, 0.2])
         plt.colorbar(heatmap_herb, cax = axes_bar)
 

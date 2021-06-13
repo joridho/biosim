@@ -15,7 +15,6 @@ geogr = """\
             WWW
             WLW
             WWW"""
-#geogr = textwrap.dedent(geogr)
 
 ini_herbs = [{'loc': (2, 2),
               'pop': [{'species': 'Herbivore',

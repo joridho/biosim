@@ -111,8 +111,7 @@ class Map_Island:
 
         for pop_info in self.init_pop:  # iterer gjennom elementene (dictionaries) i lista. init_pop er en liste med dictionaries
             if pop_info["loc"] in self.population.keys():  # vi sjekker om verdien som tilhører cell_info['loc'] er en nøkkel i dictionary. Vi sjekker altså om posisjonen allerede er en nøkkel i dictionary
-                self.population[pop_info["loc"]].extend(pop_info[
-                                                            "pop"])  # I en allerede eksisterende nøkkel i population, legger vi til den tilhørende lista med properties of animal
+                self.population[pop_info["loc"]].extend(pop_info["pop"])  # I en allerede eksisterende nøkkel i population, legger vi til den tilhørende lista med properties of animal
             else:
                 self.population[pop_info["loc"]] = pop_info["pop"]  # vi legger til posisjonen som ny nøkkel i population dictionary
 
@@ -124,23 +123,28 @@ class Map_Island:
         :param population: Specifies the new population of one or more cells
         :type population: list of dicts
         """
-        # population består av en liste av dictionaries
-        new_population = {}  # ny dictionary
-        for pop_info in population:  # iterer gjennom hvert element (dictionary) i lista
+
+        for pop_info in population:
+            if pop_info['loc'] in  self.population.keys():
+                self.population[pop_info['loc']].extend(pop_info['pop'])
+            else:
+                self.population[pop_info["loc"]] = pop_info["pop"]
+        """
+        new_population = {}
+        for pop_info in population:
             if pop_info['loc'] in new_population.keys():
                 new_population[pop_info['loc']].extend(pop_info['pop'])
             else:
-                new_population[pop_info["loc"]] = pop_info[
-                    "pop"]  # vi legger posisjonen til pop_info som ny nøkkel i newpopulasjon. Her vil vi legge til den tilhørende lista av properties som verdi
+                new_population[pop_info["loc"]] = pop_info["pop"]
 
         for location, population in new_population.items():
-            for animal_info in population:  # iterer gjennom elementene (listene med animal info) i lista population
-                if animal_info["species"] == "Herbivore":  # Hvis dyret er herbivore, blir den ....
-                    self.map[location].herbivores_pop.append(Herbivore(
-                        animal_info))  # Legger populasjon (flere lister med ulike herbivore info) inn i allerede eksisterende kartkoordinat
+            for animal_info in population:
+                if animal_info["species"] == "Herbivore":
+                    #self.map[location].herbivores_pop.append(Herbivore(animal_info))
+                    self.population[pop_info["loc"]] = pop_info["pop"]
                 else:
-                    self.map[location].carnivores_pop.append(
-                        Carnivore(animal_info))  # samme prinsipp som over
+                    self.map[location].carnivores_pop.append(Carnivore(animal_info)) 
+    """
 
     def create_map_dict(self):
         """
@@ -150,49 +154,47 @@ class Map_Island:
         the population list of it's coordinate as input.
         :raise ValueError: if invalid landscape type is given in geography string
         """
-        self.create_geography_dict()  # hvert koordinat har sin celletype
-        self.create_population_dict()  # Hvert koordinat har sine lister med dyr (med ulik info)
+        self.create_geography_dict()
+        self.create_population_dict()
 
-        for location, cell_type in self.geography.items():  #
-            if cell_type == "L":  # celletype blir bestemt
-                if location in self.population.keys():  # sjekker om koordinatet i self.geography er et koordinat i self.population
-                    self.map[location] = Lowland(self.population[location])  # Vi gir koordinatet i et kart en celletype og denne celletypen tar inn en populasjon (som fins i det samme koordinatet) som argument. populasjon aka en flere lister med ulike dyr med ulik info
-                #else:
-                    #self.map[location] = Lowland([])  # Hvis ikke koordinatet i self.geography fins i self.population betyr det at det ikke fins noen dyr i den cella/koordinatet. Argumentet blir en tom liste. Kan den ta inn en tom liste????
+        for location, cell_type in self.geography.items():
+            if cell_type == "L":
+                if location in self.population.keys():
+                    self.map[location] = Lowland(self.population[location])
+                else:
+                    self.map[location] = Lowland([])
             elif cell_type == "H":
                 if location in self.population.keys():
                     self.map[location] = Highland(self.population[location])
-                #else:
-                    #self.map[location] = Highland([])  # Har ikke highland enda
+                else:
+                    self.map[location] = Highland([])  # Har ikke highland enda
             elif cell_type == "D":
                 if location in self.population.keys():
                     self.map[location] = Desert(self.population[location])
-                #else:
-                    #self.map[location] = Desert([])  # " HAR ikke en for ørken enda"
+                else:
+                    self.map[location] = Desert([])
             elif cell_type == "W":
-                self.map[location] = Water([])  # " Har ikke en for water enda"
+                self.map[location] = Water([])
             else:
-                raise ValueError(
-                    f"Invalid landscape type {cell_type}")  # Gir feilmelding hvis celletype ikke fins
+                raise ValueError(f"Invalid landscape type {cell_type}")
+
 
     def neighbours_of_current_cell(self, current_coordinates): # Hva skal input være her?
         """
-        Finds all neighbouring coordinates of a given cell. Checks the
-        landscape type of each coordinate. The neighbours
-        with landscape types an animal can move to, are returned.
+        Finds all neighbouring coordinates of a given cell. Checks the landscape type of each
+        coordinate. The neighbour switch landscape types an animal can move to, are returned.
         :param current_coordinates: Location of current cell
         :type current_coordinates: tuple
         :return: Locations as keys and landscape class instance as values
         :rtype: dict
         """
-        neighbours_of_current_cell = {}
-        n, m = current_coordinates[0], current_coordinates[1]
-        neighbours = [(n - 1, m), (n, m - 1), (n, m + 1), (n + 1, m)]
+        # neighbours_of_current_cell = {}
+        (x, y) = current_coordinates
+        neighbours = [(x - 1, y), (x, y - 1), (x, y + 1), (x + 1, y)]
         self.neighbour_cells = []
         for neighbour_cell in neighbours:
             if neighbour_cell in self.map.keys():
                 self.neighbour_cells.append(self.map[neighbour_cell])
-
         '''
         for cell in self.neighbour_cells:
             d = random.choice(list)
@@ -233,8 +235,8 @@ class Map_Island:
         for loc, cell in self.map.items():
             self.neighbours_of_current_cell(loc)
             if self.arrived_cell.Habitable() == True:
-                liste = cell.move_animals_from_cell()
-                self.arrived_cell.move_animals_to_cell(liste)
+                list_of_moving_animals = cell.move_animals_from_cell()
+                self.arrived_cell.move_animals_to_cell(list_of_moving_animals)
 
         for loc, cell in self.map.items():
             cell.reset_already_moved()
@@ -266,7 +268,7 @@ class Map_Island:
         for cell in self.map.values():
             cell.make_animals_age()
 
-        # LOOSE WEIGHT
+        # LOSE WEIGHT
         for cell in self.map.values():
             cell.make_animals_lose_weight()
 

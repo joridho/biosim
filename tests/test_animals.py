@@ -7,77 +7,88 @@ __author__ = 'Christianie Torres'
 __email__ = 'christianie.torres@nmbu.no'
 
 from biosim.Animals import Herbivore, Carnivore
+import pytest
+
+
+@pytest.fixture
+def age5_weight20():
+    return {'age': 5, 'weight': 20}
+
+
+@pytest.fixture
+def age10_weight40():
+    return {'age': 10, 'weight': 40}
 
 
 # Tests for initial value:
-def test_parameters_herb():
+def test_parameters_herb(age5_weight20):
     """
     Checking if the correct parameters for herbivores is given
         It is given that the w_birth is 8.0 for herbivores
     """
-    h = Herbivore({'age': 5, 'weight': 20})
+    h = Herbivore(age5_weight20)
     assert h.p['w_birth'] == 8.0
 
 
-def test_parameters_carn():
+def test_parameters_carn(age10_weight40):
     """
     Checking if the correct parameters for carnivores is given
     It is given that the w_birth is 6.0 for carnivores
     """
-    h = Carnivore({'age': 10, 'weight': 40})
+    h = Carnivore(age10_weight40)
     assert h.p['w_birth'] == 6.0
 
 
-def test_herbivore_age():
+def test_herbivore_age(age5_weight20):
     """
     The herbivore shall be given an age when it is created
     It is given age = 5
     """
-    h = Herbivore({'age': 5, 'weight': 20})
+    h = Herbivore(age5_weight20)
     assert h.age == 5
 
 
-def test_carnivore_age():
+def test_carnivore_age(age10_weight40):
     """
     The herbivore shall be given an age when it is created
     It is given age = 10
     """
-    c = Carnivore({'age': 10, 'weight': 40})
+    c = Carnivore(age10_weight40)
     assert c.age == 10
 
 
-def test_herbivore_weight():
+def test_herbivore_weight(age5_weight20):
     """
     The herbivore shall be given an weight when it is created
     It is given weight = 20
     """
-    h = Herbivore({'age': 5, 'weight': 20})
+    h = Herbivore(age5_weight20)
     assert h.weight == 20
 
 
-def test_carnivore_weight():
+def test_carnivore_weight(age10_weight40):
     """
     The carnivore shall be given an weight when it is created
     It is given weight = 40
     """
-    c = Carnivore({'age': 10, 'weight': 40})
+    c = Carnivore(age10_weight40)
     assert c.weight == 40
 
 
-def test_herb_given_fitness():
+def test_herb_given_fitness(age5_weight20):
     """
     When a herbivore is created the fitness is automatically updated
     """
-    h = Herbivore({'age': 5, 'weight': 20})
+    h = Herbivore(age5_weight20)
     assert h.phi is not None
 
 
-def test_carn_given_fitness():
+def test_carn_given_fitness(age10_weight40):
     """
     When a carnivore is created the fitness is automatically updated
     """
-    c = Carnivore({'age': 10, 'weight': 40})
-    assert c.phi != None
+    c = Carnivore(age10_weight40)
+    assert c.phi is not None
 
 
 # Tests for aging function
@@ -103,72 +114,72 @@ def test_carnivore_aging():
         assert c.age == year + 1
 
 
-def test_update_fitness_when_aging_herb():
+def test_update_fitness_when_aging_herb(age5_weight20):
     """
     When a herbivore ages the fitness changes, since age is used to calculate fitness
     First the initial fitness is saved in init_phi, and compared with the new fitness after aging
     The initial fitness should ble slightly greater than the new fitness
     """
-    h = Herbivore({'age': 5, 'weight': 35})
+    h = Herbivore(age5_weight20)
     init_phi = h.phi
     h.aging()
     assert h.phi < init_phi
 
 
-def test_update_fitness_when_aging_carn():
+def test_update_fitness_when_aging_carn(age10_weight40):
     """
     When a carnivore ages the fitness changes, since age is used to calculate fitness
     First the initial fitness is saved in init_phi, and compared with the new fitness after aging
     The initial fitness should ble slightly greater than the new fitness
     """
-    c = Carnivore({'age': 10, 'weight': 40})
+    c = Carnivore(age10_weight40)
     init_phi = c.phi
     c.aging()
     assert c.phi < init_phi
 
 
 # Tests for birth_weight_function:
-def test_birth_weight_function_herb():
+def test_birth_weight_function_herb(age5_weight20):
     """
     When a new herbivore is born it needs to be given a weight
     The newborns weight is calculated with the birth_weight_function function
     To use this function the newborn has to be given a mother, which is h
     """
-    h = Herbivore({'age': 5, 'weight': 20})
+    h = Herbivore(age5_weight20)
     newborn = Herbivore({'age': 0, 'weight': h.birth_weight_function()})
-    assert newborn.weight != None
+    assert newborn.weight is not None
 
 
-def test_birth_weight_function_carn():
+def test_birth_weight_function_carn(age10_weight40):
     """
     When a new carnivore is born it needs to be given a weight
     The newborns weight is calculated with the birth_weight_function function
     To use this function the newborn has to be given a mother, which is c
     """
-    c = Carnivore({'age': 10, 'weight': 40})
+    c = Carnivore(age10_weight40)
     newborn = Herbivore({'age': 0, 'weight': c.birth_weight_function()})
-    assert newborn.weight != None
+    assert newborn.weight is not None
 
 
 # Tests for weight_loss function:
-def test_herbivore_weight_loss():
+def test_herbivore_weight_loss(age5_weight20):
     """
     The herbivore loses weight each year.
     The weight loss is equivalent to the initial weight times eta = 0.05
     """
-    h = Herbivore({'age': 5, 'weight': 20})
+    h = Herbivore(age5_weight20)
     initial_weight = h.weight
     eta = h.p['eta']
     h.weight_loss()
     assert h.weight == initial_weight - initial_weight * eta
 
 
-def test_carnivore_weight_loss():
+def test_carnivore_weight_loss(age10_weight40):
     """
     The carnivore loses weight each year.
     The weight loss is equivalent to the initial weight times eta = 0.125
     """
-    c = Carnivore({'age': 10, 'weight': 40})
+    c = Carnivore(age10_weight40)
     initial_weight = c.weight
     eta = c.p['eta']
     c.weight_loss()
@@ -391,7 +402,7 @@ def test_will_the_animal_give_birth_correct_return_herb():
     h = Herbivore({'age': 5, 'weight': 50})
     N = 10
     for _ in range(10):
-        assert h.will_the_animal_give_birth(N) == True
+        assert h.will_the_animal_give_birth(N) is True
 
 
 def test_will_the_animal_give_birth_correct_return_carn():
@@ -402,7 +413,7 @@ def test_will_the_animal_give_birth_correct_return_carn():
     c = Carnivore({'age': 10, 'weight': 50})
     N = 10
     for _ in range(10):
-        assert c.will_the_animal_give_birth(N) == True
+        assert c.will_the_animal_give_birth(N) is True
 
 
 def test_will_the_animal_give_birth_return_false_carn():
@@ -413,7 +424,7 @@ def test_will_the_animal_give_birth_return_false_carn():
     c = Carnivore({'age': 10, 'weight': 50})
     N = 1
     for _ in range(10):
-        assert c.will_the_animal_give_birth(N) == False
+        assert c.will_the_animal_give_birth(N) is False
 
 
 # Tests for birth_weight_loss function
@@ -508,7 +519,7 @@ def test_will_the_animal_die_herb(mocker):
     mocker.patch('random.random', return_value=0.1)
     h = Herbivore({'age': 5, 'weight': 10})
     for _ in range(50):
-        assert h.will_the_animal_die() == True
+        assert h.will_the_animal_die() is True
 
 
 def test_will_the_animal_die_carn(mocker):
@@ -521,7 +532,7 @@ def test_will_the_animal_die_carn(mocker):
     mocker.patch('random.random', return_value=0.1)
     c = Carnivore({'age': 10, 'weight': 5})
     for _ in range(50):
-        assert c.will_the_animal_die() == True
+        assert c.will_the_animal_die() is True
 
 
 # Tests for move_move_single_animal function
@@ -536,7 +547,7 @@ def test_will_animal_move_herb(mocker):
     h = Herbivore({'age': 5, 'weight': 50})
     h.already_moved = False
     for _ in range(20):
-        assert h.move_single_animal() == True
+        assert h.move_single_animal() is True
 
 
 def test_will_animal_move_carn(mocker):
@@ -550,7 +561,7 @@ def test_will_animal_move_carn(mocker):
     c = Carnivore({'age': 10, 'weight': 50})
     c.already_moved = False
     for _ in range(20):
-        assert c.move_single_animal() == True
+        assert c.move_single_animal() is True
 
 
 def test_already_moved(mocker):
@@ -562,7 +573,7 @@ def test_already_moved(mocker):
     c.already_moved = True
     for _ in range(20):
         c.move_single_animal()
-        assert c.move_single_animal() == False
+        assert c.move_single_animal() is False
 
 
 # Tests for eat_fodder function
@@ -647,7 +658,7 @@ def test_will_carn_kill_true(mocker):
     mocker.patch('random.random', return_value=0.01)
     h = Herbivore({'age': 5, 'weight': 10})
     c = Carnivore({'age': 10, 'weight': 70})
-    assert c.will_carn_kill(h) == True
+    assert c.will_carn_kill(h) is True
 
 
 def test_will_carn_kill_false():
@@ -655,9 +666,9 @@ def test_will_carn_kill_false():
     If p = 0, will_carn_kill returns False
     """
     h = Herbivore({'age': 5, 'weight': 40})
-    c = Carnivore({'age': 10, 'weight': 70})
+    c = Carnivore({'age': 10, 'weight': 30})
     for _ in range(50):
-        assert c.will_carn_kill(h) == False
+        assert c.will_carn_kill(h) is False
 
 
 # Tests for weight_gain_after_eating_herb
