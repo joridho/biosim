@@ -105,13 +105,11 @@ class BioSim:
 
         :param years: number of years to simulate
         """
-        phi_array_herb = []  # hvorfor kun for herb
+        phi_array_herb = []
         age_array_herb = []
         weight_array_herb = []
         N_herb = []
         N_carn = []
-        N_herb_1 = 0
-        N_carn_1 = 0
 
         phi_array_carn = []
         age_array_carn = []
@@ -172,9 +170,7 @@ class BioSim:
 
 
         self.fig = plt.figure()
-        self.create_map()
         fig = self.fig
-        #self.ax1 = fig.add_subplot(3, 3, 1)  # map
         ax2 = fig.add_subplot(3, 3, 3)  # animal count
         ax3 = fig.add_subplot(3, 3, 4)  # herbivore distribution
         ax4 = fig.add_subplot(3, 3, 6)  # carnivore distribution
@@ -218,7 +214,6 @@ class BioSim:
         #ax3.set_xticks([1 5 10])                          # skjønne hva som skjer her, aka set_xticks()
         #ax3.set_yticks(1)
 
-
         ax3.axis('off')
         ax3 = fig.add_axes([0.045, 0.35, 0.3, 0.25])
         ax3.set_title("Herbivore distribution")
@@ -230,7 +225,6 @@ class BioSim:
         # HEAT MAP CARN
         #ax4.set_xticks([1 5 10])
         #ax4.set_yticks(1)
-
 
         ax4.axis('off')
         ax4 = fig.add_axes([0.67, 0.35, 0.3, 0.26])
