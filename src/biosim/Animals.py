@@ -19,8 +19,7 @@ class Animal:
     def __init__(self, properties):
         """
         Initializing animal class for given values
-        :param properties dictionary
-        :
+        :param properties: dictionary containing species, age and weight for an animal
         """
         random.seed()
 
@@ -41,6 +40,7 @@ class Animal:
     def set_given_parameters(cls, params):
         """
         Saves the parameters for the different animals for use in Animals class
+        :param params:
         """
         for parameter in params:
             if parameter in cls.p:
@@ -48,38 +48,40 @@ class Animal:
 
     def aging(self):
         """
-            A function for aging the animal
-            """
+        A function for aging the animal
+        """
         self.age += 1
         self.fitness()
 
     def birth_weight_function(self):
         """
-            Sets value of birth weight from a gaussian distribution
-            """
+        Sets value of birth weight from a gaussian distribution
+        """
         self.birth_weight = random.gauss(self.p['w_birth'], self.p['sigma_birth'])
         return self.birth_weight
 
     def weight_loss(self):
         """
-            The animal loses weight each year
-            """
+        The animal loses weight each year
+        """
         self.weight -= self.p['eta'] * self.weight
         self.fitness()
 
     def weight_gain(self, consumption):
         """
-            The animal gains weight everytime they eat. In this function, appetite is described as
-            what is eaten, but in some cases that is not possible.
-            """
+        The animal gains weight everytime they eat. In this function, appetite is described as
+        what is eaten, but in some cases that is not possible.
+        :param consumption: amount of fodder the animal consumes
+        :type consumtion: float
+        """
         self.weight += self.p['beta'] * consumption
         self.fitness()
 
     def fitness(self):
         """
-            The animal has a certain fitness. This function calculates the fitness for one animal,
-            but does not update continuously
-            """
+        The animal has a certain fitness. This function calculates the fitness for one animal,
+        but does not update continuously
+        """
         q_plus = 1 / (1 + math.exp(self.p['phi_age'] * (self.age - self.p['a_half'])))
         q_minus = 1 / (1 + math.exp(-self.p['phi_weight'] * (self.weight - self.p['w_half'])))
 
@@ -95,10 +97,12 @@ class Animal:
 
     def birth_probability(self, n):
         """
-            Animals can mate if there are two or more animals of the same species in the same cell.
-            The animals can give birth with a probability, which depends on fitness and weight.
-            If the newborn weighs more than the mother, the probability of birth is zero.
-            """
+        Animals can mate if there are two or more animals of the same species in the same cell.
+        The animals can give birth with a probability, which depends on fitness and weight.
+        If the newborn weighs more than the mother, the probability of birth is zero.
+        :param n: number of animals in the cell
+        type n: float
+        """
         variable = self.p['gamma'] * self.phi * (n - 1)
         self.newborn_birth_weight = self.birth_weight_function()
         # this is the weight of the possible newborn
@@ -111,6 +115,10 @@ class Animal:
             return min(1, variable)
 
     def will_the_animal_give_birth(self, n):
+        """
+        If the random number generated is less than the probability for birth, the birth will not
+        take place
+        """
         p = self.birth_probability(n)
         r = random.random()
 
@@ -121,21 +129,28 @@ class Animal:
 
     def birth_weight_loss(self, newborn_birth_weight):
         """
-            If the mother gives birth, she looses weight
-            """
+        If the mother gives birth, she looses weight
+        :params newborn_birth_weight: the weight of the newborn
+        :type newborn_birth_weight: float
+        """
         self.weight -= self.p['zeta'] * newborn_birth_weight
         self.fitness()
 
     def death_probability(self):
         """
-            The animal dies if it weighs nothing, but also with a probability of prob_death
-            """
+        The animal dies if it weighs nothing, but also with a probability
+        """
         if self.phi == 0:
             return 1
         else:
             return self.p['omega'] * (1 - self.phi)
 
     def will_the_animal_die(self):
+        """
+        If the number generated is less than the probability the animal will die
+        :return: True if animal dies, False if it survives
+        :rtype: bool
+        """
         p = self.death_probability()
         d = random.random()
 
