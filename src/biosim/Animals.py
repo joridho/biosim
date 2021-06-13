@@ -145,7 +145,7 @@ class Animal:
             return False
 
     def move_single_animal(self):
-        prob_move = self.p['mu']*self.phi
+        prob_move = self.p['mu'] * self.phi
         self.m = random.random()
         #self.times_moved = 0
         if self.already_moved is False:

@@ -38,30 +38,25 @@ class Map_Island:
             lines_map.append(line)
 
         for line_nr in range(len(lines_map)):
-            # checks all cells in first line of geography str
-            if line_nr == 0:  # sjekker linje nr 0 i string
-                for cell_type in lines_map[line_nr]:  # iterer gjennom hver bokstav i linjenr 0 og sjekker om det er W
+            if line_nr == 0:
+                for cell_type in lines_map[line_nr]:
                     if cell_type != "W":
                         raise ValueError("Map boundary has to be only 'W'")
                     else:
                         return True
-            # checks left- and rightmost cell in middle lines of geography str
-            elif 0 < line_nr < (len(lines_map) - 1):  # sjekker fra linje nr 1 til nest siste linje nr
-                if lines_map[line_nr][0] != "W":  # sjekker om de første bokstavene i linjenr er lik W
-                    raise ValueError("Map boundary has to be only 'W'")
-                elif lines_map[line_nr][-1] != "W":  # SJEKKER OM DE SISTE BOKSTAVENE I LINJENR ER LIK W
-                    raise ValueError("Map boundary has to be only 'W'")
-                else:
-                    return True
-            '''
-            # checks all cells in last line of geography str
-            else:
-                for cell_type in lines_map[line_nr]:  # sjekker siste linje i string
-                    if cell_type != "W":  # iterer gjennom hver bokstav i linjenr 0 og sjekker om det er W
+            elif line_nr == (len(lines_map) - 1):
+                for cell_type in lines_map[line_nr]:
+                    if cell_type != "W":
                         raise ValueError("Map boundary has to be only 'W'")
                     else:
                         return True
-            '''
+            elif 0 < line_nr < (len(lines_map) - 1):
+                if lines_map[line_nr][0] != "W":
+                    raise ValueError("Map boundary has to be only 'W'")
+                elif lines_map[line_nr][-1] != "W":
+                    raise ValueError("Map boundary has to be only 'W'")
+                else:
+                    return True
 
 
     def check_for_equal_map_lines(self):
@@ -76,8 +71,6 @@ class Map_Island:
             raise ValueError('Map lines are not equal')
         else:
             return True
-
-    # Gir koordinatene i et kart ulike cell_typer (avh av self.geo = island_geo)
 
     def create_geography_dict(self):
         """
@@ -106,8 +99,6 @@ class Map_Island:
                     del self.geography[loc]
         '''
 
-    #Gir koordinatene flere lister med dyreinfo. et koordinat kan få flere lister med dyr (med ulik info)
-
     def create_population_dict(self):
         """
         Converts list of populations to a population dictionary that has coordinates as keys
@@ -125,7 +116,6 @@ class Map_Island:
             else:
                 self.population[pop_info["loc"]] = pop_info["pop"]  # vi legger til posisjonen som ny nøkkel i population dictionary
 
-    # vi legger til den tilhørende lista av properties of animal som verdi til nøkkelen
 
     def add_population(self, population):
         """
@@ -158,8 +148,7 @@ class Map_Island:
         the entire map. This dict has coordinates as keys and
         instances of landscape classes as values. Each landscape instance has
         the population list of it's coordinate as input.
-        :raise ValueError: if invalid landscape type is given in geography
-            string
+        :raise ValueError: if invalid landscape type is given in geography string
         """
         self.create_geography_dict()  # hvert koordinat har sin celletype
         self.create_population_dict()  # Hvert koordinat har sine lister med dyr (med ulik info)

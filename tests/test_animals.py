@@ -536,8 +536,7 @@ def test_will_animal_move_herb(mocker):
     h = Herbivore({'age': 5, 'weight': 50})
     h.already_moved = False
     for _ in range(20):
-        h.move_single_animal()
-        assert h.move == True
+        assert h.move_single_animal() == True
 
 
 def test_will_animal_move_carn(mocker):
@@ -551,8 +550,7 @@ def test_will_animal_move_carn(mocker):
     c = Carnivore({'age': 10, 'weight': 50})
     c.already_moved = False
     for _ in range(20):
-        c.move_single_animal()
-        assert c.move == True
+        assert c.move_single_animal() == True
 
 
 def test_already_moved(mocker):
@@ -564,7 +562,7 @@ def test_already_moved(mocker):
     c.already_moved = True
     for _ in range(20):
         c.move_single_animal()
-        assert c.move == False
+        assert c.move_single_animal() == False
 
 
 # Tests for eat_fodder function
