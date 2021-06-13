@@ -68,7 +68,7 @@ class Map_Island:
         for l in self.geo.splitlines():
             lengths_of_lines.append(len(l))
         if len(set(lengths_of_lines)) != 1:
-            return ValueError('Map lines are not equal')
+            raise ValueError('Map lines are not equal')
         else:
             return True
 

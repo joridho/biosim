@@ -12,6 +12,13 @@ import html.parser
 from biosim.Cell import Lowland, Highland, Desert, Water
 from biosim.Animals import Herbivore, Carnivore
 import operator
+import pytest
+
+@pytest.fixture
+def reset_parameters():
+    Herbivore.p['F'] = 10
+    Carnivore.p['F'] = 50
+    Lowland.af = 800
 
 
 # tests for initial values:
@@ -40,6 +47,7 @@ def test_water_unhabitable():
 
 
 # tests for sorting_animals function
+@pytest.fixture
 def test_sorting_herb():
     """
     This is a test that checks if the herbivores get sorted in a list based on ascending
@@ -108,16 +116,23 @@ def test_eats_random():
 
     assert eaten > 1
 
+@pytest.fixture
+def reset_parameters():
+    Herbivore.p['F'] = 10
+    Carnivore.p['F'] = 50
+    Lowland.af = 800
+
 
 def test_available_fodder():
     """
     The available fodder should be 800 for lowland
     """
     l = Lowland(population=[{'species': 'Carnivore', 'weight': 50, 'age': 9}])
+    l.make_herbivores_eat()
     assert l.af == 800
 
 
-def test_consumption_becomes_appetite():
+def test_consumption_becomes_appetite(reset_parameters):
     """
     When the herbivore has enough fodder the consumption should be the same as the appetite
     """
@@ -127,10 +142,18 @@ def test_consumption_becomes_appetite():
                   {'species': 'Herbivore', 'weight': 10, 'age': 3},
                   {'species': 'Herbivore', 'weight': 14, 'age': 3},
                   {'species': 'Herbivore', 'weight': 13, 'age': 3}]
+    reset_parameters
     l = Lowland(population)
     l.make_herbivores_eat()
     for herb in l.herbivores_pop:
         assert herb.F_consumption == herb.p['F']
+
+
+@pytest.fixture
+def reset_parameters():
+    Herbivore.p['F'] = 10
+    Carnivore.p['F'] = 50
+    Lowland.af = 800
 
 
 def test_update_fodder():
@@ -145,13 +168,12 @@ def test_update_fodder():
                   {'species': 'Herbivore', 'weight': 14, 'age': 3},
                   {'species': 'Herbivore', 'weight': 13, 'age': 3}]
     l = Lowland(population)
-    l.af == 800
     appetite = Herbivore.p['F']
     l.make_herbivores_eat()
     assert l.af == 800 - len(l.herbivores_pop) * appetite
 
 
-def test_consumption_when_little_fodder():
+def test_consumption_when_little_fodder(reset_parameters):
     """
     When there is to little fodder the consumption is not the same as the appetite, but rather
     what is left of the fodder
@@ -185,7 +207,7 @@ def test_fodder_will_stop_at_zero():
     assert l.af == 0
 
 
-def test_gain_weight_after_eating_herb():
+def test_gain_weight_after_eating_herb(reset_parameters):
     """
     After the herbivore eats it should gain weight
     """
@@ -195,6 +217,7 @@ def test_gain_weight_after_eating_herb():
                   {'species': 'Herbivore', 'weight': 10, 'age': 3},
                   {'species': 'Herbivore', 'weight': 14, 'age': 3},
                   {'species': 'Herbivore', 'weight': 13, 'age': 3}]
+    reset_parameters
     l = Lowland(population)
     weight = [k.weight for k in l.herbivores_pop]
     l.make_herbivores_eat()
@@ -204,7 +227,7 @@ def test_gain_weight_after_eating_herb():
     assert [k + 9 for k in weight] == weight_after_eating
 
 
-def test_fitness_change_after_eating():
+def test_fitness_change_after_eating(reset_parameters):
     """
     After the herbivores eats, they should gain weight and therefore have a greater fitness
     """
@@ -251,6 +274,7 @@ def test_carn_appetite():
                   {'species': 'Herbivore', 'weight': 14, 'age': 3},
                   {'species': 'Herbivore', 'weight': 13, 'age': 3}]
     l = Lowland(population)
+    l.feed_carnivores()
     for carn in l.carnivores_pop:
         assert carn.p['F'] == 50
 
@@ -284,8 +308,8 @@ def test_strongest_carn_eats_first(mocker):
     Later i check that the weight of is the same for all the carnivores, except the fittest.
     """
     mocker.patch('random.random', return_value=0.01)
-    population = [{'species': 'Herbivore', 'weight': 25, 'age': 5},
-                  {'species': 'Herbivore', 'weight': 25, 'age': 8},
+    population = [{'species': 'Herbivore', 'weight': 25, 'age': 20},
+                  {'species': 'Herbivore', 'weight': 25, 'age': 20},
                   {'species': 'Carnivore', 'weight': 50, 'age': 9},
                   {'species': 'Carnivore', 'weight': 70, 'age': 10},
                   {'species': 'Carnivore', 'weight': 10, 'age': 3},
@@ -324,7 +348,7 @@ def test_eats_until_reaches_appetite(mocker):
         assert init_weight[k] + appetite * beta <= l.carnivores_pop[k].weight
 
 
-def test_eats_until_tried_eating_all_the_herbivores(mocker):
+def test_eats_until_tried_eating_all_the_herbivores(mocker, reset_parameters):
     """
     The carnivore eats until it has tried to eat all the herbivores. To test this we create less
     available fodder than there are appetites to see if they are all removed from the list
@@ -397,7 +421,7 @@ def test_newborn_added_to_list_herb():
     assert len(l.herbivores_pop) == length * 2
 
 
-def test_mother_lost_weight_herb():
+def test_mother_lost_weight_herb(reset_parameters):
     """
     When an animal gives birth the mother loses weight equivalent to the weight of the
     newborn * zeta. When there are 9 herbivores the probability for birth is 1, if the weight is

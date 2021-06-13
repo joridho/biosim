@@ -24,7 +24,7 @@ def test_checking_island_boundaries():
                            'weight': 20}
                           for _ in range(50)]}]
     m = Map_Island(island_geo, init_pop)
-    assert m.check_island_boundaries() != True
+    assert m.check_island_boundaries() == ValueError
 
 
 # Tests for check_for_equal_map_lines function
@@ -42,7 +42,7 @@ def test_check_for_equal_map_lines():
                            'weight': 20}
                           for _ in range(50)]}]
     m = Map_Island(island_geo, init_pop)
-    assert m.check_for_equal_map_lines() != True
+    assert m.check_for_equal_map_lines() == ValueError
 
 
 # Tests for create_geography_dict function
