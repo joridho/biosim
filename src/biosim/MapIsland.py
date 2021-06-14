@@ -233,13 +233,19 @@ class Map_Island:
 
         # MIGRATION
         for loc, cell in self.map.items():
-            self.neighbours_of_current_cell(loc)
-            if self.arrived_cell.Habitable() == True:
-                list_of_moving_animals = cell.move_animals_from_cell()
-                self.arrived_cell.move_animals_to_cell(list_of_moving_animals)
+            total_moving = cell.move_animals_from_cell()
+            receiving_animals = cell.move_to_random_cell(total_moving)
+            for migration_list in receiving_animals:
+                self.neighbours_of_current_cell(loc)
+                if self.arrived_cell.Habitable():
+                    # list_of_moving_animals = cell.move_animals_from_cell()
+                    # cell.move_to_random_cell(cell.move_animals_from_cell())
+                    self.arrived_cell.move_animals_to_cell(migration_list)
 
         for loc, cell in self.map.items():
             cell.reset_already_moved()
+
+
 
             '''
             for herb in cell.herbs_move:

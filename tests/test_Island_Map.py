@@ -233,7 +233,7 @@ def test_fodder_in_cell_after_fodder_eaten(mocker):
     m = Map_Island(island_geo, init_pop)
     m.create_map_dict()
     m.year_cycle()
-    assert m.map[(2, 2)].af == 800 - len(m.map[(2, 2)].herbivores_pop) * Herbivore.p['F']
+    assert m.map[(2, 2)].available_fodder == 800 - len(m.map[(2, 2)].herbivores_pop) * Herbivore.p['F']
 
 def test_year_cycle_weight_change(mocker):
     '''
