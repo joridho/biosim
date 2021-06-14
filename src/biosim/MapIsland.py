@@ -58,7 +58,6 @@ class Map_Island:
                 else:
                     return True
 
-
     def check_for_equal_map_lines(self):
         """
         This is a function that checks that all the lines in the map's geography string have equal
@@ -90,7 +89,7 @@ class Map_Island:
             for cell_type in list(line):
                 self.geography[(self.x_coord, self.y_coord)] = cell_type
                 self.x_coord += 1
-                #self.letter_count += 1
+                # self.letter_count += 1
             self.y_coord += 1
 
         '''
@@ -110,26 +109,29 @@ class Map_Island:
         #                  lister med "properties" of the animal som verdier
 
         for pop_info in self.init_pop:  # iterer gjennom elementene (dictionaries) i lista. init_pop er en liste med dictionaries
-            if pop_info["loc"] in self.population.keys():  # vi sjekker om verdien som tilhører cell_info['loc'] er en nøkkel i dictionary. Vi sjekker altså om posisjonen allerede er en nøkkel i dictionary
-                self.population[pop_info["loc"]].extend(pop_info["pop"])  # I en allerede eksisterende nøkkel i population, legger vi til den tilhørende lista med properties of animal
+            if pop_info[
+                "loc"] in self.population.keys():  # vi sjekker om verdien som tilhører cell_info['loc'] er en nøkkel i dictionary. Vi sjekker altså om posisjonen allerede er en nøkkel i dictionary
+                self.population[pop_info["loc"]].extend(pop_info[
+                                                            "pop"])  # I en allerede eksisterende nøkkel i population, legger vi til den tilhørende lista med properties of animal
             else:
-                self.population[pop_info["loc"]] = pop_info["pop"]  # vi legger til posisjonen som ny nøkkel i population dictionary
-
+                self.population[pop_info["loc"]] = pop_info[
+                    "pop"]  # vi legger til posisjonen som ny nøkkel i population dictionary
 
     def add_population(self, population):
         """
         Adds a new population to the already existing population of the island,
         in a manner similar to create_population_dict.
+
         :param population: Specifies the new population of one or more cells
         :type population: list of dicts
         """
 
         for pop_info in population:
-            if pop_info['loc'] in  self.population.keys():
+            if pop_info['loc'] in self.population.keys():
                 self.population[pop_info['loc']].extend(pop_info['pop'])
             else:
                 self.population[pop_info["loc"]] = pop_info["pop"]
-        """
+        '''
         new_population = {}
         for pop_info in population:
             if pop_info['loc'] in new_population.keys():
@@ -140,11 +142,12 @@ class Map_Island:
         for location, population in new_population.items():
             for animal_info in population:
                 if animal_info["species"] == "Herbivore":
-                    #self.map[location].herbivores_pop.append(Herbivore(animal_info))
-                    self.population[pop_info["loc"]] = pop_info["pop"]
+                    # self.map[location].herbivores_pop.append(Herbivore(animal_info))
+                    self.population[animal_info["loc"]] = animal_info["pop"]
                 else:
-                    self.map[location].carnivores_pop.append(Carnivore(animal_info)) 
-    """
+                    self.map[location].carnivores_pop.append(Carnivore(animal_info))
+                    # self.population[animal_info["loc"]] = animal_info["pop"]
+        '''
 
     def create_map_dict(self):
         """
@@ -178,8 +181,7 @@ class Map_Island:
             else:
                 raise ValueError(f"Invalid landscape type {cell_type}")
 
-
-    def neighbours_of_current_cell(self, current_coordinates): # Hva skal input være her?
+    def neighbours_of_current_cell(self, current_coordinates):  # Hva skal input være her?
         """
         Finds all neighbouring coordinates of a given cell. Checks the landscape type of each
         coordinate. The neighbour switch landscape types an animal can move to, are returned.
@@ -233,42 +235,24 @@ class Map_Island:
 
         # MIGRATION
         for loc, cell in self.map.items():
+            self.neighbours_of_current_cell(loc)
+            if self.arrived_cell.Habitable():
+                list_of_moving_animals = cell.move_animals_from_cell()
+                self.arrived_cell.move_animals_to_cell(list_of_moving_animals)
+
+        '''
+        # med 'forbedret' migration:
+        for loc, cell in self.map.items():
+            self.neighbours_of_current_cell(loc)
             total_moving = cell.move_animals_from_cell()
             receiving_animals = cell.move_to_random_cell(total_moving)
             for migration_list in receiving_animals:
-                self.neighbours_of_current_cell(loc)
-                if self.arrived_cell.Habitable():
-                    # list_of_moving_animals = cell.move_animals_from_cell()
-                    # cell.move_to_random_cell(cell.move_animals_from_cell())
-                    self.arrived_cell.move_animals_to_cell(migration_list)
+                cell.move_to_random_cell(cell.move_animals_from_cell())
+                self.arrived_cell.move_animals_to_cell(migration_list)
+        '''
 
         for loc, cell in self.map.items():
             cell.reset_already_moved()
-
-
-
-            '''
-            for herb in cell.herbs_move:
-                self.neighbours_of_current_cell(loc)  # Mangler input her
-                arrived_cell = random.choice(self.neighbour_cells)
-                if arrived_cell.Habitable() == True:
-                    # self.move = True
-                    arrived_cell.herbivores_pop.append(herb)
-                    cell.herbivores_pop.remove(herb)
-                # else:
-                #   self.move = False
-
-            for carn in cell.carns_move:
-                self.neighbours_of_current_cell(loc)  # Mangler input her
-                arrived_cell = random.choice(self.neighbour_cells)
-                if arrived_cell.Habitable() == True:
-                    # self.move = True
-                    arrived_cell.carnivores_pop.append(carn)
-                    cell.carnivores_pop.remove(carn)
-                # else:
-                #   self.move = False
-        '''
-
 
         # AGING
         for cell in self.map.values():
@@ -278,8 +262,6 @@ class Map_Island:
         for cell in self.map.values():
             cell.make_animals_lose_weight()
 
-        #DEAD
+        # DEAD
         for cell in self.map.values():
             cell.dead_animals_natural_cause()
-
-
