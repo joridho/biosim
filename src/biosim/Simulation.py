@@ -157,8 +157,9 @@ class BioSim:
             #age_array_herb.append(total_age)
             #weight_array_herb.append(total_weight)
 
-            if self.vis_years > 0:
-                self.update_graphics()
+            #if self.vis_years > 0:
+            #    self.update_graphics()
+            self.update_graphics()
 
             self.num_years_simulated += 1
 
@@ -363,7 +364,9 @@ class BioSim:
         # ax3.set_yticks(1)
 
         #self.ax3.clear()
-        self.heatmap_herb = self.ax3.imshow(np.array(self.data_heat_map_herb).reshape(3, 3),
+        self.x = self.island_map_graph.x_coord
+        self.y = self.island_map_graph.y_coord
+        self.heatmap_herb = self.ax3.imshow(np.array(self.data_heat_map_herb).reshape(self.x, self.y),
                                   extent=[1, self.island_map_graph.x_coord,
                                           self.island_map_graph.y_coord, 1], vmin=0, vmax=200,
                                   cmap='viridis',
@@ -375,7 +378,7 @@ class BioSim:
         # ax4.set_xticks([1 5 10])
         # ax4.set_yticks(1)
         #self.ax4.clear()
-        self.heatmap_carn = self.ax4.imshow(np.array(self.data_heat_map_carn).reshape(3, 3),
+        self.heatmap_carn = self.ax4.imshow(np.array(self.data_heat_map_carn).reshape(self.x, self.y),
                                   extent=[1, self.island_map_graph.x_coord,
                                           self.island_map_graph.y_coord, 1], vmin=0, vmax=200,
                                   cmap='viridis',

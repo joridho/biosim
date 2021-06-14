@@ -40,7 +40,7 @@ def test_checking_island_boundaries():
                           for _ in range(50)]}]
     m = Map_Island(island_geo, init_pop)
 
-    assert m.check_island_boundaries() == ValueError #('Map boundary has to be only "W"')
+    assert m.check_island_boundaries() == ValueError('Map boundary has to be only "W"')
 
 
 # Tests for check_for_equal_map_lines function
@@ -77,6 +77,7 @@ def test_geography_dict1():
     for x in range(1, 3):
         for y in range(1, 3):
             assert m.geography[(x, y)] == 'W' or 'L'
+
 
 def test_geography_dict2():
     """
