@@ -41,6 +41,9 @@ class Cell:
     def set_given_parameters(cls, params):
         """
         Saves the parameters for the different cells for use in Cell class
+
+        :param params: parameters to be set to the animals
+        :type params: dict
         """
         for parameter in params:
             if parameter in cls.p:
@@ -76,6 +79,7 @@ class Cell:
     def available_herbivores_for_carnivores(self):
         """
         Sums of the weight of all the herbivores
+
         :return: the total weight of herbivores
         :rtype: float
         """
@@ -242,7 +246,6 @@ class Cell:
         self.N_carn = len(self.carnivores_pop)
 
     # yearly activities:
-
     def make_animals_age(self):
         """
         Each year the animals ages. Here we use the aging function from the herbivore class
@@ -315,6 +318,12 @@ class Lowland(Cell):
         super().__init__(population)
 
     def Habitable(self):
+        """
+        Checks if the cell is habitable
+
+        :return: True if the cell is habitable
+        :rtype: bool
+        """
         self.habitable = True
         return self.habitable
 
@@ -335,6 +344,12 @@ class Highland(Cell):
         super().__init__(population)
 
     def Habitable(self):
+        """
+        Checks if the cell is habitable
+
+        :return: True if the cell is habitable
+        :rtype: bool
+        """
         self.habitable = True
         return self.habitable
 
@@ -355,6 +370,12 @@ class Desert(Cell):
         super().__init__(population)
 
     def Habitable(self):
+        """
+        Checks if the cell is habitable
+
+        :return: True if the cell is habitable
+        :rtype: bool
+        """
         self.habitable = True
         return self.habitable
 
@@ -375,5 +396,11 @@ class Water(Cell):
         super().__init__(population)
 
     def Habitable(self):
+        """
+        Checks if the cell is habitable
+
+        :return: True if the cell is habitable
+        :rtype: bool
+        """
         self.habitable = False
         return self.habitable

@@ -474,9 +474,3 @@ def test_remove_dead_animals(mocker):
 
 
 
-
-
-
-
-
-

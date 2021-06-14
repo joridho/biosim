@@ -110,11 +110,10 @@ class Animal:
         """
         variable = self.p['gamma'] * self.phi * (n - 1)
         self.newborn_birth_weight = self.birth_weight_function()
-        # this is the weight of the possible newborn
 
         if self.weight < self.p['zeta'] * (self.p['w_birth'] + self.p['sigma_birth']):
             return 0
-        elif self.weight <= self.newborn_birth_weight * self.p['zeta']:  # birth weight to newborn
+        elif self.weight <= self.newborn_birth_weight * self.p['zeta']:
             return 0
         else:
             return min(1, variable)
