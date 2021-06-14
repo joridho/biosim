@@ -265,6 +265,62 @@ class BioSim:
         plt.show()
 
 
+    def setup_graphics(self):
+        self.fig = plt.figure()
+        self.create_map()
+        fig = self.fig
+        self.ax2 = fig.add_subplot(3, 3, 3)  # animal count
+        self.ax3 = fig.add_subplot(3, 3, 4)  # herbivore distribution
+        self.ax4 = fig.add_subplot(3, 3, 6)  # carnivore distribution
+        self.ax5 = fig.add_subplot(3, 3, 7)  # fitness
+        self.ax6 = fig.add_subplot(3, 3, 8)  # age
+        self.ax7 = fig.add_subplot(3, 3, 9)  # weight
+
+        # years                            # skjønne fra time counter til map
+        axt = self.fig.add_axes([0.4, 0.8, 0.2, 0.2])  # llx, lly, w, h
+        axt.axis('off')
+        template = 'Years: %s' % (self.num_years_simulated)  # sette self.year her
+        txt = axt.text(0.5, 0.5, template.format(0),
+                       horizontalalignment='center',
+                       verticalalignment='center',
+                       transform=axt.transAxes)  # relative coordinates
+
+        ax2.axis('off')
+        ax2 = fig.add_axes([0.67, 0.72, 0.28, 0.22])
+        ax2.set_title('Animal count')
+
+        ax3.axis('off')
+        ax3 = fig.add_axes([0.045, 0.35, 0.3, 0.25])
+        ax3.set_title("Herbivore distribution")
+        axes_bar = fig.add_axes([0.31, 0.35, 0.01, 0.2])
+        plt.colorbar(heatmap_herb, cax = axes_bar)
+
+
+        ax4.axis('off')
+        ax4 = fig.add_axes([0.67, 0.35, 0.3, 0.26])
+        ax4.set_title("Carnivore distribution")
+        axes_bar2 = fig.add_axes([0.94, 0.35, 0.01, 0.2])
+        plt.colorbar(heatmap_carn, cax = axes_bar2)
+
+
+        ax5.axis('off')
+        ax5 = fig.add_axes([0.028, 0.052, 0.28, 0.2])
+        ax5.set_title('fitness')
+
+        # AGE
+        ax6.axis('off')
+        ax6 = fig.add_axes([0.36, 0.052, 0.28, 0.2])
+        ax6.set_title('age')
+
+        # WEIGHT
+        ax7.axis('off')
+        ax7 = fig.add_axes([0.7, 0.052, 0.28, 0.2])
+        ax7.set_title('weight')
+        self.fig = fig.tight_layout()
+        plt.show()
+
+
+
 
     def create_map(self):
         # geography
@@ -327,10 +383,10 @@ class BioSim:
         return self.island_map_graph.add_population(population)   # Blir brukt for å legge til carnivores
 
 
-   # @property
-   # def year(self):
-     #   """Last year simulated."""           # Denne kan egt fjernes
-     #   return self.num_years_simulated
+    @property
+    def year(self):
+        """Last year simulated."""           # Denne kan egt fjernes
+        return self.num_years_simulated
 
     @property
     def num_animals(self):
