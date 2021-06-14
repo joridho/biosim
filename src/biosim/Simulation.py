@@ -476,7 +476,8 @@ class BioSim:
 
         :param population: List of dictionaries specifying population
         """
-        return self.island_map_graph.add_population(population)
+        self.island_map_graph.create_map_dict()
+        self.island_map_graph.add_population(population)
 
 
     @property
