@@ -78,7 +78,7 @@ class BioSim:
         else:
             self.hist_specs = hist_specs
 
-    def set_animal_parameters(self, species, p): # skjønne denne
+    def set_animal_parameters(self, species, p):
         """
         Set parameters for animal species.
 
@@ -476,13 +476,12 @@ class BioSim:
 
         :param population: List of dictionaries specifying population
         """
-
-        return self.island_map_graph.add_population(population)   # Blir brukt for å legge til carnivores
+        return self.island_map_graph.add_population(population)
 
 
     @property
     def year(self):
-        """Last year simulated."""           # Denne kan egt fjernes
+        """Last year simulated."""
         return self.num_years_simulated
 
     @property
@@ -490,7 +489,7 @@ class BioSim:
         """Total number of animals on island."""
         num_carnivores = 0
         num_herbivores = 0
-        for cell in self.island_map_graph.map.values():         # hvorfor ikke kun den nederste
+        for cell in self.island_map_graph.map.values():
             num_carnivores += len(cell.carnivores_pop)
             num_herbivores += len(cell.herbivores_pop)
         number_of_animals = num_carnivores + num_herbivores
