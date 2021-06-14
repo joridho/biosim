@@ -334,7 +334,7 @@ class BioSim:
         """Total number of animals on island."""
         num_carnivores = 0
         num_herbivores = 0
-        for cell in self.island_map_graph.map.values():  # hvorfor ikke kun den nederste
+        for cell in self.island_map_graph.map.values():
             num_carnivores += len(cell.carnivores_pop)
             num_herbivores += len(cell.herbivores_pop)
         number_of_animals = num_carnivores + num_herbivores
