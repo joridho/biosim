@@ -120,7 +120,7 @@ class BioSim:
         self.weight_array_carn = []
         self.N_total = [] # hvorfor brukes denne
         self.V_year = []
-
+        self.num_years = num_years
         self.setup_graphics()
 
         # self.set_animal_parameters(species='Herbivore, Carnivore', p=)
@@ -155,7 +155,10 @@ class BioSim:
             #age_array_herb.append(total_age)
             #weight_array_herb.append(total_weight)
 
+            self.update_graphics()
+
             self.num_years_simulated += 1
+
 
 
 
@@ -173,7 +176,7 @@ class BioSim:
 
 
 
-
+        '''
         self.fig = plt.figure()
         self.create_map()
         fig = self.fig
@@ -195,6 +198,7 @@ class BioSim:
 
 
         '''
+        '''
         plt.pause(0.01)  # pause required to make figure visible
 
         input('Press ENTER to begin counting')
@@ -203,7 +207,7 @@ class BioSim:
         for k in range(30):                           
             txt.set_text(template.format(k))
             plt.pause(0.1)  # pause required to make update visible
-        '''
+        
 
         ax2.axis('off')
         ax2 = fig.add_axes([0.67, 0.72, 0.28, 0.22])
@@ -267,9 +271,11 @@ class BioSim:
         ax7.legend(labels = labels)
         fig.tight_layout()  # Fikk feilmld
         plt.show()
-
+    
+    '''
 
     def setup_graphics(self):
+
         self.fig = plt.figure()
         self.create_map()
         #fig = self.fig
@@ -289,22 +295,30 @@ class BioSim:
                        verticalalignment='center',
                        transform= self.axt.transAxes)  # relative coordinates
 
+
+
         self.ax2.axis('off')
         self.ax2 = self.fig.add_axes([0.67, 0.72, 0.28, 0.22])
         self.ax2.set_title('Animal count')
+            #self._line_graph_ax = self._fig.add_subplot(2, 2, 2)
+            #self._line_graph_ax.set_position(pos=[0.5, 0.55, 0.35, 0.35])
+
+        # Needs updating on subsequent calls to simulate()
+        self.ax2.set_xlim(0, self.num_years + 1)
+
+        # Line graph for herbivores
+        line_graph_herb = self.ax2.plot(np.arange(0, self.num_years),
+                                        np.full(self.num_years, np.nan))
+        self.line_graph_line_herb = line_graph_herb[0]
 
         self.ax3.axis('off')
         self.ax3 = self.fig.add_axes([0.045, 0.35, 0.3, 0.25])
         self.ax3.set_title("Herbivore distribution")
-        self.axes_bar = self.fig.add_axes([0.31, 0.35, 0.01, 0.2])
-        plt.colorbar(self.heatmap_herb, cax = self.axes_bar)
 
 
         self.ax4.axis('off')
         self.ax4 = self.fig.add_axes([0.67, 0.35, 0.3, 0.26])
         self.ax4.set_title("Carnivore distribution")
-        self.axes_bar2 = self.fig.add_axes([0.94, 0.35, 0.01, 0.2])
-        plt.colorbar(self.heatmap_carn, cax = self.axes_bar2)
 
 
         self.ax5.axis('off')
@@ -321,80 +335,78 @@ class BioSim:
         self.ax7 = self.fig.add_axes([0.7, 0.052, 0.28, 0.2])
         self.ax7.set_title('weight')
         self.fig = self.fig.tight_layout()
-        plt.show()
+        #plt.show()
 
     def update_graphics(self):
-        self.ax2.plot(self.V_year, self.N_herb, 'b', label='herbs')  # antall herb
+        #for k in range(30):
+         #   self.txt.set_text(self.template.format(k))
+          #  plt.pause(0.1)  # pause required to make update visible
+        self.template = 'Years: %s' % (self.num_years_simulated)  # sette self.year her
+        self.txt.set_text(self.template.format(0))
+
+        ydata_herb = self.line_graph_line_herb.get_ydata()
+        ydata_herb[self.num_years_simulated] = self.num_animals_per_species["Herbivore"]
+        self.Ntesting = self.line_graph_line_herb.set_ydata(ydata_herb)
+
+        self.ax2.plot(self.V_year, self.Ntesting, 'b', label='herbs')  # antall herb
         self.ax2.plot(self.V_year, self.N_carn, 'r', label='carn')  # antall carn
         handles, labels = self.ax2.get_legend_handles_labels()
         self.ax2.legend(handles=handles, labels=labels)
-        self.ax2.set_title('Animal count')
 
         # HEAT MAP HERB
         # ax3.set_xticks([1 5 10])                          # skjønne hva som skjer her, aka set_xticks()
         # ax3.set_yticks(1)
 
-        self.ax3.axis('off')
-        self.ax3 = self.fig.add_axes([0.045, 0.35, 0.3, 0.25])
-        self.ax3.set_title("Herbivore distribution")
-        heatmap_herb = self.ax3.imshow(np.array(self.data_heat_map_herb).reshape(3, 3),
+        self.heatmap_herb = self.ax3.imshow(np.array(self.data_heat_map_herb).reshape(3, 3),
                                   extent=[1, self.island_map_graph.x_coord,
                                           self.island_map_graph.y_coord, 1], vmin=0, vmax=200,
                                   cmap='viridis',
                                   interpolation="nearest")  # cmap=plt.cm.gray_r)
-        axes_bar = fig.add_axes([0.31, 0.35, 0.01, 0.2])
-        plt.colorbar(heatmap_herb, cax=axes_bar)
+        #self.axes_bar = self.fig.add_axes([0.31, 0.35, 0.01, 0.2])
+        #plt.colorbar(self.heatmap_herb, cax= self.axes_bar)
 
         # HEAT MAP CARN
         # ax4.set_xticks([1 5 10])
         # ax4.set_yticks(1)
 
-        ax4.axis('off')
-        ax4 = fig.add_axes([0.67, 0.35, 0.3, 0.26])
-        ax4.set_title("Carnivore distribution")
-        heatmap_carn = ax4.imshow(np.array(data_heat_map_carn).reshape(3, 3),
+        self.heatmap_carn = self.ax4.imshow(np.array(self.data_heat_map_carn).reshape(3, 3),
                                   extent=[1, self.island_map_graph.x_coord,
                                           self.island_map_graph.y_coord, 1], vmin=0, vmax=200,
                                   cmap='viridis',
                                   interpolation="nearest")  # cmap=plt.cm.gray_r)
-        axes_bar2 = fig.add_axes([0.94, 0.35, 0.01, 0.2])
-        plt.colorbar(heatmap_carn, cax=axes_bar2)
+        #self.axes_bar2 = self.fig.add_axes([0.94, 0.35, 0.01, 0.2])
+        #plt.colorbar(self.heatmap_carn, cax= self.axes_bar2)
 
         # FITNESS
-        ax5.axis('off')
-        ax5 = fig.add_axes([0.028, 0.052, 0.28, 0.2])
-        ax5.hist(phi_array_herb, bins=20, label='phi herbs', histtype='step',
+        self.ax5.hist(self.phi_array_herb, bins=20, label='phi herbs', histtype='step',
                  edgecolor='b')  # ordne bins,  int(math.sqrt(N_herb_1))
-        ax5.hist(phi_array_carn, bins=20, label='phi carns', histtype='step',
+        self.ax5.hist(self.phi_array_carn, bins=20, label='phi carns', histtype='step',
                  edgecolor='r')  # int(math.sqrt(N_carn_1))
-        ax5.set_title('fitness')
-        handles, labels = ax5.get_legend_handles_labels()
-        ax5.legend(labels=labels)
+        handles, labels = self.ax5.get_legend_handles_labels()
+        self.ax5.legend(labels=labels)
 
         # AGE
-        ax6.axis('off')
-        ax6 = fig.add_axes([0.36, 0.052, 0.28, 0.2])
-        ax6.hist(age_array_herb, bins=20, label='age herbs', histtype='step',
+        self.ax6.hist(self.age_array_herb, bins=20, label='age herbs', histtype='step',
                  edgecolor='b')  # ordne bins, int(math.sqrt(N_herb_1))
-        ax6.hist(age_array_carn, bins=20, label='age carns', histtype='step',
+        self.ax6.hist(self.age_array_carn, bins=20, label='age carns', histtype='step',
                  edgecolor='r')  # int(math.sqrt(N_carn_1))
-        ax6.set_title('age')
-        handles, labels = ax6.get_legend_handles_labels()
-        ax6.legend(handles=handles,
+        handles, labels = self.ax6.get_legend_handles_labels()
+        self.ax6.legend(handles=handles,
                    labels=labels)  # Kan ta med handles også, men blir d samme med og uten
 
         # WEIGHT
-        ax7.axis('off')
-        ax7 = fig.add_axes([0.7, 0.052, 0.28, 0.2])
-        ax7.hist(weight_array_herb, bins=20, label='weight herbs', histtype='step',
+        self.ax7.hist(self.weight_array_herb, bins=20, label='weight herbs', histtype='step',
                  edgecolor='b')  # ordne bins, int(math.sqrt(N_herb_1))
-        ax7.hist(weight_array_carn, bins=20, label='weight carns', histtype='step',
+        self.ax7.hist(self.weight_array_carn, bins=20, label='weight carns', histtype='step',
                  edgecolor='r')  # int(math.sqrt(N_carn_1))
-        ax7.set_title('weight')
-        handles, labels = ax7.get_legend_handles_labels()
-        ax7.legend(labels=labels)
-        fig.tight_layout()  # Fikk feilmld
-        plt.show()
+        handles, labels = self.ax7.get_legend_handles_labels()
+        self.ax7.legend(labels=labels)
+        #self.fig.tight_layout()  # Fikk feilmld
+
+
+        #input('Press ENTER to begin counting')
+        plt.pause(0.01)  # pause required to make figure visible
+        #plt.draw()
 
 
 
