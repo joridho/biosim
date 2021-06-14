@@ -79,11 +79,10 @@ class Map_Island:
         """
         self.check_island_boundaries()
         self.check_for_equal_map_lines()
-        a = "some string"
         self.letter_count = len(self.geo)
         self.geo.splitlines()
 
-        self.y_coord = 1  # orginalt er det motsatt: der y koordinatet står
+        self.y_coord = 1
         for line in self.geo.splitlines():
             self.x_coord = 1
             for cell_type in list(line):
@@ -92,62 +91,36 @@ class Map_Island:
                 # self.letter_count += 1
             self.y_coord += 1
 
-        '''
-            for loc, cell_type in self.geography:
-                if cell_type == 'W':
-                    del self.geography[loc]
-        '''
-
     def create_population_dict(self):
         """
         Converts list of populations to a population dictionary that has coordinates as keys
         and lists of the properties of the animals at this location as values.
         """
-
-        # self.population skal til slutt være en dictionary med
-        #                  posisjoner som nøkler
-        #                  lister med "properties" of the animal som verdier
-
-        for pop_info in self.init_pop:  # iterer gjennom elementene (dictionaries) i lista. init_pop er en liste med dictionaries
-            if pop_info[
-                "loc"] in self.population.keys():  # vi sjekker om verdien som tilhører cell_info['loc'] er en nøkkel i dictionary. Vi sjekker altså om posisjonen allerede er en nøkkel i dictionary
-                self.population[pop_info["loc"]].extend(pop_info[
-                                                            "pop"])  # I en allerede eksisterende nøkkel i population, legger vi til den tilhørende lista med properties of animal
+        for pop_info in self.init_pop:
+            if pop_info["loc"] in self.population.keys():
+                self.population[pop_info["loc"]].extend(pop_info["pop"])
             else:
-                self.population[pop_info["loc"]] = pop_info[
-                    "pop"]  # vi legger til posisjonen som ny nøkkel i population dictionary
+                self.population[pop_info["loc"]] = pop_info["pop"]
 
     def add_population(self, population):
         """
-        Adds a new population to the already existing population of the island,
-        in a manner similar to create_population_dict.
+        Creates a dictionary with the new population.
+
+        Lates the dictionary is added to the map dictionary
 
         :param population: Specifies the new population of one or more cells
         :type population: list of dicts
         """
-
-        for pop_info in population:
-            if pop_info['loc'] in self.population.keys():
-                self.population[pop_info['loc']].extend(pop_info['pop'])
-            else:
-                self.population[pop_info["loc"]] = pop_info["pop"]
-        '''
         new_population = {}
         for pop_info in population:
-            if pop_info['loc'] in new_population.keys():
-                new_population[pop_info['loc']].extend(pop_info['pop'])
-            else:
-                new_population[pop_info["loc"]] = pop_info["pop"]
+            new_population[pop_info["loc"]] = pop_info["pop"]
 
         for location, population in new_population.items():
             for animal_info in population:
-                if animal_info["species"] == "Herbivore":
-                    # self.map[location].herbivores_pop.append(Herbivore(animal_info))
-                    self.population[animal_info["loc"]] = animal_info["pop"]
-                else:
+                if animal_info["species"] == "Carnivore":
                     self.map[location].carnivores_pop.append(Carnivore(animal_info))
-                    # self.population[animal_info["loc"]] = animal_info["pop"]
-        '''
+                else:
+                    self.map[location].herbivores_pop.append(Herbivore(animal_info))
 
     def create_map_dict(self):
         """

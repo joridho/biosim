@@ -51,7 +51,8 @@ def eg_sim():
                            'age': 5,
                            'weight': 20}
                           for _ in range(50)]}]
-    return BioSim(geogr, ini_pop=(ini_herbs + ini_carns), seed=100)
+    return BioSim(geogr, ini_pop=(ini_herbs + ini_carns), seed=100, img_dir='results',
+                  img_base=f'mono_hc_{100:05d}', img_years=300)
 
 @pytest.fixture
 def eg_sim2():
@@ -67,11 +68,12 @@ def eg_sim2():
     return BioSim(geogr, ini_herbs, seed=100, img_dir='results', img_base=f'mono_hc_{100:05d}',
                   img_years=300)
 
-def test_ini_year(eg_sim):
+
+def test_ini_year(eg_sim2):
     """
     Test for checking that the number of years simulated is zero when nothing has been simulated
     """
-    b = eg_sim
+    b = eg_sim2
     assert b.num_years_simulated == 0
 
 def test_num_animals(eg_sim2):

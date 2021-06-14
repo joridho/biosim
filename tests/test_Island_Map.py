@@ -417,10 +417,10 @@ def test_remove_dead_animals(mocker, island1):
     assert len(m.map[(2, 2)].herbivores_pop) < init_length
 
 
-
-
-
-
+def test_noe(island1):
+    m = island1
+    m.create_map_dict()
+    assert m.map[(2, 2)] == m.population[(2, 2)]['species']
 
 
 
