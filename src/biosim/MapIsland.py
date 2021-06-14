@@ -13,7 +13,7 @@ import random
 
 
 class Map_Island:
-    def __init__(self, island_geo, init_pop):  # Tror init_pop skal være argument her
+    def __init__(self, island_geo, init_pop):
         """
         Initialize map class with given island geography and initial population
         of the various cells.

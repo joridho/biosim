@@ -78,6 +78,8 @@ class BioSim:
         else:
             self.hist_specs = hist_specs
 
+        self.vis_years = vis_years
+
     def set_animal_parameters(self, species, p):
         """
         Set parameters for animal species.
@@ -155,12 +157,10 @@ class BioSim:
             #age_array_herb.append(total_age)
             #weight_array_herb.append(total_weight)
 
-            self.update_graphics()
+            if self.vis_years > 0:
+                self.update_graphics()
 
             self.num_years_simulated += 1
-
-
-
 
 
         # values needed after stopping:
