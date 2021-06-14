@@ -166,7 +166,6 @@ class Cell:
             if herb.move_single_animal():
                 herb.already_moved = True
                 self.herbs_move.append(herb)
-                self.herbivores_pop.remove(herb)
 
         self.carns_move = []
         carns = self.carnivores_pop
@@ -174,10 +173,16 @@ class Cell:
             if carn.move_single_animal():
                 carn.already_moved = True
                 self.carns_move.append(carn)
-                self.carnivores_pop.remove(carn)
 
         tot_animals = [self.herbs_move, self.carns_move]
-        return tot_animals
+        return tot_animals # trenger egt ikke å returnere noe
+
+    #def move_animals_to_cell(self, herb):
+     #   if self.Habitable() == True:
+      #      self.herbivores_pop.append(herb)
+            #cell.herbivores_pop.remove(herb)
+       #     return True
+    '''
 
     def move_to_random_cell(self, list_of_moving_animals):
         """
@@ -234,6 +239,8 @@ class Cell:
 
         for carn in carns_moved:
             self.carnivores_pop.append(carn)
+            
+    '''
 
     def reset_already_moved(self):
         """
@@ -244,31 +251,6 @@ class Cell:
             animal.already_moved = False
         for animal in self.carnivores_pop:
             animal.already_moved = False
-
-        '''
-        list1 = [], list2 = [], list3 = [], list4 = []
-        for herb in self.herbs_move:
-            p = random.choice(list1, list2, list3, list4)
-            if p == list1:
-                list1.append(herb)
-            elif p == list2:
-                list2.append(herb)
-            elif p == list3:
-                list3.append(herb)
-            else:
-                list4.append(herb)
-
-        self.tot_list = [list1, list2, list3, list4]
-        return self.tot_list
-
-        if self.Habitable() == True:
-            for herb in self.herbs_move:
-                self.herbivores_pop.append(herb)
-
-            for carn in self.carns_move:
-                self.carnivores_pop.append(carn)
-    
-        '''
 
     def counting_animals(self):
         """

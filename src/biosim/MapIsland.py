@@ -179,8 +179,7 @@ class Map_Island:
             else:
                 return 
         '''
-        self.arrived_cell = random.choice(self.neighbour_cells)
-        return self.arrived_cell
+        return self.neighbour_cells
 
     def year_cycle(self):
         """
@@ -208,10 +207,25 @@ class Map_Island:
 
         # MIGRATION
         for loc, cell in self.map.items():
-            self.neighbours_of_current_cell(loc)
-            if self.arrived_cell.Habitable():
-                list_of_moving_animals = cell.move_animals_from_cell()
-                self.arrived_cell.move_animals_to_cell(list_of_moving_animals)
+            self.neighbours_of_current_cell(loc) 
+            cell.move_animals_from_cell()
+            for herb in cell.herbs_move:
+                nr = random.choice([0, 1, 2, 3])
+                #self.neighbour_cells[nr].move_to_cell_herb(herb)
+
+                if self.neighbour_cells[nr].Habitable() == True:
+                    self.neighbour_cells[nr].herbivores_pop.append(herb)
+                    cell.herbivores_pop.remove(herb)
+
+            for carn in cell.carns_move:
+                nr = random.choice([0, 1, 2, 3])
+
+                #self.neighbour_cells[nr].move_to_cell_carn(carn)
+                if self.neighbour_cells[nr].Habitable() == True:
+                    self.neighbour_cells[nr].carnivores_pop.append(carn)
+                    cell.carnivores_pop.remove(carn)
+
+            cell.reset_already_moved()
 
         '''
         # med 'forbedret' migration:
