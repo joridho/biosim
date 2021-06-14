@@ -203,12 +203,11 @@ class Cell:
         to_cell_carns = [to_cell_1_carn, to_cell_2_carn, to_cell_3_carn, to_cell_4_carn]
 
         for herb in herbs_moving:
-            receiving_cell = random.choice(to_cell_herbs)
-            receiving_cell.append(herb)
+            random.choice(to_cell_herbs).append(herb)
 
         for carn in carns_moving:
-            receiving_cell = random.choice(to_cell_carns)
-            receiving_cell.append(carn)
+            #receiving_cell =
+            random.choice(to_cell_carns).receiving_cell.append(carn)
 
         to_cell_1 = [to_cell_1_herb, to_cell_1_carn]
         to_cell_2 = [to_cell_2_herb, to_cell_2_carn]
