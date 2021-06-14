@@ -314,11 +314,13 @@ class BioSim:
         self.ax3.axis('off')
         self.ax3 = self.fig.add_axes([0.045, 0.35, 0.3, 0.25])
         self.ax3.set_title("Herbivore distribution")
+        self.axes_bar = self.fig.add_axes([0.31, 0.35, 0.01, 0.2])
 
 
         self.ax4.axis('off')
         self.ax4 = self.fig.add_axes([0.67, 0.35, 0.3, 0.26])
         self.ax4.set_title("Carnivore distribution")
+        self.axes_bar2 = self.fig.add_axes([0.94, 0.35, 0.01, 0.2])
 
 
         self.ax5.axis('off')
@@ -347,8 +349,11 @@ class BioSim:
         ydata_herb = self.line_graph_line_herb.get_ydata()
         ydata_herb[self.num_years_simulated] = self.num_animals_per_species["Herbivore"]
         self.Ntesting = self.line_graph_line_herb.set_ydata(ydata_herb)
+        #self.Ntesting.plot
 
-        self.ax2.plot(self.V_year, self.Ntesting, 'b', label='herbs')  # antall herb
+        #self.ax2.plot(self.V_year, self.Ntesting.get_ydata(), 'b', label='herbs')  # antall herb
+        self.ax2.clear()
+        self.ax2.plot(self.V_year, self.N_herb, 'b', label = 'herb')
         self.ax2.plot(self.V_year, self.N_carn, 'r', label='carn')  # antall carn
         handles, labels = self.ax2.get_legend_handles_labels()
         self.ax2.legend(handles=handles, labels=labels)
@@ -357,27 +362,28 @@ class BioSim:
         # ax3.set_xticks([1 5 10])                          # skjønne hva som skjer her, aka set_xticks()
         # ax3.set_yticks(1)
 
+        #self.ax3.clear()
         self.heatmap_herb = self.ax3.imshow(np.array(self.data_heat_map_herb).reshape(3, 3),
                                   extent=[1, self.island_map_graph.x_coord,
                                           self.island_map_graph.y_coord, 1], vmin=0, vmax=200,
                                   cmap='viridis',
                                   interpolation="nearest")  # cmap=plt.cm.gray_r)
-        #self.axes_bar = self.fig.add_axes([0.31, 0.35, 0.01, 0.2])
-        #plt.colorbar(self.heatmap_herb, cax= self.axes_bar)
+
+        plt.colorbar(self.heatmap_herb, cax= self.axes_bar)
 
         # HEAT MAP CARN
         # ax4.set_xticks([1 5 10])
         # ax4.set_yticks(1)
-
+        #self.ax4.clear()
         self.heatmap_carn = self.ax4.imshow(np.array(self.data_heat_map_carn).reshape(3, 3),
                                   extent=[1, self.island_map_graph.x_coord,
                                           self.island_map_graph.y_coord, 1], vmin=0, vmax=200,
                                   cmap='viridis',
                                   interpolation="nearest")  # cmap=plt.cm.gray_r)
-        #self.axes_bar2 = self.fig.add_axes([0.94, 0.35, 0.01, 0.2])
-        #plt.colorbar(self.heatmap_carn, cax= self.axes_bar2)
+        plt.colorbar(self.heatmap_carn, cax= self.axes_bar2)
 
         # FITNESS
+        self.ax5.clear()
         self.ax5.hist(self.phi_array_herb, bins=20, label='phi herbs', histtype='step',
                  edgecolor='b')  # ordne bins,  int(math.sqrt(N_herb_1))
         self.ax5.hist(self.phi_array_carn, bins=20, label='phi carns', histtype='step',
@@ -386,6 +392,7 @@ class BioSim:
         self.ax5.legend(labels=labels)
 
         # AGE
+        self.ax6.clear()
         self.ax6.hist(self.age_array_herb, bins=20, label='age herbs', histtype='step',
                  edgecolor='b')  # ordne bins, int(math.sqrt(N_herb_1))
         self.ax6.hist(self.age_array_carn, bins=20, label='age carns', histtype='step',
@@ -395,6 +402,7 @@ class BioSim:
                    labels=labels)  # Kan ta med handles også, men blir d samme med og uten
 
         # WEIGHT
+        self.ax7.clear()
         self.ax7.hist(self.weight_array_herb, bins=20, label='weight herbs', histtype='step',
                  edgecolor='b')  # ordne bins, int(math.sqrt(N_herb_1))
         self.ax7.hist(self.weight_array_carn, bins=20, label='weight carns', histtype='step',
