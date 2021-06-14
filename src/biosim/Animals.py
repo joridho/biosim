@@ -44,9 +44,9 @@ class Animal:
         Saves the parameters for the different animals for use in Animals class
         """
         for parameter in params:
-            if parameter < 0:
-                raise ValueError('Parameter must be positive')
             if parameter in cls.p:
+                if params[parameter] < 0:
+                    raise ValueError('Parameter must be positive')
                 cls.p[parameter] = params[parameter]
 
     def aging(self):
