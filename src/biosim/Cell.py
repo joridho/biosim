@@ -44,6 +44,8 @@ class Cell:
         """
         for parameter in params:
             if parameter in cls.p:
+                if params[parameter] < 0:
+                    raise ValueError('Parameter must be positive')
                 cls.p[parameter] = params[parameter]
 
     def sorting_animals(self):
