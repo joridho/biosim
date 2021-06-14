@@ -33,30 +33,30 @@ class Map_Island:
         """
         This is a function that raises an error if the boundary cells are not water.
         """
-        lines_map = []
+        self.lines_map = []
         for line in self.geo.splitlines():
-            lines_map.append(line)
+            self.lines_map.append(line)
 
-        for line_nr in range(len(lines_map)):
-            if line_nr == 0:
-                for cell_type in lines_map[line_nr]:
+        for self.line_nr in range(len(self.lines_map)):
+            if self.line_nr == 0:
+                for cell_type in self.lines_map[self.line_nr]:
                     if cell_type != "W":
                         raise ValueError("Map boundary has to be only 'W'")
-                    else:
-                        return True
-            elif line_nr == (len(lines_map) - 1):
-                for cell_type in lines_map[line_nr]:
+                    #else:
+                    #   return True
+            elif self.line_nr == (len(self.lines_map) - 1):
+                for cell_type in self.lines_map[self.line_nr]:
                     if cell_type != "W":
                         raise ValueError("Map boundary has to be only 'W'")
-                    else:
-                        return True
-            elif 0 < line_nr < (len(lines_map) - 1):
-                if lines_map[line_nr][0] != "W":
+                    #else:
+                    #    return True
+            else:
+                if self.lines_map[self.line_nr][0] != "W":
                     raise ValueError("Map boundary has to be only 'W'")
-                elif lines_map[line_nr][-1] != "W":
+                elif self.lines_map[self.line_nr][-1] != "W":
                     raise ValueError("Map boundary has to be only 'W'")
-                else:
-                    return True
+                #else:
+                    #return True
 
     def check_for_equal_map_lines(self):
         """
