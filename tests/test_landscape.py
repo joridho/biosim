@@ -20,6 +20,57 @@ def reset_parameters():
     Carnivore.p['F'] = 50
     Lowland.af = 800
 
+@pytest.fixture
+def list_herbivores_and_carnivores():
+    return [{'species': 'Herbivore', 'weight': 35, 'age': 5},
+            {'species': 'Herbivore', 'weight': 41, 'age': 8},
+            {'species': 'Herbivore', 'weight': 50, 'age': 9},
+            {'species': 'Carnivore', 'weight': 70, 'age': 10},
+            {'species': 'Herbivore', 'weight': 10, 'age': 3},
+            {'species': 'Herbivore', 'weight': 60, 'age': 3}]
+
+@pytest.fixture
+def list_herbivores():
+    return [{'species': 'Herbivore', 'weight': 35, 'age': 5},
+            {'species': 'Herbivore', 'weight': 41, 'age': 8},
+            {'species': 'Herbivore', 'weight': 50, 'age': 9},
+            {'species': 'Herbivore', 'weight': 10, 'age': 3},
+            {'species': 'Herbivore', 'weight': 14, 'age': 3},
+            {'species': 'Herbivore', 'weight': 13, 'age': 3}]
+
+@pytest.fixture
+def list_carnivores():
+    return [{'species': 'Carnivore', 'weight': 35, 'age': 5},
+            {'species': 'Carnivore', 'weight': 41, 'age': 8},
+            {'species': 'Carnivore', 'weight': 50, 'age': 9},
+            {'species': 'Carnivore', 'weight': 10, 'age': 3},
+            {'species': 'Carnivore', 'weight': 14, 'age': 3},
+            {'species': 'Carnivore', 'weight': 13, 'age': 3}]
+
+@pytest.fixture
+def list_herbivore_long():
+    return [{'species': 'Herbivore', 'weight': 65, 'age': 3},
+             {'species': 'Herbivore', 'weight': 41, 'age': 3},
+             {'species': 'Herbivore', 'weight': 50, 'age': 3},
+             {'species': 'Herbivore', 'weight': 40, 'age': 3},
+             {'species': 'Herbivore', 'weight': 41, 'age': 3},
+             {'species': 'Herbivore', 'weight': 50, 'age': 9},
+             {'species': 'Herbivore', 'weight': 67, 'age': 5},
+             {'species': 'Herbivore', 'weight': 41, 'age': 8},
+             {'species': 'Herbivore', 'weight': 50, 'age': 9}]
+
+@pytest.fixture
+def list_carnivore_long():
+    return [{'species': 'Carnivore', 'weight': 65, 'age': 3},
+             {'species': 'Carnivore', 'weight': 41, 'age': 3},
+             {'species': 'Carnivore', 'weight': 50, 'age': 3},
+             {'species': 'Carnivore', 'weight': 40, 'age': 3},
+             {'species': 'Carnivore', 'weight': 41, 'age': 3},
+             {'species': 'Carnivore', 'weight': 50, 'age': 9},
+             {'species': 'Carnivore', 'weight': 67, 'age': 5},
+             {'species': 'Carnivore', 'weight': 41, 'age': 8},
+             {'species': 'Carnivore', 'weight': 50, 'age': 9}]
+
 
 # tests for initial values:
 def test_lowland_given_fodder():
@@ -47,18 +98,12 @@ def test_water_unhabitable():
 
 
 # tests for sorting_animals function
-@pytest.fixture
-def test_sorting_herb():
+def test_sorting_herb(list_herbivores_and_carnivores):
     """
     This is a test that checks if the herbivores get sorted in a list based on ascending
     phi-value.
     """
-    l = Lowland(population=[{'species': 'Herbivore', 'weight': 60, 'age': 5},
-                            {'species': 'Herbivore', 'weight': 41, 'age': 8},
-                            {'species': 'Herbivore', 'weight': 50, 'age': 9},
-                            {'species': 'Carnivore', 'weight': 35, 'age': 5},
-                            {'species': 'Carnivore', 'weight': 41, 'age': 8},
-                            {'species': 'Carnivore', 'weight': 50, 'age': 9}])
+    l = Lowland(population=list_herbivores_and_carnivores)
     unsorted_herbs = l.herbivores_pop
     herbs_fitness = [k.phi for k in unsorted_herbs]
     herbs_fitness.sort()
@@ -67,17 +112,12 @@ def test_sorting_herb():
     assert herbs_fitness == sorted_herbs_fitness
 
 
-def test_sorting_carn():
+def test_sorting_carn(list_herbivores_and_carnivores):
     """
     This is a test that checks if the carnivores get sorted in a list based on descending
     phi-value.
     """
-    l = Lowland(population=[{'species': 'Herbivore', 'weight': 60, 'age': 5},
-                            {'species': 'Herbivore', 'weight': 41, 'age': 8},
-                            {'species': 'Herbivore', 'weight': 50, 'age': 9},
-                            {'species': 'Carnivore', 'weight': 35, 'age': 5},
-                            {'species': 'Carnivore', 'weight': 41, 'age': 8},
-                            {'species': 'Carnivore', 'weight': 50, 'age': 9}])
+    l = Lowland(population=list_herbivores_and_carnivores)
     unsorted_carns = l.carnivores_pop
     carns_fitness = [k.phi for k in unsorted_carns]
     carns_fitness.sort()
@@ -88,20 +128,14 @@ def test_sorting_carn():
 
 
 # Tests for make_herbivores_eat function:
-def test_eats_random():
+def test_eats_random(list_herbivores):
     """
     The herbivores should eat in a  random order. To test this, i assign all the herbs a False
     value. I make the herbivores eat. We randomise the list, and everytime they eat, the first
     herb in the list eats and is given a True value. At the end there should be more than one
     herb with a True value.
     """
-    population = [{'species': 'Herbivore', 'weight': 35, 'age': 5},
-                  {'species': 'Herbivore', 'weight': 41, 'age': 8},
-                  {'species': 'Herbivore', 'weight': 50, 'age': 9},
-                  {'species': 'Herbivore', 'weight': 10, 'age': 3},
-                  {'species': 'Herbivore', 'weight': 14, 'age': 3},
-                  {'species': 'Herbivore', 'weight': 13, 'age': 3}]
-    l = Lowland(population)
+    l = Lowland(list_herbivores)
     for herb in l.herbivores_pop:
         herb.eaten = False
 
@@ -116,12 +150,6 @@ def test_eats_random():
 
     assert eaten > 1
 
-@pytest.fixture
-def reset_parameters():
-    Herbivore.p['F'] = 10
-    Carnivore.p['F'] = 50
-    Lowland.af = 800
-
 
 def test_available_fodder():
     """
@@ -132,93 +160,54 @@ def test_available_fodder():
     assert l.available_fodder == 800
 
 
-def test_consumption_becomes_appetite(reset_parameters):
+def test_consumption_becomes_appetite(list_herbivores):
     """
     When the herbivore has enough fodder the consumption should be the same as the appetite
     """
-    population = [{'species': 'Herbivore', 'weight': 35, 'age': 5},
-                  {'species': 'Herbivore', 'weight': 41, 'age': 8},
-                  {'species': 'Herbivore', 'weight': 50, 'age': 9},
-                  {'species': 'Herbivore', 'weight': 10, 'age': 3},
-                  {'species': 'Herbivore', 'weight': 14, 'age': 3},
-                  {'species': 'Herbivore', 'weight': 13, 'age': 3}]
-    reset_parameters
-    l = Lowland(population)
+    l = Lowland(list_herbivores)
     l.make_herbivores_eat()
     for herb in l.herbivores_pop:
         assert herb.F_consumption == herb.p['F']
 
 
-@pytest.fixture
-def reset_parameters():
-    Herbivore.p['F'] = 10
-    Carnivore.p['F'] = 50
-    Lowland.af = 800
-
-
-def test_update_fodder():
+def test_update_fodder(list_herbivores):
     """
     When a herbivore eats the available fodder should update. When there are six herbivores there
     should be enough fodder for everyone. The updated fodder should then be 800 - 6 * appetite
     """
-    population = [{'species': 'Herbivore', 'weight': 35, 'age': 5},
-                  {'species': 'Herbivore', 'weight': 41, 'age': 8},
-                  {'species': 'Herbivore', 'weight': 50, 'age': 9},
-                  {'species': 'Herbivore', 'weight': 10, 'age': 3},
-                  {'species': 'Herbivore', 'weight': 14, 'age': 3},
-                  {'species': 'Herbivore', 'weight': 13, 'age': 3}]
-    l = Lowland(population)
+    l = Lowland(list_herbivores)
     appetite = Herbivore.p['F']
     l.make_herbivores_eat()
     assert l.available_fodder == 800 - len(l.herbivores_pop) * appetite
 
 
-def test_consumption_when_little_fodder(reset_parameters):
+def test_consumption_when_little_fodder(list_herbivores):
     """
     When there is to little fodder the consumption is not the same as the appetite, but rather
     what is left of the fodder
     """
-    population = [{'species': 'Herbivore', 'weight': 35, 'age': 5},
-                  {'species': 'Herbivore', 'weight': 41, 'age': 8},
-                  {'species': 'Herbivore', 'weight': 50, 'age': 9},
-                  {'species': 'Herbivore', 'weight': 10, 'age': 3},
-                  {'species': 'Herbivore', 'weight': 14, 'age': 3},
-                  {'species': 'Herbivore', 'weight': 13, 'age': 3}]
-    l = Lowland(population)
+    l = Lowland(list_herbivores)
     l.p['f_max'] = 8
     l.make_herbivores_eat()
     assert l.herbivores_pop[0].F_consumption == 8
 
 
-def test_fodder_will_stop_at_zero():
+def test_fodder_will_stop_at_zero(list_herbivores):
     """
     When there isn't enough fodder the available fodder should stop at 0 after eating and not
     become negagtive.
     """
-    population = [{'species': 'Herbivore', 'weight': 35, 'age': 5},
-                  {'species': 'Herbivore', 'weight': 41, 'age': 8},
-                  {'species': 'Herbivore', 'weight': 50, 'age': 9},
-                  {'species': 'Herbivore', 'weight': 10, 'age': 3},
-                  {'species': 'Herbivore', 'weight': 14, 'age': 3},
-                  {'species': 'Herbivore', 'weight': 13, 'age': 3}]
-    l = Lowland(population)
+    l = Lowland(list_herbivores)
     l.p['f_max'] = 51
     l.make_herbivores_eat()
     assert l.available_fodder == 0
 
 
-def test_gain_weight_after_eating_herb(reset_parameters):
+def test_gain_weight_after_eating_herb(list_herbivores):
     """
     After the herbivore eats it should gain weight
     """
-    population = [{'species': 'Herbivore', 'weight': 35, 'age': 5},
-                  {'species': 'Herbivore', 'weight': 41, 'age': 8},
-                  {'species': 'Herbivore', 'weight': 50, 'age': 9},
-                  {'species': 'Herbivore', 'weight': 10, 'age': 3},
-                  {'species': 'Herbivore', 'weight': 14, 'age': 3},
-                  {'species': 'Herbivore', 'weight': 13, 'age': 3}]
-    reset_parameters
-    l = Lowland(population)
+    l = Lowland(list_herbivores)
     weight = [k.weight for k in l.herbivores_pop]
     l.make_herbivores_eat()
     weight_after_eating = [k.weight for k in l.herbivores_pop]
@@ -227,17 +216,11 @@ def test_gain_weight_after_eating_herb(reset_parameters):
     assert [k + 9 for k in weight] == weight_after_eating
 
 
-def test_fitness_change_after_eating(reset_parameters):
+def test_fitness_change_after_eating(list_herbivores):
     """
     After the herbivores eats, they should gain weight and therefore have a greater fitness
     """
-    population = [{'species': 'Herbivore', 'weight': 35, 'age': 5},
-                  {'species': 'Herbivore', 'weight': 41, 'age': 8},
-                  {'species': 'Herbivore', 'weight': 50, 'age': 9},
-                  {'species': 'Herbivore', 'weight': 10, 'age': 3},
-                  {'species': 'Herbivore', 'weight': 14, 'age': 3},
-                  {'species': 'Herbivore', 'weight': 13, 'age': 3}]
-    l = Lowland(population)
+    l = Lowland(list_herbivores)
     init_fitness = [k.phi for k in l.herbivores_pop]
     l.make_herbivores_eat()
     fitness_after_eating = [k.phi for k in l.herbivores_pop]
@@ -248,13 +231,11 @@ def test_fitness_change_after_eating(reset_parameters):
 
 
 # Tests for available_herbivores_for_carnivores function
-def test_available_herbivores():
+def test_available_herbivores(list_herbivores):
     """
     The available food for carnivores is the weight of the available herbivores
     """
-    l = Lowland(population=[{'species': 'Herbivore', 'weight': 35, 'age': 5},
-                            {'species': 'Herbivore', 'weight': 41, 'age': 8},
-                            {'species': 'Herbivore', 'weight': 50, 'age': 9}])
+    l = Lowland(list_herbivores)
     weight = 0
     for k in l.herbivores_pop:
         weight += k.weight
@@ -263,36 +244,24 @@ def test_available_herbivores():
 
 
 # Tests for feed_carnivores_function
-def test_carn_appetite():
+def test_carn_appetite(list_herbivores_and_carnivores):
     """
     The carnivores appetite is given as a parameter. It should be 50 before eating
     """
-    population = [{'species': 'Carnivore', 'weight': 35, 'age': 5},
-                  {'species': 'Carnivore', 'weight': 41, 'age': 8},
-                  {'species': 'Carnivore', 'weight': 50, 'age': 9},
-                  {'species': 'Herbivore', 'weight': 10, 'age': 3},
-                  {'species': 'Herbivore', 'weight': 14, 'age': 3},
-                  {'species': 'Herbivore', 'weight': 13, 'age': 3}]
-    l = Lowland(population)
+    l = Lowland(list_herbivores_and_carnivores)
     l.feed_carnivores()
     for carn in l.carnivores_pop:
         assert carn.p['F'] == 50
 
 
-def test_weakest_herb_eaten_first(mocker):
+def test_weakest_herb_eaten_first(mocker, list_herbivores_and_carnivores):
     """
     When the carnivores eats, it eats the weakest herbivore first. To check if that happens i
     make sure there are only one carnivore in the cell with appetite equal to the weight of the
     weakest herbivore. After eating we check that the herbivore is no longer in the cell
     """
     mocker.patch('random.random', return_value=0.01)
-    population = [{'species': 'Herbivore', 'weight': 35, 'age': 5},
-                  {'species': 'Herbivore', 'weight': 41, 'age': 8},
-                  {'species': 'Herbivore', 'weight': 50, 'age': 9},
-                  {'species': 'Carnivore', 'weight': 70, 'age': 10},
-                  {'species': 'Herbivore', 'weight': 10, 'age': 3},
-                  {'species': 'Herbivore', 'weight': 60, 'age': 3}]
-    l = Lowland(population)
+    l = Lowland(list_herbivores_and_carnivores)
     l.sorting_animals()
     weakest_herb = l.herbivores_pop[0]
     for k in range(len(l.carnivores_pop)):
@@ -348,7 +317,7 @@ def test_eats_until_reaches_appetite(mocker):
         assert init_weight[k] + appetite * beta <= l.carnivores_pop[k].weight
 
 
-def test_eats_until_tried_eating_all_the_herbivores(mocker, reset_parameters):
+def test_eats_until_tried_eating_all_the_herbivores(mocker):
     """
     The carnivore eats until it has tried to eat all the herbivores. To test this we create less
     available fodder than there are appetites to see if they are all removed from the list
@@ -401,41 +370,25 @@ def test_update_fitness_after_eating_carnivores(mocker):
 
 
 # Tests for newborn_animals_function for herbs
-def test_newborn_added_to_list_herb():
+def test_newborn_added_to_list_herb(list_herbivore_long):
     """
     When an animal gives birth the newborn must be added to the list. When there are 9 herbivores
     the probability for birth is 1, if the weight is acceptable, and therefore there will be added
     9 herbivores to the list.
     """
-    l = Lowland(population=[{'species': 'Herbivore', 'weight': 65, 'age': 3},
-                            {'species': 'Herbivore', 'weight': 41, 'age': 3},
-                            {'species': 'Herbivore', 'weight': 50, 'age': 3},
-                            {'species': 'Herbivore', 'weight': 40, 'age': 3},
-                            {'species': 'Herbivore', 'weight': 41, 'age': 3},
-                            {'species': 'Herbivore', 'weight': 50, 'age': 9},
-                            {'species': 'Herbivore', 'weight': 67, 'age': 5},
-                            {'species': 'Herbivore', 'weight': 41, 'age': 8},
-                            {'species': 'Herbivore', 'weight': 50, 'age': 9}])
+    l = Lowland(list_herbivore_long)
     length = len(l.herbivores_pop)
     l.newborn_animals()
     assert len(l.herbivores_pop) == length * 2
 
 
-def test_mother_lost_weight_herb(reset_parameters):
+def test_mother_lost_weight_herb(list_herbivore_long):
     """
     When an animal gives birth the mother loses weight equivalent to the weight of the
     newborn * zeta. When there are 9 herbivores the probability for birth is 1, if the weight is
     acceptable, and therefore all 9 herbivores will give birth.
     """
-    l = Lowland(population=[{'species': 'Herbivore', 'weight': 65, 'age': 1},
-                            {'species': 'Herbivore', 'weight': 41, 'age': 2},
-                            {'species': 'Herbivore', 'weight': 50, 'age': 3},
-                            {'species': 'Herbivore', 'weight': 40, 'age': 4},
-                            {'species': 'Herbivore', 'weight': 41, 'age': 5},
-                            {'species': 'Herbivore', 'weight': 50, 'age': 6},
-                            {'species': 'Herbivore', 'weight': 67, 'age': 7},
-                            {'species': 'Herbivore', 'weight': 41, 'age': 8},
-                            {'species': 'Herbivore', 'weight': 50, 'age': 9}])
+    l = Lowland(list_herbivore_long)
     weight = [k.weight for k in l.herbivores_pop]
     l.newborn_animals()
     mothers = l.herbivores_pop[0:9]
@@ -443,19 +396,11 @@ def test_mother_lost_weight_herb(reset_parameters):
         assert weight[k] > mothers[k].weight
 
 
-def test_mother_lost_fitness_herb():
+def test_mother_lost_fitness_herb(list_herbivore_long):
     """
     When the mother loses weight, the fitness needs to be updated.
     """
-    l = Lowland(population=[{'species': 'Herbivore', 'weight': 65, 'age': 1},
-                            {'species': 'Herbivore', 'weight': 41, 'age': 2},
-                            {'species': 'Herbivore', 'weight': 50, 'age': 3},
-                            {'species': 'Herbivore', 'weight': 40, 'age': 4},
-                            {'species': 'Herbivore', 'weight': 41, 'age': 5},
-                            {'species': 'Herbivore', 'weight': 50, 'age': 6},
-                            {'species': 'Herbivore', 'weight': 67, 'age': 7},
-                            {'species': 'Herbivore', 'weight': 41, 'age': 8},
-                            {'species': 'Herbivore', 'weight': 50, 'age': 9}])
+    l = Lowland(list_herbivore_long)
     fitness = [k.phi for k in l.herbivores_pop]
     l.newborn_animals()
     mothers = l.herbivores_pop[0:9]
@@ -504,41 +449,25 @@ def test_criteria_for_birth_prob_herb():
 
 
 # Tests for newborn_animals for carns
-def test_newborn_added_to_list_carn():
+def test_newborn_added_to_list_carn(list_carnivore_long):
     """
     When an animal gives birth the newborn must be added to the list. When there are 9 carnivores
     the probability for birth is 1, if the weight is acceptable, and therefore there will be added
     9 carnivores to the list.
     """
-    l = Lowland(population=[{'species': 'Carnivore', 'weight': 65, 'age': 3},
-                            {'species': 'Carnivore', 'weight': 41, 'age': 3},
-                            {'species': 'Carnivore', 'weight': 50, 'age': 3},
-                            {'species': 'Carnivore', 'weight': 40, 'age': 3},
-                            {'species': 'Carnivore', 'weight': 41, 'age': 3},
-                            {'species': 'Carnivore', 'weight': 50, 'age': 9},
-                            {'species': 'Carnivore', 'weight': 67, 'age': 5},
-                            {'species': 'Carnivore', 'weight': 41, 'age': 8},
-                            {'species': 'Carnivore', 'weight': 50, 'age': 9}])
+    l = Lowland(list_carnivore_long)
     length = len(l.carnivores_pop)
     l.newborn_animals()
     assert len(l.carnivores_pop) == length * 2
 
 
-def test_mother_lost_weight_carn():
+def test_mother_lost_weight_carn(list_carnivore_long):
     """
     When an animal gives birth the mother loses weight equivalent to the weight of the
     newborn * zeta. When there are 9 carnivores the probability for birth is 1, if the weight is
     acceptable, and therefore all 9 carnivores will give birth.
     """
-    l = Lowland(population=[{'species': 'Carnivore', 'weight': 65, 'age': 1},
-                            {'species': 'Carnivore', 'weight': 41, 'age': 2},
-                            {'species': 'Carnivore', 'weight': 50, 'age': 3},
-                            {'species': 'Carnivore', 'weight': 40, 'age': 4},
-                            {'species': 'Carnivore', 'weight': 41, 'age': 5},
-                            {'species': 'Carnivore', 'weight': 50, 'age': 6},
-                            {'species': 'Carnivore', 'weight': 67, 'age': 7},
-                            {'species': 'Carnivore', 'weight': 41, 'age': 8},
-                            {'species': 'Carnivore', 'weight': 50, 'age': 9}])
+    l = Lowland(list_carnivore_long)
     weight = [k.weight for k in l.carnivores_pop]
     l.newborn_animals()
     mothers = l.carnivores_pop[0:9]
@@ -546,19 +475,11 @@ def test_mother_lost_weight_carn():
         assert weight[k] > mothers[k].weight
 
 
-def test_mother_lost_fitness_carn():
+def test_mother_lost_fitness_carn(list_carnivore_long):
     """
     When the mother loses weight, the fitness needs to be updated.
     """
-    l = Lowland(population=[{'species': 'Carnivore', 'weight': 65, 'age': 1},
-                            {'species': 'Carnivore', 'weight': 41, 'age': 2},
-                            {'species': 'Carnivore', 'weight': 50, 'age': 3},
-                            {'species': 'Carnivore', 'weight': 40, 'age': 4},
-                            {'species': 'Carnivore', 'weight': 41, 'age': 5},
-                            {'species': 'Carnivore', 'weight': 50, 'age': 6},
-                            {'species': 'Carnivore', 'weight': 67, 'age': 7},
-                            {'species': 'Carnivore', 'weight': 41, 'age': 8},
-                            {'species': 'Carnivore', 'weight': 50, 'age': 9}])
+    l = Lowland(list_carnivore_long)
     fitness = [k.phi for k in l.carnivores_pop]
     l.newborn_animals()
     mothers = l.carnivores_pop[0:9]
@@ -610,61 +531,37 @@ def test_criteria_for_birth_prob_carn():
 
 
 # Tests for move_animals_from_cell:
-def test_herbs_removed_from_list(mocker):
+def test_herbs_removed_from_list(mocker,  list_herbivore_long):
     """
     The animal will move with a probability, when choosing mocker for 0.1 there will definitly some
     animals moving. When animals are moving the list will be shorter
     """
     mocker.patch('random.random', return_value=0.1)
-    l = Lowland(population=[{'species': 'Herbivore', 'weight': 65, 'age': 3},
-                            {'species': 'Herbivore', 'weight': 41, 'age': 3},
-                            {'species': 'Herbivore', 'weight': 50, 'age': 3},
-                            {'species': 'Herbivore', 'weight': 40, 'age': 3},
-                            {'species': 'Herbivore', 'weight': 41, 'age': 3},
-                            {'species': 'Herbivore', 'weight': 50, 'age': 9},
-                            {'species': 'Herbivore', 'weight': 67, 'age': 5},
-                            {'species': 'Herbivore', 'weight': 41, 'age': 8},
-                            {'species': 'Herbivore', 'weight': 50, 'age': 9}])
+    l = Lowland(list_herbivore_long)
     length = len(l.herbivores_pop)
     l.move_animals_from_cell()
     assert len(l.herbivores_pop) < length
 
 
-def test_carns_removed_from_list(mocker):
+def test_carns_removed_from_list(mocker, list_carnivore_long):
     """
     The animal will move with a probability, when choosing mocker for 0.1 there will definitly some
     animals moving. When animals are moving the list will be shorter
     """
     mocker.patch('random.random', return_value=0.1)
-    l = Lowland(population=[{'species': 'Carnivore', 'weight': 65, 'age': 3},
-                            {'species': 'Carnivore', 'weight': 41, 'age': 3},
-                            {'species': 'Carnivore', 'weight': 50, 'age': 3},
-                            {'species': 'Carnivore', 'weight': 40, 'age': 3},
-                            {'species': 'Carnivore', 'weight': 41, 'age': 3},
-                            {'species': 'Carnivore', 'weight': 50, 'age': 9},
-                            {'species': 'Carnivore', 'weight': 67, 'age': 5},
-                            {'species': 'Carnivore', 'weight': 41, 'age': 8},
-                            {'species': 'Carnivore', 'weight': 50, 'age': 9}])
+    l = Lowland(list_carnivore_long)
     length = len(l.carnivores_pop)
     l.move_animals_from_cell()
     assert len(l.carnivores_pop) < length
 
 
-def test_total_moving_animals(mocker):
+def test_total_moving_animals(mocker, list_carnivore_long, list_herbivore_long):
     """
     The move_animal_from_cell function returns a list with one list for moving herbivores and one
     list for moving carnivores
     """
     mocker.patch('random.random', return_value=0.1)
-    l = Lowland(population=[{'species': 'Carnivore', 'weight': 65, 'age': 3},
-                            {'species': 'Carnivore', 'weight': 41, 'age': 3},
-                            {'species': 'Carnivore', 'weight': 50, 'age': 3},
-                            {'species': 'Carnivore', 'weight': 40, 'age': 3},
-                            {'species': 'Carnivore', 'weight': 41, 'age': 3},
-                            {'species': 'Herbivore', 'weight': 50, 'age': 9},
-                            {'species': 'Herbivore', 'weight': 67, 'age': 5},
-                            {'species': 'Herbivore', 'weight': 41, 'age': 8},
-                            {'species': 'Herbivore', 'weight': 50, 'age': 9}])
+    l = Lowland(list_herbivore_long + list_carnivore_long)
     init_length_herb = len(l.herbivores_pop)
     init_length_carn = len(l.carnivores_pop)
     total_moving = l.move_animals_from_cell()
@@ -672,6 +569,21 @@ def test_total_moving_animals(mocker):
     difference_carn = init_length_carn - len(l.carnivores_pop)
     assert len(total_moving[0]) == difference_herb
     assert len(total_moving[1]) == difference_carn
+
+'''
+# Tests for move_to_random_cell:
+def test_assigned_to_different_cells(list_carnivore_long, list_herbivore_long):
+    """
+    The test uses a list of animals and checks that all the cells are given animals
+    """
+    new_animals = [list_herbivores, list_carnivores]
+    l = Lowland([])
+    moving = l.move_to_random_cell(new_animals)
+    #for cells in moving:
+        #assert len(cells) != 40
+    assert moving == 2
+'''
+
 
 # tests for move_animals_to_cell:
 def test_herb_added_to_cell():
@@ -704,20 +616,12 @@ def test_carns_added_to_cell():
     assert l.carnivores_pop == new_carnivores
 
 # Tests for reset_already_moved:
-def test_reset_already_moved_herb():
+def test_reset_already_moved_herb(list_carnivore_long, list_herbivore_long):
     """
     After moving, animal.already_moved should be True, so they don't move again from the new cell
     in the same year
     """
-    l = Lowland(population=[{'species': 'Carnivore', 'weight': 65, 'age': 3},
-                            {'species': 'Carnivore', 'weight': 41, 'age': 3},
-                            {'species': 'Carnivore', 'weight': 50, 'age': 3},
-                            {'species': 'Carnivore', 'weight': 40, 'age': 3},
-                            {'species': 'Carnivore', 'weight': 41, 'age': 3},
-                            {'species': 'Herbivore', 'weight': 50, 'age': 9},
-                            {'species': 'Herbivore', 'weight': 21, 'age': 5},
-                            {'species': 'Herbivore', 'weight': 41, 'age': 8},
-                            {'species': 'Herbivore', 'weight': 50, 'age': 9}])
+    l = Lowland(list_herbivore_long + list_carnivore_long)
     total_moving = l.move_animals_from_cell()
 
     # Reset list for new cell
@@ -728,20 +632,12 @@ def test_reset_already_moved_herb():
         assert herb.already_moved == True
 
 
-def test_reset_already_moved_carn():
+def test_reset_already_moved_carn(list_carnivore_long, list_herbivore_long):
     """
     After moving, animal.already_moved should be True, so they don't move again from the new cell
     in the same year
     """
-    l = Lowland(population=[{'species': 'Carnivore', 'weight': 65, 'age': 3},
-                            {'species': 'Carnivore', 'weight': 41, 'age': 3},
-                            {'species': 'Carnivore', 'weight': 50, 'age': 3},
-                            {'species': 'Carnivore', 'weight': 40, 'age': 3},
-                            {'species': 'Carnivore', 'weight': 41, 'age': 3},
-                            {'species': 'Herbivore', 'weight': 50, 'age': 9},
-                            {'species': 'Herbivore', 'weight': 21, 'age': 5},
-                            {'species': 'Herbivore', 'weight': 41, 'age': 8},
-                            {'species': 'Herbivore', 'weight': 50, 'age': 9}])
+    l = Lowland(list_herbivore_long + list_carnivore_long)
     total_moving = l.move_animals_from_cell()
 
     # Reset list for new cell
@@ -751,19 +647,11 @@ def test_reset_already_moved_carn():
     for herb in l.carnivores_pop:
         assert herb.already_moved == True
 
-def test_reset_already_moved():
+def test_reset_already_moved(list_carnivore_long, list_herbivore_long):
     """
     Every year we must reset already moved so that they can move again
     """
-    l = Lowland(population=[{'species': 'Carnivore', 'weight': 65, 'age': 3},
-                            {'species': 'Carnivore', 'weight': 41, 'age': 3},
-                            {'species': 'Carnivore', 'weight': 50, 'age': 3},
-                            {'species': 'Carnivore', 'weight': 40, 'age': 3},
-                            {'species': 'Carnivore', 'weight': 41, 'age': 3},
-                            {'species': 'Herbivore', 'weight': 50, 'age': 9},
-                            {'species': 'Herbivore', 'weight': 21, 'age': 5},
-                            {'species': 'Herbivore', 'weight': 41, 'age': 8},
-                            {'species': 'Herbivore', 'weight': 50, 'age': 9}])
+    l = Lowland(list_herbivore_long + list_carnivore_long)
     total_moving = l.move_animals_from_cell()
 
     # Reset list for new cell

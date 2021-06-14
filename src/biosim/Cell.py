@@ -179,6 +179,45 @@ class Cell:
         tot_animals = [self.herbs_move, self.carns_move]
         return tot_animals
 
+    def move_to_random_cell(self, list_of_moving_animals):
+        """
+        The migrating animals from one cell will try to move to different cells. They will be
+        randomly assigned to four different lists.
+
+        :param list_of_moving_animals: list with a list of the moving herbivores and a list of the
+        moving carnivores
+        :type list_of_moving_animals: list
+        """
+        herbs_moving = list_of_moving_animals[0]
+        carns_moving = list_of_moving_animals[1]
+        to_cell_1_herb = []
+        to_cell_2_herb = []
+        to_cell_3_herb = []
+        to_cell_4_herb = []
+        to_cell_1_carn = []
+        to_cell_2_carn = []
+        to_cell_3_carn = []
+        to_cell_4_carn = []
+
+        to_cell_herbs = [to_cell_1_herb, to_cell_2_herb, to_cell_3_herb, to_cell_4_herb]
+        to_cell_carns = [to_cell_1_carn, to_cell_2_carn, to_cell_3_carn, to_cell_4_carn]
+
+        for herb in herbs_moving:
+            receiving_cell = random.choice(to_cell_herbs)
+            receiving_cell.append(herb)
+
+        for carn in carns_moving:
+            receiving_cell = random.choice(to_cell_carns)
+            receiving_cell.append(carn)
+
+        to_cell_1 = [to_cell_1_herb, to_cell_1_carn]
+        to_cell_2 = [to_cell_2_herb, to_cell_2_carn]
+        to_cell_3 = [to_cell_3_herb, to_cell_3_carn]
+        to_cell_4 = [to_cell_4_herb, to_cell_4_carn]
+
+        return [to_cell_1, to_cell_2, to_cell_3, to_cell_4]
+
+
     def move_animals_to_cell(self, list_of_moving_animals):
         """
         Adds the migrating animals into a new cell
