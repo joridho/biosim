@@ -162,8 +162,8 @@ class Map_Island:
         coordinate. The neighbour switch landscape types an animal can move to, are returned.
         :param current_coordinates: Location of current cell
         :type current_coordinates: tuple
-        :return: Locations as keys and landscape class instance as values
-        :rtype: dict
+        :return: list of neighbour cells
+        :rtype: list
         """
         # neighbours_of_current_cell = {}
         (x, y) = current_coordinates
@@ -181,7 +181,7 @@ class Map_Island:
             else:
                 return 
         '''
-        return self.neighbour_cells
+        #return self.neighbour_cells
 
     def year_cycle(self):
         """
@@ -212,7 +212,7 @@ class Map_Island:
             self.neighbours_of_current_cell(loc) 
             cell.move_animals_from_cell()
             for herb in cell.herbs_move:
-                nr = random.choice([0, 1, 2, 3])
+                nr = random.choice(range(len(self.neighbour_cells)))
                 #self.neighbour_cells[nr].move_to_cell_herb(herb)
 
                 if self.neighbour_cells[nr].Habitable() == True:
@@ -240,8 +240,8 @@ class Map_Island:
                 self.arrived_cell.move_animals_to_cell(migration_list)
         '''
 
-        for loc, cell in self.map.items():
-            cell.reset_already_moved()
+        # for loc, cell in self.map.items():
+            # cell.reset_already_moved()
 
         # AGING
         for cell in self.map.values():

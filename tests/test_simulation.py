@@ -141,7 +141,12 @@ def test_migration(eg_sim3):
     population_3_2 = cell.herbivores_pop + cell.carnivores_pop
     assert len(population_3_2) != 0
 
-
+def test_big_island(eg_sim):
+    """
+    Test to see if the simulation work  for bigger islands,such as the one in eg_sim
+    """
+    b = eg_sim
+    assert b.num_animals == 250
 
 
 

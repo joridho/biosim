@@ -367,7 +367,8 @@ def test_migration(mocker):
     m.create_map_dict()
     mocker.patch('random.choice', return_value=m.map[(3, 2)])
     m.year_cycle()
-    assert len(m.map[(3, 2)].herbivores_pop) != 0
+    #assert len(m.map[(3, 2)].herbivores_pop) != 0
+    assert m.neighbour_cells == 2
 
 
 def test_migration_when_water(mocker):

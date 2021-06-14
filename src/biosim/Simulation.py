@@ -70,7 +70,7 @@ class BioSim:
         random.seed(seed)
 
         self.island_map_graph = Map_Island(island_map, ini_pop)
-        self.island_map_graph.create_map_dict()  # koordinatene i kart får tilhørende lister med dyr
+        self.island_map_graph.create_map_dict()
 
         self.num_years_simulated = 0
         if hist_specs == None:
