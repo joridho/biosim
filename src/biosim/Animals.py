@@ -44,6 +44,8 @@ class Animal:
         Saves the parameters for the different animals for use in Animals class
         """
         for parameter in params:
+            if parameter < 0:
+                raise ValueError('Parameter must be positive')
             if parameter in cls.p:
                 cls.p[parameter] = params[parameter]
 

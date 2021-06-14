@@ -129,7 +129,7 @@ def test_available_fodder():
     """
     l = Lowland(population=[{'species': 'Carnivore', 'weight': 50, 'age': 9}])
     l.make_herbivores_eat()
-    assert l.af == 800
+    assert l.available_fodder == 800
 
 
 def test_consumption_becomes_appetite(reset_parameters):
@@ -170,7 +170,7 @@ def test_update_fodder():
     l = Lowland(population)
     appetite = Herbivore.p['F']
     l.make_herbivores_eat()
-    assert l.af == 800 - len(l.herbivores_pop) * appetite
+    assert l.available_fodder == 800 - len(l.herbivores_pop) * appetite
 
 
 def test_consumption_when_little_fodder(reset_parameters):
@@ -204,7 +204,7 @@ def test_fodder_will_stop_at_zero():
     l = Lowland(population)
     l.p['f_max'] = 51
     l.make_herbivores_eat()
-    assert l.af == 0
+    assert l.available_fodder == 0
 
 
 def test_gain_weight_after_eating_herb(reset_parameters):

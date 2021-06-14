@@ -35,7 +35,7 @@ class Cell:
             else:
                 self.carnivores_pop.append(Carnivore(animal_info))
 
-        self.af = self.p['f_max']
+        self.available_fodder = self.p['f_max']
 
     @classmethod
     def set_given_parameters(cls, params):
@@ -66,12 +66,12 @@ class Cell:
 
         This function can only be used once per year because of the available_fodder_function
         """
-        self.af = self.p['f_max']
+        self.available_fodder = self.p['f_max']
         random.shuffle(self.herbivores_pop)
 
         for animal in self.herbivores_pop:
-            animal.eat_fodder(F_cell=self.af)  # make the herbivore eat
-            self.af -= animal.F_consumption  # change the amount of fodder in the cell
+            animal.eat_fodder(F_cell=self.available_fodder)  # make the herbivore eat
+            self.available_fodder -= animal.F_consumption  # change the amount of fodder in the cell
 
     def available_herbivores_for_carnivores(self):
         """

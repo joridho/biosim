@@ -27,7 +27,9 @@ def test_parameters_herb(age5_weight20):
         It is given that the w_birth is 8.0 for herbivores
     """
     h = Herbivore(age5_weight20)
-    assert h.p['w_birth'] == 8.0
+    h.p['eta'] = -2
+    #assert h.p['w_birth'] == 8.0
+    assert h.p['eta'] == -2
 
 
 def test_parameters_carn(age10_weight40):
