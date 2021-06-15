@@ -156,9 +156,13 @@ def test_add_population():
     m.create_map_dict()
     m.add_population(ini_carns)
     #m.create_map_dict()
-    #assert
-    for cell in m.map.values():
-       assert cell.carnivores_pop == 20
+    #assert m.pop_info["loc"] == (2,2)
+    #assert m.new_population[(2,2)] == m.pop_info
+    m.map[(2,2)].carnivores_pop.append(Carnivore({'species': 'Carnivore', 'age': 5, 'weight': 60}))
+    #assert len(m.map[(2,2)].carnivores_pop) == 21
+    for loc, cell in m.map.items():
+        if cell.habitable
+       assert cell == 20
 
 def test_add_population_age():
     """
