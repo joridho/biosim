@@ -292,7 +292,7 @@ class BioSim:
 
 
         plt.pause(0.01)
-        self._save_graphics()
+        #self._save_graphics()
 
     def create_map(self):
         # Each letter has a colour value
