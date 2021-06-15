@@ -3,36 +3,27 @@
 __author__ = 'Jorid Holmen'
 __email__ = 'jorid.holmen@nmbu.no'
 
-import math
-
 from biosim.Animals import Herbivore, Carnivore
 from biosim.Cell import Lowland, Highland, Desert, Water
 from biosim.MapIsland import Map_Island
-import operator
 
-import pandas
-import matplotlib.pyplot as plt
-# import subprocess
 import random
 import numpy as np
-import time
+import matplotlib.pyplot as plt
+# import operator
+# import math
+# import pandas
+# import subprocess
+# import time
 # import os
-import textwrap
-
-'''
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/Simulation
-'''
+# import textwrap
 
 
 class BioSim:
 
     def __init__(self, island_map, ini_pop, seed,
                  vis_years=1, ymax_animals=None, cmax_animals=None, hist_specs=None,
-                 img_dir=None, img_base=None, img_fmt='png', img_years=None,
-                 log_file=None):
+                 img_dir=None, img_base=None, img_fmt='png', img_years=None, log_file=None):
 
         """
         :param island_map: Multi-line string specifying island geography
@@ -120,7 +111,7 @@ class BioSim:
         self.phi_array_carn = []
         self.age_array_carn = []
         self.weight_array_carn = []
-        self.N_total = []  # hvorfor brukes denne
+        self.N_total = []
         self.V_year = []
         self.num_years = num_years
         self.setup_graphics()
@@ -147,14 +138,10 @@ class BioSim:
                     self.age_array_herb.append(carn.age)
                     self.weight_array_herb.append(carn.weight)
 
-            self.N_herb.append(self.num_animals_per_species[
-                                   'Herbivore'])  # Hvorfor kan vi bruke den metoden på den måten
+            self.N_herb.append(self.num_animals_per_species['Herbivore'])
             self.N_carn.append(self.num_animals_per_species['Carnivore'])
             self.N_total.append(self.num_animals)
             self.V_year.append(self.num_years_simulated)
-            # phi_array_herb.append(total_phi)
-            # age_array_herb.append(total_age)
-            # weight_array_herb.append(total_weight)
 
             if self.vis_years > 0:
                 self.update_graphics()
@@ -162,113 +149,12 @@ class BioSim:
             self.num_years_simulated += 1
 
         # values needed after stopping:
-        number_of_simulated_years = self.num_years_simulated  # self.year her
-        total_number_of_animals = self.num_animals  # property
-        total_number_of_herbivores = self.num_animals_per_species['Herbivore']  # pga property
-        total_number_of_carnivores = self.num_animals_per_species['Carnivore']
+        number_of_simulated_years = self.num_years_simulated
+        total_number_of_animals = self.num_animals
 
         print('Number of animals:', total_number_of_animals)
         print(self.num_animals_per_species)
         print('Number of simulated years:', number_of_simulated_years)
-        # print(\n) Hvordan få til at det blir mellomrom her
-
-        '''
-        self.fig = plt.figure()
-        self.create_map()
-        fig = self.fig
-        ax2 = fig.add_subplot(3, 3, 3)  # animal count
-        ax3 = fig.add_subplot(3, 3, 4)  # herbivore distribution
-        ax4 = fig.add_subplot(3, 3, 6)  # carnivore distribution
-        ax5 = fig.add_subplot(3, 3, 7)  # fitness
-        ax6 = fig.add_subplot(3, 3, 8)  # age
-        ax7 = fig.add_subplot(3, 3, 9)  # weight
-
-        # years                                              # skjønne fra time counter til map
-        axt = fig.add_axes([0.4, 0.8, 0.2, 0.2])  # llx, lly, w, h
-        axt.axis('off')
-        template = 'Years: %s' %(self.num_years_simulated)                      #sette self.year her
-        txt = axt.text(0.5, 0.5, template.format(0),
-                       horizontalalignment='center',
-                       verticalalignment='center',
-                       transform= axt.transAxes)  # relative coordinates
-
-
-        '''
-        '''
-        plt.pause(0.01)  # pause required to make figure visible
-
-        input('Press ENTER to begin counting')
-
-        
-        for k in range(30):                           
-            txt.set_text(template.format(k))
-            plt.pause(0.1)  # pause required to make update visible
-        
-
-        ax2.axis('off')
-        ax2 = fig.add_axes([0.67, 0.72, 0.28, 0.22])
-        ax2.plot(V_year, N_herb, 'b', label = 'herbs') # antall herb
-        ax2.plot(V_year, N_carn, 'r', label = 'carn') # antall carn
-        handles, labels = ax2.get_legend_handles_labels()
-        ax2.legend(handles = handles, labels =labels)
-        ax2.set_title('Animal count')
-
-        # HEAT MAP HERB
-        #ax3.set_xticks([1 5 10])                          # skjønne hva som skjer her, aka set_xticks()
-        #ax3.set_yticks(1)
-
-        ax3.axis('off')
-        ax3 = fig.add_axes([0.045, 0.35, 0.3, 0.25])
-        ax3.set_title("Herbivore distribution")
-        heatmap_herb = ax3.imshow(np.array(data_heat_map_herb).reshape(3, 3),
-                                  extent=[1,self.island_map_graph.x_coord,
-                                  self.island_map_graph.y_coord, 1], vmin = 0, vmax=200,
-                                  cmap = 'viridis', interpolation="nearest")   #cmap=plt.cm.gray_r)
-        axes_bar = fig.add_axes([0.31, 0.35, 0.01, 0.2])
-        plt.colorbar(heatmap_herb, cax = axes_bar)
-
-
-        # HEAT MAP CARN
-        #ax4.set_xticks([1 5 10])
-        #ax4.set_yticks(1)
-
-        ax4.axis('off')
-        ax4 = fig.add_axes([0.67, 0.35, 0.3, 0.26])
-        ax4.set_title("Carnivore distribution")
-        heatmap_carn = ax4.imshow(np.array(data_heat_map_carn).reshape(3, 3),extent=[1,self.island_map_graph.x_coord,self.island_map_graph.y_coord, 1], vmin = 0, vmax=200, cmap = 'viridis', interpolation="nearest")   #cmap=plt.cm.gray_r)
-        axes_bar2 = fig.add_axes([0.94, 0.35, 0.01, 0.2])
-        plt.colorbar(heatmap_carn, cax = axes_bar2)
-
-        # FITNESS
-        ax5.axis('off')
-        ax5 = fig.add_axes([0.028, 0.052, 0.28, 0.2])
-        ax5.hist(phi_array_herb, bins= 20, label ='phi herbs', histtype ='step', edgecolor = 'b') # ordne bins,  int(math.sqrt(N_herb_1))
-        ax5.hist(phi_array_carn, bins= 20,label ='phi carns', histtype ='step', edgecolor = 'r')     #int(math.sqrt(N_carn_1))
-        ax5.set_title('fitness')
-        handles, labels = ax5.get_legend_handles_labels()
-        ax5.legend(labels = labels)
-
-        # AGE
-        ax6.axis('off')
-        ax6 = fig.add_axes([0.36, 0.052, 0.28, 0.2])
-        ax6.hist(age_array_herb, bins= 20, label ='age herbs',histtype ='step', edgecolor = 'b')  # ordne bins, int(math.sqrt(N_herb_1))
-        ax6.hist(age_array_carn, bins = 20, label ='age carns', histtype ='step', edgecolor = 'r') #int(math.sqrt(N_carn_1))
-        ax6.set_title('age')
-        handles, labels = ax6.get_legend_handles_labels()
-        ax6.legend(handles = handles, labels =labels) # Kan ta med handles også, men blir d samme med og uten
-
-        # WEIGHT
-        ax7.axis('off')
-        ax7 = fig.add_axes([0.7, 0.052, 0.28, 0.2])
-        ax7.hist(weight_array_herb, bins= 20, label ='weight herbs',histtype ='step', edgecolor = 'b') #ordne bins, int(math.sqrt(N_herb_1))
-        ax7.hist(weight_array_carn, bins= 20, label ='weight carns',histtype ='step', edgecolor = 'r') #int(math.sqrt(N_carn_1))
-        ax7.set_title('weight')
-        handles, labels = ax7.get_legend_handles_labels()
-        ax7.legend(labels = labels)
-        fig.tight_layout()  # Fikk feilmld
-        plt.show()
-    
-    '''
 
     def setup_graphics(self):
 
@@ -282,20 +168,18 @@ class BioSim:
         self.ax6 = self.fig.add_subplot(3, 3, 8)  # age
         self.ax7 = self.fig.add_subplot(3, 3, 9)  # weight
 
-        # years                            # skjønne fra time counter til map
+        # years
         self.axt = self.fig.add_axes([0.4, 0.8, 0.2, 0.2])  # llx, lly, w, h
         self.axt.axis('off')
-        self.template = 'Years: %s' % (self.num_years_simulated)  # sette self.year her
+        self.template = 'Years: %s' % self.num_years_simulated
         self.txt = self.axt.text(0.5, 0.5, self.template.format(0),
                                  horizontalalignment='center',
                                  verticalalignment='center',
-                                 transform=self.axt.transAxes)  # relative coordinates
+                                 transform=self.axt.transAxes)
 
         self.ax2.axis('off')
         self.ax2 = self.fig.add_axes([0.67, 0.72, 0.28, 0.22])
         self.ax2.set_title('Animal count')
-        # self._line_graph_ax = self._fig.add_subplot(2, 2, 2)
-        # self._line_graph_ax.set_position(pos=[0.5, 0.55, 0.35, 0.35])
 
         # Needs updating on subsequent calls to simulate()
         self.ax2.set_xlim(0, self.num_years + 1)
@@ -329,136 +213,97 @@ class BioSim:
         self.ax7 = self.fig.add_axes([0.7, 0.052, 0.28, 0.2])
         self.ax7.set_title('weight')
         self.fig = self.fig.tight_layout()
-        # plt.show()
 
     def update_graphics(self):
-        # for k in range(30):
-        #   self.txt.set_text(self.template.format(k))
-        #  plt.pause(0.1)  # pause required to make update visible
-        self.template = 'Years: %s' % self.num_years_simulated  # sette self.year her
+        self.template = 'Years: %s' % self.num_years_simulated
         self.txt.set_text(self.template.format(0))
 
         ydata_herb = self.line_graph_line_herb.get_ydata()
         ydata_herb[self.num_years_simulated] = self.num_animals_per_species["Herbivore"]
         self.Ntesting = self.line_graph_line_herb.set_ydata(ydata_herb)
-        # self.Ntesting.plot
 
-        # self.ax2.plot(self.V_year, self.Ntesting.get_ydata(), 'b', label='herbs')  # antall herb
         self.ax2.clear()
         self.ax2.plot(self.V_year, self.N_herb, 'b', label='herb')
-        self.ax2.plot(self.V_year, self.N_carn, 'r', label='carn')  # antall carn
+        self.ax2.plot(self.V_year, self.N_carn, 'r', label='carn')
         handles, labels = self.ax2.get_legend_handles_labels()
         self.ax2.legend(handles=handles, labels=labels)
 
-        # HEAT MAP HERB
-        # ax3.set_xticks([1 5 10])                          # skjønne hva som skjer her, aka set_xticks()
-        # ax3.set_yticks(1)
-
-        # self.ax3.clear()
         self.x = self.island_map_graph.x_coord
         self.y = self.island_map_graph.y_coord
+
+        # HEAT MAP HERB
         self.heatmap_herb = self.ax3.imshow(
             np.array(self.data_heat_map_herb).reshape(self.x, self.y),
-            extent=[1, self.island_map_graph.x_coord,
-                    self.island_map_graph.y_coord, 1], vmin=0, vmax=200,
-            cmap='viridis',
-            interpolation="nearest")  # cmap=plt.cm.gray_r)
+            extent=[1, self.island_map_graph.x_coord, self.island_map_graph.y_coord, 1], vmin=0,
+                    vmax=200, cmap='viridis', interpolation="nearest")
 
         plt.colorbar(self.heatmap_herb, cax=self.axes_bar)
 
         # HEAT MAP CARN
-        # ax4.set_xticks([1 5 10])
-        # ax4.set_yticks(1)
-        # self.ax4.clear()
         self.heatmap_carn = self.ax4.imshow(
             np.array(self.data_heat_map_carn).reshape(self.x, self.y),
-            extent=[1, self.island_map_graph.x_coord,
-                    self.island_map_graph.y_coord, 1], vmin=0, vmax=200,
-            cmap='viridis',
-            interpolation="nearest")  # cmap=plt.cm.gray_r)
+            extent=[1, self.island_map_graph.x_coord, self.island_map_graph.y_coord, 1], vmin=0,
+                    vmax=200, cmap='viridis', interpolation="nearest")
         plt.colorbar(self.heatmap_carn, cax=self.axes_bar2)
 
         # FITNESS
         self.ax5.clear()
         self.ax5.hist(self.phi_array_herb, bins=20, label='phi herbs', histtype='step',
-                      edgecolor='b')  # ordne bins,  int(math.sqrt(N_herb_1))
+                      edgecolor='b')
         self.ax5.hist(self.phi_array_carn, bins=20, label='phi carns', histtype='step',
-                      edgecolor='r')  # int(math.sqrt(N_carn_1))
+                      edgecolor='r')
         handles, labels = self.ax5.get_legend_handles_labels()
         self.ax5.legend(labels=labels)
 
         # AGE
         self.ax6.clear()
         self.ax6.hist(self.age_array_herb, bins=20, label='age herbs', histtype='step',
-                      edgecolor='b')  # ordne bins, int(math.sqrt(N_herb_1))
+                      edgecolor='b')
         self.ax6.hist(self.age_array_carn, bins=20, label='age carns', histtype='step',
-                      edgecolor='r')  # int(math.sqrt(N_carn_1))
+                      edgecolor='r')
         handles, labels = self.ax6.get_legend_handles_labels()
-        self.ax6.legend(handles=handles,
-                        labels=labels)  # Kan ta med handles også, men blir d samme med og uten
+        self.ax6.legend(handles=handles, labels=labels)
 
         # WEIGHT
         self.ax7.clear()
         self.ax7.hist(self.weight_array_herb, bins=20, label='weight herbs', histtype='step',
-                      edgecolor='b')  # ordne bins, int(math.sqrt(N_herb_1))
+                      edgecolor='b')
         self.ax7.hist(self.weight_array_carn, bins=20, label='weight carns', histtype='step',
-                      edgecolor='r')  # int(math.sqrt(N_carn_1))
+                      edgecolor='r')
         handles, labels = self.ax7.get_legend_handles_labels()
         self.ax7.legend(labels=labels)
-        # self.fig.tight_layout()  # Fikk feilmld
 
-        # input('Press ENTER to begin counting')
-        plt.pause(0.01)  # pause required to make figure visible
-        # plt.draw()
+        plt.pause(0.01)
 
     def create_map(self):
-        # geography
-        # island_map = """WWWWW
-        # WWLHW
-        # WDDLW
-        # WWWWW
-        # """
-        # hver bokstav for fargeverdi
-        #                R    G    B
+        # Each letter has a colour value
+        #                  R    G    B
         rgb_value = {'W': (0.0, 0.0, 1.0),  # blue
                      'L': (0.0, 0.6, 0.0),  # dark green
                      'H': (0.5, 1.0, 0.5),  # light green
                      'D': (1.0, 1.0, 0.5)}  # light yellow
 
-        # hver bokstav I geography får rgb_value
         map_rgb = [[rgb_value[column] for column in row]
-                   for row in
-                   self.island_map_graph.geo.splitlines()]  # vet ikke hv Map_Island returnere enda
+                   for row in self.island_map_graph.geo.splitlines()]
 
-        # lager tom figur
-        # fig = plt.figure()
-
-        # adder akser til tom figur (skal bli øy)
+        # Adding axes to a empty figure that will be the island
         self.ax_im = self.fig.add_axes([0.049, 0.71, 0.28, 0.27])  # llx, lly, w, h
 
-        # viser øya m/vann
+        # shows the island with  water
         self.ax_im.imshow(map_rgb)
 
-        # hva gjør denne??????????????????
         self.ax_im.set_xticks(range(len(map_rgb[0])))
         self.ax_im.set_xticklabels(range(1, 1 + len(map_rgb[0])))
         self.ax_im.set_yticks(range(len(map_rgb)))
         self.ax_im.set_yticklabels(range(1, 1 + len(map_rgb)))
 
-        # lager nytt koordinatsystem i figuren (x akse starter ved 80 % bredde (v->h) av figuren, y 
-        # akse starter i 10 prosent høyde av figuren, har bredde som er på 10% av figuren, har høyde som er på 80% av figuren)
+        # Creates a new coordinate system for the figure
         self.ax_lg = self.fig.add_axes([0.32, 0.71, 0.1, 0.26])  # llx, lly, w, h
-        self.ax_lg.axis('off')  # fjerner selve koordinatsystemet
-        for ix, name in enumerate(('Water', 'Lowland',
-                                   'Highland',
-                                   'Desert')):  # enumarte gir tall/indeks til elementene i en liste ['katt', 'skole'] blir til ['0', 'katt', '1', 'skole']
-            self.ax_lg.add_patch(plt.Rectangle((0., ix * 0.2), 0.3, 0.1,
-                                               # tilsetter rektangler med x akse.. yakse ... bredde... og høyde..(samme som over)
-                                               edgecolor='none',  # ingen ytterkant
-                                               facecolor=rgb_value[
-                                                   name[0]]))  # første element i navn feks 'W'
-            self.ax_lg.text(0.35, ix * 0.2, name,
-                            transform=self.ax_lg.transAxes)  # legger til navn ved x akse... og yakse ...
+        self.ax_lg.axis('off')
+        for ix, name in enumerate(('Water', 'Lowland', 'Highland', 'Desert')):
+            self.ax_lg.add_patch(plt.Rectangle((0., ix * 0.2), 0.3, 0.1, edgecolor='none',
+                                               facecolor=rgb_value[name[0]]))
+            self.ax_lg.text(0.35, ix * 0.2, name, transform=self.ax_lg.transAxes)
 
     def add_population(self, population):
         """
@@ -493,5 +338,5 @@ class BioSim:
             num_animals_per_species["Carnivore"] += len(cell.carnivores_pop)
         return num_animals_per_species
 
-    # def make_movie(self): denne er fra Plesser
+    # def make_movie(self):
     # Create MPEG4 movie from visualization images saved."""
