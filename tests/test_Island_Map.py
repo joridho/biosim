@@ -132,6 +132,31 @@ def test_add_population():
     for cell in m.map.values():
         assert cell.carnivores_pop == 20
 
+def test_add_population():
+    """
+    We first simulate herbivores, and later we add carnivores. We need a function for adding the
+    carnivores later, that we call add_population. To tests that this function work we check that
+    the population has a list called carnivores_pop
+    """
+    geogr = """\
+                WWW
+                WLW
+                WWW"""
+    ini_herbs = [{'loc': (2, 2),
+                  'pop': [{'species': 'Herbivore',
+                           'age': 5,
+                           'weight': 20}
+                          for _ in range(50)]}]
+    ini_carns = [{'loc': (2, 2),
+                  'pop': [{'species': 'Carnivore',
+                           'age': 5,
+                           'weight': 60}
+                          for _ in range(20)]}]
+    m = Map_Island(island_geo=geogr, init_pop=ini_herbs)
+    m.add_population(ini_carns)
+    m.create_map_dict()
+    for cell in m.map.values():
+        assert cell.carnivores_pop == 20
 
 def test_add_population_age():
     """

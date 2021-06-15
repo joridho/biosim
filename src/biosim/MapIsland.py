@@ -113,9 +113,9 @@ class Map_Island:
         :param population: Specifies the new population of one or more cells
         :type population: list of dicts
         """
-        new_population = {}
+        self.new_population = {}
         for pop_info in population:
-            new_population[pop_info["loc"]] = pop_info["pop"]
+            self.new_population[pop_info["loc"]] = pop_info["pop"]
 
         for location, population in new_population.items():
             for animal_info in population:
