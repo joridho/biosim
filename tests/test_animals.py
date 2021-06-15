@@ -26,10 +26,26 @@ def test_parameters_herb(age5_weight20):
     Checking if the correct parameters for herbivores is given
         It is given that the w_birth is 8.0 for herbivores
     """
-    h = Herbivore(age5_weight20)
-    h.p['eta'] = -2
-    # assert h.p['w_birth'] == 8.0
-    assert h.p['eta'] == -2
+    with pytest.raises(ValueError):
+        p = {
+            "w_birth": -6.0,
+            "sigma_birth": 1.0,
+            "beta": 0.75,
+            "eta": 0.125,
+            "a_half": 40.0,
+            "phi_age": 0.3,
+            "w_half": 4.0,
+            "phi_weight": 0.4,
+            "mu": 0.4,
+            "gamma": 0.8,
+            "zeta": 3.5,
+            "xi": 1.1,
+            "omega": 0.8,
+            "F": 50.0,
+            "DeltaPhiMax": 10.0
+        }
+        h = Herbivore(age5_weight20)
+        h.set_given_parameters(p)
 
 
 def test_parameters_carn(age10_weight40):

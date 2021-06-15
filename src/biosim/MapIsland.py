@@ -212,9 +212,8 @@ class Map_Island:
             self.neighbours_of_current_cell(loc)
             cell.move_animals_from_cell()
             for herb in cell.herbs_move:
-                nr = random.choice(range(len(self.neighbour_cells)))
+                nr = random.choice([0, 1, 2, 3])
                 # self.neighbour_cells[nr].move_to_cell_herb(herb)
-
                 if self.neighbour_cells[nr].Habitable():
                     self.neighbour_cells[nr].herbivores_pop.append(herb)
                     cell.herbivores_pop.remove(herb)

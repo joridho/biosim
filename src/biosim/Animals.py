@@ -38,16 +38,19 @@ class Animal:
         self.fitness()
         self.already_moved = False
 
+
     @classmethod
     def set_given_parameters(cls, params):
         """
-        Saves the parameters for the different animals for use in Animals class
+        Saves new parameters for the different animals for use in Animals class
+        :raise ValueError: if invalid landscape type is given in geography string
         """
         for parameter in params:
             if parameter in cls.p:
                 if params[parameter] < 0:
                     raise ValueError('Parameter must be positive')
                 cls.p[parameter] = params[parameter]
+
 
     def aging(self):
         """
