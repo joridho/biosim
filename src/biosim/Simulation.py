@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-__author__ = 'Jorid Holmen'
-__email__ = 'jorid.holmen@nmbu.no'
+__author__ = 'Jorid Holmen', 'Christianie Torres'
+__email__ = 'jorid.holmen@nmbu.no', 'Christianie.torres@nmbu.no'
 
 from biosim.Animals import Herbivore, Carnivore
 from biosim.Cell import Lowland, Highland, Desert, Water
@@ -20,6 +20,7 @@ import matplotlib.pyplot as plt
 
 
 class BioSim:
+    """ A class for BioSIm that simulates the dynamics of the island and creates graphics"""
 
     def __init__(self, island_map, ini_pop, seed,
                  vis_years=1, ymax_animals=None, cmax_animals=None, hist_specs=None,

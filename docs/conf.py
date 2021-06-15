@@ -20,6 +20,7 @@ autoclass_content = 'both'
 project = 'biosim'
 copyright = '2021, Holmen Torres'
 author = 'Holmen Torres'
+release = '0.1'
 
 
 # -- General configuration ---------------------------------------------------
@@ -32,7 +33,7 @@ extensions = [
     'sphinx.ext.coverage',
     'sphinx.ext.mathjax',
     'sphinx.ext.viewcode',
-    'sphinx.ext.napeleon'
+    'sphinx.ext.napoleon'
 ]
 
 # Add any paths that contain templates here, relative to this directory.

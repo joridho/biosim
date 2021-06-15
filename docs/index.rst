@@ -9,14 +9,17 @@ This is a simulation of an island including
  * Herbivores
  * Carnivores
  * Several landscapes
- * An Island
+ * An island
 
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-
+   Simulation
+   MapIsland
+   Cell
+   Animals
 
 Indices and tables
 ==================
@@ -24,3 +27,4 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
