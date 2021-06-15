@@ -19,6 +19,7 @@ __author__ = 'Hans Ekkehard Plesser, NMBU'
 import textwrap
 from biosim.Simulation import BioSim
 
+
 geogr = """\
             WWWWWWW
             WDDDDDW
