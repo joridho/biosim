@@ -368,7 +368,7 @@ def test_migration(mocker):
                          for _ in range(50)]}]
     m = Map_Island(island_geo, init_pop)
     m.create_map_dict()
-    m.neighbours_of_current_cell((2,2))
+    m.neighbours_of_current_cell((2, 2))
     mocker.patch('random.choice', return_value=3)
     m.year_cycle()
     assert len(m.map[(3, 2)].herbivores_pop) != 0

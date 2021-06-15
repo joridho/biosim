@@ -29,6 +29,8 @@ class Cell:
 
         self.herbivores_pop = []
         self.carnivores_pop = []
+        self.N_herb = len(self.herbivores_pop)
+        self.N_carn = len(self.carnivores_pop)
         for animal_info in population:
             if animal_info['species'] == 'Herbivore':
                 self.herbivores_pop.append(Herbivore(animal_info))
@@ -72,8 +74,8 @@ class Cell:
         random.shuffle(self.herbivores_pop)
 
         for animal in self.herbivores_pop:
-            animal.eat_fodder(F_cell=self.available_fodder)  # make the herbivore eat
-            self.available_fodder -= animal.F_consumption  # change the amount of fodder in the cell
+            animal.eat_fodder(F_cell=self.available_fodder)
+            self.available_fodder -= animal.F_consumption
 
     def available_herbivores_for_carnivores(self):
         """
@@ -81,10 +83,10 @@ class Cell:
         :return: the total weight of herbivores
         :rtype: float
         """
-        self.herbivores_weight_sum = 0
+        herbivores_weight_sum = 0
         for k in self.herbivores_pop:
-            self.herbivores_weight_sum += k.weight
-        return self.herbivores_weight_sum
+            herbivores_weight_sum += k.weight
+        return herbivores_weight_sum
 
     def feed_carnivores(self):
         """
@@ -95,18 +97,14 @@ class Cell:
         """
         self.sorting_animals()
         killed = []
-        # sum_weight_herbs = self.available_herbivores_for_carnivores()
-        # consumed = 0
         for carn in self.carnivores_pop:
             appetite = carn.p['F']
             weight_of_eaten_herbs = 0
             for herb in self.herbivores_pop:
-                # if herb.weight <= appetite:
                 if weight_of_eaten_herbs < appetite:
                     if herb not in killed:
                         if carn.will_carn_kill(herb) is True:
                             carn.weight_gain_after_eating_herb(herb)
-                            # weight_of_eaten_herbs += herb.weight
                             appetite -= herb.weight
                             killed.append(herb)
 
@@ -179,51 +177,6 @@ class Cell:
         tot_animals = [self.herbs_move, self.carns_move]
         return tot_animals
 
-    # def move_animals_to_cell(self, herb):
-    #   if self.Habitable() == True:
-    #      self.herbivores_pop.append(herb)
-    # cell.herbivores_pop.remove(herb)
-    #     return True
-    '''
-
-    def move_to_random_cell(self, list_of_moving_animals):
-        """
-        The migrating animals from one cell will try to move to different cells. They will be
-        randomly assigned to four different lists.
-
-        :param list_of_moving_animals: list with a list of the moving herbivores and a list of the
-        moving carnivores
-        :type list_of_moving_animals: list
-        """
-        herbs_moving = list_of_moving_animals[0]
-        carns_moving = list_of_moving_animals[1]
-        to_cell_1_herb = []
-        to_cell_2_herb = []
-        to_cell_3_herb = []
-        to_cell_4_herb = []
-        to_cell_1_carn = []
-        to_cell_2_carn = []
-        to_cell_3_carn = []
-        to_cell_4_carn = []
-
-        to_cell_herbs = [to_cell_1_herb, to_cell_2_herb, to_cell_3_herb, to_cell_4_herb]
-        to_cell_carns = [to_cell_1_carn, to_cell_2_carn, to_cell_3_carn, to_cell_4_carn]
-
-        for herb in herbs_moving:
-            random.choice(to_cell_herbs).append(herb)
-
-        for carn in carns_moving:
-            #receiving_cell =
-            random.choice(to_cell_carns).receiving_cell.append(carn)
-
-        to_cell_1 = [to_cell_1_herb, to_cell_1_carn]
-        to_cell_2 = [to_cell_2_herb, to_cell_2_carn]
-        to_cell_3 = [to_cell_3_herb, to_cell_3_carn]
-        to_cell_4 = [to_cell_4_herb, to_cell_4_carn]
-
-        return [to_cell_1, to_cell_2, to_cell_3, to_cell_4]
-
-
     def move_animals_to_cell(self, list_of_moving_animals):
         """
         Adds the migrating animals into a new cell
@@ -241,8 +194,6 @@ class Cell:
 
         for carn in carns_moved:
             self.carnivores_pop.append(carn)
-            
-    '''
 
     def reset_already_moved(self):
         """
@@ -276,14 +227,6 @@ class Cell:
             animal.aging()
             animal.fitness()
 
-    """
-    def update_fitness(self):
-        for animal in self.herbivores_pop:
-            animal.fitness()
-        for animal in self.carnivores_pop:
-            animal.fitness()
-    """
-
     def make_animals_lose_weight(self):
         """
         Each year the animal loses weight based on their own weight and eta
@@ -299,23 +242,17 @@ class Cell:
         by using the function death_probability. After we need to remove them from the from the
         list of animals
         """
-        self.dead = 0  # for testing
-
         herbs = []
         for herb in self.herbivores_pop:
             herb.death_probability()
             if herb.will_the_animal_die() is False:
                 herbs.append(herb)
-            else:
-                self.dead += 1
 
         carns = []
         for carn in self.carnivores_pop:
             carn.death_probability()
             if carn.will_the_animal_die() is False:
                 carns.append(carn)
-            else:
-                self.dead += 1
 
         self.herbivores_pop = herbs
         self.carnivores_pop = carns
@@ -334,11 +271,8 @@ class Lowland(Cell):
         :param population: list of dictionaries containing animals
         :type population: list
         """
-        super().__init__(population)
-
-    def Habitable(self):
         self.habitable = True
-        return self.habitable
+        super().__init__(population)
 
 
 class Highland(Cell):
@@ -354,11 +288,8 @@ class Highland(Cell):
         :param population: list of dictionaries containing animals
         :type population: list
         """
-        super().__init__(population)
-
-    def Habitable(self):
         self.habitable = True
-        return self.habitable
+        super().__init__(population)
 
 
 class Desert(Cell):
@@ -374,11 +305,8 @@ class Desert(Cell):
         :param population: list of dictionaries containing animals
         :type population: list
         """
-        super().__init__(population)
-
-    def Habitable(self):
         self.habitable = True
-        return self.habitable
+        super().__init__(population)
 
 
 class Water(Cell):
@@ -394,8 +322,5 @@ class Water(Cell):
         :param population: list of dictionaries containing animals
         :type population: list
         """
-        super().__init__(population)
-
-    def Habitable(self):
         self.habitable = False
-        return self.habitable
+        super().__init__(population)
