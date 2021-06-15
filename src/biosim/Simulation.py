@@ -15,14 +15,14 @@ import matplotlib.pyplot as plt
 # import pandas
 # import subprocess
 # import time
-# import os
+import os
 # import textwrap
 
 
 class BioSim:
 
     def __init__(self, island_map, ini_pop, seed,
-                 vis_years=1, ymax_animals=None, cmax_animals=None, hist_specs=None,
+                 vis_years= 1, ymax_animals = None, cmax_animals=None, hist_specs=None,
                  img_dir=None, img_base=None, img_fmt='png', img_years=None, log_file=None):
 
         """
@@ -64,12 +64,24 @@ class BioSim:
         self.island_map_graph.create_map_dict()
 
         self.num_years_simulated = 0
-        if hist_specs is None:
-            self.hist_specs = 1
+
+        img_name = 'figures'
+
+        if img_base is None:
+            if img_dir is not None:
+                self._img_base = os.path.join(img_dir, img_name)
+            else:
+                self._img_base = None   # skal vi gjøre det sånn eller skal vi gi det en base likevel feks os.path.join('..', 'data')
         else:
-            self.hist_specs = hist_specs
+            self._img_base = img_base
+
+        self._img_fmt = img_fmt  #hvis ingenting er skrevet, er png satt til default
+
+        self._img_ctr = 0        #nr på lagret bildet til visualisation
+        self._img_step = 1       # vet ikke hva er enda
 
         self.vis_years = vis_years
+
 
     def set_animal_parameters(self, species, p):
         """
@@ -183,6 +195,7 @@ class BioSim:
 
         # Needs updating on subsequent calls to simulate()
         self.ax2.set_xlim(0, self.num_years + 1)
+        self.ax2.set_ylim(ymax= 50)
 
         # Line graph for herbivores
         line_graph_herb = self.ax2.plot(np.arange(0, self.num_years),
@@ -273,7 +286,11 @@ class BioSim:
         handles, labels = self.ax7.get_legend_handles_labels()
         self.ax7.legend(labels=labels)
 
+
+
+
         plt.pause(0.01)
+        self._save_graphics()
 
     def create_map(self):
         # Each letter has a colour value
@@ -338,5 +355,55 @@ class BioSim:
             num_animals_per_species["Carnivore"] += len(cell.carnivores_pop)
         return num_animals_per_species
 
-    # def make_movie(self):
-    # Create MPEG4 movie from visualization images saved."""
+    def _save_graphics(self):
+        """Saves graphics to file if file name given."""
+
+        if self._img_base is None:
+            return
+
+        plt.savefig('{base}_{num:05d}.{type}'.format(base=self._img_base,
+                                                     num=self._img_ctr,
+                                                     type=self._img_fmt))
+        self._img_ctr += 1
+
+    def make_movie(self, movie_fmt=None):
+        """
+        Creates MPEG4 movie from visualization images saved.
+
+        .. :note:
+            Requires ffmpeg for MP4 and magick for GIF
+
+        The movie is stored as img_base + movie_fmt
+        """
+
+        if self._img_base is None:
+            raise RuntimeError("No filename defined.")
+
+        if movie_fmt is None:
+            movie_fmt = 'mp4'
+
+        if movie_fmt == 'mp4':
+            try:
+                # Parameters chosen according to http://trac.ffmpeg.org/wiki/Encode/H.264,
+                # section "Compatibility"
+                subprocess.check_call([_FFMPEG_BINARY,
+                                       '-i', '{}_%05d.png'.format(self._img_base),
+                                       '-y',
+                                       '-profile:v', 'baseline',
+                                       '-level', '3.0',
+                                       '-pix_fmt', 'yuv420p',
+                                       '{}.{}'.format(self._img_base, movie_fmt)])
+            except subprocess.CalledProcessError as err:
+                raise RuntimeError('ERROR: ffmpeg failed with: {}'.format(err))
+        elif movie_fmt == 'gif':
+            try:
+                subprocess.check_call([_MAGICK_BINARY,
+                                       '-delay', '1',
+                                       '-loop', '0',
+                                       '{}_*.png'.format(self._img_base),
+                                       '{}.{}'.format(self._img_base, movie_fmt)])
+            except subprocess.CalledProcessError as err:
+                raise RuntimeError('ERROR: convert failed with: {}'.format(err))
+        else:
+            raise ValueError('Unknown movie format: ' + movie_fmt)
+
