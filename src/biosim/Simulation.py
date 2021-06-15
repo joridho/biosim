@@ -175,15 +175,8 @@ class BioSim:
     def setup_graphics(self):
 
         self.fig = plt.figure()
-        self.gs = gridspec.GridSpec(ncols=3, nrows=3, width_ratios= [2, 2, 2], height_ratios= [2, 2, 2], figure=self.fig)
+        self.gs = gridspec.GridSpec(ncols=3, nrows=3, figure=self.fig)
         self.create_map()
-        # fig = self.fig
-        #self.ax2 = self.fig.add_subplot(3, 3, 3)  # animal count
-        #self.ax3 = self.fig.add_subplot(3, 3, 4)  # herbivore distribution
-        #self.ax4 = self.fig.add_subplot(3, 3, 6)  # carnivore distribution
-        #self.ax5 = self.fig.add_subplot(3, 3, 7)  # fitness
-        #self.ax6 = self.fig.add_subplot(3, 3, 8)  # age
-        #self.ax7 = self.fig.add_subplot(3, 3, 9)  # weight
 
         # years
         self.axt = self.fig.add_axes([0.4, 0.8, 0.2, 0.2])  # llx, lly, w, h
@@ -194,7 +187,6 @@ class BioSim:
                                  verticalalignment='center',
                                  transform=self.axt.transAxes)
 
-        #self.ax2.axis('off')
         self.ax2 = self.fig.add_subplot(self.gs[0, 2])
         self.ax2.set_title('Animal count')
 
@@ -207,27 +199,23 @@ class BioSim:
                                         np.full(self.num_years, np.nan))
         self.line_graph_line_herb = line_graph_herb[0]
 
-        #self.ax3.axis('off')
+
+
         self.ax3 = self.fig.add_subplot(self.gs[1, 0])
         self.ax3.set_title("Herbivore distribution")
         self.axes_bar = self.fig.add_axes([0.32, 0.4, 0.01, 0.2])
 
-        #self.ax4.axis('off')
         self.ax4 = self.fig.add_subplot(self.gs[1, 2])
         self.ax4.set_title("Carnivore distribution")
         self.axes_bar2 = self.fig.add_axes([0.95, 0.4, 0.01, 0.2])
 
-        #self.ax5.axis('off')
         self.ax5 = self.fig.add_subplot(self.gs[2, 0])
         self.ax5.set_title('fitness')
+        self.ax5.set_ylim(0, 50)
 
-        # AGE
-        #self.ax6.axis('off')
         self.ax6 = self.fig.add_subplot(self.gs[2, 1])
         self.ax6.set_title('age')
 
-        # WEIGHT
-        #self.ax7.axis('off')
         self.ax7 = self.fig.add_subplot(self.gs[2, 2])
         self.ax7.set_title('weight')
         self.fig = self.fig.tight_layout()
@@ -248,7 +236,7 @@ class BioSim:
         # HEAT MAP HERB
         self.heatmap_herb = self.ax3.imshow(
             np.array(self.data_heat_map_herb).reshape(self.x, self.y),
-            extent=[1, self.island_map_graph.x_coord, self.island_map_graph.y_coord, 1], vmin=0,
+            extent=[1, self.x, self.y, 1], vmin=0,
                     vmax=200, cmap='viridis', interpolation="nearest")
 
         plt.colorbar(self.heatmap_herb, cax=self.axes_bar)
@@ -256,7 +244,7 @@ class BioSim:
         # HEAT MAP CARN
         self.heatmap_carn = self.ax4.imshow(
             np.array(self.data_heat_map_carn).reshape(self.x, self.y),
-            extent=[1, self.island_map_graph.x_coord, self.island_map_graph.y_coord, 1], vmin=0,
+            extent=[1, self.x, self.y, 1], vmin=0,
                     vmax=200, cmap='viridis', interpolation="nearest")
 
         plt.colorbar(self.heatmap_carn, cax=self.axes_bar2)
@@ -293,7 +281,7 @@ class BioSim:
 
 
         plt.pause(0.01)
-        self._save_graphics()
+        #self._save_graphics()
 
     def create_map(self):
         # Each letter has a colour value
@@ -313,10 +301,11 @@ class BioSim:
         # shows the island with  water
         self.ax_im.imshow(map_rgb)
         #self.ax_im.axis('off')
-        self.ax_im.set_xticks(range(len(map_rgb[0])))
-        self.ax_im.set_xticklabels(range(1, 1 + len(map_rgb[0])))
-        self.ax_im.set_yticks(range(len(map_rgb)))
-        self.ax_im.set_yticklabels(range(1, 1 + len(map_rgb)))
+        if (len(map_rgb[0])) < 21:
+            self.ax_im.set_xticks(range(len(map_rgb[0])))
+            self.ax_im.set_xticklabels(range(1, 1 + len(map_rgb[0])))
+            self.ax_im.set_yticks(range(len(map_rgb)))
+            self.ax_im.set_yticklabels(range(1, 1 + len(map_rgb)))
 
         # Creates a new coordinate system for the figure
         self.ax_lg = self.fig.add_axes([0.32, 0.71, 0.1, 0.26])  # llx, lly, w, h
@@ -410,8 +399,3 @@ class BioSim:
                 raise RuntimeError('ERROR: convert failed with: {}'.format(err))
         else:
             raise ValueError('Unknown movie format: ' + movie_fmt)
-
-    #def ani(self):
-     #   ani = FuncAnimation(self.fig, self.simulate(self.num_years), frames=500,
-                              #interval=20, blit=True)
-      #  ani.save('biosim.mp4')
