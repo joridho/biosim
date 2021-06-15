@@ -38,7 +38,6 @@ class Animal:
         self.fitness()
         self.already_moved = False
 
-
     @classmethod
     def set_given_parameters(cls, params):
         """
@@ -50,7 +49,6 @@ class Animal:
                 if params[parameter] < 0:
                     raise ValueError('Parameter must be positive')
                 cls.p[parameter] = params[parameter]
-
 
     def aging(self):
         """

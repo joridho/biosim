@@ -6,7 +6,7 @@
 __author__ = 'Christianie Torres'
 __email__ = 'christianie.torres@nmbu.no'
 
-from biosim.Cell import Cell, Lowland, Highland, Desert, Water
+from biosim.Cell import Lowland, Highland, Desert, Water
 from biosim.Animals import Herbivore, Carnivore
 import textwrap
 import random
@@ -214,14 +214,14 @@ class Map_Island:
             for herb in cell.herbs_move:
                 nr = random.choice([0, 1, 2, 3])
                 # self.neighbour_cells[nr].move_to_cell_herb(herb)
-                if self.neighbour_cells[nr].Habitable():
+                if self.neighbour_cells[nr].habitable is True:
                     self.neighbour_cells[nr].herbivores_pop.append(herb)
                     cell.herbivores_pop.remove(herb)
             for carn in cell.carns_move:
                 nr = random.choice([0, 1, 2, 3])
 
                 # self.neighbour_cells[nr].move_to_cell_carn(carn)
-                if self.neighbour_cells[nr].Habitable():
+                if self.neighbour_cells[nr].habitable is True:
                     self.neighbour_cells[nr].carnivores_pop.append(carn)
                     cell.carnivores_pop.remove(carn)
 

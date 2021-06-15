@@ -21,11 +21,11 @@ from biosim.Simulation import BioSim
 
 geogr = """\
             WWWWWWW
-            WDHHDDW
-            WDHLDDW
-            WDDLLDW
-            WHLLLLW
-            WHHHLLW
+            WDDDDDW
+            WDDDDDW
+            WDDDDDW
+            WDDDDDW
+            WDDDDDW
             WWWWWWW"""
 
 ini_herbs = [{'loc': (4, 4),
@@ -42,6 +42,13 @@ ini_carns = [{'loc': (4, 4),
 for seed in range(100, 103):
     sim = BioSim(geogr, ini_herbs, seed=seed,
                  img_dir='results', img_base=f'mono_hc_{seed:05d}', img_years=300)
+
+
+    sim.set_animal_parameters('Herbivore', {'mu': 1, 'omega': 0, 'gamma': 0, 'F': 0,
+                                            'a_half': 1000})
+    sim.set_animal_parameters('Carnivore', {'mu': 1, 'omega': 0, 'gamma': 0, 'F': 0,
+                                            'a_half': 1000})
+
     sim.simulate(50)
     sim.add_population(ini_carns)
     sim.simulate(251)
