@@ -42,7 +42,8 @@ class Animal:
     def set_given_parameters(cls, params):
         """
         Saves new parameters for the different animals for use in Animals class
-        :raise ValueError: if invalid landscape type is given in geography string
+
+        :raises ValueError: if invalid landscape type is given in geography string
         """
         for parameter in params:
             if parameter in cls.p:
