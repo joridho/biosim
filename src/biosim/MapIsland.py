@@ -14,6 +14,7 @@ import random
 
 class Map_Island:
     """A class for the island"""
+
     def __init__(self, island_geo, init_pop):
         """
         Initialize map class with given island geography and initial population
