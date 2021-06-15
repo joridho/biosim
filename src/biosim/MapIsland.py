@@ -113,16 +113,16 @@ class Map_Island:
         :param population: Specifies the new population of one or more cells
         :type population: list of dicts
         """
-        self.new_population = {}
-        for self.pop_info in population:
-            self.new_population[self.pop_info["loc"]] = self.pop_info["pop"]
+        new_population = {}
+        for pop_info in population:
+            new_population[pop_info["loc"]] = pop_info["pop"]
 
-        for self.location, self.population1 in self.new_population.items():
-            for self.animal_info in self.population1:
-                if self.animal_info["species"] == "Carnivore":
-                    self.map[self.location].carnivores_pop.append(Carnivore(self.animal_info))
+        for location, population in new_population.items():
+            for animal_info in population:
+                if animal_info['species'] == "Carnivore":
+                    self.map[location].carnivores_pop.append(Carnivore(animal_info))
                 else:
-                    self.map[self.location].herbivores_pop.append(Herbivore(self.animal_info))
+                    self.map[location].herbivores_pop.append(Herbivore(animal_info))
 
     def create_map_dict(self):
         """
