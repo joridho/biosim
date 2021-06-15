@@ -10,13 +10,15 @@ from biosim.MapIsland import Map_Island
 import random
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
+from matplotlib.animation import FuncAnimation
 # import operator
 # import math
 # import pandas
-# import subprocess
+import subprocess
 # import time
 import os
-# import textwrap
+#import textwrap
 
 
 class BioSim:
@@ -171,14 +173,15 @@ class BioSim:
     def setup_graphics(self):
 
         self.fig = plt.figure()
+        self.gs = gridspec.GridSpec(ncols=3, nrows=3, width_ratios= [2, 2, 2], height_ratios= [2, 2, 2], figure=self.fig)
         self.create_map()
         # fig = self.fig
-        self.ax2 = self.fig.add_subplot(3, 3, 3)  # animal count
-        self.ax3 = self.fig.add_subplot(3, 3, 4)  # herbivore distribution
-        self.ax4 = self.fig.add_subplot(3, 3, 6)  # carnivore distribution
-        self.ax5 = self.fig.add_subplot(3, 3, 7)  # fitness
-        self.ax6 = self.fig.add_subplot(3, 3, 8)  # age
-        self.ax7 = self.fig.add_subplot(3, 3, 9)  # weight
+        #self.ax2 = self.fig.add_subplot(3, 3, 3)  # animal count
+        #self.ax3 = self.fig.add_subplot(3, 3, 4)  # herbivore distribution
+        #self.ax4 = self.fig.add_subplot(3, 3, 6)  # carnivore distribution
+        #self.ax5 = self.fig.add_subplot(3, 3, 7)  # fitness
+        #self.ax6 = self.fig.add_subplot(3, 3, 8)  # age
+        #self.ax7 = self.fig.add_subplot(3, 3, 9)  # weight
 
         # years
         self.axt = self.fig.add_axes([0.4, 0.8, 0.2, 0.2])  # llx, lly, w, h
@@ -189,51 +192,47 @@ class BioSim:
                                  verticalalignment='center',
                                  transform=self.axt.transAxes)
 
-        self.ax2.axis('off')
-        self.ax2 = self.fig.add_axes([0.67, 0.72, 0.28, 0.22])
+        #self.ax2.axis('off')
+        self.ax2 = self.fig.add_subplot(self.gs[0, 2])
         self.ax2.set_title('Animal count')
 
         # Needs updating on subsequent calls to simulate()
-        self.ax2.set_xlim(0, self.num_years + 1)
-        self.ax2.set_ylim(ymax= 50)
+        #self.ax2.set_xlim(0, self.num_years + 1)
+        #self.ax2.set_ylim(ymax= 50)
 
         # Line graph for herbivores
         line_graph_herb = self.ax2.plot(np.arange(0, self.num_years),
                                         np.full(self.num_years, np.nan))
         self.line_graph_line_herb = line_graph_herb[0]
 
-        self.ax3.axis('off')
-        self.ax3 = self.fig.add_axes([0.045, 0.35, 0.3, 0.25])
+        #self.ax3.axis('off')
+        self.ax3 = self.fig.add_subplot(self.gs[1, 0])
         self.ax3.set_title("Herbivore distribution")
-        self.axes_bar = self.fig.add_axes([0.31, 0.35, 0.01, 0.2])
+        self.axes_bar = self.fig.add_axes([0.32, 0.4, 0.01, 0.2])
 
-        self.ax4.axis('off')
-        self.ax4 = self.fig.add_axes([0.67, 0.35, 0.3, 0.26])
+        #self.ax4.axis('off')
+        self.ax4 = self.fig.add_subplot(self.gs[1, 2])
         self.ax4.set_title("Carnivore distribution")
-        self.axes_bar2 = self.fig.add_axes([0.94, 0.35, 0.01, 0.2])
+        self.axes_bar2 = self.fig.add_axes([0.95, 0.4, 0.01, 0.2])
 
-        self.ax5.axis('off')
-        self.ax5 = self.fig.add_axes([0.028, 0.052, 0.28, 0.2])
+        #self.ax5.axis('off')
+        self.ax5 = self.fig.add_subplot(self.gs[2, 0])
         self.ax5.set_title('fitness')
 
         # AGE
-        self.ax6.axis('off')
-        self.ax6 = self.fig.add_axes([0.36, 0.052, 0.28, 0.2])
+        #self.ax6.axis('off')
+        self.ax6 = self.fig.add_subplot(self.gs[2, 1])
         self.ax6.set_title('age')
 
         # WEIGHT
-        self.ax7.axis('off')
-        self.ax7 = self.fig.add_axes([0.7, 0.052, 0.28, 0.2])
+        #self.ax7.axis('off')
+        self.ax7 = self.fig.add_subplot(self.gs[2, 2])
         self.ax7.set_title('weight')
         self.fig = self.fig.tight_layout()
 
     def update_graphics(self):
         self.template = 'Years: %s' % self.num_years_simulated
         self.txt.set_text(self.template.format(0))
-
-        ydata_herb = self.line_graph_line_herb.get_ydata()
-        ydata_herb[self.num_years_simulated] = self.num_animals_per_species["Herbivore"]
-        self.Ntesting = self.line_graph_line_herb.set_ydata(ydata_herb)
 
         self.ax2.clear()
         self.ax2.plot(self.V_year, self.N_herb, 'b', label='herb')
@@ -257,6 +256,7 @@ class BioSim:
             np.array(self.data_heat_map_carn).reshape(self.x, self.y),
             extent=[1, self.island_map_graph.x_coord, self.island_map_graph.y_coord, 1], vmin=0,
                     vmax=200, cmap='viridis', interpolation="nearest")
+
         plt.colorbar(self.heatmap_carn, cax=self.axes_bar2)
 
         # FITNESS
@@ -289,6 +289,7 @@ class BioSim:
 
 
 
+
         plt.pause(0.01)
         self._save_graphics()
 
@@ -304,11 +305,12 @@ class BioSim:
                    for row in self.island_map_graph.geo.splitlines()]
 
         # Adding axes to a empty figure that will be the island
-        self.ax_im = self.fig.add_axes([0.049, 0.71, 0.28, 0.27])  # llx, lly, w, h
+        self.ax_im = self.fig.add_subplot(self.gs[0, 0])  # llx, lly, w, h
+
 
         # shows the island with  water
         self.ax_im.imshow(map_rgb)
-
+        #self.ax_im.axis('off')
         self.ax_im.set_xticks(range(len(map_rgb[0])))
         self.ax_im.set_xticklabels(range(1, 1 + len(map_rgb[0])))
         self.ax_im.set_yticks(range(len(map_rgb)))
@@ -407,3 +409,7 @@ class BioSim:
         else:
             raise ValueError('Unknown movie format: ' + movie_fmt)
 
+    #def ani(self):
+     #   ani = FuncAnimation(self.fig, self.simulate(self.num_years), frames=500,
+                              #interval=20, blit=True)
+      #  ani.save('biosim.mp4')
