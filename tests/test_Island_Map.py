@@ -178,8 +178,8 @@ def test_add_population_age():
                            'weight': 60}
                           for _ in range(20)]}]
     m = Map_Island(island_geo=geogr, init_pop=ini_herbs)
-    m.add_population(ini_carns)
     m.create_map_dict()
+    m.add_population(ini_carns)
     for carn in m.map[(2, 2)].carnivores_pop:
         assert carn.age == 5
 
