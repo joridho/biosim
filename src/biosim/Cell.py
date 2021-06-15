@@ -18,8 +18,6 @@ class Cell:
     def __init__(self, population):
         random.seed()
         """
-        Repeat given text a given number of times.
-
         :param population: A list with dictionaries
         :param herbivores_pop: a string
         :param carnivores_pop: a string
@@ -67,8 +65,6 @@ class Cell:
         The animals eats available fodder until their appetite is filled.
         The eat_fodder-function from the Herbivore class does this.
         Herbivores eat in a random order, and therefore need to be randomised
-
-        This function can only be used once per year because of the available_fodder_function
         """
         self.available_fodder = self.p['f_max']
         random.shuffle(self.herbivores_pop)
@@ -76,17 +72,6 @@ class Cell:
         for animal in self.herbivores_pop:
             animal.eat_fodder(F_cell=self.available_fodder)
             self.available_fodder -= animal.F_consumption
-
-    def available_herbivores_for_carnivores(self):
-        """
-        Sums of the weight of all the herbivores
-        :return: the total weight of herbivores
-        :rtype: float
-        """
-        herbivores_weight_sum = 0
-        for k in self.herbivores_pop:
-            herbivores_weight_sum += k.weight
-        return herbivores_weight_sum
 
     def feed_carnivores(self):
         """
@@ -105,7 +90,7 @@ class Cell:
                     if herb not in killed:
                         if carn.will_carn_kill(herb) is True:
                             carn.weight_gain_after_eating_herb(herb)
-                            appetite -= herb.weight
+                            weight_of_eaten_herbs += herb.weight
                             killed.append(herb)
 
         for herb in killed:
@@ -208,7 +193,7 @@ class Cell:
     def counting_animals(self):
         """
         A function for counting how many animals there are in the cell.
-        We also need to differentiate between the different animals and provide to
+        We also need to differentiate between the different animals and provide two
         variables for this
         """
         self.N_herb = len(self.herbivores_pop)
@@ -222,10 +207,8 @@ class Cell:
         """
         for animal in self.herbivores_pop:
             animal.aging()
-            animal.fitness()
         for animal in self.carnivores_pop:
             animal.aging()
-            animal.fitness()
 
     def make_animals_lose_weight(self):
         """

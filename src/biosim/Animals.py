@@ -114,11 +114,10 @@ class Animal:
         """
         variable = self.p['gamma'] * self.phi * (n - 1)
         self.newborn_birth_weight = self.birth_weight_function()
-        # this is the weight of the possible newborn
 
         if self.weight < self.p['zeta'] * (self.p['w_birth'] + self.p['sigma_birth']):
             return 0
-        elif self.weight <= self.newborn_birth_weight * self.p['zeta']:  # birth weight to newborn
+        elif self.weight <= self.newborn_birth_weight * self.p['zeta']:
             return 0
         else:
             return min(1, variable)
@@ -240,17 +239,18 @@ class Herbivore(Animal):
 
         :param F_cell: the amount of fodder available in the cell
         :type F_cell: float
+        :Raises ValueError: if there is a nonnegative amount of fodder
         """
         if F_cell >= self.p['F']:
             self.F_consumption = self.p['F']
             self.weight_gain(consumption=self.F_consumption)
             if self.F_consumption < 0:
-                return ValueError('There has to be a nonnegative amount of fodder')
+                raise ValueError('There has to be a nonnegative amount of fodder')
         else:
             self.F_consumption = F_cell
             self.weight_gain(consumption=self.F_consumption)
             if self.F_consumption < 0:
-                return ValueError
+                raise ValueError('There has to be a nonnegative amount of fodder')
 
 
 class Carnivore(Animal):
@@ -283,7 +283,6 @@ class Carnivore(Animal):
         :param properties: dictionary containing species, weight and age
         :type properties: dict
         """
-        # super().__init__(species, weight, age)
         super().__init__(properties)
 
     def probability_kill_herbivore(self, herb):
@@ -304,8 +303,8 @@ class Carnivore(Animal):
 
     def will_carn_kill(self, herb):
         """
-        If the generated number is less than the probability for killing the carnivore will eat the
-        herbivore
+        If the generated number is less than the probability for killing, the carnivore will eat
+        the herbivore
 
         :param herb: the herbivore the carnivore will try to kill
         :type herb: class Herbivore
