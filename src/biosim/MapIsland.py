@@ -217,7 +217,6 @@ class Map_Island:
                 if self.neighbour_cells[nr].Habitable():
                     self.neighbour_cells[nr].herbivores_pop.append(herb)
                     cell.herbivores_pop.remove(herb)
-
             for carn in cell.carns_move:
                 nr = random.choice([0, 1, 2, 3])
 
@@ -227,9 +226,6 @@ class Map_Island:
                     cell.carnivores_pop.remove(carn)
 
             cell.reset_already_moved()
-
-        # for loc, cell in self.map.items():
-        # cell.reset_already_moved()
 
         # AGING
         for cell in self.map.values():
