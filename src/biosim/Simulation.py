@@ -11,6 +11,7 @@ import random
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
+
 from matplotlib.animation import FuncAnimation
 # import operator
 # import math
@@ -292,7 +293,7 @@ class BioSim:
 
 
         plt.pause(0.01)
-        #self._save_graphics()
+        self._save_graphics()
 
     def create_map(self):
         # Each letter has a colour value
@@ -389,7 +390,7 @@ class BioSim:
             try:
                 # Parameters chosen according to http://trac.ffmpeg.org/wiki/Encode/H.264,
                 # section "Compatibility"
-                subprocess.check_call([_FFMPEG_BINARY,
+                subprocess.check_call(['ffmpeg',
                                        '-i', '{}_%05d.png'.format(self._img_base),
                                        '-y',
                                        '-profile:v', 'baseline',
@@ -400,7 +401,7 @@ class BioSim:
                 raise RuntimeError('ERROR: ffmpeg failed with: {}'.format(err))
         elif movie_fmt == 'gif':
             try:
-                subprocess.check_call([_MAGICK_BINARY,
+                subprocess.check_call(['magick',
                                        '-delay', '1',
                                        '-loop', '0',
                                        '{}_*.png'.format(self._img_base),
