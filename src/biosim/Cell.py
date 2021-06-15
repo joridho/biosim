@@ -177,13 +177,13 @@ class Cell:
                 self.carns_move.append(carn)
 
         tot_animals = [self.herbs_move, self.carns_move]
-        return tot_animals # trenger egt ikke å returnere noe
+        return tot_animals
 
-    #def move_animals_to_cell(self, herb):
-     #   if self.Habitable() == True:
-      #      self.herbivores_pop.append(herb)
-            #cell.herbivores_pop.remove(herb)
-       #     return True
+    # def move_animals_to_cell(self, herb):
+    #   if self.Habitable() == True:
+    #      self.herbivores_pop.append(herb)
+    # cell.herbivores_pop.remove(herb)
+    #     return True
     '''
 
     def move_to_random_cell(self, list_of_moving_animals):

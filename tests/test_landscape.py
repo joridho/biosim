@@ -7,18 +7,18 @@ class MyTestCase(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()
 """
-import html.parser
 
 from biosim.Cell import Lowland, Highland, Desert, Water
 from biosim.Animals import Herbivore, Carnivore
-import operator
 import pytest
+
 
 @pytest.fixture
 def reset_parameters():
     Herbivore.p['F'] = 10
     Carnivore.p['F'] = 50
     Lowland.af = 800
+
 
 @pytest.fixture
 def list_herbivores_and_carnivores():
@@ -29,6 +29,7 @@ def list_herbivores_and_carnivores():
             {'species': 'Herbivore', 'weight': 10, 'age': 3},
             {'species': 'Herbivore', 'weight': 60, 'age': 3}]
 
+
 @pytest.fixture
 def list_herbivores():
     return [{'species': 'Herbivore', 'weight': 35, 'age': 5},
@@ -37,6 +38,7 @@ def list_herbivores():
             {'species': 'Herbivore', 'weight': 10, 'age': 3},
             {'species': 'Herbivore', 'weight': 14, 'age': 3},
             {'species': 'Herbivore', 'weight': 13, 'age': 3}]
+
 
 @pytest.fixture
 def list_carnivores():
@@ -47,29 +49,31 @@ def list_carnivores():
             {'species': 'Carnivore', 'weight': 14, 'age': 3},
             {'species': 'Carnivore', 'weight': 13, 'age': 3}]
 
+
 @pytest.fixture
 def list_herbivore_long():
     return [{'species': 'Herbivore', 'weight': 65, 'age': 3},
-             {'species': 'Herbivore', 'weight': 41, 'age': 3},
-             {'species': 'Herbivore', 'weight': 50, 'age': 3},
-             {'species': 'Herbivore', 'weight': 40, 'age': 3},
-             {'species': 'Herbivore', 'weight': 41, 'age': 3},
-             {'species': 'Herbivore', 'weight': 50, 'age': 9},
-             {'species': 'Herbivore', 'weight': 67, 'age': 5},
-             {'species': 'Herbivore', 'weight': 41, 'age': 8},
-             {'species': 'Herbivore', 'weight': 50, 'age': 9}]
+            {'species': 'Herbivore', 'weight': 41, 'age': 3},
+            {'species': 'Herbivore', 'weight': 50, 'age': 3},
+            {'species': 'Herbivore', 'weight': 40, 'age': 3},
+            {'species': 'Herbivore', 'weight': 41, 'age': 3},
+            {'species': 'Herbivore', 'weight': 50, 'age': 9},
+            {'species': 'Herbivore', 'weight': 67, 'age': 5},
+            {'species': 'Herbivore', 'weight': 41, 'age': 8},
+            {'species': 'Herbivore', 'weight': 50, 'age': 9}]
+
 
 @pytest.fixture
 def list_carnivore_long():
     return [{'species': 'Carnivore', 'weight': 65, 'age': 3},
-             {'species': 'Carnivore', 'weight': 41, 'age': 3},
-             {'species': 'Carnivore', 'weight': 50, 'age': 3},
-             {'species': 'Carnivore', 'weight': 40, 'age': 3},
-             {'species': 'Carnivore', 'weight': 41, 'age': 3},
-             {'species': 'Carnivore', 'weight': 50, 'age': 9},
-             {'species': 'Carnivore', 'weight': 67, 'age': 5},
-             {'species': 'Carnivore', 'weight': 41, 'age': 8},
-             {'species': 'Carnivore', 'weight': 50, 'age': 9}]
+            {'species': 'Carnivore', 'weight': 41, 'age': 3},
+            {'species': 'Carnivore', 'weight': 50, 'age': 3},
+            {'species': 'Carnivore', 'weight': 40, 'age': 3},
+            {'species': 'Carnivore', 'weight': 41, 'age': 3},
+            {'species': 'Carnivore', 'weight': 50, 'age': 9},
+            {'species': 'Carnivore', 'weight': 67, 'age': 5},
+            {'species': 'Carnivore', 'weight': 41, 'age': 8},
+            {'species': 'Carnivore', 'weight': 50, 'age': 9}]
 
 
 # tests for initial values:
@@ -94,7 +98,7 @@ def test_water_unhabitable():
     An animal can not enter the water. It is therefore unhabitable.
     """
     w = Water(population={})
-    assert w.Habitable() == False
+    assert w.Habitable() is False
 
 
 # tests for sorting_animals function
@@ -145,7 +149,7 @@ def test_eats_random(list_herbivores):
 
     eaten = 0
     for herb in l.herbivores_pop:
-        if herb.eaten == True:
+        if herb.eaten:
             eaten += 1
 
     assert eaten > 1
@@ -195,7 +199,7 @@ def test_consumption_when_little_fodder(list_herbivores):
 def test_fodder_will_stop_at_zero(list_herbivores):
     """
     When there isn't enough fodder the available fodder should stop at 0 after eating and not
-    become negagtive.
+    become negative.
     """
     l = Lowland(list_herbivores)
     l.p['f_max'] = 51
@@ -418,7 +422,7 @@ def test_criteria_for_birth_fitness_herb():
                             {'species': 'Herbivore', 'weight': 50, 'age': 9}])
     for k in l.herbivores_pop:
         if k.phi == 0:
-            assert k.will_the_animal_give_birth(n=len(l.herbivores_pop)) == False
+            assert k.will_the_animal_give_birth(n=len(l.herbivores_pop)) is False
 
 
 def test_criteria_for_birth_weight_herb():
@@ -431,7 +435,7 @@ def test_criteria_for_birth_weight_herb():
     for k in l.herbivores_pop:
         k.birth_probability(n=len(l.herbivores_pop))
         if k.weight <= k.newborn_birth_weight * k.p['zeta']:
-            assert k.will_the_animal_give_birth(n=len(l.herbivores_pop)) == False
+            assert k.will_the_animal_give_birth(n=len(l.herbivores_pop)) is False
 
 
 def test_criteria_for_birth_prob_herb():
@@ -445,7 +449,7 @@ def test_criteria_for_birth_prob_herb():
     for k in l.herbivores_pop:
         if k.birth_probability(n=len(l.herbivores_pop)) != 0:
             assert k.birth_probability(n=len(l.herbivores_pop)) == k.p['gamma'] * k.phi * (
-                        len(l.herbivores_pop) - 1)
+                    len(l.herbivores_pop) - 1)
 
 
 # Tests for newborn_animals for carns
@@ -497,7 +501,7 @@ def test_criteria_for_birth_fitness_carn():
                             {'species': 'Carnivore', 'weight': 50, 'age': 9}])
     for k in l.carnivores_pop:
         if k.phi == 0:
-            assert k.will_the_animal_give_birth(n=len(l.carnivores_pop)) == False
+            assert k.will_the_animal_give_birth(n=len(l.carnivores_pop)) is False
 
 
 def test_criteria_for_birth_weight_carn():
@@ -510,7 +514,7 @@ def test_criteria_for_birth_weight_carn():
     for k in l.carnivores_pop:
         k.birth_probability(n=len(l.carnivores_pop))
         if k.weight <= k.newborn_birth_weight * k.p['zeta']:
-            assert k.will_the_animal_give_birth(n=len(l.carnivores_pop)) == False
+            assert k.will_the_animal_give_birth(n=len(l.carnivores_pop)) is False
 
 
 def test_criteria_for_birth_prob_carn():
@@ -524,16 +528,16 @@ def test_criteria_for_birth_prob_carn():
     for k in l.carnivores_pop:
         if k.birth_probability(n=len(l.carnivores_pop)) != 0:
             if k.p['gamma'] * k.phi * (len(l.carnivores_pop) - 1) < 1:
-                assert k.birth_probability(n=len(l.carnivores_pop)) == k.p['gamma'] * k.phi * (len(l.carnivores_pop) - 1)
+                assert k.birth_probability(n=len(l.carnivores_pop)) == k.p['gamma'] * k.phi * (
+                        len(l.carnivores_pop) - 1)
             else:
                 assert k.birth_probability(n=len(l.carnivores_pop)) == 1
 
 
-
 # Tests for move_animals_from_cell:
-def test_herbs_removed_from_list(mocker,  list_herbivore_long):
+def test_herbs_removed_from_list(mocker, list_herbivore_long):
     """
-    The animal will move with a probability, when choosing mocker for 0.1 there will definitly some
+    The animal will move with a probability, when choosing mocker for 0.1 there will definitely some
     animals moving. When animals are moving the list will be shorter
     """
     mocker.patch('random.random', return_value=0.1)
@@ -545,7 +549,7 @@ def test_herbs_removed_from_list(mocker,  list_herbivore_long):
 
 def test_carns_removed_from_list(mocker, list_carnivore_long):
     """
-    The animal will move with a probability, when choosing mocker for 0.1 there will definitly some
+    The animal will move with a probability, when choosing mocker for 0.1 there will definitely some
     animals moving. When animals are moving the list will be shorter
     """
     mocker.patch('random.random', return_value=0.1)
@@ -570,6 +574,7 @@ def test_total_moving_animals(mocker, list_carnivore_long, list_herbivore_long):
     assert len(total_moving[0]) == difference_herb
     assert len(total_moving[1]) == difference_carn
 
+
 '''
 # Tests for move_to_random_cell:
 def test_assigned_to_different_cells(list_carnivore_long, list_herbivore_long):
@@ -584,7 +589,7 @@ def test_assigned_to_different_cells(list_carnivore_long, list_herbivore_long):
     assert moving == 2
 '''
 
-
+'''
 # tests for move_animals_to_cell:
 def test_herb_added_to_cell():
     """
@@ -614,6 +619,8 @@ def test_carns_added_to_cell():
     l = Lowland([])
     l.move_animals_to_cell(new_animals)
     assert l.carnivores_pop == new_carnivores
+'''
+
 
 # Tests for reset_already_moved:
 def test_reset_already_moved_herb(list_carnivore_long, list_herbivore_long):
@@ -624,12 +631,8 @@ def test_reset_already_moved_herb(list_carnivore_long, list_herbivore_long):
     l = Lowland(list_herbivore_long + list_carnivore_long)
     total_moving = l.move_animals_from_cell()
 
-    # Reset list for new cell
-    l.herbivores_pop = []
-    l.carnivores_pop = []
-    l.move_animals_to_cell(total_moving)
-    for herb in l.herbivores_pop:
-        assert herb.already_moved == True
+    for herb in total_moving[0]:
+        assert herb.already_moved is True
 
 
 def test_reset_already_moved_carn(list_carnivore_long, list_herbivore_long):
@@ -639,28 +642,20 @@ def test_reset_already_moved_carn(list_carnivore_long, list_herbivore_long):
     """
     l = Lowland(list_herbivore_long + list_carnivore_long)
     total_moving = l.move_animals_from_cell()
+    for carn in total_moving[1]:
+        assert carn.already_moved is True
 
-    # Reset list for new cell
-    l.herbivores_pop = []
-    l.carnivores_pop = []
-    l.move_animals_to_cell(total_moving)
-    for herb in l.carnivores_pop:
-        assert herb.already_moved == True
 
 def test_reset_already_moved(list_carnivore_long, list_herbivore_long):
     """
     Every year we must reset already moved so that they can move again
     """
     l = Lowland(list_herbivore_long + list_carnivore_long)
-    total_moving = l.move_animals_from_cell()
-
-    # Reset list for new cell
-    l.herbivores_pop = []
-    l.carnivores_pop = []
-    l.move_animals_to_cell(total_moving)
+    l.move_animals_from_cell()
     l.reset_already_moved()
     for herb in l.carnivores_pop:
-        assert herb.already_moved == False
+        assert herb.already_moved is False
+
 
 # Tests for counting_animals function
 def test_count_animals_herb():
@@ -738,7 +733,6 @@ def test_fitness_when_aging_carn():
         assert l.carnivores_pop[k].phi < init_fitness[k]
 
 
-
 # Tests for make_animals_lose_weight:
 def test_yearly_weight_loss_herb():
     """
@@ -781,6 +775,7 @@ def test_yearly_weight_loss_carn():
     for k in range(len(l.carnivores_pop)):
         assert l.carnivores_pop[k].weight == init_weight[k] - Carnivore.p['eta'] * init_weight[k]
 
+
 def test_update_fitness_during_weight_loss_carn():
     """
     Every year the animal loses weight and therefore must update the fitness. It becomes less
@@ -793,6 +788,7 @@ def test_update_fitness_during_weight_loss_carn():
     l.make_animals_lose_weight()
     for k in range(len(init_fitness)):
         assert l.carnivores_pop[k].phi < init_fitness[k]
+
 
 # Tests for dead_animals_natural_cause:
 def test_animal_removed_after_death_when_true_herb():

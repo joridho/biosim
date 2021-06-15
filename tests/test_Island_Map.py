@@ -1,12 +1,12 @@
 import unittest
 import pytest
 from biosim.Animals import Herbivore, Carnivore
-from biosim.Cell import Lowland
+from biosim.Cell import Lowland, Highland, Desert, Water
 from biosim.MapIsland import Map_Island
-
 
 if __name__ == '__main__':
     unittest.main()
+
 
 @pytest.fixture
 def island1():
@@ -15,12 +15,11 @@ def island1():
                     WLW
                     WWW"""
     init_pop = [{'loc': (2, 2),
-                  'pop': [{'species': 'Herbivore',
-                           'age': 5,
-                           'weight': 20}
-                          for _ in range(50)]}]
+                 'pop': [{'species': 'Herbivore',
+                          'age': 5,
+                          'weight': 20}
+                         for _ in range(50)]}]
     return Map_Island(island_geo, init_pop)
-
 
 
 # tests for checking_island_boundaries function
@@ -34,10 +33,10 @@ def test_checking_island_boundaries():
                     WLW
                     WWL"""
     init_pop = [{'loc': (2, 2),
-                  'pop': [{'species': 'Herbivore',
-                           'age': 5,
-                           'weight': 20}
-                          for _ in range(50)]}]
+                 'pop': [{'species': 'Herbivore',
+                          'age': 5,
+                          'weight': 20}
+                         for _ in range(50)]}]
     m = Map_Island(island_geo, init_pop)
 
     assert m.check_island_boundaries() == ValueError('Map boundary has to be only "W"')
@@ -53,10 +52,10 @@ def test_check_for_equal_map_lines():
                     WLW
                     WW"""
     init_pop = [{'loc': (2, 2),
-                  'pop': [{'species': 'Herbivore',
-                           'age': 5,
-                           'weight': 20}
-                          for _ in range(50)]}]
+                 'pop': [{'species': 'Herbivore',
+                          'age': 5,
+                          'weight': 20}
+                         for _ in range(50)]}]
     m = Map_Island(island_geo, init_pop)
     assert m.check_for_equal_map_lines() == ValueError
 
@@ -131,6 +130,7 @@ def test_add_population():
     m.create_map_dict()
     assert len(m.map[(2, 2)].carnivores_pop) == 20
 
+
 def test_add_population_age():
     """
     If add_population works correctly the age of all the carnivores should be 5
@@ -180,7 +180,7 @@ def test_neighbours_of_current_cell1(island1):
     In island1 the herbivores are in coordinates (2,2)
     """
     m = island1
-    coordinates = [(1,2),(2,1),(2,3),(3,2)]
+    coordinates = [(1, 2), (2, 1), (2, 3), (3, 2)]
     m.create_map_dict()
     m.neighbours_of_current_cell((2, 2))
     for cell in range(len(m.neighbour_cells)):
@@ -199,24 +199,27 @@ def test_year_cycle_change_weight(island1):
     for k in m.map[(2, 2)].herbivores_pop:
         assert k.weight != 20
 
+
 def test_fodder_in_cell_after_fodder_eaten(mocker, island1):
-    '''
+    """
     Check if make_herbivores eat works in year_cycle by checking if fodder in cell has the right
     amount. During the first year there should be enough fodder for all 50 animals
-    '''
+    """
     mocker.patch('random.random', return_value=1)
     m = island1
     m.create_map_dict()
     m.year_cycle()
-    assert m.map[(2, 2)].available_fodder == 800 - len(m.map[(2, 2)].herbivores_pop) * Herbivore.p['F']
+    assert m.map[(2, 2)].available_fodder == 800 - len(m.map[(2, 2)].herbivores_pop) * Herbivore.p[
+        'F']
 
-def test_year_cycle_weight_change(mocker, island1):
-    '''
+
+def test_year_cycle_weight_change(island1):
+    """
     During year_cycle they eat and gain weight, but later they lose weight again. In the first year
     they gain F * beta, and later lose current weight * eta
-    Since they all initially weigh 20, there will be no procreation, and therefor that will not
+    Since they all initially weigh 20, there will be no procreation, and therefore that will not
     affect the weight
-    '''
+    """
     m = island1
     m.create_map_dict()
     current_weight = []
@@ -309,7 +312,7 @@ def test_year_cycle_newborn_animals(mocker):
                  'pop': [{'species': 'Herbivore',
                           'age': 5,
                           'weight': 60}
-                          for _ in range(50)]}]
+                         for _ in range(50)]}]
     m = Map_Island(island_geo, init_pop)
     m.create_map_dict()
     init_amount = len(m.map[(2, 2)].herbivores_pop)
@@ -367,7 +370,7 @@ def test_migration(mocker):
     m.create_map_dict()
     mocker.patch('random.choice', return_value=m.map[(3, 2)])
     m.year_cycle()
-    #assert len(m.map[(3, 2)].herbivores_pop) != 0
+    # assert len(m.map[(3, 2)].herbivores_pop) != 0
     assert m.neighbour_cells == 2
 
 
@@ -395,7 +398,6 @@ def test_migration_when_water(mocker):
     assert len(m.map[(2, 2)].herbivores_pop) == init_pop
 
 
-
 def test_age(island1):
     """
     Will the animals age in accordance with the year?
@@ -406,6 +408,7 @@ def test_age(island1):
     m.year_cycle()
     for k in m.map[(2, 2)].herbivores_pop:
         assert k.age == 6
+
 
 def test_remove_dead_animals(mocker, island1):
     """
@@ -424,9 +427,3 @@ def test_noe(island1):
     m = island1
     m.create_map_dict()
     assert m.map[(2, 2)] == m.population[(2, 2)]['species']
-
-
-
-
-
-

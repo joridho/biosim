@@ -42,21 +42,21 @@ class Map_Island:
                 for cell_type in self.lines_map[self.line_nr]:
                     if cell_type != "W":
                         raise ValueError("Map boundary has to be only 'W'")
-                    #else:
+                    # else:
                     #   return True
             elif self.line_nr == (len(self.lines_map) - 1):
                 for cell_type in self.lines_map[self.line_nr]:
                     if cell_type != "W":
                         raise ValueError("Map boundary has to be only 'W'")
-                    #else:
+                    # else:
                     #    return True
             else:
                 if self.lines_map[self.line_nr][0] != "W":
                     raise ValueError("Map boundary has to be only 'W'")
                 elif self.lines_map[self.line_nr][-1] != "W":
                     raise ValueError("Map boundary has to be only 'W'")
-                #else:
-                    #return True
+                # else:
+                # return True
 
     def check_for_equal_map_lines(self):
         """
@@ -79,7 +79,7 @@ class Map_Island:
         """
         self.check_island_boundaries()
         self.check_for_equal_map_lines()
-        #self.letter_count = 0
+        # self.letter_count = 0
         self.geo.splitlines()
 
         self.y_coord = 1
@@ -89,7 +89,7 @@ class Map_Island:
                 self.geography[(self.x_coord, self.y_coord)] = cell_type
                 if len(list(line)) > self.x_coord:
                     self.x_coord += 1
-                    #self.letter_count += 1
+                    # self.letter_count += 1
             if len(self.geo.splitlines()) > self.y_coord:
                 self.y_coord += 1
 
@@ -108,7 +108,7 @@ class Map_Island:
         """
         Creates a dictionary with the new population.
 
-        Lates the dictionary is added to the map dictionary
+        Next the dictionary is added to the map dictionary
 
         :param population: Specifies the new population of one or more cells
         :type population: list of dicts
@@ -145,7 +145,7 @@ class Map_Island:
                 if location in self.population.keys():
                     self.map[location] = Highland(self.population[location])
                 else:
-                    self.map[location] = Highland([])  # Har ikke highland enda
+                    self.map[location] = Highland([])
             elif cell_type == "D":
                 if location in self.population.keys():
                     self.map[location] = Desert(self.population[location])
@@ -156,7 +156,7 @@ class Map_Island:
             else:
                 raise ValueError(f"Invalid landscape type {cell_type}")
 
-    def neighbours_of_current_cell(self, current_coordinates):  # Hva skal input være her?
+    def neighbours_of_current_cell(self, current_coordinates):
         """
         Finds all neighbouring coordinates of a given cell. Checks the landscape type of each
         coordinate. The neighbour switch landscape types an animal can move to, are returned.
@@ -181,7 +181,7 @@ class Map_Island:
             else:
                 return 
         '''
-        #return self.neighbour_cells
+        # return self.neighbour_cells
 
     def year_cycle(self):
         """
@@ -209,39 +209,28 @@ class Map_Island:
 
         # MIGRATION
         for loc, cell in self.map.items():
-            self.neighbours_of_current_cell(loc) 
+            self.neighbours_of_current_cell(loc)
             cell.move_animals_from_cell()
             for herb in cell.herbs_move:
                 nr = random.choice(range(len(self.neighbour_cells)))
-                #self.neighbour_cells[nr].move_to_cell_herb(herb)
+                # self.neighbour_cells[nr].move_to_cell_herb(herb)
 
-                if self.neighbour_cells[nr].Habitable() == True:
+                if self.neighbour_cells[nr].Habitable():
                     self.neighbour_cells[nr].herbivores_pop.append(herb)
                     cell.herbivores_pop.remove(herb)
 
             for carn in cell.carns_move:
                 nr = random.choice([0, 1, 2, 3])
 
-                #self.neighbour_cells[nr].move_to_cell_carn(carn)
-                if self.neighbour_cells[nr].Habitable() == True:
+                # self.neighbour_cells[nr].move_to_cell_carn(carn)
+                if self.neighbour_cells[nr].Habitable():
                     self.neighbour_cells[nr].carnivores_pop.append(carn)
                     cell.carnivores_pop.remove(carn)
 
             cell.reset_already_moved()
 
-        '''
-        # med 'forbedret' migration:
-        for loc, cell in self.map.items():
-            self.neighbours_of_current_cell(loc)
-            total_moving = cell.move_animals_from_cell()
-            receiving_animals = cell.move_to_random_cell(total_moving)
-            for migration_list in receiving_animals:
-                cell.move_to_random_cell(cell.move_animals_from_cell())
-                self.arrived_cell.move_animals_to_cell(migration_list)
-        '''
-
         # for loc, cell in self.map.items():
-            # cell.reset_already_moved()
+        # cell.reset_already_moved()
 
         # AGING
         for cell in self.map.values():

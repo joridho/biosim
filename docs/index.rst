@@ -5,6 +5,13 @@
 
 Welcome to biosim's documentation!
 ==================================
+This is a simulation of an island including
+ * Herbivores
+ * Carnivores
+ * Several landscapes
+ * An Island
+
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:

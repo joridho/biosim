@@ -21,11 +21,11 @@ from biosim.Simulation import BioSim
 
 geogr = """\
             WWWWWWW
-            WDDDDDW
-            WDDDDDW
-            WDDDDDW
-            WDDDDDW
-            WDDDDDW
+            WDHHDDW
+            WDHLDDW
+            WDDLLDW
+            WHLLLLW
+            WHHHLLW
             WWWWWWW"""
 
 ini_herbs = [{'loc': (4, 4),
