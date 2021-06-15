@@ -11,10 +11,11 @@ __author__ = 'Hans Ekkehard Plesser, NMBU'
 import textwrap
 from biosim.Simulation import BioSim
 
-geogr = """WWW
-           WLW
-           WWW"""
-geogr = textwrap.dedent(geogr)
+
+geogr = """\
+            WWW
+            WLW
+            WWW"""
 
 ini_herbs = [{'loc': (2, 2),
               'pop': [{'species': 'Herbivore',
