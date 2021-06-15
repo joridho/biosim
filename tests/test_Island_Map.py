@@ -153,10 +153,12 @@ def test_add_population():
                            'weight': 60}
                           for _ in range(20)]}]
     m = Map_Island(island_geo=geogr, init_pop=ini_herbs)
-    m.add_population(ini_carns)
     m.create_map_dict()
+    m.add_population(ini_carns)
+    #m.create_map_dict()
+    #assert
     for cell in m.map.values():
-        assert cell.carnivores_pop == 20
+       assert cell.carnivores_pop == 20
 
 def test_add_population_age():
     """

@@ -117,7 +117,7 @@ class Map_Island:
         for pop_info in population:
             self.new_population[pop_info["loc"]] = pop_info["pop"]
 
-        for location, population in new_population.items():
+        for location, population in self.new_population.items():
             for animal_info in population:
                 if animal_info["species"] == "Carnivore":
                     self.map[location].carnivores_pop.append(Carnivore(animal_info))
