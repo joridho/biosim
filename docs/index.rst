@@ -26,9 +26,6 @@ In the simulation module we simulate the whole island,
 including the visualisation.
 
 Comments on code
- * The tests could have had better coverage. We believed
-   we had good coverage, until we tested with  tox. By then
-   there was no time to fix it.
  * We are aware of the carnivores dying out during every
    simulation, but we did not find a solution to that
    problem before the deadline. We suspect it has something
