@@ -157,3 +157,9 @@ def test_big_island(eg_sim):
     """
     b = eg_sim
     assert b.num_animals == 250
+
+
+
+
+
+
