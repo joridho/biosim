@@ -96,6 +96,16 @@ class BioSim:
               self.cmax_carn = cmax_animals['Carnivore']
               self.cmax_herb = cmax_animals['Herbivore']
 
+        # if histspecs None
+        # ymax
+        # logfile
+        # img_years
+        # hvor sette vis years
+        # makemovie treigere
+        # koordinatsystem ikke komme flere ganger
+        # rydding + finpussing
+
+
     def set_animal_parameters(self, species, p):
         """
         Set parameters for animal species.
@@ -209,7 +219,6 @@ class BioSim:
 
         self.ax5 = self.fig.add_subplot(self.gs[2, 0])
         self.ax5.set_title('fitness')
-        self.ax5.set_ylim(0, 50)
 
         self.ax6 = self.fig.add_subplot(self.gs[2, 1])
         self.ax6.set_title('age')
@@ -231,7 +240,7 @@ class BioSim:
         self.x = self.island_map_graph.x_coord
         self.y = self.island_map_graph.y_coord
 
-        # HEAT MAP HERB   # samme for carnivore, men 50 istedet
+        # HEAT MAP HERB
 
         self.heatmap_herb = self.ax3.imshow(
             np.array(self.data_heat_map_herb).reshape(self.x, self.y),
@@ -300,7 +309,6 @@ class BioSim:
 
         # shows the island with  water
         self.ax_im.imshow(map_rgb)
-        # self.ax_im.axis('off')
         if (len(map_rgb[0])) < 21:
             self.ax_im.set_xticks(range(len(map_rgb[0])))
             self.ax_im.set_xticklabels(range(1, 1 + len(map_rgb[0])))
@@ -377,8 +385,6 @@ class BioSim:
 
         if movie_fmt == 'mp4':
             try:
-                # Parameters chosen according to http://trac.ffmpeg.org/wiki/Encode/H.264,
-                # section "Compatibility"
                 subprocess.check_call(['ffmpeg',
                                        '-i', '{}_%05d.png'.format(self._img_base),
                                        '-y',
