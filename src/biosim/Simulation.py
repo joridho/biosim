@@ -92,10 +92,6 @@ class BioSim:
         else:
             self.hist_specs = hist_specs
 
-        # makemovie treigere
-        # koordinatsystem ikke komme flere ganger
-        # rydding + finpussing (fjerne kommentarer, innhakk, mellomrom, endre variabelnavn, ikke så mye self, dobbeltsjekke vis years)
-
     def set_animal_parameters(self, species, p):
         """
         Set parameters for animal species.
