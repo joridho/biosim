@@ -11,18 +11,8 @@ import random
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
-
-from matplotlib.animation import FuncAnimation
-# import operator
-# import math
-# import pandas
 import subprocess
-# import time
 import os
-
-
-# import textwrap
-
 
 class BioSim:
     """ A class for BioSIm that simulates the dynamics of the island and creates graphics"""
@@ -75,13 +65,13 @@ class BioSim:
 
         if img_base is None:
             if img_dir is not None:
-                self._img_base = os.path.join(img_dir, img_name)
+                self.img_base = os.path.join(img_dir, img_name)
             else:
-                self._img_base = None  # skal vi gjøre det sånn eller skal vi gi det en base likevel feks os.path.join('..', 'data')
+                self.img_base = None  # skal vi gjøre det sånn eller skal vi gi det en base likevel feks os.path.join('..', 'data')
         else:
-            self._img_base = img_base
+            self.img_base = img_base
 
-        self._img_fmt = img_fmt  # hvis ingenting er skrevet, er png satt til default
+        self.img_fmt = img_fmt  # hvis ingenting er skrevet, er png satt til default
 
         self._img_ctr = 0  # nr på lagret bildet til visualisation
         self._img_step = 1  # vet ikke hva er enda
