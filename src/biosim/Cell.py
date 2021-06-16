@@ -18,8 +18,6 @@ class Cell:
     def __init__(self, population):
         random.seed()
         """
-        Repeat given text a given number of times.
-
         :param population: A list with dictionaries
         :param herbivores_pop: a string
         :param carnivores_pop: a string
@@ -29,13 +27,15 @@ class Cell:
 
         self.herbivores_pop = []
         self.carnivores_pop = []
+        self.N_herb = len(self.herbivores_pop)
+        self.N_carn = len(self.carnivores_pop)
         for animal_info in population:
             if animal_info['species'] == 'Herbivore':
                 self.herbivores_pop.append(Herbivore(animal_info))
             else:
                 self.carnivores_pop.append(Carnivore(animal_info))
 
-        self.af = self.p['f_max']
+        self.available_fodder = self.p['f_max']
 
     @classmethod
     def set_given_parameters(cls, params):
@@ -44,6 +44,8 @@ class Cell:
         """
         for parameter in params:
             if parameter in cls.p:
+                if params[parameter] < 0:
+                    raise ValueError('Parameter must be positive')
                 cls.p[parameter] = params[parameter]
 
     def sorting_animals(self):
@@ -63,26 +65,13 @@ class Cell:
         The animals eats available fodder until their appetite is filled.
         The eat_fodder-function from the Herbivore class does this.
         Herbivores eat in a random order, and therefore need to be randomised
-
-        This function can only be used once per year because of the available_fodder_function
         """
-        self.af = self.p['f_max']
+        self.available_fodder = self.p['f_max']
         random.shuffle(self.herbivores_pop)
 
         for animal in self.herbivores_pop:
-            animal.eat_fodder(F_cell=self.af)  # make the herbivore eat
-            self.af -= animal.F_consumption  # change the amount of fodder in the cell
-
-    def available_herbivores_for_carnivores(self):
-        """
-        Sums of the weight of all the herbivores
-        :return: the total weight of herbivores
-        :rtype: float
-        """
-        self.herbivores_weight_sum = 0
-        for k in self.herbivores_pop:
-            self.herbivores_weight_sum += k.weight
-        return self.herbivores_weight_sum
+            animal.eat_fodder(F_cell=self.available_fodder)
+            self.available_fodder -= animal.F_consumption
 
     def feed_carnivores(self):
         """
@@ -93,19 +82,15 @@ class Cell:
         """
         self.sorting_animals()
         killed = []
-        # sum_weight_herbs = self.available_herbivores_for_carnivores()
-        # consumed = 0
         for carn in self.carnivores_pop:
             appetite = carn.p['F']
             weight_of_eaten_herbs = 0
             for herb in self.herbivores_pop:
-                # if herb.weight <= appetite:
                 if weight_of_eaten_herbs < appetite:
                     if herb not in killed:
                         if carn.will_carn_kill(herb) is True:
                             carn.weight_gain_after_eating_herb(herb)
-                            # weight_of_eaten_herbs += herb.weight
-                            appetite -= herb.weight
+                            weight_of_eaten_herbs += herb.weight
                             killed.append(herb)
 
         for herb in killed:
@@ -166,7 +151,6 @@ class Cell:
             if herb.move_single_animal():
                 herb.already_moved = True
                 self.herbs_move.append(herb)
-                self.herbivores_pop.remove(herb)
 
         self.carns_move = []
         carns = self.carnivores_pop
@@ -174,7 +158,6 @@ class Cell:
             if carn.move_single_animal():
                 carn.already_moved = True
                 self.carns_move.append(carn)
-                self.carnivores_pop.remove(carn)
 
         tot_animals = [self.herbs_move, self.carns_move]
         return tot_animals
@@ -207,35 +190,10 @@ class Cell:
         for animal in self.carnivores_pop:
             animal.already_moved = False
 
-        '''
-        list1 = [], list2 = [], list3 = [], list4 = []
-        for herb in self.herbs_move:
-            p = random.choice(list1, list2, list3, list4)
-            if p == list1:
-                list1.append(herb)
-            elif p == list2:
-                list2.append(herb)
-            elif p == list3:
-                list3.append(herb)
-            else:
-                list4.append(herb)
-
-        self.tot_list = [list1, list2, list3, list4]
-        return self.tot_list
-
-        if self.Habitable() == True:
-            for herb in self.herbs_move:
-                self.herbivores_pop.append(herb)
-
-            for carn in self.carns_move:
-                self.carnivores_pop.append(carn)
-    
-        '''
-
     def counting_animals(self):
         """
         A function for counting how many animals there are in the cell.
-        We also need to differentiate between the different animals and provide to
+        We also need to differentiate between the different animals and provide two
         variables for this
         """
         self.N_herb = len(self.herbivores_pop)
@@ -249,18 +207,8 @@ class Cell:
         """
         for animal in self.herbivores_pop:
             animal.aging()
-            animal.fitness()
         for animal in self.carnivores_pop:
             animal.aging()
-            animal.fitness()
-
-    """
-    def update_fitness(self):
-        for animal in self.herbivores_pop:
-            animal.fitness()
-        for animal in self.carnivores_pop:
-            animal.fitness()
-    """
 
     def make_animals_lose_weight(self):
         """
@@ -277,23 +225,17 @@ class Cell:
         by using the function death_probability. After we need to remove them from the from the
         list of animals
         """
-        self.dead = 0  # for testing
-
         herbs = []
         for herb in self.herbivores_pop:
             herb.death_probability()
             if herb.will_the_animal_die() is False:
                 herbs.append(herb)
-            else:
-                self.dead += 1
 
         carns = []
         for carn in self.carnivores_pop:
             carn.death_probability()
             if carn.will_the_animal_die() is False:
                 carns.append(carn)
-            else:
-                self.dead += 1
 
         self.herbivores_pop = herbs
         self.carnivores_pop = carns
@@ -312,11 +254,8 @@ class Lowland(Cell):
         :param population: list of dictionaries containing animals
         :type population: list
         """
-        super().__init__(population)
-
-    def Habitable(self):
         self.habitable = True
-        return self.habitable
+        super().__init__(population)
 
 
 class Highland(Cell):
@@ -332,11 +271,8 @@ class Highland(Cell):
         :param population: list of dictionaries containing animals
         :type population: list
         """
-        super().__init__(population)
-
-    def Habitable(self):
         self.habitable = True
-        return self.habitable
+        super().__init__(population)
 
 
 class Desert(Cell):
@@ -352,11 +288,8 @@ class Desert(Cell):
         :param population: list of dictionaries containing animals
         :type population: list
         """
-        super().__init__(population)
-
-    def Habitable(self):
         self.habitable = True
-        return self.habitable
+        super().__init__(population)
 
 
 class Water(Cell):
@@ -372,8 +305,5 @@ class Water(Cell):
         :param population: list of dictionaries containing animals
         :type population: list
         """
-        super().__init__(population)
-
-    def Habitable(self):
         self.habitable = False
-        return self.habitable
+        super().__init__(population)

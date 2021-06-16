@@ -26,8 +26,26 @@ def test_parameters_herb(age5_weight20):
     Checking if the correct parameters for herbivores is given
         It is given that the w_birth is 8.0 for herbivores
     """
-    h = Herbivore(age5_weight20)
-    assert h.p['w_birth'] == 8.0
+    with pytest.raises(ValueError):
+        p = {
+            "w_birth": -6.0,
+            "sigma_birth": 1.0,
+            "beta": 0.75,
+            "eta": 0.125,
+            "a_half": 40.0,
+            "phi_age": 0.3,
+            "w_half": 4.0,
+            "phi_weight": 0.4,
+            "mu": 0.4,
+            "gamma": 0.8,
+            "zeta": 3.5,
+            "xi": 1.1,
+            "omega": 0.8,
+            "F": 50.0,
+            "DeltaPhiMax": 10.0
+        }
+        h = Herbivore(age5_weight20)
+        h.set_given_parameters(p)
 
 
 def test_parameters_carn(age10_weight40):
@@ -186,39 +204,39 @@ def test_carnivore_weight_loss(age10_weight40):
     assert c.weight == initial_weight - initial_weight * eta
 
 
-def test_update_fitness_during_weight_loss_herb():
+def test_update_fitness_during_weight_loss_herb(age5_weight20):
     """
     When the herbivore loses weight the fitness must be updates.
     It is updated in the weight_loss function.
     The initial fitness should be greater than the new fitness.
     """
-    h = Herbivore({'age': 5, 'weight': 20})
+    h = Herbivore(age5_weight20)
     init_phi = h.phi
     h.weight_loss()
     assert h.phi < init_phi
 
 
-def test_update_fitness_during_weight_loss_carn():
+def test_update_fitness_during_weight_loss_carn(age10_weight40):
     """
     When the carnivore loses weight the fitness must be updates.
     It is updated in the weight_loss function.
     The initial fitness should be greater than the new fitness.
     """
-    c = Carnivore({'age': 10, 'weight': 40})
+    c = Carnivore(age10_weight40)
     init_phi = c.phi
     c.weight_loss()
     assert c.phi < init_phi
 
 
 # Tests for weight_gain function:
-def test_weight_gain_herb():
+def test_weight_gain_herb(age5_weight20):
     """
     When the herbivore eats it gains weight.
     Before it eats we save the initial weight in init_weight.
     We use the weight_gain function to calculate the new weight, where the input is the amount
     it eats. For convenience the amount it eats is the same as the appetite.
     """
-    h = Herbivore({'age': 5, 'weight': 20})
+    h = Herbivore(age5_weight20)
     init_weight = h.weight
     beta = h.p['beta']
     F = h.p['F']
@@ -227,14 +245,14 @@ def test_weight_gain_herb():
     assert h.weight == new_weight
 
 
-def test_weight_gain_carn():
+def test_weight_gain_carn(age10_weight40):
     """
     When the carnivore eats it gains weight.
     Before it eats we save the initial weight in init_weight.
     We use the weight_gain function to calculate the new weight, where the input is the amount
     it eats. For convenience the amount it eats is the same as the appetite.
     """
-    c = Carnivore({'age': 10, 'weight': 40})
+    c = Carnivore(age10_weight40)
     init_weight = c.weight
     beta = c.p['beta']
     F = c.p['F']
@@ -243,25 +261,25 @@ def test_weight_gain_carn():
     assert c.weight == new_weight
 
 
-def test_updated_fitness_during_weight_gain_herb():
+def test_updated_fitness_during_weight_gain_herb(age5_weight20):
     """
     When the herbivore gains weight the fitness must be updates.
     It is updated in the weight_gain function.
     The initial fitness should be lower than the new fitness.
     """
-    h = Herbivore({'age': 5, 'weight': 20})
+    h = Herbivore(age5_weight20)
     init_phi = h.phi
     h.weight_gain(consumption=h.p['F'])
     assert h.phi > init_phi
 
 
-def test_updated_fitness_during_weight_gain_carn():
+def test_updated_fitness_during_weight_gain_carn(age10_weight40):
     """
     When the carnivore gains weight the fitness must be updates.
     It is updated in the weight_gain function.
     The initial fitness should be lower than the new fitness.
     """
-    c = Carnivore({'age': 10, 'weight': 40})
+    c = Carnivore(age10_weight40)
     init_phi = c.phi
     c.weight_gain(consumption=c.p['F'])
     assert c.phi > init_phi
@@ -299,14 +317,14 @@ def test_fitness_when_weight_is_zero():
 
 
 # Tests for birth_probability function:
-def test_no_newborn_when_mother_weighs_too_little_herb():
+def test_no_newborn_when_mother_weighs_too_little_herb(age5_weight20):
     """
     If the mother weighs less than zeta * (w_birth + sigma_birth) the birth will not take place
     For herbivores: zeta * (w_birth * sigma_birth) = 3.5 * (8 - 1.5) = 22.75
     For the test we use weight = 20, since 20 < 22.75
     The input in birth_probability is how many herbivores in the cell.
     """
-    h = Herbivore({'age': 5, 'weight': 20})
+    h = Herbivore(age5_weight20)
     assert h.birth_probability(n=3) == 0
 
 
@@ -321,24 +339,24 @@ def test_no_newborn_when_mother_weighs_too_little_carn():
     assert c.birth_probability(n=3) == 0
 
 
-def test_no_newborn_if_mother_weighs_less_than_newborn_times_zeta_herb():
+def test_no_newborn_if_mother_weighs_less_than_newborn_times_zeta_herb(age5_weight20):
     """
     There will be no birth if the mother weighs less than the newborn times zeta.
     If we run the birth_probability function 50 times, the mother will weigh less at least once
     """
-    h = Herbivore({'age': 5, 'weight': 20})
+    h = Herbivore(age5_weight20)
     for k in range(50):
         h.birth_probability(n=10)
         if h.weight < h.newborn_birth_weight * h.p['zeta']:
             assert h.birth_probability(n=10) == 0
 
 
-def test_no_newborn_if_mother_weighs_less_than_newborn_times_zeta_carn():
+def test_no_newborn_if_mother_weighs_less_than_newborn_times_zeta_carn(age5_weight20):
     """
     There will be no birth if the mother weighs less than the newborn times zeta.
     If we run the birth_probability function 50 times, the mother will weigh less at least once
     """
-    c = Carnivore({'age': 5, 'weight': 20})
+    c = Carnivore(age5_weight20)
     for k in range(50):
         c.birth_probability(n=10)
         if c.weight < c.newborn_birth_weight * c.p['zeta']:
@@ -592,8 +610,9 @@ def test_negative_consumption():
     The herbivore should stop eating if there is no more available fodder. Therefore there
     the eat_fodder function should give an error if the fodder is negative
     """
-    h = Herbivore({'age': 5, 'weight': 50})
-    assert h.eat_fodder(F_cell=-10) == ValueError
+    with pytest.raises(ValueError):
+        h = Herbivore({'age': 5, 'weight': 50})
+        h.eat_fodder(F_cell=-10)
 
 
 def test_to_little_fodder():

@@ -10,6 +10,7 @@ __author__ = 'Hans Ekkehard Plesser, NMBU'
 import textwrap
 from biosim.Simulation import BioSim
 
+
 if __name__ == '__main__':
 
     geogr = """\
@@ -47,14 +48,14 @@ if __name__ == '__main__':
                            'age': 5,
                            'weight': 20}
                           for _ in range(50)]}]
-    for seed in range(100, 103):
-        sim = BioSim(geogr, ini_herbs + ini_carns, seed=seed,
-                     hist_specs={'fitness': {'max': 1.0, 'delta': 0.05},
-                                 'age': {'max': 60.0, 'delta': 2},
-                                 'weight': {'max': 60, 'delta': 2}},
-                     img_dir='results',
-                     img_base='sample')
-        sim.simulate(400)
-        #sim.make_movie()
 
-        input('Press ENTER')
+    sim = BioSim(geogr, ini_herbs + ini_carns, seed=1,
+                 hist_specs={'fitness': {'max': 1.0, 'delta': 0.05},
+                             'age': {'max': 60.0, 'delta': 2},
+                             'weight': {'max': 60, 'delta': 2}},
+                 img_dir='results',
+                 img_base='sample')
+    sim.simulate(400)
+    sim.make_movie()
+
+    input('Press ENTER')
