@@ -19,14 +19,16 @@ from matplotlib.animation import FuncAnimation
 import subprocess
 # import time
 import os
-#import textwrap
+
+
+# import textwrap
 
 
 class BioSim:
     """ A class for BioSIm that simulates the dynamics of the island and creates graphics"""
 
     def __init__(self, island_map, ini_pop, seed,
-                 vis_years= 1, ymax_animals = None, cmax_animals=None, hist_specs=None,
+                 vis_years=1, ymax_animals=None, cmax_animals=None, hist_specs=None,
                  img_dir=None, img_base=None, img_fmt='png', img_years=None, log_file=None):
 
         """
@@ -75,17 +77,16 @@ class BioSim:
             if img_dir is not None:
                 self._img_base = os.path.join(img_dir, img_name)
             else:
-                self._img_base = None   # skal vi gjøre det sånn eller skal vi gi det en base likevel feks os.path.join('..', 'data')
+                self._img_base = None  # skal vi gjøre det sånn eller skal vi gi det en base likevel feks os.path.join('..', 'data')
         else:
             self._img_base = img_base
 
-        self._img_fmt = img_fmt  #hvis ingenting er skrevet, er png satt til default
+        self._img_fmt = img_fmt  # hvis ingenting er skrevet, er png satt til default
 
-        self._img_ctr = 0        #nr på lagret bildet til visualisation
-        self._img_step = 1       # vet ikke hva er enda
+        self._img_ctr = 0  # nr på lagret bildet til visualisation
+        self._img_step = 1  # vet ikke hva er enda
 
         self.vis_years = vis_years
-
 
     def set_animal_parameters(self, species, p):
         """
@@ -132,7 +133,6 @@ class BioSim:
         self.num_years = num_years
         self.setup_graphics()
 
-        # self.set_animal_parameters(species='Herbivore, Carnivore', p=)
         for year in range(num_years):
 
             self.island_map_graph.year_cycle()
@@ -191,15 +191,13 @@ class BioSim:
         self.ax2.set_title('Animal count')
 
         # Needs updating on subsequent calls to simulate()
-        #self.ax2.set_xlim(0, self.num_years + 1)
-        #self.ax2.set_ylim(ymax= 50)
+        # self.ax2.set_xlim(0, self.num_years + 1)
+        # self.ax2.set_ylim(ymax= 50)
 
         # Line graph for herbivores
         line_graph_herb = self.ax2.plot(np.arange(0, self.num_years),
                                         np.full(self.num_years, np.nan))
         self.line_graph_line_herb = line_graph_herb[0]
-
-
 
         self.ax3 = self.fig.add_subplot(self.gs[1, 0])
         self.ax3.set_title("Herbivore distribution")
@@ -237,7 +235,7 @@ class BioSim:
         self.heatmap_herb = self.ax3.imshow(
             np.array(self.data_heat_map_herb).reshape(self.x, self.y),
             extent=[1, self.x, self.y, 1], vmin=0,
-                    vmax=200, cmap='viridis', interpolation="nearest")
+            vmax=200, cmap='viridis', interpolation="nearest")
 
         plt.colorbar(self.heatmap_herb, cax=self.axes_bar)
 
@@ -245,7 +243,7 @@ class BioSim:
         self.heatmap_carn = self.ax4.imshow(
             np.array(self.data_heat_map_carn).reshape(self.x, self.y),
             extent=[1, self.x, self.y, 1], vmin=0,
-                    vmax=200, cmap='viridis', interpolation="nearest")
+            vmax=200, cmap='viridis', interpolation="nearest")
 
         plt.colorbar(self.heatmap_carn, cax=self.axes_bar2)
 
@@ -276,12 +274,8 @@ class BioSim:
         handles, labels = self.ax7.get_legend_handles_labels()
         self.ax7.legend(labels=labels)
 
-
-
-
-
         plt.pause(0.01)
-        #self._save_graphics()
+        # self._save_graphics()
 
     def create_map(self):
         # Each letter has a colour value
@@ -297,10 +291,9 @@ class BioSim:
         # Adding axes to a empty figure that will be the island
         self.ax_im = self.fig.add_subplot(self.gs[0, 0])  # llx, lly, w, h
 
-
         # shows the island with  water
         self.ax_im.imshow(map_rgb)
-        #self.ax_im.axis('off')
+        # self.ax_im.axis('off')
         if (len(map_rgb[0])) < 21:
             self.ax_im.set_xticks(range(len(map_rgb[0])))
             self.ax_im.set_xticklabels(range(1, 1 + len(map_rgb[0])))

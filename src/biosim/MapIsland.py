@@ -19,6 +19,7 @@ class Map_Island:
         """
         Initialize map class with given island geography and initial population
         of the various cells.
+
         :param island_geo: Specifies island geography
         :type island_geo: multiline str
         :param init_pop: Specifies initial population of each cell
@@ -44,21 +45,15 @@ class Map_Island:
                 for cell_type in self.lines_map[self.line_nr]:
                     if cell_type != "W":
                         raise ValueError("Map boundary has to be only 'W'")
-                    # else:
-                    #   return True
             elif self.line_nr == (len(self.lines_map) - 1):
                 for cell_type in self.lines_map[self.line_nr]:
                     if cell_type != "W":
                         raise ValueError("Map boundary has to be only 'W'")
-                    # else:
-                    #    return True
             else:
                 if self.lines_map[self.line_nr][0] != "W":
                     raise ValueError("Map boundary has to be only 'W'")
                 elif self.lines_map[self.line_nr][-1] != "W":
                     raise ValueError("Map boundary has to be only 'W'")
-                # else:
-                # return True
 
     def check_for_equal_map_lines(self):
         """
@@ -81,7 +76,6 @@ class Map_Island:
         """
         self.check_island_boundaries()
         self.check_for_equal_map_lines()
-        # self.letter_count = 0
         self.geo.splitlines()
 
         self.y_coord = 1
@@ -91,7 +85,6 @@ class Map_Island:
                 self.geography[(self.x_coord, self.y_coord)] = cell_type
                 if len(list(line)) > self.x_coord:
                     self.x_coord += 1
-                    # self.letter_count += 1
             if len(self.geo.splitlines()) > self.y_coord:
                 self.y_coord += 1
 
@@ -108,9 +101,8 @@ class Map_Island:
 
     def add_population(self, population):
         """
-        Creates a dictionary with the new population.
-
-        Next the dictionary is added to the map dictionary
+        Creates a dictionary with the new population. Next the dictionary is added to the map
+        dictionary
 
         :param population: Specifies the new population of one or more cells
         :type population: list of dicts
@@ -167,23 +159,12 @@ class Map_Island:
         :return: list of neighbour cells
         :rtype: list
         """
-        # neighbours_of_current_cell = {}
         (x, y) = current_coordinates
         neighbours = [(x - 1, y), (x, y - 1), (x, y + 1), (x + 1, y)]
         self.neighbour_cells = []
         for neighbour_cell in neighbours:
             if neighbour_cell in self.map.keys():
                 self.neighbour_cells.append(self.map[neighbour_cell])
-        '''
-        for cell in self.neighbour_cells:
-            d = random.choice(list)
-            if cell.Habitable() == True:
-                cell.herbivores_pop.extend(d)
-                list.remove(d)
-            else:
-                return 
-        '''
-        # return self.neighbour_cells
 
     def year_cycle(self):
         """
@@ -215,14 +196,12 @@ class Map_Island:
             cell.move_animals_from_cell()
             for herb in cell.herbs_move:
                 nr = random.choice([0, 1, 2, 3])
-                # self.neighbour_cells[nr].move_to_cell_herb(herb)
                 if self.neighbour_cells[nr].habitable is True:
                     self.neighbour_cells[nr].herbivores_pop.append(herb)
                     cell.herbivores_pop.remove(herb)
             for carn in cell.carns_move:
                 nr = random.choice([0, 1, 2, 3])
 
-                # self.neighbour_cells[nr].move_to_cell_carn(carn)
                 if self.neighbour_cells[nr].habitable is True:
                     self.neighbour_cells[nr].carnivores_pop.append(carn)
                     cell.carnivores_pop.remove(carn)
