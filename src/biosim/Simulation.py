@@ -327,12 +327,20 @@ class BioSim:
 
     @property
     def year(self):
-        """Last year simulated."""
+        """
+        Last year simulated.
+        :return: the last year simulated
+        :rtype: float
+        """
         return self.num_years_simulated
 
     @property
     def num_animals(self):
-        """Total number of animals on island."""
+        """
+        Total number of animals on island.
+        :return: total number of animals
+        :rtype: float
+        """
         num_carnivores = 0
         num_herbivores = 0
         for cell in self.island_map_graph.map.values():
@@ -343,7 +351,11 @@ class BioSim:
 
     @property
     def num_animals_per_species(self):
-        """Number of animals per species in island, as dictionary."""
+        """
+        Number of animals per species in island, as dictionary.
+        :return: number of animals per species
+        :rtype: dict
+        """
         num_animals_per_species = {"Herbivore": 0, "Carnivore": 0}
         for cell in self.island_map_graph.map.values():
             num_animals_per_species["Herbivore"] += len(cell.herbivores_pop)
@@ -351,7 +363,10 @@ class BioSim:
         return num_animals_per_species
 
     def _save_graphics(self):
-        """Saves graphics to file if file name given."""
+        """
+        Saves graphics to file if file name given.
+        :return: nothing if img_base is None
+        """
 
         if self._img_base is None:
             return
