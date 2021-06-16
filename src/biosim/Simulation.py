@@ -28,7 +28,7 @@ class BioSim:
     """ A class for BioSIm that simulates the dynamics of the island and creates graphics"""
 
     def __init__(self, island_map, ini_pop, seed,
-                 vis_years=1, ymax_animals=None, cmax_animals=None, hist_specs=None,
+                 vis_years=1, ymax_animals=None, cmax_animals=None, hist_specs = None,
                  img_dir=None, img_base=None, img_fmt='png', img_years=None, log_file=None):
 
         """
@@ -87,6 +87,7 @@ class BioSim:
         self._img_step = 1  # vet ikke hva er enda
 
         self.vis_years = vis_years
+        self.hist_specs = hist_specs
 
     def set_animal_parameters(self, species, p):
         """
@@ -231,25 +232,37 @@ class BioSim:
         self.x = self.island_map_graph.x_coord
         self.y = self.island_map_graph.y_coord
 
-        # HEAT MAP HERB
+        # HEAT MAP HERB   # samme for carnivore, men 50 istedet
+        if cmax is None:
+             self.cmax = 200
+        else:
+              self.cmax = cmax_animals['Herbivore']
+
         self.heatmap_herb = self.ax3.imshow(
             np.array(self.data_heat_map_herb).reshape(self.x, self.y),
             extent=[1, self.x, self.y, 1], vmin=0,
-            vmax=200, cmap='viridis', interpolation="nearest")
+            vmax= self.cmax, cmap='viridis', interpolation="nearest")
 
         plt.colorbar(self.heatmap_herb, cax=self.axes_bar)
 
         # HEAT MAP CARN
+        if cmax is None:
+             self.cmax = 50
+        else:
+              self.cmax = cmax_animals['Carnivore']
+
         self.heatmap_carn = self.ax4.imshow(
             np.array(self.data_heat_map_carn).reshape(self.x, self.y),
             extent=[1, self.x, self.y, 1], vmin=0,
-            vmax=200, cmap='viridis', interpolation="nearest")
+            vmax=50, cmap='viridis', interpolation="nearest")
 
         plt.colorbar(self.heatmap_carn, cax=self.axes_bar2)
 
         # FITNESS
         self.ax5.clear()
-        self.ax5.hist(self.phi_array_herb, bins=20, label='phi herbs', histtype='step',
+        bins_fit = int(self.hist_specs['fitness']['max']/self.hist_specs['fitness']['delta'])
+        range = (0,self.hist_specs['fitness']['max'])
+        self.ax5.hist(self.phi_array_herb, bins= bins_fit, range = range, label='phi herbs', histtype='step',
                       edgecolor='b')
         self.ax5.hist(self.phi_array_carn, bins=20, label='phi carns', histtype='step',
                       edgecolor='r')
@@ -258,18 +271,22 @@ class BioSim:
 
         # AGE
         self.ax6.clear()
-        self.ax6.hist(self.age_array_herb, bins=20, label='age herbs', histtype='step',
+        bins_fit = int(self.hist_specs['age']['max']/self.hist_specs['age']['delta'])
+        range = (0,self.hist_specs['age']['max'])
+        self.ax6.hist(self.age_array_herb, bins= bins_fit, range = range, label='age herbs', histtype='step',
                       edgecolor='b')
-        self.ax6.hist(self.age_array_carn, bins=20, label='age carns', histtype='step',
+        self.ax6.hist(self.age_array_carn, bins= bins_fit, range = range, label='age carns', histtype='step',
                       edgecolor='r')
         handles, labels = self.ax6.get_legend_handles_labels()
         self.ax6.legend(handles=handles, labels=labels)
 
         # WEIGHT
         self.ax7.clear()
-        self.ax7.hist(self.weight_array_herb, bins=20, label='weight herbs', histtype='step',
+        bins_fit = int(self.hist_specs['weight']['max']/self.hist_specs['weight']['delta'])
+        range = (0,self.hist_specs['weight']['max'])
+        self.ax7.hist(self.weight_array_herb, bins= bins_fit, range = range, label='weight herbs', histtype='step',
                       edgecolor='b')
-        self.ax7.hist(self.weight_array_carn, bins=20, label='weight carns', histtype='step',
+        self.ax7.hist(self.weight_array_carn, bins=bins_fit, range = range, label='weight carns', histtype='step',
                       edgecolor='r')
         handles, labels = self.ax7.get_legend_handles_labels()
         self.ax7.legend(labels=labels)
