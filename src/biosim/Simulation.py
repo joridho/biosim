@@ -67,13 +67,13 @@ class BioSim:
             if img_dir is not None:
                 self.img_base = os.path.join(img_dir, img_name)
             else:
-                self.img_base = None  # skal vi gjøre det sånn eller skal vi gi det en base likevel feks os.path.join('..', 'data')
+                self.img_base = None
         else:
             self.img_base = img_base
 
-        self.img_fmt = img_fmt  # hvis ingenting er skrevet, er png satt til default
+        self.img_fmt = img_fmt
 
-        self.img_ctr = 0  # nr på lagret bildet til visualisation
+        self.img_ctr = 0
 
         self.vis_years = vis_years
         self.hist_specs = hist_specs
