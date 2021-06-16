@@ -77,7 +77,6 @@ class BioSim:
         self.img_ctr = 0
 
         self.vis_years = vis_years
-        self.hist_specs = hist_specs
 
         if cmax_animals is None:
             self.cmax_carn = 50
@@ -176,7 +175,9 @@ class BioSim:
         print('Number of simulated years:', number_of_simulated_years)
 
     def setup_graphics(self):
-
+        """
+        Sets up the graphics of the island
+        """
         self.fig = plt.figure()
         self.gs = gridspec.GridSpec(ncols=3, nrows=3, figure=self.fig)
         self.create_map()
@@ -212,6 +213,9 @@ class BioSim:
         self.fig = self.fig.tight_layout()
 
     def update_graphics(self):
+        """
+        Updates the graphics of the island
+        """
         if self.vis_years > 0:
             if self.num_years_simulated % self.vis_years == 0:
                 self.template = 'Years: %s' % self.num_years_simulated
@@ -290,6 +294,9 @@ class BioSim:
                     self._save_graphics()
 
     def create_map(self):
+        """
+        Creates a graphic map of the island
+        """
         # Each letter has a colour value
         #                  R    G    B
         rgb_value = {'W': (0.0, 0.0, 1.0),  # blue
