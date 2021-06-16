@@ -32,7 +32,7 @@ Comments on code
  * We are aware of the carnivores dying out during every
    simulation, but we did not find a solution to that
    problem before the deadline. We suspect it has something
-   to do with the carnivores eating.
+   to do with the carnivores eating the herbivores.
  * When simulating with just herbivores in a single cell,
    the herbivore population does not reach 200, as it should.
    We are yet to find the source of that problem.

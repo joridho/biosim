@@ -13,7 +13,7 @@ from biosim.Animals import Herbivore, Carnivore
 import pytest
 
 
-@pytest.fixture
+@pytest.fixture(autouse=True)
 def reset_parameters():
     Herbivore.p['F'] = 10
     Carnivore.p['F'] = 50
@@ -201,6 +201,7 @@ def test_consumption_when_little_fodder(list_herbivores):
     l = Lowland(list_herbivores)
     l.p['f_max'] = 8
     l.make_herbivores_eat()
+    l.p['f_max'] = 800
     assert l.herbivores_pop[0].F_consumption == 8
 
 
@@ -212,6 +213,7 @@ def test_fodder_will_stop_at_zero(list_herbivores):
     l = Lowland(list_herbivores)
     l.p['f_max'] = 51
     l.make_herbivores_eat()
+    l.p['f_max'] = 800
     assert l.available_fodder == 0
 
 
@@ -242,17 +244,6 @@ def test_fitness_change_after_eating(list_herbivores):
         assert init_fitness[k] < fitness_after_eating[k]
 
 
-# Tests for available_herbivores_for_carnivores function
-def test_available_herbivores(list_herbivores):
-    """
-    The available food for carnivores is the weight of the available herbivores
-    """
-    l = Lowland(list_herbivores)
-    weight = 0
-    for k in l.herbivores_pop:
-        weight += k.weight
-    assert l.available_herbivores_for_carnivores() == weight
-
 
 # Tests for feed_carnivores_function
 def test_carn_appetite(list_herbivores_and_carnivores):
@@ -278,6 +269,8 @@ def test_weakest_herb_eaten_first(mocker, list_herbivores_and_carnivores):
     for k in range(len(l.carnivores_pop)):
         l.carnivores_pop[k].p['F'] = weakest_herb.weight + 1
     l.feed_carnivores()
+    for k in range(len(l.carnivores_pop)):
+        l.carnivores_pop[k].p['F'] = 50
     assert weakest_herb not in l.herbivores_pop
 
 
