@@ -25,6 +25,19 @@ that happens on the island during a year.
 In the simulation module we simulate the whole island,
 including the visualisation.
 
+Comments on code
+ * The tests could have had better coverage. We believed
+   we had good coverage, until we tested with  tox. By then
+   there was no time to fix it.
+ * We are aware of the carnivores dying out during every
+   simulation, but we did not find a solution to that
+   problem before the deadline. We suspect it has something
+   to do with the carnivores eating.
+ * When simulating with just herbivores in a single cell,
+   the herbivore population does not reach 200, as it should.
+   We are yet to find the source of that problem.
+
+
 
 .. toctree::
    :maxdepth: 2
