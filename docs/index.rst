@@ -11,6 +11,20 @@ This is a simulation of an island including
  * Several landscapes
  * An island
 
+The animals module creates herbivores and carnivores.
+
+The cell module creates cells, consisting of lowland,
+highland, desert and water. In the cell module we also
+include what happens in the cell, eg. feeding and
+procreation.
+
+In the MapIsland module we create the island and put
+together all the cells. In addition it simulates everything
+that happens on the island during a year.
+
+In the simulation module we simulate the whole island,
+including the visualisation.
+
 
 .. toctree::
    :maxdepth: 2
