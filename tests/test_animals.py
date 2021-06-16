@@ -610,8 +610,9 @@ def test_negative_consumption():
     The herbivore should stop eating if there is no more available fodder. Therefore there
     the eat_fodder function should give an error if the fodder is negative
     """
-    h = Herbivore({'age': 5, 'weight': 50})
-    assert h.eat_fodder(F_cell=-10) == ValueError
+    with pytest.raises(ValueError):
+        h = Herbivore({'age': 5, 'weight': 50})
+        h.eat_fodder(F_cell=-10)
 
 
 def test_to_little_fodder():
