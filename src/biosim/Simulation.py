@@ -73,8 +73,7 @@ class BioSim:
 
         self.img_fmt = img_fmt  # hvis ingenting er skrevet, er png satt til default
 
-        self._img_ctr = 0  # nr på lagret bildet til visualisation
-        self._img_step = 1  # vet ikke hva er enda
+        self.img_ctr = 0  # nr på lagret bildet til visualisation
 
         self.vis_years = vis_years
         self.hist_specs = hist_specs
@@ -368,13 +367,13 @@ class BioSim:
         :return: nothing if img_base is None
         """
 
-        if self._img_base is None:
+        if self.img_base is None:
             return
 
-        plt.savefig('{base}_{num:05d}.{type}'.format(base=self._img_base,
-                                                     num=self._img_ctr,
-                                                     type=self._img_fmt))
-        self._img_ctr += 1
+        plt.savefig('{base}_{num:05d}.{type}'.format(base=self.img_base,
+                                                     num=self.img_ctr,
+                                                     type=self.img_fmt))
+        self.img_ctr += 1
 
     def make_movie(self, movie_fmt=None):
         """
@@ -386,7 +385,7 @@ class BioSim:
         The movie is stored as img_base + movie_fmt
         """
 
-        if self._img_base is None:
+        if self.img_base is None:
             raise RuntimeError("No filename defined.")
 
         if movie_fmt is None:
@@ -395,12 +394,12 @@ class BioSim:
         if movie_fmt == 'mp4':
             try:
                 subprocess.check_call(['ffmpeg',
-                                       '-i', '{}_%05d.png'.format(self._img_base),
+                                       '-i', '{}_%05d.png'.format(self.img_base),
                                        '-y',
                                        '-profile:v', 'baseline',
                                        '-level', '3.0',
                                        '-pix_fmt', 'yuv420p',
-                                       '{}.{}'.format(self._img_base, movie_fmt)])
+                                       '{}.{}'.format(self.img_base, movie_fmt)])
             except subprocess.CalledProcessError as err:
                 raise RuntimeError('ERROR: ffmpeg failed with: {}'.format(err))
         elif movie_fmt == 'gif':
@@ -408,8 +407,8 @@ class BioSim:
                 subprocess.check_call(['magick',
                                        '-delay', '1',
                                        '-loop', '0',
-                                       '{}_*.png'.format(self._img_base),
-                                       '{}.{}'.format(self._img_base, movie_fmt)])
+                                       '{}_*.png'.format(self.img_base),
+                                       '{}.{}'.format(self.img_base, movie_fmt)])
             except subprocess.CalledProcessError as err:
                 raise RuntimeError('ERROR: convert failed with: {}'.format(err))
         else:
