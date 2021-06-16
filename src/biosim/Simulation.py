@@ -89,6 +89,13 @@ class BioSim:
         self.vis_years = vis_years
         self.hist_specs = hist_specs
 
+        if cmax_animals is None:
+             self.cmax_carn = 50
+             self.cmax_herb = 200
+        else:
+              self.cmax_carn = cmax_animals['Carnivore']
+              self.cmax_herb = cmax_animals['Herbivore']
+
     def set_animal_parameters(self, species, p):
         """
         Set parameters for animal species.
@@ -191,14 +198,6 @@ class BioSim:
         self.ax2 = self.fig.add_subplot(self.gs[0, 2])
         self.ax2.set_title('Animal count')
 
-        # Needs updating on subsequent calls to simulate()
-        # self.ax2.set_xlim(0, self.num_years + 1)
-        # self.ax2.set_ylim(ymax= 50)
-
-        # Line graph for herbivores
-        line_graph_herb = self.ax2.plot(np.arange(0, self.num_years),
-                                        np.full(self.num_years, np.nan))
-        self.line_graph_line_herb = line_graph_herb[0]
 
         self.ax3 = self.fig.add_subplot(self.gs[1, 0])
         self.ax3.set_title("Herbivore distribution")
@@ -233,60 +232,51 @@ class BioSim:
         self.y = self.island_map_graph.y_coord
 
         # HEAT MAP HERB   # samme for carnivore, men 50 istedet
-        if cmax is None:
-             self.cmax = 200
-        else:
-              self.cmax = cmax_animals['Herbivore']
 
         self.heatmap_herb = self.ax3.imshow(
             np.array(self.data_heat_map_herb).reshape(self.x, self.y),
             extent=[1, self.x, self.y, 1], vmin=0,
-            vmax= self.cmax, cmap='viridis', interpolation="nearest")
+            vmax= self.cmax_herb, cmap='viridis', interpolation="nearest")
 
         plt.colorbar(self.heatmap_herb, cax=self.axes_bar)
 
         # HEAT MAP CARN
-        if cmax is None:
-             self.cmax = 50
-        else:
-              self.cmax = cmax_animals['Carnivore']
-
         self.heatmap_carn = self.ax4.imshow(
             np.array(self.data_heat_map_carn).reshape(self.x, self.y),
             extent=[1, self.x, self.y, 1], vmin=0,
-            vmax=50, cmap='viridis', interpolation="nearest")
+            vmax= self.cmax_carn, cmap='viridis', interpolation="nearest")
 
         plt.colorbar(self.heatmap_carn, cax=self.axes_bar2)
 
         # FITNESS
         self.ax5.clear()
-        bins_fit = int(self.hist_specs['fitness']['max']/self.hist_specs['fitness']['delta'])
-        range = (0,self.hist_specs['fitness']['max'])
-        self.ax5.hist(self.phi_array_herb, bins= bins_fit, range = range, label='phi herbs', histtype='step',
+        self.bins_fit_f = int(self.hist_specs['fitness']['max']/self.hist_specs['fitness']['delta'])
+        self.range_f = (0,self.hist_specs['fitness']['max'])
+        self.ax5.hist(self.phi_array_herb, bins = self.bins_fit_f, range = self.range_f, label='phi herbs', histtype='step',
                       edgecolor='b')
-        self.ax5.hist(self.phi_array_carn, bins=20, label='phi carns', histtype='step',
+        self.ax5.hist(self.phi_array_carn, bins= self.bins_fit_f, range = self.range_f, label='phi carns', histtype='step',
                       edgecolor='r')
         handles, labels = self.ax5.get_legend_handles_labels()
         self.ax5.legend(labels=labels)
 
         # AGE
         self.ax6.clear()
-        bins_fit = int(self.hist_specs['age']['max']/self.hist_specs['age']['delta'])
-        range = (0,self.hist_specs['age']['max'])
-        self.ax6.hist(self.age_array_herb, bins= bins_fit, range = range, label='age herbs', histtype='step',
+        self.bins_fit_a = int(self.hist_specs['age']['max']/self.hist_specs['age']['delta'])
+        self.range_a = (0,self.hist_specs['age']['max'])
+        self.ax6.hist(self.age_array_herb, bins= self.bins_fit_a, range = self.range_a, label='age herbs', histtype='step',
                       edgecolor='b')
-        self.ax6.hist(self.age_array_carn, bins= bins_fit, range = range, label='age carns', histtype='step',
+        self.ax6.hist(self.age_array_carn, bins= self.bins_fit_a, range = self.range_a, label='age carns', histtype='step',
                       edgecolor='r')
         handles, labels = self.ax6.get_legend_handles_labels()
         self.ax6.legend(handles=handles, labels=labels)
 
         # WEIGHT
         self.ax7.clear()
-        bins_fit = int(self.hist_specs['weight']['max']/self.hist_specs['weight']['delta'])
-        range = (0,self.hist_specs['weight']['max'])
-        self.ax7.hist(self.weight_array_herb, bins= bins_fit, range = range, label='weight herbs', histtype='step',
+        self.bins_fit_w = int(self.hist_specs['weight']['max']/self.hist_specs['weight']['delta'])
+        self.range_w = (0,self.hist_specs['weight']['max'])
+        self.ax7.hist(self.weight_array_herb, bins= self.bins_fit_w, range = self.range_w, label='weight herbs', histtype='step',
                       edgecolor='b')
-        self.ax7.hist(self.weight_array_carn, bins=bins_fit, range = range, label='weight carns', histtype='step',
+        self.ax7.hist(self.weight_array_carn, bins= self.bins_fit_w, range = self.range_w, label='weight carns', histtype='step',
                       edgecolor='r')
         handles, labels = self.ax7.get_legend_handles_labels()
         self.ax7.legend(labels=labels)
