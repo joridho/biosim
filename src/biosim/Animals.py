@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 """
-This is a file that creates animals by using the class function
+This is a module that creates animals by using the class function
 """
 
 __author__ = 'Christianie Torres', 'Jorid Holmen'

@@ -96,13 +96,15 @@ class BioSim:
               self.cmax_carn = cmax_animals['Carnivore']
               self.cmax_herb = cmax_animals['Herbivore']
 
-        # if histspecs None
-        # ymax
-        # logfile
-        # img_years
+        if hist_specs is None:
+            self.hist_specs = {'fitness': {'max': 1, 'delta': 0.05}, 'age': {'max': 60, 'delta': 2},
+                               'weight': {'max': 60, 'delta': 2}}
+        else:
+            self.hist_specs = hist_specs
+
         # makemovie treigere
         # koordinatsystem ikke komme flere ganger
-        # rydding + finpussing (fjerne kommentarer, innhakk, mellomrom, endre variabelnavn, dobbeltsjekke vis years)
+        # rydding + finpussing (fjerne kommentarer, innhakk, mellomrom, endre variabelnavn, ikke så mye self, dobbeltsjekke vis years)
 
 
     def set_animal_parameters(self, species, p):
@@ -292,7 +294,8 @@ class BioSim:
                 self.ax7.legend(labels=labels)
 
                 plt.pause(0.01)
-                # self._save_graphics()
+                if self.num_years_simulated%self.vis_years == 0:
+                    self._save_graphics()
 
     def create_map(self):
         # Each letter has a colour value
