@@ -78,15 +78,15 @@ class Map_Island:
         self.check_for_equal_map_lines()
         self.geo.splitlines()
 
-        self.y_coord = 1
+        self.x_coord = 1
         for line in self.geo.splitlines():
-            self.x_coord = 1
+            self.y_coord = 1
             for cell_type in list(line):
                 self.geography[(self.x_coord, self.y_coord)] = cell_type
-                if len(list(line)) > self.x_coord:
-                    self.x_coord += 1
-            if len(self.geo.splitlines()) > self.y_coord:
-                self.y_coord += 1
+                if len(list(line)) > self.y_coord:
+                    self.y_coord += 1
+            if len(self.geo.splitlines()) > self.x_coord:
+                self.x_coord += 1
 
     def create_population_dict(self):
         """
