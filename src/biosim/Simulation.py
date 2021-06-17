@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-
+"""
+Template for BioSim class.
+"""
+
+# The material in this file is licensed under the BSD 3-clause license
+# https://opensource.org/licenses/BSD-3-Clause
+# (C) Copyright 2021 Hans Ekkehard Plesser / NMBU
 
 __author__ = 'Jorid Holmen', 'Christianie Torres'
 __email__ = 'jorid.holmen@nmbu.no', 'Christianie.torres@nmbu.no'
