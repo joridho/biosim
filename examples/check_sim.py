@@ -47,10 +47,11 @@ if __name__ == '__main__':
                           for _ in range(40)]}]
 
     sim = BioSim(island_map=geogr, ini_pop=ini_herbs,
-                 seed=123456, vis_years=1,
+                 seed=123456,
                  hist_specs={'fitness': {'max': 1.0, 'delta': 0.05},
                              'age': {'max': 60.0, 'delta': 2},
-                             'weight': {'max': 60, 'delta': 2}})
+                             'weight': {'max': 60, 'delta': 2}},
+                 vis_years=1)
 
 
     sim.set_animal_parameters('Herbivore', {'zeta': 3.2, 'xi': 1.8})
