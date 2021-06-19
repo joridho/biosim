@@ -210,6 +210,12 @@ class Cell:
         for animal in self.carnivores_pop:
             animal.aging()
 
+        # noinspection PyTypeChecker
+        animals = self.herbivores_pop + self.carnivores_pop
+
+        for animal in animals:
+            animal.aging()
+
     def make_animals_lose_weight(self):
         """
         Each year the animal loses weight based on their own weight and eta

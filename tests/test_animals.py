@@ -288,7 +288,7 @@ def test_updated_fitness_during_weight_gain_carn(age10_weight40):
 # Tests for fitness function:
 def test_valid_fitness_herb():
     """
-    The phi-value should be between 0 and zero.
+    The phi-value should be between 0 and 1.
     To test this we calculate the fitness for several herbivores
     """
     for age in range(0, 50):
